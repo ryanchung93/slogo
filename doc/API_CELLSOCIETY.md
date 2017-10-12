@@ -1,5 +1,5 @@
-#Methods Marked Internal, External, or Should not be in API. 
-#netid: ike,anp36,dht9,tc140
+# Methods Marked Internal, External, or Should not be in API. 
+# netid: ike,anp36,dht9,tc140
 
 
 ```code
@@ -218,34 +218,34 @@ public class main extends Application {
 }
 ```
 
-#API’s
+# API’s
 
-##Simulation
+## Simulation
 
-###Internal
+### Internal
 
 The internal API for simulations sets the statuses of the Cells and sets the color of each Cell accordingly.
 
-###External
+### External
 
 The external API for simulations initializes and updates the statuses of the Cells in the simulation based on neighboring statuses for each Cell, as well as other rules as needed. The API’s for visualization and configuration use this external API to set the initial data of the Cells, update the data, and manipulate the simulation’s parameters in the back end, such as setting different neighbor rules based on shape and edge types.
 
-##Visualization
+## Visualization
 
-###Internal
+### Internal
 
 All API for Visualization are internal except for ‘gameLoop()’. APIs in classes SimulationWindow, Window, and MenuWindow (other than ‘gameLoop() ) are intended to help other classes visualize the simulations. 
 
-###External
+### External
 
 The external API involves calling `gameLoop(...)` in Main.java allowing the simulation to be run and displayed in a Window. This method is intended for outside use since it will take in a set of external information to run the simulation.
 
-##Configuration
+## Configuration
 
-###Internal
+### Internal
 
 There is no internal API. All features of the XML Parser are intended for outside use. Since there is only one class for this section, all methods that would be internal are private. 
 
-###External
+### External
 
 buttonChooseFile(File file) selects the file to be loaded, then getSimulation() can be called to return the simulation last selected. 
