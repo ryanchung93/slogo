@@ -93,11 +93,9 @@
 	
 **VariableDisplay implements VariableListener extends Pane**
 * Public VariableDisplay()
-* Public void updateVariable(String name, String val)
 * Public void clearVariables()
 	
 **UserDefinedCommandsDisplay implements StringListener extends Pane**
-* Public void updateCommands(String name)
 * Public void clearCommands()
 
 ## Controller
