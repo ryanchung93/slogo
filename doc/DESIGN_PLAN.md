@@ -65,9 +65,9 @@ command.execute(turtle, commands, variables);
 
 ‘commands’ and ‘variables’ are both unmodified by fd, but the command (fd) updates turtle’s position using setXY (and the get methods to determine the direction and original position). When it does so, the turtle calls the TurtleListener’s locationChange method, but since in practice the TurtleListener is actually an instance of TurtleView, the TurtleView will be the object notified. It can then use the change in position, along with the current position given by the ImmutableTurtle, to draw a line on the screen and move the turtle image to its new position. The View can add the string passed to execute to the history using the updateHistory(string) method.
 
-Team Member Specific Use Cases
+### Team Member Specific Use Cases
 
-Aaron
+#### Aaron
 
 1. ‘Execute’ method in Model class receives String “rt 50”
 	- Method calls on Parser methods to parse “rt 50”.
@@ -82,7 +82,7 @@ Aaron
 	- Parser tells ‘execute’ to create a new instance of go.
 	- Go executes, calling the Turtle’s ‘setXY’ method to move it forward 50.
 
-Ian
+#### Ian
 
 1. Parse String “rt sum 10 20”
 	- Use list of known commands to see “rt” takes one argument
@@ -108,7 +108,7 @@ Ian
 	- Return a Repeat object containing a NumberCommand and a List<Command>.
 
 
-Ryan
+#### Ryan
 
 1. Store Command “fd sum sum sum sum 10 20 30 5 5” to Command History
 	* When “fd sum sum sum sum 10 20 30 5 5” command is typed and run button is pressed, TextPrompt calls consumer.accept(string).
@@ -119,7 +119,7 @@ Ryan
 	* Button implemented as private class in pane
 	* eventHandler -> when button is clicked, TextPrompt call consumer.accept(string). 
 
-David Tran
+#### David Tran
 
 1. User selects a new pen color from drop-down list.
 	* Pallete class extending Pane has ColorListener that detects new pen color selection from the drop-down list (ChoiceBox object).
