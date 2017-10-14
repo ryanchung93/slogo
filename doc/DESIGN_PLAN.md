@@ -1,9 +1,10 @@
 # SLogo Team 8
 
-Aaron Paskin
-Ian Eldridge-Allegra
-David Tran
-Ryan Chung
+## Project Members
+ * Aaron Paskin
+ * Ian Eldridge-Allegra
+ * David Tran
+ * Ryan Chung
 
 ## Introduction
 
