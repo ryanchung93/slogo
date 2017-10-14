@@ -122,7 +122,7 @@ command.execute(turtle, commands, variables);
 	* Button implemented as private class in pane
 	* eventHandler -> when button is clicked, TextPrompt call consumer.accept(string). 
 
-#### David Tran
+#### David
 
 1. User selects a new pen color from drop-down list.
 	* Pallete class extending Pane has ColorListener that detects new pen color selection from the drop-down list (ChoiceBox object).
