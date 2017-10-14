@@ -144,10 +144,10 @@ One decision that still has to be resolved is how known commands will be represe
 
 ## Team Responsibilities
 
-Ian Eldridge-Allegra -- Parser (a private class in Model) and Commands
-Aaron Paskin -- Model (class), Turtle, ImmutableTurtle
-Ryan Chung -- HistoryDisplay, TurtleView, Buttons, Language
-David Tran -- ColorPallete, TextPrompt, VariableDisplay, TurtleView
+* Ian Eldridge-Allegra -- Parser (a private class in Model) and Commands
+* Aaron Paskin -- Model (class), Turtle, ImmutableTurtle
+* Ryan Chung -- HistoryDisplay, TurtleView, Buttons, Language
+* David Tran -- ColorPallete, TextPrompt, VariableDisplay, TurtleView
 
 
 
