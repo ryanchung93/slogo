@@ -1,5 +1,7 @@
 package view;
 
+
+import javafx.scene.paint.Color;
 import model.ImmutableTurtle;
 
 /**
@@ -30,12 +32,17 @@ public interface TurtleListener {
 	/**
 	 * Called when the pen's state (up/down) is toggled
 	 */
-	public void penChange();
+	public void penChange(boolean down);
 
 	/**
 	 * Called when the visibility is toggled
 	 */
-	public void visibilityChange();
+	public void visibilityChange(boolean isVisible);
+	
+	/**
+	 * Called when the pen color is changed
+	 */
+	public void penColorChange(Color color);
 
 	/**
 	 * Called when the screen should be cleared
