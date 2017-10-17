@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javafx.scene.paint.Color;
-import view.TurtleListener;
+import view.API.TurtleListenerAPI;
 
 /**
  * A representation of the state of the turtle at a given time. Notifies all
@@ -13,7 +13,7 @@ import view.TurtleListener;
  */
 public class Turtle implements ImmutableTurtle {
 	
-	private List<TurtleListener> listeners;
+	private List<TurtleListenerAPI> listeners;
 	private double x;
 	private double initX;
 	private double y;
@@ -35,9 +35,10 @@ public class Turtle implements ImmutableTurtle {
 		penColor = DEFAULT_PEN_COLOR;
 	}
 	
-	public void addTurtleListener(TurtleListener tL) {
+	public void addTurtleListener(TurtleListenerAPI tL) {
 		listeners.add(tL);
 	}
+	
 
 	public double getX() {
 		return x;
@@ -66,35 +67,35 @@ public class Turtle implements ImmutableTurtle {
 	public void setXY(double newX, double newY) {
 		x = newX;
 		y = newY;
-		for(TurtleListener tL : listeners) {
+		for(TurtleListenerAPI tL : listeners) {
 			tL.locationChange(newX, newY);
 		}
 	}
 
 	public void setHeading(double newHeading) {
 		heading = newHeading;
-		for(TurtleListener tL : listeners) {
+		for(TurtleListenerAPI tL : listeners) {
 			tL.headingChange(newHeading);
 		}
 	}
 
 	public void setPenDown(boolean down) {
 		penDown = down;
-		for(TurtleListener tL : listeners) {
+		for(TurtleListenerAPI tL : listeners) {
 			tL.penChange(down);
 		}
 	}
 
 	public void setVisible(boolean visible) {
 		isVisible = visible;
-		for(TurtleListener tL : listeners) {
+		for(TurtleListenerAPI tL : listeners) {
 			tL.visibilityChange(visible);
 		}
 	}
 
 	public void setPenColor(Color color) {
 		penColor = color;
-		for(TurtleListener tL : listeners) {
+		for(TurtleListenerAPI tL : listeners) {
 			tL.penColorChange(color);
 		}
 	}
@@ -109,7 +110,7 @@ public class Turtle implements ImmutableTurtle {
 		penDown = true;
 		isVisible = true;
 		penColor = DEFAULT_PEN_COLOR;
-		for(TurtleListener tL : listeners) {
+		for(TurtleListenerAPI tL : listeners) {
 			tL.clearScreen();
 		}
 	}

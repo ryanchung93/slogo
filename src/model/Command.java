@@ -1,6 +1,5 @@
 package model;
 
-import java.util.Collection;
 import java.util.Map;
 
 /**
@@ -17,5 +16,6 @@ public interface Command {
 	 *            The list of variables, which this may alter or add to
 	 * @return The result of the command this represents
 	 */
-	public double execute(Turtle t, Collection commands, Map<String, Double> variables); // TBD Collection types
+	public double execute(Turtle t, Map<String, CommandDef> commands, Map<String, Double> variables); // TBD Collection types
+
 }

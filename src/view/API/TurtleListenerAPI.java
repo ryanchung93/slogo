@@ -1,4 +1,4 @@
-package view;
+package view.API;
 
 import javafx.scene.paint.Color;
 import model.ImmutableTurtle;
@@ -8,8 +8,7 @@ import model.ImmutableTurtle;
  * when these changes occur
  *
  */
-public interface TurtleListener {
-	
+public interface TurtleListenerAPI {
 	/**
 	 * Gives the listener a Turtle to keep track of the state
 	 * @param turtle A turtle with an observable state
@@ -37,16 +36,15 @@ public interface TurtleListener {
 	/**
 	 * Called when the visibility is toggled
 	 */
-	public void visibilityChange(boolean isVisible);
-	
+	public void visibilityChange(boolean visible);
+
 	/**
-	 * Called when the pen color is changed
+	 * Called when pen color is changed
 	 */
 	public void penColorChange(Color color);
-
+	
 	/**
 	 * Called when the screen should be cleared
 	 */
 	public void clearScreen();
-
 }

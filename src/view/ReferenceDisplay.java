@@ -1,8 +1,11 @@
 package view;
 
+import view.API.ReferenceDisplayAPI;
+
 /**
  * A Pane representing the basic instructions for using SLogo
  *
  */
-public interface ReferenceDisplay {
+public class ReferenceDisplay implements ReferenceDisplayAPI {
+
 }
