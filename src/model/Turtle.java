@@ -1,7 +1,7 @@
 package model;
 
 import javafx.scene.paint.Color;
-import view.TurtleListener;
+import view.API.TurtleListenerAPI;
 
 /**
  * A representation of the state of the turtle at a given time. Notifies all
@@ -9,7 +9,7 @@ import view.TurtleListener;
  *
  */
 public interface Turtle extends ImmutableTurtle {
-	public void addTurtleListener(TurtleListener tL);
+	public void addTurtleListener(TurtleListenerAPI tL);
 
 	public double getX();
 

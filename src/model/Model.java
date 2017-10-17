@@ -1,12 +1,12 @@
 package model;
 
-import view.StringListener;
-import view.TurtleListener;
-import view.VariableListener;
+import view.API.StringListenerAPI;
+import view.API.TurtleListenerAPI;
+import view.API.VariableListenerAPI;
 
 public interface Model {
-	public void addTurtleListener(TurtleListener tL);
-	public void addVariableListener(VariableListener sL);
-	public void addCommandListener(StringListener sL);
+	public void addTurtleListener(TurtleListenerAPI tL);
+	public void addVariableListener(VariableListenerAPI sL);
+	public void addCommandListener(StringListenerAPI sL);
 	public void execute(String code);
 }
