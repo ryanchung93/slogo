@@ -9,6 +9,7 @@ import model.ImmutableTurtle;
  *
  */
 public interface TurtleListenerAPI {
+	
 	/**
 	 * Gives the listener a Turtle to keep track of the state
 	 * @param turtle A turtle with an observable state
@@ -36,15 +37,17 @@ public interface TurtleListenerAPI {
 	/**
 	 * Called when the visibility is toggled
 	 */
-	public void visibilityChange(boolean visible);
-
+	public void visibilityChange(boolean isVisible);
+	
 	/**
-	 * Called when pen color is changed
+	 * Called when the pen color is changed
 	 */
 	public void penColorChange(Color color);
-	
+
 	/**
 	 * Called when the screen should be cleared
 	 */
 	public void clearScreen();
+
 }
+

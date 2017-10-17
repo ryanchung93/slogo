@@ -5,10 +5,10 @@ import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.scene.Scene;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.control.ScrollPane.ScrollBarPolicy;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.RowConstraints;
-import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import view.API.StringListenerAPI;
@@ -97,9 +97,12 @@ public class View implements ViewAPI {
 		myRoot.getColumnConstraints().addAll(col1, col2, col3);
 		myRoot.getRowConstraints().addAll(row1);
 		
-		ScrollPane sp = new ScrollPane();
-		sp.setFitToWidth(true);
-		myRoot.add(sp, 0, 0, 1, 1);
+		ScrollPane leftSP = new ScrollPane();
+		leftSP.setFitToWidth(true);
+		leftSP.setVbarPolicy(ScrollBarPolicy.ALWAYS);
+		leftSP.setHbarPolicy(ScrollBarPolicy.NEVER);
+		
+		myRoot.add(leftSP, 0, 0, 1, 1);
 		
 		myStage.setScene(myScene);
 		myStage.show();
