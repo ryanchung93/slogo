@@ -1,14 +1,24 @@
 package controller;
 
-/**
- * The controller of the program -- instantiates Model and View, distributes
- * Listeners from View to Model, gives View the ability to access Model's
- * execute method
- *
- */
-public interface Driver {
+import controller.API.DriverAPI;
+import javafx.stage.Stage;
+import view.View;
+
+public class Driver implements DriverAPI {
+
+	private View myView;
+	
 	/**
-	 * Starts the programming environment
+	 * Constructor
 	 */
-	public void run(); 
+	public Driver(Stage stage) {
+		myView = new View(stage);
+	}
+	
+	@Override
+	public void run() {
+		// TODO Auto-generated method stub
+		
+	}
+	
 }

@@ -9,5 +9,6 @@ import javafx.scene.paint.Color;
  *
  */
 public interface TurtleViewAPI extends TurtleListenerAPI {
+	
 	public void setBackgroundColor(Color c);
 }
