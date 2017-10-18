@@ -6,7 +6,7 @@ import model.Command;
 import model.CommandDef;
 import model.Turtle;
 
-public class Forward implements Command {
+public class Forward extends Command {
 
 	private Command input;
 
@@ -15,8 +15,8 @@ public class Forward implements Command {
 	}
 
 	@Override
-	public double execute(Turtle t, Map<String, CommandDef> commands, Map<String, Double> variables) {
-		double result = input.execute(t, commands, variables);
+	public double execute(Turtle t, Map<String, CommandDef> commands, Map<String, Double> variables, Map<String, Double> localVariables) {
+		double result = input.execute(t, commands, variables, localVariables);
 		t.setXY(t.getX() - result * Math.sin(Math.toDegrees(t.getHeading())),
 				t.getY() + result * Math.sin(Math.toDegrees(t.getHeading())));
 		return result;
