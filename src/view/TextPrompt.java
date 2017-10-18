@@ -1,18 +1,19 @@
 package view;
 
-/**
- * The pane containing a text field where users can enter commands to be sent to
- * the model. Must have access to a Consumer<String>.
- *
- */
-public interface TextPrompt {
-	/**
-	 * Submits the text in the field to the stored Consumer
-	 */
-	public void enter();
+import view.API.TextPromptAPI;
 
-	/**
-	 * Clears the text field
-	 */
-	public void clear();
+public class TextPrompt implements TextPromptAPI{
+
+	@Override
+	public void enter() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void clear() {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

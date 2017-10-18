@@ -1,44 +1,56 @@
 package view;
 
+import javafx.scene.paint.Color;
 import model.ImmutableTurtle;
+import view.API.TurtleListenerAPI;
 
 /**
  * Listens for modifications to a turtle's state -- its methods must be called
  * when these changes occur
  *
  */
-public interface TurtleListener {
-	/**
-	 * Gives the listener a Turtle to keep track of the state
-	 * @param turtle A turtle with an observable state
-	 */
-	public void setTurtle(ImmutableTurtle turtle);
+public class TurtleListener implements TurtleListenerAPI {
 
-	/**
-	 * Called when the turtle moves coordinates
-	 * @param dx change in x
-	 * @param dy change in y
-	 */
-	public void locationChange(double dx, double dy);
+	@Override
+	public void setTurtle(ImmutableTurtle turtle) {
+		// TODO Auto-generated method stub
+		
+	}
 
-	/**
-	 * Called when the turtle turns
-	 * @param dtheta change in heading
-	 */
-	public void headingChange(double dtheta);
+	@Override
+	public void locationChange(double dx, double dy) {
+		// TODO Auto-generated method stub
+		
+	}
 
-	/**
-	 * Called when the pen's state (up/down) is toggled
-	 */
-	public void penChange();
+	@Override
+	public void headingChange(double dtheta) {
+		// TODO Auto-generated method stub
+		
+	}
 
-	/**
-	 * Called when the visibility is toggled
-	 */
-	public void visibilityChange();
+	@Override
+	public void penChange(boolean down) {
+		// TODO Auto-generated method stub
+		
+	}
 
-	/**
-	 * Called when the screen should be cleared
-	 */
-	public void clearScreen();
+	@Override
+	public void visibilityChange(boolean isVisible) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void penColorChange(Color color) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void clearScreen() {
+		// TODO Auto-generated method stub
+		
+	}
+	
 }
