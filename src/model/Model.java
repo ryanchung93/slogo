@@ -49,6 +49,7 @@ public class Model {
 	public void execute(String code) {
 		Parser parser = new Parser(code, commands);
 		
+		
 	}
 
 }
