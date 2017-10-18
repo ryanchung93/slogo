@@ -16,12 +16,13 @@ public class UserDefinedCommand implements Command {
 	
 	@Override
 	public double execute(Turtle t, Map<String, CommandDef> commands, Map<String, Double> variables) {
-		Map<String, Double> results = new HashMap<String, Double>();
-		for(String var : parameters.keySet())
-			results.put(var, parameters.get(var).execute(t, commands, variables));
+		for(String var : parameters.keySet()) {
+			variables.put(var, parameters.get(var).execute(t, commands, variables));
+
+		}
 		double ret = 0;
 		for(int i = 0; i < inputCommands.size(); i++) {
-			ret = inputCommands.get(i).execute(t, commands, results);
+			ret = inputCommands.get(i).execute(t, commands, variables);
 		}
 		return ret;
 	}
