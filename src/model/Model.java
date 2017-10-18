@@ -20,8 +20,10 @@ public class Model {
 	private List<VariableListenerAPI> variableListeners;
 	private List<StringListenerAPI> commandListeners;
 	
-	private Map<String, CommandDef> commands; 		//choose type of collection
+	private Map<String, CommandDef> commands;
 	private Map<String, Double> variables;
+	
+	private Turtle turtle;
 	
 	public Model() {
 		
@@ -31,6 +33,8 @@ public class Model {
 		
 		commands = new HashMap<String, CommandDef>();
 		variables = new HashMap<String, Double>();
+		
+		turtle = new Turtle(0, 0, 0);
 		
 	}
 	
@@ -48,8 +52,9 @@ public class Model {
 	
 	public void execute(String code) {
 		Parser parser = new Parser(code, commands);
-		 
-		
+		while(parser.hasNextCommand()) {
+			parser.getNextCommand().execute(turtle, commands, variables);
+		}
 	}
 
 }
