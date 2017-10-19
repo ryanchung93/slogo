@@ -3,9 +3,9 @@ package view;
 import java.util.Map;
 
 import model.CommandDef;
-import view.API.UserDefinedCommandDisplayAPI;
+import view.API.UserDefinedCommandDisplay;
 
-public class UserDefinedCommandDisplay implements UserDefinedCommandDisplayAPI{
+public class UserDefinedCommandView implements UserDefinedCommandDisplay {
 
 	@Override
 	public void changedMap(Map<String, CommandDef> newMap) {

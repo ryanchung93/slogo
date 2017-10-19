@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javafx.scene.paint.Color;
-import view.API.TurtleListenerAPI;
+import view.API.TurtleListener;
 
 /**
  * A representation of the state of the turtle at a given time. Notifies all
@@ -13,7 +13,7 @@ import view.API.TurtleListenerAPI;
  */
 public class Turtle implements ImmutableTurtle {
 	
-	private TurtleListenerAPI listener;
+	private TurtleListener listener;
 	private double x;
 	private double initX;
 	private double y;
@@ -35,7 +35,7 @@ public class Turtle implements ImmutableTurtle {
 		penColor = DEFAULT_PEN_COLOR;
 	}
 	
-	public void addTurtleListener(TurtleListenerAPI tL) {
+	public void addTurtleListener(TurtleListener tL) {
 		listener = tL;
 	}
 	

@@ -1,24 +1,19 @@
 package model;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import view.API.StringListenerAPI;
-import view.API.TurtleListenerAPI;
-import view.API.VariableListenerAPI;
-
-import view.StringListener;
-import view.TurtleListener;
-import view.VariableListener;
+import view.API.StringListener;
+import view.API.TurtleListener;
+import view.API.VariableListener;
 
 public class Model {
 	
-	private List<TurtleListenerAPI> turtleListeners;
-	private List<VariableListenerAPI> variableListeners;
-	private List<StringListenerAPI> commandListeners;
+	private List<TurtleListener> turtleListeners;
+	private List<VariableListener> variableListeners;
+	private List<StringListener> commandListeners;
 	
 	private Map<String, CommandDef> commands;
 	private Map<String, Double> variables;
@@ -27,9 +22,9 @@ public class Model {
 	
 	public Model() {
 		
-		turtleListeners = new ArrayList<TurtleListenerAPI>();
-		variableListeners = new ArrayList<VariableListenerAPI>();
-		commandListeners = new ArrayList<StringListenerAPI>();
+		turtleListeners = new ArrayList<TurtleListener>();
+		variableListeners = new ArrayList<VariableListener>();
+		commandListeners = new ArrayList<StringListener>();
 		
 		commands = new HashMap<String, CommandDef>();
 		variables = new HashMap<String, Double>();
@@ -38,15 +33,19 @@ public class Model {
 		
 	}
 	
-	public void addVariableListener(VariableListenerAPI vL) {
+	public void addTurtleListener(TurtleListener tL) {
+		turtleListeners.add(tL);
+	}
+	
+	public void addVariableListener(VariableListener vL) {
 		variableListeners.add(vL);
 	}
 	
-	public void addCommandListener(StringListenerAPI sL) {
+	public void addCommandListener(StringListener sL) {
 		commandListeners.add(sL);
 	}
 	
-	public void addTurtle(Turtle t, TurtleListenerAPI tL) {
+	public void addTurtle(Turtle t, TurtleListener tL) {
 		t.addTurtleListener(tL);
 		turtles.add(t);
 		turtleListeners.add(tL);

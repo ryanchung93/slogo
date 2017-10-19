@@ -3,9 +3,13 @@ package view;
 import java.util.Map;
 
 import model.CommandDef;
-import view.API.StringListenerAPI;
+import view.API.StringListener;
 
-public class StringListener implements StringListenerAPI{
+/**
+ * A Pane representing the basic instructions for using SLogo
+ *
+ */
+public class ReferenceView implements StringListener {
 
 	@Override
 	public void changedMap(Map<String, CommandDef> newMap) {
