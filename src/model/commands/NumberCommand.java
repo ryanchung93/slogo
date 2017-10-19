@@ -3,14 +3,14 @@ package model.commands;
 import java.util.Map;
 
 import model.Command;
-import model.CommandDef;
 import model.Turtle;
+import model.commandBuilder.CommandDef;
 
-public class Number implements Command {
+public class NumberCommand implements Command {
 
 	private double input;
 	
-	public Number(double num) {
+	public NumberCommand(double num) {
 		input = num;
 	}
 
