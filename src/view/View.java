@@ -30,7 +30,7 @@ public class View implements ViewAPI {
 	private static final int SCREEN_WIDTH = 1000;
 	private static final int SCREEN_HEIGHT = 700;
 
-	private static final String BALL_IMAGE = "ball.gif";
+	private static final String TURTLE_IMAGE = "turtle.png";
 
 	private Stage myStage;
 	private Scene myScene;
@@ -163,13 +163,18 @@ public class View implements ViewAPI {
 	 * for testing
 	 */
 	private void addTurtle() {
-		Image image = new Image(getClass().getClassLoader().getResourceAsStream("resources/images/" + BALL_IMAGE));
+		Image image = new Image(getClass().getClassLoader().getResourceAsStream("resources/images/" + TURTLE_IMAGE));
 		TurtleView tv = new TurtleView(myCanvas, image);
 		myCanvas.getChildren().add(tv.getImage());
+		tv.offset();
+		tv.headingChange(180);
+		
 		tv.locationChange(0, 100);
 		tv.locationChange(100,100);
 		tv.locationChange(100,0);
 		tv.locationChange(0,0);
+//		tv.headingChange(90);
+//		tv.clearScreen();
 
 	}
 	

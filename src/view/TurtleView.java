@@ -15,13 +15,11 @@ import view.API.TurtleListener;
 
 public class TurtleView implements TurtleListener {
 
-	private static final double WIDTH = 100;
-	private static final double HEIGHT = 100;
+	private static final double WIDTH = 50;
+	private static final double HEIGHT = 50;
 
 	private ImageView myView;
 	private Color myPenColor;
-	private double myPenX;
-	private double myPenY;
 	
 	private boolean myPenIsDown;
 	private Pane myParent;
@@ -37,8 +35,6 @@ public class TurtleView implements TurtleListener {
 		myView.setLayoutY(-HEIGHT/2);
 		myView.setX(0);
 		myView.setY(0);
-		myPenX = 0;
-		myPenY = 0;
 
 		myPenColor = Color.WHITE;
 		myPenIsDown = true;
@@ -55,12 +51,17 @@ public class TurtleView implements TurtleListener {
 		myView.setVisible(turtle.isVisible());
 
 	}
+	
+	public void offset() {
+		myView.setTranslateX(myView.getParent().getLayoutX());
+		myView.setTranslateY(myView.getParent().getLayoutY());
+	}
 
 	@Override
 	public void locationChange(double newX, double newY) {
 		
-		double myX = myPenX + myView.getParent().getLayoutX();
-		double myY = myPenY + myView.getParent().getLayoutY();
+		double myX = myView.getX() + myView.getParent().getLayoutX();
+		double myY = myView.getY() + myView.getParent().getLayoutY();
 		// compensate for center offset since center if not (0,0)
 		double offsetNewX = newX + myView.getParent().getLayoutX();
 		double offsetNewY = newY + myView.getParent().getLayoutY();
@@ -68,14 +69,13 @@ public class TurtleView implements TurtleListener {
 		Line line = new Line(myX, myY, offsetNewX, offsetNewY);
 		line.setStroke(myPenColor);
 //		lines.add(line);
-		myParent.getChildren().add(line);
+		if (myPenIsDown) 
+			myParent.getChildren().add(line);
 //		PathTransition pt = new PathTransition(Duration.millis(1000), line, myView);
 //		pt.play();
 		
-		myView.setX(offsetNewX);
-		myView.setY(offsetNewY);
-		myPenX = newX;
-		myPenY = newY;
+		myView.setX(newX);
+		myView.setY(newY);
 
 	}
 
@@ -83,8 +83,7 @@ public class TurtleView implements TurtleListener {
 	public void headingChange(double dtheta) {
 		// TODO Auto-generated method stub
 		// create an animation that rotates the shape
-		RotateTransition rt = new RotateTransition(Duration.seconds(3));
-		rt.setByAngle(90);
+		myView.setRotate(dtheta);
 
 	}
 
