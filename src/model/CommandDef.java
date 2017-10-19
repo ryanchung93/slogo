@@ -1,5 +1,5 @@
 package model;
 
-public interface CommandBuilder {
+public interface CommandDef {
 	public Command build(TokenDispenser dispenser);
 }

@@ -21,7 +21,7 @@ public class If implements Command {
 	@Override
 	public double execute(Turtle t, Map<String, CommandDef> commands, Map<String, Double> variables) {
 		List<Command> falseCommands = new ArrayList<Command>();
-		falseCommands.add(new Number(0));
+		falseCommands.add(new NumberCommand(0));
 		IfElse useIfElse = new IfElse(expr, input, falseCommands);
 		return useIfElse.execute(t, commands, variables);
 	}

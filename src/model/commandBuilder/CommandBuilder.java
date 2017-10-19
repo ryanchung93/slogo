@@ -5,15 +5,15 @@ import java.util.List;
 import java.util.Map;
 
 import model.Command;
-import model.CommandBuilder;
+import model.CommandDef;
 import model.TokenDispenser;
-import model.UserDefinedCommand;
+import model.commands.UserDefinedCommand;
 
-public class CommandDef implements CommandBuilder{
+public class CommandBuilder implements CommandDef{
 	private List<String> variables;
 	private List<Command> commands;
 
-	public CommandDef(List<String> variables, List<Command> commands) {
+	public CommandBuilder(List<String> variables, List<Command> commands) {
 		this.variables = variables;
 		this.commands = commands;
 	}

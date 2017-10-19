@@ -2,8 +2,6 @@ package model;
 
 import java.util.Map;
 
-import model.commandBuilder.CommandDef;
-
 /**
  * Represents a single line of SLogo code that can be executed. 
  *
