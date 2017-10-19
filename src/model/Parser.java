@@ -8,13 +8,14 @@ import model.commands.NumberCommand;
 
 public class Parser implements TokenDispenser{
 
-	private int index = 0;
+	private int index;
 	private String[] tokens;
 	private Map<String, CommandDef> availableCommands;
 	
 	private static ResourceBundle syntax = ResourceBundle.getBundle("resources.languages/Syntax");
 	
 	public Parser(String code, Map<String, CommandDef> availableCommands) {
+		index = 0;
 		code = code.replaceAll(syntax.getString("Comment"), " ");
 		tokens = code.split("\\s+");
 		this.availableCommands = availableCommands;

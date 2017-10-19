@@ -6,17 +6,17 @@ public interface ViewAPI {
 	 * @return
 	 * TurtleListener that detects changes to Turtle states.
 	 */
-	public TurtleListenerAPI getTurtleListener();
+	public TurtleListener getTurtleListener();
 
 	/**
 	 * @return
 	 * VariableListener that detects changes to current variables.
 	 */
-	public VariableListenerAPI getVariableListener();
+	public VariableListener getVariableListener();
 
 	/**
 	 * @return
 	 * StringListener that detects changes to list of commands.
 	 */
-	public StringListenerAPI getCommandListener();
+	public StringListener getCommandListener();
 }

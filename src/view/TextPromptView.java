@@ -1,9 +1,12 @@
 package view;
 
-import view.API.TextPromptAPI;
+import view.API.TextPromptDisplay;
 
-public class TextPrompt implements TextPromptAPI{
+public class TextPromptView implements TextPromptDisplay{
 
+	public TextPromptView() {
+		
+	}
 	@Override
 	public void enter() {
 		// TODO Auto-generated method stub

@@ -8,7 +8,8 @@ import javafx.scene.paint.Color;
  * directly when changes to the turtle's state occur.
  *
  */
-public interface TurtleViewAPI extends TurtleListenerAPI {
+public interface CanvasDisplay {
 	
 	public void setBackgroundColor(Color c);
+	
 }
