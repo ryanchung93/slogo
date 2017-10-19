@@ -2,9 +2,9 @@ package view;
 
 import java.util.Map;
 
-import view.API.VariableDisplayAPI;
+import view.API.VariableDisplay;
 
-public class VariableDisplay implements VariableDisplayAPI{
+public class VariableView implements VariableDisplay {
 
 	@Override
 	public void changedMap(Map<String, Double> vars) {
@@ -17,5 +17,6 @@ public class VariableDisplay implements VariableDisplayAPI{
 		// TODO Auto-generated method stub
 		
 	}
+
 
 }

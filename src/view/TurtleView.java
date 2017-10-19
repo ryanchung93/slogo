@@ -2,9 +2,9 @@ package view;
 
 import javafx.scene.paint.Color;
 import model.ImmutableTurtle;
-import view.API.TurtleViewAPI;
+import view.API.TurtleListener;
 
-public class TurtleView implements TurtleViewAPI {
+public class TurtleView implements TurtleListener {
 
 	@Override
 	public void setTurtle(ImmutableTurtle turtle) {
@@ -44,12 +44,6 @@ public class TurtleView implements TurtleViewAPI {
 
 	@Override
 	public void clearScreen() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void setBackgroundColor(Color c) {
 		// TODO Auto-generated method stub
 		
 	}

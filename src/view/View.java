@@ -11,9 +11,9 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.RowConstraints;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-import view.API.StringListenerAPI;
-import view.API.TurtleListenerAPI;
-import view.API.VariableListenerAPI;
+import view.API.StringListener;
+import view.API.TurtleListener;
+import view.API.VariableListener;
 import view.API.ViewAPI;
 
 public class View implements ViewAPI {
@@ -45,19 +45,19 @@ public class View implements ViewAPI {
 	/****************PUBLIC METHODS*******************/
 	
 	@Override
-	public TurtleListenerAPI getTurtleListener() {
+	public TurtleListener getTurtleListener() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public VariableListenerAPI getVariableListener() {
+	public VariableListener getVariableListener() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public StringListenerAPI getCommandListener() {
+	public StringListener getCommandListener() {
 		// TODO Auto-generated method stub
 		return null;
 	}

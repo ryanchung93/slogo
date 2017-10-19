@@ -1,8 +1,8 @@
 package view;
 
-import view.API.TextPromptAPI;
+import view.API.TextPromptDisplay;
 
-public class TextPrompt implements TextPromptAPI{
+public class TextPromptView implements TextPromptDisplay{
 
 	@Override
 	public void enter() {

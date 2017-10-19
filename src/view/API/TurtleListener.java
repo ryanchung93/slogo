@@ -8,7 +8,7 @@ import model.ImmutableTurtle;
  * when these changes occur
  *
  */
-public interface TurtleListenerAPI {
+public interface TurtleListener {
 	
 	/**
 	 * Gives the listener a Turtle to keep track of the state
