@@ -90,19 +90,28 @@ public class View implements ViewAPI {
 		ColumnConstraints col2 = new ColumnConstraints();
 		ColumnConstraints col3 = new ColumnConstraints();
 		RowConstraints row1 = new RowConstraints();
+		RowConstraints row2 = new RowConstraints();
 		col1.setPercentWidth(25);
 		col2.setPercentWidth(50);
 		col3.setPercentWidth(25);
-		row1.setPercentHeight(100);
+		row1.setPercentHeight(10);
+		row2.setPercentHeight(90);
 		myRoot.getColumnConstraints().addAll(col1, col2, col3);
-		myRoot.getRowConstraints().addAll(row1);
+		myRoot.getRowConstraints().addAll(row1,row2);
 		
 		ScrollPane leftSP = new ScrollPane();
 		leftSP.setFitToWidth(true);
 		leftSP.setVbarPolicy(ScrollBarPolicy.ALWAYS);
 		leftSP.setHbarPolicy(ScrollBarPolicy.NEVER);
 		
-		myRoot.add(leftSP, 0, 0, 1, 1);
+		myRoot.add(leftSP, 0, 1, 1, 1);
+		
+		ScrollPane rightSP = new ScrollPane();
+		rightSP.setFitToWidth(true);
+		rightSP.setVbarPolicy(ScrollBarPolicy.ALWAYS);
+		rightSP.setHbarPolicy(ScrollBarPolicy.NEVER);
+		
+		myRoot.add(rightSP, 2, 1, 1, 1);
 		
 		myStage.setScene(myScene);
 		myStage.show();

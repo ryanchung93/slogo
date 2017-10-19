@@ -10,7 +10,6 @@ import view.API.StringListenerAPI;
 import view.API.TurtleListenerAPI;
 import view.API.VariableListenerAPI;
 
-import view.StringListener;
 import view.TurtleListener;
 import view.VariableListener;
 
