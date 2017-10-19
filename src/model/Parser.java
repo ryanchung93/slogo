@@ -3,7 +3,10 @@ package model;
 import java.util.Map;
 import java.util.ResourceBundle;
 
-public class Parser {
+import model.commandBuilder.CommandDef;
+import model.commands.NumberCommand;
+
+public class Parser implements TokenDispenser{
 
 	private int index;
 	private String[] tokens;
@@ -18,14 +21,20 @@ public class Parser {
 		this.availableCommands = availableCommands;
 	}
 	
-	public Command getNextCommand() {
-		CommandDef builder = availableCommands.get(tokens[index]);
+	public String peek() {
+		return tokens[index];
+	}
+	
+	public String getNextToken() {
 		index++;
-		Command[] parameters = new Command[builder.numExpected()];
-		for(int start = index; index - start < parameters.length; index++) {
-			parameters[index-start] = getNextCommand();
-		}
-		return builder.build(parameters);
+		return tokens[index-1];
+	}
+	
+	public Command getNextCommand() {
+		String s = getNextToken();
+		if(s.matches(syntax.getString("Constant")))
+			return new NumberCommand(Double.parseDouble(s));
+		return availableCommands.get(getNextToken()).build(this);
 	}
 	
 	public boolean hasNextCommand() {

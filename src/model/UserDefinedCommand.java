@@ -4,26 +4,27 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import model.commandBuilder.CommandDef;
+
 public class UserDefinedCommand implements Command {
 
 	private Map<String, Command> parameters;
-	private List<Command> inputCommands;
+	private List<Command> commandList;
 	
 	public UserDefinedCommand(Map<String, Command> parameters, List<Command> commands) {
 		this.parameters = parameters;
-		this.inputCommands = commands;
+		this.commandList = commands;
 	}
 	
 	@Override
-	public double execute(Turtle t, Map<String, CommandDef> commands, Map<String, Double> variables) {
-		for(String var : parameters.keySet()) {
+	public double execute(Turtle t, Map<String, CommandDef> commands, Map<String, Double> variables) {		
+		for(String var : parameters.keySet())
 			variables.put(var, parameters.get(var).execute(t, commands, variables));
-
+		
+		double answer = 0;
+		for(Command command : commandList) {
+			answer = command.execute(t, commands, variables);
 		}
-		double ret = 0;
-		for(int i = 0; i < inputCommands.size(); i++) {
-			ret = inputCommands.get(i).execute(t, commands, variables);
-		}
-		return ret;
+		return answer;
 	}
 }
