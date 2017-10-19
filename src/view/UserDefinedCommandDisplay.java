@@ -1,11 +1,14 @@
 package view;
 
+import java.util.Map;
+
+import model.CommandDef;
 import view.API.UserDefinedCommandDisplayAPI;
 
 public class UserDefinedCommandDisplay implements UserDefinedCommandDisplayAPI{
 
 	@Override
-	public void newString(String s) {
+	public void changedMap(Map<String, CommandDef> newMap) {
 		// TODO Auto-generated method stub
 		
 	}

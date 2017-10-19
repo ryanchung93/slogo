@@ -23,7 +23,7 @@ public class Model {
 	private Map<String, CommandDef> commands;
 	private Map<String, Double> variables;
 	
-	private Turtle turtle;
+	private List<Turtle> turtles;
 	
 	public Model() {
 		
@@ -34,12 +34,8 @@ public class Model {
 		commands = new HashMap<String, CommandDef>();
 		variables = new HashMap<String, Double>();
 		
-		turtle = new Turtle(0, 0, 0);
+		turtles = new ArrayList<Turtle>();
 		
-	}
-	
-	public void addTurtleListener(TurtleListenerAPI tL) {
-		turtleListeners.add(tL);
 	}
 	
 	public void addVariableListener(VariableListenerAPI vL) {
@@ -50,10 +46,28 @@ public class Model {
 		commandListeners.add(sL);
 	}
 	
+	public void addTurtle(Turtle t, TurtleListenerAPI tL) {
+		t.addTurtleListener(tL);
+		turtles.add(t);
+		turtleListeners.add(tL);
+	}
+	
 	public void execute(String code) {
 		Parser parser = new Parser(code, commands);
+		Map<String, CommandDef> prevCommands = new HashMap<String, CommandDef>();
+		prevCommands.putAll(commands);
+		Map<String, Double> prevVariables = new HashMap<String, Double>();
+		prevVariables.putAll(variables);
 		while(parser.hasNextCommand()) {
-			parser.getNextCommand().execute(turtle, commands, variables);
+			parser.getNextCommand().execute(turtles.get(0), commands, variables);
+			if(!prevVariables.equals(variables)) {
+				variableListeners.get(0).changedMap(variables);
+				prevVariables.putAll(variables);
+			}
+			if(!prevCommands.equals(commands)) {
+				commandListeners.get(0).changedMap(commands);
+				prevCommands.putAll(commands);
+			}
 		}
 	}
 

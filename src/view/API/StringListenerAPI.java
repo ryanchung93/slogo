@@ -1,5 +1,9 @@
 package view.API;
 
+import java.util.Map;
+
+import model.CommandDef;
+
 /**
  * Listens for the addition of new strings -- specifically used to get
  * representations of new commands
@@ -11,5 +15,5 @@ public interface StringListenerAPI {
 	 * @param s
 	 *            The new String
 	 */
-	public void newString(String s);
+	public void changedMap(Map<String, CommandDef> newMap);
 }

@@ -9,7 +9,6 @@ public class VariableListener implements VariableListenerAPI{
 	@Override
 	public void changedMap(Map<String, Double> vars) {
 		// TODO Auto-generated method stub
-		
 	}
 
 }

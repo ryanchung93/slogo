@@ -13,7 +13,7 @@ import view.API.TurtleListenerAPI;
  */
 public class Turtle implements ImmutableTurtle {
 	
-	private List<TurtleListenerAPI> listeners;
+	private TurtleListenerAPI listener;
 	private double x;
 	private double initX;
 	private double y;
@@ -36,10 +36,9 @@ public class Turtle implements ImmutableTurtle {
 	}
 	
 	public void addTurtleListener(TurtleListenerAPI tL) {
-		listeners.add(tL);
+		listener = tL;
 	}
 	
-
 	public double getX() {
 		return x;
 	}
@@ -67,37 +66,27 @@ public class Turtle implements ImmutableTurtle {
 	public void setXY(double newX, double newY) {
 		x = newX;
 		y = newY;
-		for(TurtleListenerAPI tL : listeners) {
-			tL.locationChange(newX, newY);
-		}
+		listener.locationChange(newX, newY);
 	}
 
 	public void setHeading(double newHeading) {
 		heading = newHeading;
-		for(TurtleListenerAPI tL : listeners) {
-			tL.headingChange(newHeading);
-		}
+		listener.headingChange(newHeading);
 	}
 
 	public void setPenDown(boolean down) {
 		penDown = down;
-		for(TurtleListenerAPI tL : listeners) {
-			tL.penChange(down);
-		}
+		listener.penChange(down);
 	}
 
 	public void setVisible(boolean visible) {
 		isVisible = visible;
-		for(TurtleListenerAPI tL : listeners) {
-			tL.visibilityChange(visible);
-		}
+		listener.visibilityChange(visible);
 	}
 
 	public void setPenColor(Color color) {
 		penColor = color;
-		for(TurtleListenerAPI tL : listeners) {
-			tL.penColorChange(color);
-		}
+		listener.penColorChange(color);
 	}
 
 	/**
@@ -110,8 +99,6 @@ public class Turtle implements ImmutableTurtle {
 		penDown = true;
 		isVisible = true;
 		penColor = DEFAULT_PEN_COLOR;
-		for(TurtleListenerAPI tL : listeners) {
-			tL.clearScreen();
-		}
+		listener.clearScreen();
 	}
 }
