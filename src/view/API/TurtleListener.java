@@ -18,10 +18,10 @@ public interface TurtleListener {
 
 	/**
 	 * Called when the turtle moves coordinates
-	 * @param dx change in x
-	 * @param dy change in y
+	 * @param new x
+	 * @param new y
 	 */
-	public void locationChange(double dx, double dy);
+	public void locationChange(double newX, double newY);
 
 	/**
 	 * Called when the turtle turns
