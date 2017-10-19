@@ -29,14 +29,14 @@ public class Parser implements TokenDispenser{
 		return tokens[index-1];
 	}
 	
+	public boolean hasNextCommand() {
+		return index < tokens.length;
+	}
+	
 	public Command getNextCommand() {
 		String s = getNextToken();
 		if(s.matches(syntax.getString("Constant")))
 			return new NumberCommand(Double.parseDouble(s));
 		return availableCommands.get(getNextToken()).build(this);
-	}
-	
-	public boolean hasNextCommand() {
-		return index < tokens.length;
 	}
 }
