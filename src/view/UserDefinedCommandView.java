@@ -1,8 +1,8 @@
 package view;
 
-import view.API.UserDefinedCommandDisplayAPI;
+import view.API.UserDefinedCommandDisplay;
 
-public class UserDefinedCommandDisplay implements UserDefinedCommandDisplayAPI{
+public class UserDefinedCommandView implements UserDefinedCommandDisplay{
 
 	@Override
 	public void newString(String s) {
