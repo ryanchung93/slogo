@@ -9,7 +9,7 @@ import view.API.StringListener;
  * A Pane representing the basic instructions for using SLogo
  *
  */
-public class ReferenceDisplay implements StringListener {
+public class ReferenceView implements StringListener {
 
 	@Override
 	public void changedMap(Map<String, CommandDef> newMap) {

@@ -8,7 +8,7 @@ import model.ImmutableTurtle;
  * when these changes occur
  *
  */
-public interface TurtleListenerAPI {
+public interface TurtleListener {
 	
 	/**
 	 * Gives the listener a Turtle to keep track of the state
@@ -18,10 +18,10 @@ public interface TurtleListenerAPI {
 
 	/**
 	 * Called when the turtle moves coordinates
-	 * @param dx change in x
-	 * @param dy change in y
+	 * @param new x
+	 * @param new y
 	 */
-	public void locationChange(double dx, double dy);
+	public void locationChange(double newX, double newY);
 
 	/**
 	 * Called when the turtle turns
