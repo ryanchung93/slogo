@@ -1,10 +1,11 @@
-package model;
+package model.commands;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import model.commandBuilder.CommandDef;
+import model.Command;
+import model.CommandDef;
+import model.Turtle;
 
 public class UserDefinedCommand implements Command {
 

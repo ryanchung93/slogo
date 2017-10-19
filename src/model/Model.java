@@ -5,6 +5,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javafx.scene.paint.Color;
+import model.commandBuilder.ForwardBuilder;
+import model.commandBuilder.RepeatBuilder;
 import view.API.StringListener;
 import view.API.TurtleListener;
 import view.API.VariableListener;
@@ -29,8 +32,11 @@ public class Model {
 		commands = new HashMap<String, CommandDef>();
 		variables = new HashMap<String, Double>();
 		
-		turtles = new ArrayList<Turtle>();
+		commands.put("fd", new ForwardBuilder());
+		commands.put("repeat", new RepeatBuilder());
 		
+		turtles = new ArrayList<Turtle>();
+	
 	}
 	
 	public void addTurtleListener(TurtleListener tL) {

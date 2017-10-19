@@ -1,8 +1,5 @@
 package model;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import javafx.scene.paint.Color;
 import view.API.TurtleListener;
 
@@ -37,6 +34,7 @@ public class Turtle implements ImmutableTurtle {
 	
 	public void addTurtleListener(TurtleListener tL) {
 		listener = tL;
+		tL.setTurtle(this);
 	}
 	
 	public double getX() {
