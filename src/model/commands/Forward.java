@@ -18,7 +18,7 @@ public class Forward implements Command {
 	public double execute(Turtle t, Map<String, CommandDef> commands, Map<String, Double> variables) {
 		double result = input.execute(t, commands, variables);
 		t.setXY(t.getX() - result * Math.sin(Math.toDegrees(t.getHeading())),
-				t.getY() + result * Math.sin(Math.toDegrees(t.getHeading())));
+				t.getY() + result * Math.cos(Math.toDegrees(t.getHeading())));
 		return result;
 	}
 

@@ -6,26 +6,30 @@ import java.util.Map;
 import model.Command;
 import model.CommandDef;
 import model.Turtle;
+import model.commandBuilder.CommandBuilder;
 
 public class Repeat implements Command {
 
-	private int num;
-	private List<Command> input;
-	
-	public Repeat(int iterations, List<Command> commandList) {
-		num = iterations;
-		input = commandList;
+	private Command numTimes;
+	private List<Command> commandList;
+
+	public Repeat(Command numTimes, List<Command> commands) {
+		this.numTimes = numTimes;
+		this.commandList = commands;
 	}
-	
+
 	@Override
 	public double execute(Turtle t, Map<String, CommandDef> commands, Map<String, Double> variables) {
-		double ret = 0;
-		for(int i = 0; i < num; i++) {
-			for(int c = 0; c < input.size(); c++) {
-				ret = input.get(c).execute(t, commands, variables);
+		double times = numTimes.execute(t, commands, variables);
+		
+		double result = 0;
+		for(int i = 0; i < times; i++) {
+			for(Command c : commandList) {
+				result = c.execute(t, commands, variables);
 			}
 		}
-		return ret;
+		
+		return result;
 	}
 
 }
