@@ -19,7 +19,7 @@ public class Main extends Application {
 		// For testing
 		test();
 
-		// launch(args);
+		 launch(args);
 	}
 
 	private static void test() {

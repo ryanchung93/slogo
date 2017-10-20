@@ -16,6 +16,7 @@ import javafx.scene.image.Image;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.RowConstraints;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import view.API.StringListener;
@@ -40,8 +41,11 @@ public class View implements ViewAPI {
 	private GridPane myGrid;
 	private ScrollPane myLeftSP;
 	private ScrollPane myRightSP;
+	private VBox myLeftVBox;
+	private VBox myRightVBox;
 	private CanvasView myCanvas;
 	private TextPromptView myTextPrompt;
+	private VariableView myVarView;
 
 	/**
 	 * Constructor for setting up animation.
@@ -59,6 +63,7 @@ public class View implements ViewAPI {
 		addCanvasView();
 		addTurtle();
 		addTextPrompt();
+		addVariableView();
 		myTimeline.play();
 
 	}
@@ -130,6 +135,8 @@ public class View implements ViewAPI {
 		myLeftSP.setFitToWidth(true);
 		myLeftSP.setVbarPolicy(ScrollBarPolicy.ALWAYS);
 		myLeftSP.setHbarPolicy(ScrollBarPolicy.NEVER);
+		myLeftVBox = new VBox();
+		myLeftSP.setContent(myLeftVBox);
 		myGrid.add(myLeftSP, 0, 1, 1, 2);
 
 		myRightSP = new ScrollPane();
@@ -137,6 +144,8 @@ public class View implements ViewAPI {
 		myRightSP.setPannable(true);
 		myRightSP.setVbarPolicy(ScrollBarPolicy.ALWAYS);
 		myRightSP.setHbarPolicy(ScrollBarPolicy.NEVER);
+		myRightVBox = new VBox();
+		myRightSP.setContent(myRightVBox);
 		myGrid.add(myRightSP, 2, 1, 1, 2);
 
 		myStage.setScene(myScene);
@@ -183,7 +192,27 @@ public class View implements ViewAPI {
 		// tv.clearScreen();
 
 	}
-
+	
+	private void addVariableView() {
+		double[][] ret = getGridDimensions();
+		myVarView = new VariableView(ret[0][0], myLeftSP.getHeight()/2);
+		myLeftVBox.getChildren().add(myVarView);
+		
+		//TESTS
+		VariableView myVarView2 = new VariableView(ret[0][0], myLeftSP.getHeight());
+		myLeftVBox.getChildren().add(myVarView2);
+		VariableView myVarView3 = new VariableView(ret[0][0], myLeftSP.getHeight());
+		myLeftVBox.getChildren().add(myVarView3);
+		VariableView myVarView4 = new VariableView(ret[0][0], myLeftSP.getHeight()/2);
+		myLeftVBox.getChildren().add(myVarView4);
+		
+//		myGrid.add(myVarView, 0, 1);
+	}
+	
+	/**
+	 * @return
+	 * array containing dimensions of cells
+	 */ 
 	private double[][] getGridDimensions() {
 		double[][] ret = new double[4][4];
 		try {
