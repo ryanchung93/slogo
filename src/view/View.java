@@ -1,15 +1,16 @@
 package view;
 
+import java.awt.Button;
+
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.geometry.HPos;
-import javafx.geometry.Pos;
 import javafx.geometry.VPos;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
-import javafx.scene.control.ScrollPane;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.ScrollPane.ScrollBarPolicy;
 import javafx.scene.image.Image;
 import javafx.scene.layout.ColumnConstraints;
@@ -35,8 +36,12 @@ public class View implements ViewAPI {
 	private Stage myStage;
 	private Scene myScene;
 	private Timeline myTimeline;
-	private GridPane myRoot;
+
+	private GridPane myGrid;
+	private ScrollPane myLeftSP;
+	private ScrollPane myRightSP;
 	private CanvasView myCanvas;
+	private TextPromptView myTextPrompt;
 
 	/**
 	 * Constructor for setting up animation.
@@ -53,8 +58,9 @@ public class View implements ViewAPI {
 		setupLayout();
 		addCanvasView();
 		addTurtle();
+		addTextPrompt();
 		myTimeline.play();
-		
+
 	}
 
 	/**************** PUBLIC METHODS *******************/
@@ -92,6 +98,7 @@ public class View implements ViewAPI {
 
 	/**
 	 * Steps to update interface.
+	 * 
 	 * @param elaspedTime
 	 */
 	private void step(double elaspedTime) {
@@ -102,33 +109,36 @@ public class View implements ViewAPI {
 	 * Sets up the general layout of the scene.
 	 */
 	private void setupLayout() {
-		myRoot = new GridPane();
-		myScene = new Scene(myRoot, SCREEN_WIDTH, SCREEN_HEIGHT);
+		myGrid = new GridPane();
+		myScene = new Scene(myGrid, SCREEN_WIDTH, SCREEN_HEIGHT);
 		ColumnConstraints col1 = new ColumnConstraints();
 		ColumnConstraints col2 = new ColumnConstraints();
 		ColumnConstraints col3 = new ColumnConstraints();
 		RowConstraints row1 = new RowConstraints();
 		RowConstraints row2 = new RowConstraints();
+		RowConstraints row3 = new RowConstraints();
 		col1.setPercentWidth(25);
 		col2.setPercentWidth(50);
 		col3.setPercentWidth(25);
 		row1.setPercentHeight(10);
-		row2.setPercentHeight(90);
-		myRoot.getColumnConstraints().addAll(col1, col2, col3);
-		myRoot.getRowConstraints().addAll(row1, row2);
+		row2.setPercentHeight(70);
+		row3.setPercentHeight(20);
+		myGrid.getColumnConstraints().addAll(col1, col2, col3);
+		myGrid.getRowConstraints().addAll(row1, row2, row3);
 
-		ScrollPane leftSP = new ScrollPane();
-		leftSP.setFitToWidth(true);
-		leftSP.setVbarPolicy(ScrollBarPolicy.ALWAYS);
-		leftSP.setHbarPolicy(ScrollBarPolicy.NEVER);
-		myRoot.add(leftSP, 0, 1, 1, 1);
-		
-		ScrollPane rightSP = new ScrollPane();
-		rightSP.setFitToWidth(true);
-		rightSP.setVbarPolicy(ScrollBarPolicy.ALWAYS);
-		rightSP.setHbarPolicy(ScrollBarPolicy.NEVER);
-		myRoot.add(rightSP, 2, 1, 1, 1);
-		
+		myLeftSP = new ScrollPane();
+		myLeftSP.setFitToWidth(true);
+		myLeftSP.setVbarPolicy(ScrollBarPolicy.ALWAYS);
+		myLeftSP.setHbarPolicy(ScrollBarPolicy.NEVER);
+		myGrid.add(myLeftSP, 0, 1, 1, 2);
+
+		myRightSP = new ScrollPane();
+		myRightSP.setFitToWidth(true);
+		myRightSP.setPannable(true);
+		myRightSP.setVbarPolicy(ScrollBarPolicy.ALWAYS);
+		myRightSP.setHbarPolicy(ScrollBarPolicy.NEVER);
+		myGrid.add(myRightSP, 2, 1, 1, 2);
+
 		myStage.setScene(myScene);
 		myStage.show();
 
@@ -139,26 +149,25 @@ public class View implements ViewAPI {
 	 */
 	private void addCanvasView() {
 
-		double[][] ret = new double[0][0];
+		double[][] dims = getGridDimensions();
 
-		try {
-			java.lang.reflect.Method m = myRoot.getClass().getDeclaredMethod("getGrid");
-			m.setAccessible(true);
-			ret = (double[][]) m.invoke(myRoot);
-			
-			myCanvas = new CanvasView(ret[0][1],ret[1][1]);
-			myRoot.add(myCanvas, 1, 1);
-			myCanvas.setLayoutX(myCanvas.getMaxWidth() / 2);
-			myCanvas.setLayoutY(myCanvas.getMaxHeight() / 2);
+		myCanvas = new CanvasView(dims[0][1], dims[1][1]);
+		myGrid.add(myCanvas, 1, 1);
+		myCanvas.setLayoutX(myCanvas.getMaxWidth() / 2);
+		myCanvas.setLayoutY(myCanvas.getMaxHeight() / 2);
 
-			GridPane.setConstraints(myCanvas, 1, 1, 1, 1, HPos.CENTER, VPos.CENTER);
-			
-		} catch (Exception e) {
-			e.printStackTrace();
-			showError(e.getMessage());
-		}
+		GridPane.setConstraints(myCanvas, 1, 1, 1, 1, HPos.CENTER, VPos.CENTER);
 	}
-	
+
+	/**
+	 * Add text prompt where commands are entered and run.
+	 */
+	private void addTextPrompt() {
+		double[][] dims = getGridDimensions();
+		myTextPrompt = new TextPromptView(dims[0][1], dims[1][2]);
+		myGrid.add(myTextPrompt, 1, 2, 2, 1);
+	}
+
 	/**
 	 * for testing
 	 */
@@ -168,18 +177,35 @@ public class View implements ViewAPI {
 		myCanvas.getChildren().add(tv.getImage());
 		tv.offset();
 		tv.headingChange(180);
-		
+
 		tv.locationChange(0, 100);
-		tv.locationChange(100,100);
-		tv.locationChange(100,0);
-		tv.locationChange(0,0);
-//		tv.headingChange(90);
-//		tv.clearScreen();
+		tv.headingChange(90);
+		// tv.clearScreen();
 
 	}
-	
+
+	private double[][] getGridDimensions() {
+		double[][] ret = new double[4][4];
+		try {
+			java.lang.reflect.Method m = myGrid.getClass().getDeclaredMethod("getGrid");
+			m.setAccessible(true);
+			ret = (double[][]) m.invoke(myGrid);
+			for (int i = 0; i < ret.length; i++) {
+				for (int j = 0; j < ret[0].length; j++)
+					System.out.println(i + "," + j + " " + ret[i][j]);
+			}
+			System.out.println(ret);
+		} catch (Exception e) {
+			e.printStackTrace();
+			showError(e.getMessage());
+		}
+
+		return ret;
+	}
+
 	/**
 	 * Display error message
+	 * 
 	 * @param message
 	 */
 	private void showError(String message) {
