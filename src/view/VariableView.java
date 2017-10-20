@@ -2,25 +2,29 @@ package view;
 
 import java.util.Map;
 
+import javafx.scene.Parent;
 import javafx.scene.control.ScrollPane;
-import javafx.scene.control.TextArea;
 import javafx.scene.control.ScrollPane.ScrollBarPolicy;
+import javafx.scene.control.TextArea;
 import view.API.VariableDisplay;
 
-public class VariableView extends ScrollPane implements VariableDisplay {
+public class VariableView implements VariableDisplay {
 
+	TextArea ta;
+	ScrollPane sp;
 	public VariableView(double width, double height) {
 
 		TextArea ta = new TextArea();
 		ta.setWrapText(true);
 		ta.setEditable(false);
-		ta.appendText("Test");
+		ta.appendText("VariableView");
 		// this.setPrefWidth(width);
 		// this.setPrefHeight(height);
-		this.setVisible(true);
-		this.setContent(ta);
-		this.setVbarPolicy(ScrollBarPolicy.ALWAYS);
-		this.setHbarPolicy(ScrollBarPolicy.NEVER);
+		sp = new ScrollPane();
+		sp.setVisible(true);
+		sp.setContent(ta);
+		sp.setVbarPolicy(ScrollBarPolicy.ALWAYS);
+		sp.setHbarPolicy(ScrollBarPolicy.NEVER);
 	}
 
 	@Override
@@ -33,6 +37,12 @@ public class VariableView extends ScrollPane implements VariableDisplay {
 	public void clearVariables() {
 		// TODO Auto-generated method stub
 
+	}
+
+	@Override
+	public Parent getParent() {
+		// TODO Auto-generated method stub
+		return sp;
 	}
 
 }

@@ -9,20 +9,16 @@ import javafx.scene.control.ScrollPane.ScrollBarPolicy;
 import model.CommandDef;
 import view.API.StringListener;
 
-/**
- * A Pane representing the basic instructions for using SLogo
- *
- */
-public class ReferenceView implements StringListener {
+public class HistoryView implements StringListener {
 
 	TextArea ta;
 	ScrollPane sp;
-	public ReferenceView(double width, double height) {
+	public HistoryView(double width, double height) {
 
 		TextArea ta = new TextArea();
 		ta.setWrapText(true);
 		ta.setEditable(false);
-		ta.appendText("ReferenceView");
+		ta.appendText("HistoryView");
 		// this.setPrefWidth(width);
 		// this.setPrefHeight(height);
 		sp = new ScrollPane();
@@ -31,17 +27,17 @@ public class ReferenceView implements StringListener {
 		sp.setVbarPolicy(ScrollBarPolicy.ALWAYS);
 		sp.setHbarPolicy(ScrollBarPolicy.NEVER);
 	}
-	
-	@Override
-	public void changedMap(Map<String, CommandDef> newMap) {
-		// TODO Auto-generated method stub
-
-	}
 
 	@Override
 	public Parent getParent() {
 		// TODO Auto-generated method stub
 		return sp;
+	}
+
+	@Override
+	public void changedMap(Map<String, CommandDef> newMap) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

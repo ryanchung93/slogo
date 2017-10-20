@@ -2,6 +2,7 @@ package view;
 
 import java.util.Map;
 
+import javafx.scene.Parent;
 import model.CommandDef;
 import view.API.UserDefinedCommandDisplay;
 
@@ -17,6 +18,12 @@ public class UserDefinedCommandView implements UserDefinedCommandDisplay {
 	public void clearCommands() {
 		// TODO Auto-generated method stub
 		
+	}
+
+	@Override
+	public Parent getParent() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

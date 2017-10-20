@@ -46,6 +46,8 @@ public class View implements ViewAPI {
 	private CanvasView myCanvas;
 	private TextPromptView myTextPrompt;
 	private VariableView myVarView;
+	private ReferenceView myRefView;
+	private HistoryView myHistoryView;
 
 	/**
 	 * Constructor for setting up animation.
@@ -64,6 +66,8 @@ public class View implements ViewAPI {
 		addTurtle();
 		addTextPrompt();
 		addVariableView();
+		addReferenceView();
+		addHistoryView();
 		myTimeline.play();
 
 	}
@@ -185,10 +189,9 @@ public class View implements ViewAPI {
 		TurtleView tv = new TurtleView(myCanvas, image);
 		myCanvas.getChildren().add(tv.getImage());
 		tv.offset();
-		tv.headingChange(180);
-
-		tv.locationChange(0, 100);
-		tv.headingChange(90);
+//		tv.headingChange(180);
+//		tv.locationChange(0, 100);
+//		tv.headingChange(90);
 		// tv.clearScreen();
 
 	}
@@ -196,17 +199,21 @@ public class View implements ViewAPI {
 	private void addVariableView() {
 		double[][] ret = getGridDimensions();
 		myVarView = new VariableView(ret[0][0], myLeftSP.getHeight()/2);
-		myLeftVBox.getChildren().add(myVarView);
-		
-		//TESTS
-		VariableView myVarView2 = new VariableView(ret[0][0], myLeftSP.getHeight());
-		myLeftVBox.getChildren().add(myVarView2);
-		VariableView myVarView3 = new VariableView(ret[0][0], myLeftSP.getHeight());
-		myLeftVBox.getChildren().add(myVarView3);
-		VariableView myVarView4 = new VariableView(ret[0][0], myLeftSP.getHeight()/2);
-		myLeftVBox.getChildren().add(myVarView4);
+		myLeftVBox.getChildren().add(myVarView.getParent());
 		
 //		myGrid.add(myVarView, 0, 1);
+	}
+	
+	private void addReferenceView() {
+		double[][] ret = getGridDimensions();
+		myRefView = new ReferenceView(ret[0][0], myRightSP.getHeight()/2);
+		myRightVBox.getChildren().add(myRefView.getParent());
+	}
+	
+	private void addHistoryView() {
+		double[][] ret = getGridDimensions();
+		myHistoryView = new HistoryView(ret[0][0], myRightSP.getHeight()/2);
+		myRightVBox.getChildren().add(myHistoryView.getParent());
 	}
 	
 	/**

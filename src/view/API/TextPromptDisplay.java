@@ -5,7 +5,7 @@ package view.API;
  * the model. Must have access to a Consumer<String>.
  *
  */
-public interface TextPromptDisplay {
+public interface TextPromptDisplay extends SubcomponentViewAPI {
 	/**
 	 * Submits the text in the field to the stored Consumer
 	 */
