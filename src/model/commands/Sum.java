@@ -5,6 +5,7 @@ import java.util.Map;
 import model.Command;
 import model.CommandDef;
 import model.Turtle;
+import model.VariableManager;
 
 public class Sum implements Command {
 
@@ -17,7 +18,7 @@ public class Sum implements Command {
 	}
 	
 	@Override
-	public double execute(Turtle t, Map<String, CommandDef> commands, Map<String, Double> variables) {
+	public double execute(Turtle t, Map<String, CommandDef> commands, VariableManager variables) {
 		return input1.execute(t, commands, variables) + input2.execute(t, commands, variables);
 	}
 
