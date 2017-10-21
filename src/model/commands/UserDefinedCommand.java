@@ -19,14 +19,15 @@ public class UserDefinedCommand implements Command {
 	}
 	
 	@Override
-	public double execute(Turtle t, Map<String, CommandDef> commands, VariableManager variables) {		
+	public double execute(Turtle t, Map<String, CommandDef> commands, VariableManager variables) {
+		variables.enterLocalScope();
 		for(String var : parameters.keySet())
-			variables.put(var, parameters.get(var).execute(t, commands, variables));
-		
+			variables.setLocalValue(var, parameters.get(var).execute(t, commands, variables));
 		double answer = 0;
 		for(Command command : commandList) {
 			answer = command.execute(t, commands, variables);
 		}
+		variables.leaveLocalScope();
 		return answer;
 	}
 }
