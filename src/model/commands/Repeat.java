@@ -6,7 +6,7 @@ import java.util.Map;
 import model.Command;
 import model.CommandDef;
 import model.Turtle;
-import model.commandBuilder.CommandBuilder;
+import model.VariableManager;
 
 public class Repeat implements Command {
 
@@ -19,7 +19,7 @@ public class Repeat implements Command {
 	}
 
 	@Override
-	public double execute(Turtle t, Map<String, CommandDef> commands, Map<String, Double> variables) {
+	public double execute(Turtle t, Map<String, CommandDef> commands, VariableManager variables) {
 		double times = numTimes.execute(t, commands, variables);
 		
 		double result = 0;

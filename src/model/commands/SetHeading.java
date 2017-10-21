@@ -5,6 +5,7 @@ import java.util.Map;
 import model.Command;
 import model.CommandDef;
 import model.Turtle;
+import model.VariableManager;
 
 public class SetHeading implements Command {
 
@@ -15,7 +16,7 @@ public class SetHeading implements Command {
 	}
 	
 	@Override
-	public double execute(Turtle t, Map<String, CommandDef> commands, Map<String, Double> variables) {
+	public double execute(Turtle t, Map<String, CommandDef> commands, VariableManager variables) {
 		double result = input.execute(t, commands, variables);
 		t.setHeading(result);
 		return Math.abs(t.getHeading() - result);
