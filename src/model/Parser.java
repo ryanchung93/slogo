@@ -55,7 +55,7 @@ public class Parser implements TokenDispenser{
 	}
 
 	
-	public <T> List<T> getNextList(Supplier<T> supplier){
+	private <T> List<T> getNextList(Supplier<T> supplier){
 		if(!getNextToken().equals("["))
 			throw new RuntimeException("TO DO"); //TODO
 		
