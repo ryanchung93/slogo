@@ -28,7 +28,7 @@ public class For implements Command {
 	public double execute(Turtle t, Map<String, CommandDef> commands, VariableManager variables) {
 		double ret = 0;
 		for(int i = start; i < end; i += increment) {
-			variables.put(varName, (double)i);
+			variables.setValue(varName, (double)i);
 			for(int c = 0; c < commandList.size(); c++) {
 				ret = commandList.get(c).execute(t, commands, variables);
 			}
