@@ -52,8 +52,8 @@ public class Model {
 	}
 	
 	public void addTurtle(Turtle t, TurtleListener tL) {
-		t.addTurtleListener(tL);
 		turtles.add(t);
+		t.addTurtleListener(tL);
 		turtleListeners.add(tL);
 	}
 	

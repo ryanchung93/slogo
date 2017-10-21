@@ -6,13 +6,4 @@ package view.API;
  *
  */
 public interface TextPromptDisplay extends SubcomponentViewAPI {
-	/**
-	 * Submits the text in the field to the stored Consumer
-	 */
-	public void enter();
-
-	/**
-	 * Clears the text field
-	 */
-	public void clear();
 }

@@ -1,5 +1,7 @@
 package view;
 
+import java.util.function.Consumer;
+
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.Button;
@@ -13,14 +15,18 @@ public class TextPromptView extends HBox implements TextPromptDisplay {
 	private Button runButton;
 	private Button clearButton;
 	private VBox buttonPanel;
+	
+	private Consumer<String> commandConsumer;
 
-	public TextPromptView(double width, double height) {
+	public TextPromptView(double width, double height, Consumer<String> commandConsumer) {
 		this.setMaxWidth(width);
 		this.setMaxHeight(height);
 		
 		tp = new TextArea();
 		tp.setPrefWidth(width*.75);
 		tp.setPrefHeight(height);
+		
+		this.commandConsumer = commandConsumer;
 		
 		this.getChildren().add(tp);
 		
@@ -48,18 +54,16 @@ public class TextPromptView extends HBox implements TextPromptDisplay {
 		return ret;
 	}
 	
-	/***************************PUBLIC METHODS********************************/
+	private void enter() {
+		String code = tp.getText();
+		commandConsumer.accept(code);
+		clear();
+	}
 	
-	@Override
-	public void enter() {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void clear() {
+	private void clear() {
 		tp.clear();
-
 	}
+	
+	/***************************PUBLIC METHODS********************************/
 
 }

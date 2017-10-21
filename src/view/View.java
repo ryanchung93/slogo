@@ -1,6 +1,7 @@
 package view;
 
 import java.awt.Button;
+import java.util.function.Consumer;
 
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
@@ -48,28 +49,28 @@ public class View implements ViewAPI {
 	private VariableView myVarView;
 	private ReferenceView myRefView;
 	private HistoryView myHistoryView;
+	private TurtleView myTurtleView;
 
 	/**
 	 * Constructor for setting up animation.
 	 * 
 	 * @param stage
 	 */
-	public View(Stage stage) {
+	public View(Stage stage, Consumer<String> commandConsumer) {
 		myStage = stage;
-		start();
+		start(commandConsumer);
 	}
 
-	public void start() {
+	public void start(Consumer<String> commandConsumer) {
 		myTimeline = setupTimeline();
 		setupLayout();
 		addCanvasView();
 		addTurtle();
-		addTextPrompt();
+		addTextPrompt(commandConsumer);
 		addVariableView();
 		addReferenceView();
 		addHistoryView();
 		myTimeline.play();
-
 	}
 
 	/**************** PUBLIC METHODS *******************/
@@ -77,7 +78,7 @@ public class View implements ViewAPI {
 	@Override
 	public TurtleListener getTurtleListener() {
 		// TODO Auto-generated method stub
-		return null;
+		return myTurtleView;
 	}
 
 	@Override
@@ -111,7 +112,9 @@ public class View implements ViewAPI {
 	 * @param elaspedTime
 	 */
 	private void step(double elaspedTime) {
-		// do stuff
+		//Read command
+		
+		//Pass into execute
 	}
 
 	/**
@@ -175,9 +178,9 @@ public class View implements ViewAPI {
 	/**
 	 * Add text prompt where commands are entered and run.
 	 */
-	private void addTextPrompt() {
+	private void addTextPrompt(Consumer<String> commandConsumer) {
 		double[][] dims = getGridDimensions();
-		myTextPrompt = new TextPromptView(dims[0][1], dims[1][2]);
+		myTextPrompt = new TextPromptView(dims[0][1], dims[1][2], commandConsumer);
 		myGrid.add(myTextPrompt, 1, 2, 2, 1);
 	}
 
@@ -187,12 +190,13 @@ public class View implements ViewAPI {
 	private void addTurtle() {
 		Image image = new Image(getClass().getClassLoader().getResourceAsStream("resources/images/" + TURTLE_IMAGE));
 		TurtleView tv = new TurtleView(myCanvas, image);
+		myTurtleView = tv;
 		myCanvas.getChildren().add(tv.getImage());
 		tv.offset();
 //		tv.headingChange(180);
 //		tv.locationChange(0, 100);
 //		tv.headingChange(90);
-		// tv.clearScreen();
+// 		tv.clearScreen();
 
 	}
 	

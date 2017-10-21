@@ -15,16 +15,16 @@ public class Driver implements DriverAPI {
 	 * Constructor
 	 */
 	public Driver(Stage stage) {
-		myView = new View(stage);
+		myView = new View(stage, s -> myModel.execute(s));
 		myModel = new Model();
 	}
 	
 	@Override
 	public void run() {
-		myModel.addTurtle(new Turtle(0, 0, 0), myView.getTurtleListener());
+		Turtle t = new Turtle(0, 0, 0);
+		myModel.addTurtle(t, myView.getTurtleListener());
 		myModel.addCommandListener(myView.getCommandListener());
 		myModel.addVariableListener(myView.getVariableListener());
-		//call myView.start();
 	}
 	
 }

@@ -11,15 +11,14 @@ public class Main extends Application {
 
 	public void start(Stage stage) {
 		Driver driver = new Driver(stage);
-		// driver.run();
+		driver.run();
 
 	}
 
 	public static void main(String[] args) {
 		// For testing
-		test();
-
-		 launch(args);
+		//test();
+		launch(args);
 	}
 
 	private static void test() {
