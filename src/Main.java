@@ -11,8 +11,7 @@ public class Main extends Application {
 
 	public void start(Stage stage) {
 		Driver driver = new Driver(stage);
-		// driver.run();
-
+		driver.run();
 	}
 
 	public static void main(String[] args) {
