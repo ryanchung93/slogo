@@ -65,8 +65,8 @@ public class CommandManager {
 		listeners.add(commandListener);
 	}
 	
-	public void put(String regex, CommandDef definition) {
-		commands.put(regex, definition);
+	public void put(String name, CommandDef definition) {
+		commands.put(name, definition);
 		updateListeners();
 	}
 

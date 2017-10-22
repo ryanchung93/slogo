@@ -1,17 +1,16 @@
 package model.commandBuilder;
 
-import java.util.ArrayList;
-
 import model.Command;
 import model.CommandDef;
 import model.SLogoException;
 import model.TokenDispenser;
-import model.commands.IfElse;
+import model.commands.SetTowards;
 
-public class IfBuilder implements CommandDef {
+public class SetTowardsBuilder implements CommandDef {
+
 	@Override
 	public Command build(TokenDispenser dispenser) throws SLogoException {
-		return new IfElse(dispenser.getNextCommand(), dispenser.getNextCommandList(), new ArrayList<Command>());
+		return new SetTowards(dispenser.getNextCommand(), dispenser.getNextCommand());
 	}
 
 }

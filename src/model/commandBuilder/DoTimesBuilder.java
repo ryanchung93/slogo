@@ -4,13 +4,15 @@ import model.Command;
 import model.CommandDef;
 import model.SLogoException;
 import model.TokenDispenser;
-import model.commands.DoTimes;
+import model.commands.For;
+import model.commands.NumberCommand;
 
 public class DoTimesBuilder implements CommandDef {
 
 	@Override
 	public Command build(TokenDispenser dispenser) throws SLogoException {
-		return new DoTimes(dispenser.getNextToken(), Integer.parseInt(dispenser.getNextToken()), dispenser.getNextCommandList());
+		return new For(dispenser.getNextToken(), new NumberCommand(1), dispenser.getNextCommand(), new NumberCommand(1),
+				dispenser.getNextCommandList());
 	}
 
 }
