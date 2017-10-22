@@ -11,6 +11,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 import model.ImmutableTurtle;
+//import view.API.PenOptionListener;
 import view.API.TurtleListener;
 
 /**
@@ -46,6 +47,9 @@ public class TurtleView implements TurtleListener {
 		myView.setY(0);
 		headingChange(0);
 
+		myView.setRotate(180);
+		// myHeading = myView.getRotate();
+
 		setMouseEvents();
 
 		myPenColor = Color.WHITE;
@@ -62,7 +66,7 @@ public class TurtleView implements TurtleListener {
 		myView.setX(turtle.getX() + offsetX);
 		myView.setY(turtle.getY() + offsetY);
 
-		myHeading = turtle.getHeading();
+		myHeading = turtle.getHeading() + 180;
 		myPenColor = turtle.getPenColor();
 		myPenIsDown = turtle.getPenDown();
 		myView.setVisible(turtle.isVisible());
@@ -135,10 +139,13 @@ public class TurtleView implements TurtleListener {
 	}
 
 	@Override
-	public void headingChange(double dtheta) {
+	public void headingChange(double newHeading) {
 		// TODO Auto-generated method stub
 		// create an animation that rotates the shape
-		myView.setRotate(dtheta);
+		// myView.setRotate(dtheta);
+		double newAngle = -newHeading;
+		myView.setRotate(180 - newAngle);
+		System.out.println("NewHeading: " + (-newHeading));
 	}
 
 	@Override
@@ -170,7 +177,7 @@ public class TurtleView implements TurtleListener {
 		System.out.println(code);
 
 		// must change the back-end turtle!!!
-		
+
 		if (myIsToggled) {
 			switch (code) {
 			case W:

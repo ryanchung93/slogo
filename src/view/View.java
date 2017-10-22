@@ -1,6 +1,5 @@
 package view;
 
-import java.util.ResourceBundle;
 import java.util.function.Consumer;
 
 import javafx.animation.Animation;
@@ -40,7 +39,6 @@ public class View implements ViewAPI {
 	private static final double SECOND_DELAY = 1.0 / FRAMES_PER_SECOND;
 	private static final int SCREEN_WIDTH = 1000;
 	private static final int SCREEN_HEIGHT = 700;
-	private ResourceBundle myResource = ResourceBundle.getBundle("resources.view/view");
 	private static final String STYLESHEET = "/resources/view/view.css";
 
 	private static final String TURTLE_IMAGE = "Turtle_up.png";
@@ -230,6 +228,7 @@ public class View implements ViewAPI {
 		myToolbarView = new ToolbarView(SCREEN_WIDTH);
 		// set a listener for background color changes.
 		myToolbarView.getBackgroundOptionView().addBackgroundOptionListener(myCanvas);
+		myToolbarView.getPenOptionView().addPenOptionListener(myTurtleView);
 		
 		myLeftVBox.getChildren().add(myVarView.getParent());
 		myRightVBox.getChildren().add(myRefView.getParent());

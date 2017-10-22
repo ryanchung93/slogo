@@ -72,7 +72,7 @@ public class Turtle implements ImmutableTurtle {
 	public void setHeading(double newHeading) {
 		heading = newHeading;
 		listener.headingChange(newHeading);
-		System.out.println("H = " + heading);
+//		System.out.println("H = " + heading);
 	}
 
 	public void setPenDown(boolean down) {
