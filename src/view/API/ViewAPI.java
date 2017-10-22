@@ -5,6 +5,13 @@ import model.SLogoException;
 public interface ViewAPI {
 	
 	/**
+	 * Creates and displays the simulation window.
+	 * 
+	 * @param commandConsumer
+	 */
+	public void start(Consumer<String> commandConsumer);
+	
+	/**
 	 * @return
 	 * TurtleListener that detects changes to Turtle states.
 	 */

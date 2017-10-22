@@ -8,16 +8,12 @@ import view.API.SubcomponentViewAPI;
 
 public class HistoryView implements SubcomponentViewAPI{
 
-	private TextArea ta;
-	private ScrollPane sp;
-	public HistoryView(double width, double height) {
+	public HistoryView() {
 
 		ta = new TextArea();
 		ta.setWrapText(true);
 		ta.setEditable(false);
 		ta.appendText("HistoryView");
-		// this.setPrefWidth(width);
-		// this.setPrefHeight(height);
 		sp = new ScrollPane();
 		sp.setVisible(true);
 		sp.setContent(ta);
@@ -39,5 +35,11 @@ public class HistoryView implements SubcomponentViewAPI{
 		// TODO Auto-generated method stub
 		return sp;
 	}
+
+	// @Override
+	// public void changedMap(Map<String, CommandDef> newMap) {
+	// // TODO Auto-generated method stub
+	//
+	// }
 
 }
