@@ -5,19 +5,17 @@ import model.CommandManager;
 import model.Turtle;
 import model.VariableManager;
 
-public class Right implements Command {
+public class VariableCommand implements Command {
 
-	private Command input;
-	
-	public Right(Command par1) {
-		input = par1;
+	private String name;
+
+	public VariableCommand(String name) {
+		this.name = name;
 	}
 	
 	@Override
 	public double execute(Turtle t, CommandManager commands, VariableManager variables) {
-		double result = input.execute(t, commands, variables);
-		t.setHeading(t.getHeading() - result);
-		return result;
+		return variables.getValue(name);
 	}
 
 }

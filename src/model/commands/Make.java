@@ -17,8 +17,9 @@ public class Make implements Command {
 	
 	@Override
 	public double execute(Turtle t, CommandManager commands, VariableManager variables) {
-		variables.setValue(variable, value.execute(t, commands, variables));
-		return value.execute(t, commands, variables);
+		double val = value.execute(t, commands, variables);
+		variables.setValue(variable, val);
+		return val;
 	}
 
 }
