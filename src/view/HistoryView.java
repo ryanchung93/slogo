@@ -11,7 +11,6 @@ import view.API.SubcomponentViewAPI;
 public class HistoryView implements SubcomponentViewAPI {
 
 	TextArea ta;
-	ScrollPane sp;
 	private ResourceBundle myResources = ResourceBundle.getBundle("resources.view/view");
 
 	public HistoryView() {
@@ -19,12 +18,7 @@ public class HistoryView implements SubcomponentViewAPI {
 		ta = new TextArea();
 		ta.setWrapText(true);
 		ta.setEditable(false);
-		ta.appendText(myResources.getString("HistoryView"));
-		sp = new ScrollPane();
-		sp.setVisible(true);
-		sp.setContent(ta);
-		sp.setVbarPolicy(ScrollBarPolicy.ALWAYS);
-		sp.setHbarPolicy(ScrollBarPolicy.NEVER);
+		ta.appendText(myResources.getString("HistoryView") + "\n");
 	}
 
 	public void updateHistory(String newCode) {
@@ -32,7 +26,7 @@ public class HistoryView implements SubcomponentViewAPI {
 	}
 
 	public Parent getParent() {
-		return sp;
+		return ta;
 	}
 
 }

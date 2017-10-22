@@ -18,7 +18,6 @@ import view.API.VariableDisplay;
 public class VariableView implements VariableDisplay {
 
 	private TextArea ta;
-	private ScrollPane sp;
 	private ResourceBundle myResources = ResourceBundle.getBundle("resources.view/view");
 
 	public VariableView() {
@@ -27,20 +26,14 @@ public class VariableView implements VariableDisplay {
 		ta.setWrapText(true);
 		ta.setEditable(false);
 		ta.appendText(myResources.getString("VariableView"));
-
-		sp = new ScrollPane();
-		sp.setVisible(true);
-		sp.setContent(ta);
-		sp.setVbarPolicy(ScrollBarPolicy.ALWAYS);
-		sp.setHbarPolicy(ScrollBarPolicy.NEVER);
 	}
 
 	@Override
 	public void changedMap(Map<String, Double> vars) {
 		ta.clear();
-		ta.appendText(myResources.getString("VariableView"));
+		ta.appendText(myResources.getString("VariableView") + "\n\n");
 		for (String key : vars.keySet()) {
-			ta.appendText("\n" + key + " : " + vars.get(key));
+			ta.appendText(key + " : " + vars.get(key) + "\n");
 		}
 
 	}
@@ -53,7 +46,7 @@ public class VariableView implements VariableDisplay {
 
 	@Override
 	public Parent getParent() {
-		return sp;
+		return ta;
 	}
 
 }

@@ -2,11 +2,12 @@ package view;
 
 import java.util.Map;
 import java.util.ResourceBundle;
+import java.util.Set;
 
 import javafx.scene.Parent;
 import javafx.scene.control.ScrollPane;
-import javafx.scene.control.TextArea;
 import javafx.scene.control.ScrollPane.ScrollBarPolicy;
+import javafx.scene.control.TextArea;
 import model.CommandDef;
 import view.API.StringListener;
 
@@ -19,7 +20,6 @@ import view.API.StringListener;
 public class ReferenceView implements StringListener {
 
 	TextArea ta;
-	ScrollPane sp;
 	private ResourceBundle myResources = ResourceBundle.getBundle("resources.view/view");
 
 	public ReferenceView() {
@@ -28,26 +28,22 @@ public class ReferenceView implements StringListener {
 		ta.setWrapText(true);
 		ta.setEditable(false);
 		ta.appendText(myResources.getString("ReferenceView"));
-		sp = new ScrollPane();
-		sp.setVisible(true);
-		sp.setContent(ta);
-		sp.setVbarPolicy(ScrollBarPolicy.ALWAYS);
-		sp.setHbarPolicy(ScrollBarPolicy.NEVER);
 	}
 
 	@Override
-	public void changedMap(Map<String, CommandDef> newMap) {
+	public void changedMap(Map<String, CommandDef> refMap, Set<String> commandSet) {
 		ta.clear();
-		ta.appendText(myResources.getString("ReferenceView") + "\n");
-		for (String key : newMap.keySet()) {
+		ta.appendText(myResources.getString("ReferenceView") + "\n\n");
+		for (String key : refMap.keySet()) {
 			ta.appendText(key + "\n");// + " : " + newMap.get(key));
 		}
+		ta.setScrollTop(0);
 
 	}
 
 	@Override
 	public Parent getParent() {
-		return sp;
+		return ta;
 	}
 
 }

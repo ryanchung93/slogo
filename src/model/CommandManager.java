@@ -63,10 +63,12 @@ public class CommandManager {
 	
 	public void addListener(StringListener commandListener) {
 		listeners.add(commandListener);
+		updateListeners();
 	}
 	
 	public void put(String name, CommandDef definition) {
 		builtInCommands.put(name, definition);
+		userCommands.put(name, definition);
 		updateListeners();
 	}
 	
@@ -81,6 +83,6 @@ public class CommandManager {
 
 	private void updateListeners() {
 		for(StringListener listener : listeners)
-			listener.changedMap(builtInCommands);
+			listener.changedMap(builtInCommands, userCommands.keySet());
 	}
 }

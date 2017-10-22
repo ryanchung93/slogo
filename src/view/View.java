@@ -52,12 +52,16 @@ public class View implements ViewAPI {
 	private ScrollPane myRightSP;
 	private VBox myLeftVBox;
 	private VBox myRightVBox;
+
 	private CanvasView myCanvas;
+	private TurtleView myTurtleView;
 	private TextPromptView myTextPrompt;
+
+	private UserDefinedCommandView myUDCView;
 	private VariableView myVarView;
 	private ReferenceView myRefView;
 	private HistoryView myHistoryView;
-	private TurtleView myTurtleView;
+
 	private ToolbarView myToolbarView;
 
 	/**
@@ -95,6 +99,11 @@ public class View implements ViewAPI {
 	@Override
 	public StringListener getCommandListener() {
 		return myRefView;
+	}
+	
+	@Override
+	public StringListener getUserDefinedCommandListener() {
+		return myUDCView;
 	}
 
 	@Override
@@ -224,10 +233,12 @@ public class View implements ViewAPI {
 		myRightSP.setContent(myRightVBox);
 		myGrid.add(myRightSP, 2, 1, 1, 2);
 
+		myUDCView = new UserDefinedCommandView();
 		myVarView = new VariableView();
 		myRefView = new ReferenceView();
 		myHistoryView = new HistoryView();
 
+		myLeftVBox.getChildren().add(myUDCView.getParent());
 		myLeftVBox.getChildren().add(myVarView.getParent());
 		myRightVBox.getChildren().add(myRefView.getParent());
 		myRightVBox.getChildren().add(myHistoryView.getParent());
