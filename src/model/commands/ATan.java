@@ -15,7 +15,7 @@ public class ATan implements Command {
 	
 	@Override
 	public double execute(Turtle t, CommandManager commands, VariableManager variables) {
-		return Math.atan(a.execute(t, commands, variables));
+		return Math.toDegrees(Math.atan(a.execute(t, commands, variables)));
 	}
 
 }
