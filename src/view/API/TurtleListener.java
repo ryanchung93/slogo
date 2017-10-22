@@ -9,7 +9,7 @@ import model.ImmutableTurtle;
  * when these changes occur
  *
  */
-public interface TurtleListener{
+public interface TurtleListener extends TurtleImageListener {
 	
 	/**
 	 * Gives the listener a Turtle to keep track of the state

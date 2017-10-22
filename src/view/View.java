@@ -78,9 +78,10 @@ public class View implements ViewAPI {
 		addAnimationComponents();
 		addScrollPaneComponents();
 		addTextPrompt(commandConsumer);
+		addToolbar();
 		myTimeline.play();
 	}
-	
+
 	@Override
 	public TurtleListener getTurtleListener() {
 		return myTurtleView;
@@ -100,6 +101,7 @@ public class View implements ViewAPI {
 	public void display(SLogoException e) {
 		// TODO
 		System.out.println(e.getMessage());
+		showError(e.getMessage());
 	}
 
 	/*************** PRIVATE METHODS *******************/
@@ -129,12 +131,12 @@ public class View implements ViewAPI {
 	 */
 	private void setupLayout() {
 		myGrid = new GridPane();
-		
+
 		myScene = new Scene(myGrid, SCREEN_WIDTH, SCREEN_HEIGHT);
-//		myScene.getStylesheets().add(getClass().getResource("/resources/view/view.css").toExternalForm());
+		// myScene.getStylesheets().add(getClass().getResource("/resources/view/view.css").toExternalForm());
 		myScene.getStylesheets().add(STYLESHEET);
 		myScene.setOnKeyPressed(e -> handleKeyInput(e.getCode()));
-		
+
 		ColumnConstraints col1 = new ColumnConstraints();
 		col1.setPercentWidth(25);
 		ColumnConstraints col2 = new ColumnConstraints();
@@ -172,11 +174,11 @@ public class View implements ViewAPI {
 
 		myGrid.add(myCanvas, 1, 1);
 		GridPane.setConstraints(myCanvas, 1, 1, 1, 1, HPos.CENTER, VPos.CENTER);
-	
-		//FOR TESTING
+
+		// FOR TESTING
 		Image image = new Image(getClass().getClassLoader().getResourceAsStream("resources/images/" + TURTLE_IMAGE));
 		myTurtleView = new TurtleView(myCanvas, image);
-		
+
 		myCanvas.getChildren().add(myTurtleView.getImage());
 	}
 
@@ -211,7 +213,7 @@ public class View implements ViewAPI {
 	 * Add subcomponents of major scroll panes.
 	 */
 	private void addScrollPaneComponents() {
-		
+
 		myLeftSP = createScrollPane();
 		myLeftVBox = new VBox();
 		myLeftSP.setContent(myLeftVBox);
@@ -221,18 +223,23 @@ public class View implements ViewAPI {
 		myRightVBox = new VBox();
 		myRightSP.setContent(myRightVBox);
 		myGrid.add(myRightSP, 2, 1, 1, 2);
-		
+
 		myVarView = new VariableView();
 		myRefView = new ReferenceView();
 		myHistoryView = new HistoryView();
-		myToolbarView = new ToolbarView(SCREEN_WIDTH);
-		// set a listener for background color changes.
-		myToolbarView.getBackgroundOptionView().addBackgroundOptionListener(myCanvas);
-		myToolbarView.getPenOptionView().addPenOptionListener(myTurtleView);
-		
+
 		myLeftVBox.getChildren().add(myVarView.getParent());
 		myRightVBox.getChildren().add(myRefView.getParent());
 		myRightVBox.getChildren().add(myHistoryView.getParent());
+
+	}
+
+	private void addToolbar() {
+		myToolbarView = new ToolbarView(SCREEN_WIDTH);
+		// set a listener for background color changes.
+		myToolbarView.getBackgroundOptionView().addBackgroundOptionListener(myCanvas);
+		myToolbarView.getImageOptionView().addTurtleImageListener(myTurtleView);
+		myToolbarView.getPenOptionView().addPenOptionListener(myTurtleView);
 		myGrid.add(myToolbarView.getParent(), 0, 0);
 	}
 
@@ -262,6 +269,5 @@ public class View implements ViewAPI {
 		alert.setContentText(message);
 		alert.showAndWait();
 	}
-
 
 }

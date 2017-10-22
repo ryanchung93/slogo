@@ -32,7 +32,7 @@ public class PenOptionView implements PenOptionDisplay {
 	private Label prompt;
 	private ChoiceBox<String> cb;
 	private List<String> colorList;
-	private ResourceBundle myResources = ResourceBundle.getBundle("resources.view/pen");
+	private ResourceBundle myResources = ResourceBundle.getBundle("resources.view/choicebox");
 	private TurtleListener listener;
 
 	public PenOptionView() {

@@ -13,11 +13,12 @@ import javafx.scene.Parent;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.Tooltip;
-import javafx.scene.layout.HBox;
+import javafx.scene.image.Image;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
-import view.API.BackgroundOptionDisplay;
 import view.API.BackgroundOptionListener;
+import view.API.ImageOptionDisplay;
+import view.API.TurtleImageListener;
 
 /**
  * Class that allows users to select a canvas color from a choice box.
@@ -25,38 +26,46 @@ import view.API.BackgroundOptionListener;
  * @author DavidTran
  *
  */
-public class BackgroundOptionView implements BackgroundOptionDisplay {
+public class ImageOptionView implements ImageOptionDisplay {
 
 	private VBox optionView;
 	private Label prompt;
 	private ChoiceBox<String> cb;
-	private List<String> colorList;
 	private ResourceBundle myResources = ResourceBundle.getBundle("resources.view/choicebox");
-	private BackgroundOptionListener listener;
+	private TurtleImageListener listener;
+	private List<String> imageNameList;
+	private List<Image> imageList;
 
-	public BackgroundOptionView() {
+	public ImageOptionView() {
 
 		optionView = new VBox();
-		
-		prompt = new Label(myResources.getString("BackgroundPrompt"));
-		
-		colorList = new ArrayList<String>(
-				Arrays.asList(myResources.getString("BackgroundColors").replaceAll("\\s+", "").split(",")));
 
-		cb = new ChoiceBox<String>(FXCollections.observableArrayList(colorList));
-		cb.setTooltip(new Tooltip("Select the background color"));
+		prompt = new Label(myResources.getString("TurtleImagePrompt"));
+
+		imageNameList = new ArrayList<String>(new ArrayList<String>(
+				Arrays.asList(myResources.getString("TurtleImages").replaceAll("\\s+", "").split(","))));
+		imageList = new ArrayList<Image>();
+		
+		for (String s : imageNameList) {
+			Image image = new Image(
+					getClass().getClassLoader().getResourceAsStream("resources/images/" + s));
+			imageList.add(image);
+		}
+
+		cb = new ChoiceBox<String>(FXCollections.observableArrayList(imageNameList));
+		cb.setTooltip(new Tooltip("Select the turtle image"));
 		cb.getSelectionModel().selectedIndexProperty().addListener(new ChangeListener<Number>() {
 
 			@Override
 			public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
 				System.out.println(newValue.intValue());
-				listener.backgroundColorChange(Color.valueOf((colorList.get(newValue.intValue()))));
+				listener.imageChange(imageList.get(newValue.intValue()));
 
 			}
 		});
-		
+
 		cb.setId("background_cb");
-		
+
 		optionView.getChildren().addAll(prompt, cb);
 		optionView.setAlignment(Pos.CENTER);
 	}
@@ -67,7 +76,7 @@ public class BackgroundOptionView implements BackgroundOptionDisplay {
 	}
 
 	@Override
-	public void addBackgroundOptionListener(BackgroundOptionListener l) {
+	public void addTurtleImageListener(TurtleImageListener l) {
 		listener = l;
 
 	}
