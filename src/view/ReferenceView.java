@@ -10,21 +10,21 @@ import model.CommandDef;
 import view.API.StringListener;
 
 /**
- * A Pane representing the basic instructions for using SLogo.
- * 
- * @author DavidTran
+ * A Pane representing the basic instructions for using SLogo
  *
  */
 public class ReferenceView implements StringListener {
 
 	TextArea ta;
 	ScrollPane sp;
-	public ReferenceView() {
+	public ReferenceView(double width, double height) {
 
 		ta = new TextArea();
 		ta.setWrapText(true);
 		ta.setEditable(false);
 		ta.appendText("ReferenceView");
+		// this.setPrefWidth(width);
+		// this.setPrefHeight(height);
 		sp = new ScrollPane();
 		sp.setVisible(true);
 		sp.setContent(ta);
