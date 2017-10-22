@@ -50,6 +50,7 @@ public class CommandManager {
 	
 	public void clear() {
 		builtInCommands.clear();
+		userCommands.clear();
 		updateListeners();
 	}
 
@@ -58,6 +59,8 @@ public class CommandManager {
 			if(s.matches(regex))
 				return builtInCommands.get(regex);
 		}
+		if(userCommands.containsKey(s))
+			return userCommands.get(s);
 		throw new SLogoException("UnexpectedCommand",s);
 	}
 	
@@ -73,7 +76,7 @@ public class CommandManager {
 	}
 	
 	public boolean checkIfBuiltIn(String name) {
-		System.out.println(builtInCommands.keySet().toString());
+		//System.out.println(builtInCommands.keySet().toString());
 		for(String regex : builtInCommands.keySet()) {
 			if(name.matches(regex))
 				return true;
