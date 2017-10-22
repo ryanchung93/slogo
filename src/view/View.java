@@ -230,17 +230,14 @@ public class View implements ViewAPI {
 		myHistoryView = new HistoryView(ret[0][0], myRightSP.getHeight() / 2);
 		myRightVBox.getChildren().add(myHistoryView.getParent());
 	}
-	
+
 	/**
 	 * Create a view for toolbar with subcomponents.
 	 */
 	private void addToolbar() {
 		myToolbarView = new ToolbarView();
-		myBackgroundOptionView = new BackgroundOptionView();
-		myBackgroundOptionView.addBackgroundOptionListener(myCanvas);
-		myToolbarView.addNode(myBackgroundOptionView.getParent());
+		myToolbarView.getBackgroundOptionView().addBackgroundOptionListener(myCanvas);
 		myGrid.add(myToolbarView.getParent(), 0, 0);
-		
 	}
 
 	/**
@@ -252,11 +249,11 @@ public class View implements ViewAPI {
 			java.lang.reflect.Method m = myGrid.getClass().getDeclaredMethod("getGrid");
 			m.setAccessible(true);
 			ret = (double[][]) m.invoke(myGrid);
-//			for (int i = 0; i < ret.length; i++) {
-//				for (int j = 0; j < ret[0].length; j++)
-//					System.out.println(i + "," + j + " " + ret[i][j]);
-//			}
-//			System.out.println(ret);
+			// for (int i = 0; i < ret.length; i++) {
+			// for (int j = 0; j < ret[0].length; j++)
+			// System.out.println(i + "," + j + " " + ret[i][j]);
+			// }
+			// System.out.println(ret);
 		} catch (Exception e) {
 			e.printStackTrace();
 			showError(e.getMessage());

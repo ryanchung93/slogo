@@ -8,18 +8,20 @@ import java.util.ResourceBundle;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
+import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.Tooltip;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import view.API.BackgroundOptionDisplay;
 import view.API.BackgroundOptionListener;
 
 public class BackgroundOptionView implements BackgroundOptionDisplay {
 
-	private HBox optionView;
+	private VBox optionView;
 	private Label prompt;
 	private ChoiceBox<String> cb;
 	private List<String> colorList;
@@ -28,7 +30,7 @@ public class BackgroundOptionView implements BackgroundOptionDisplay {
 
 	public BackgroundOptionView() {
 
-		optionView = new HBox();
+		optionView = new VBox();
 		
 		prompt = new Label(myResources.getString("BackgroundPrompt"));
 		
@@ -48,6 +50,7 @@ public class BackgroundOptionView implements BackgroundOptionDisplay {
 		});
 		
 		optionView.getChildren().addAll(prompt, cb);
+		optionView.setAlignment(Pos.CENTER);
 	}
 
 	@Override
