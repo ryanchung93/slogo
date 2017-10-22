@@ -11,6 +11,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 import model.ImmutableTurtle;
+import view.API.PenOptionListener;
 import view.API.TurtleListener;
 
 /**

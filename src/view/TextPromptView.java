@@ -28,7 +28,7 @@ public class TextPromptView extends HBox implements TextPromptDisplay {
 		this.setMaxWidth(width);
 		this.setMaxHeight(height);
 
-		tp = new TextArea();
+		tp = new TextArea(); 
 		tp.setPrefWidth(width * .75);
 		tp.setPrefHeight(height);
 		tp.setId("text-prompt");

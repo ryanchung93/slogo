@@ -31,6 +31,7 @@ public class ToolbarView implements SubcomponentViewAPI {
 	private HBox myToolbar;
 	private Hyperlink myHelpLink;
 	private BackgroundOptionView myBackgroundOptionView;
+	private PenOptionView myPenOptionView;
 
 	public ToolbarView(double width) {
 
@@ -38,6 +39,7 @@ public class ToolbarView implements SubcomponentViewAPI {
 		myToolbar.setAlignment(Pos.CENTER);
 		myToolbar.setMinWidth(width);
 		addBackgroundColorOption();
+		addPenColorOption();
 		addHelpLink();
 
 	}
@@ -51,12 +53,16 @@ public class ToolbarView implements SubcomponentViewAPI {
 	public BackgroundOptionView getBackgroundOptionView() {
 		return myBackgroundOptionView;
 	}
+	
+	public PenOptionView getPenOptionView() {
+		return myPenOptionView;
+	}
 
 	private void addHelpLink() {
 
 		myHelpLink = new Hyperlink();
 		myHelpLink.setText("Help");
-		
+
 		myHelpLink.setOnAction(e -> {
 			if (Desktop.isDesktopSupported()) {
 				try {
@@ -79,6 +85,11 @@ public class ToolbarView implements SubcomponentViewAPI {
 		myBackgroundOptionView = new BackgroundOptionView();
 		myToolbar.getChildren().add(myBackgroundOptionView.getParent());
 
+	}
+
+	private void addPenColorOption() {
+		myPenOptionView = new PenOptionView();
+		myToolbar.getChildren().add(myPenOptionView.getParent());
 	}
 
 	private void showError(String message) {
