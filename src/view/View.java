@@ -72,6 +72,8 @@ public class View implements ViewAPI {
 		start(commandConsumer);
 	}
 
+	/**************** PUBLIC METHODS *******************/
+
 	public void start(Consumer<String> commandConsumer) {
 		myTimeline = setupTimeline();
 		setupLayout();
@@ -80,9 +82,7 @@ public class View implements ViewAPI {
 		addTextPrompt(commandConsumer);
 		myTimeline.play();
 	}
-
-	/**************** PUBLIC METHODS *******************/
-
+	
 	@Override
 	public TurtleListener getTurtleListener() {
 		return myTurtleView;
@@ -263,5 +263,6 @@ public class View implements ViewAPI {
 		alert.setContentText(message);
 		alert.showAndWait();
 	}
+
 
 }
