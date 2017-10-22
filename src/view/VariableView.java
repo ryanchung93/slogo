@@ -28,9 +28,9 @@ public class VariableView implements VariableDisplay {
 
 	@Override
 	public void changedMap(Map<String, Double> vars) {
+		ta.clear();
 		for (String key : vars.keySet()) {
-			ta.clear();
-			ta.appendText(key + " : " + vars.get(key));
+			ta.appendText(key + " : " + vars.get(key) + "\n");
 		}
 
 	}
