@@ -83,7 +83,7 @@ public class CommandManager {
 		}
 		return false;
 	}
-
+	
 	private void updateListeners() {
 		for(StringListener listener : listeners)
 			listener.changedMap(builtInCommands, userCommands.keySet());

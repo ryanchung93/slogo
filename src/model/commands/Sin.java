@@ -15,7 +15,7 @@ public class Sin implements Command {
 	
 	@Override
 	public double execute(Turtle t, CommandManager commands, VariableManager variables) {
-		return Math.sin(x.execute(t, commands, variables));
+		return Math.sin(Math.toRadians(x.execute(t, commands, variables)));
 	}
 
 	
