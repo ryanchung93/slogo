@@ -59,7 +59,7 @@ public class TextPromptView extends HBox implements TextPromptDisplay {
 	private void enter() {
 		String code = tp.getText();
 		commandConsumer.accept(code);
-		listener.addCommand(code);
+//		listener.addCommand(code);
 		clear();
 	}
 
