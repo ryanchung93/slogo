@@ -8,9 +8,14 @@ import javafx.scene.paint.Color;
  */
 public interface ImmutableTurtle {
 	public double getX();
+
 	public double getY();
+
 	public double getHeading();
+
 	public boolean getPenDown();
+
 	public boolean isVisible();
+
 	public Color getPenColor();
 }

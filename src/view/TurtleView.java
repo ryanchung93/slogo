@@ -44,7 +44,9 @@ public class TurtleView implements TurtleListener {
 		myView.setLayoutY(-HEIGHT / 2);
 		myView.setX(0);
 		myView.setY(0);
-		headingChange(180);
+
+		myView.setRotate(180);
+		// myHeading = myView.getRotate();
 
 		setMouseEvents();
 
@@ -62,7 +64,7 @@ public class TurtleView implements TurtleListener {
 		myView.setX(turtle.getX() + offsetX);
 		myView.setY(turtle.getY() + offsetY);
 
-		myHeading = turtle.getHeading();
+		myHeading = turtle.getHeading() + 180;
 		myPenColor = turtle.getPenColor();
 		myPenIsDown = turtle.getPenDown();
 		myView.setVisible(turtle.isVisible());
@@ -135,11 +137,12 @@ public class TurtleView implements TurtleListener {
 	}
 
 	@Override
-	public void headingChange(double dtheta) {
+	public void headingChange(double newHeading) {
 		// TODO Auto-generated method stub
 		// create an animation that rotates the shape
-		myView.setRotate(dtheta);
-
+		double newAngle = -newHeading;
+		myView.setRotate(180 - newAngle);
+		System.out.println("NewHeading: " + (-newHeading));
 	}
 
 	@Override
@@ -171,7 +174,7 @@ public class TurtleView implements TurtleListener {
 		System.out.println(code);
 
 		// must change the back-end turtle!!!
-		
+
 		if (myIsToggled) {
 			switch (code) {
 			case W:

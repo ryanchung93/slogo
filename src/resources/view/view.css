@@ -61,7 +61,10 @@ HBox {
 /*ARROW*/
 #background_cb {
   -fx-mark-color: #435761;
+  -fx-background-color: #7d97a5;
 }
+
+
 
 .text-area {
 	-fx-text-fill: #f5f7f8;
