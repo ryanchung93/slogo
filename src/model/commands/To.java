@@ -23,8 +23,7 @@ public class To implements Command {
 	@Override
 	public double execute(Turtle t, CommandManager commands, VariableManager variables) {
 		commands.put(name, new CommandBuilder(localVariables, inputCommands));
-		//handle variables here or in userdefinedcommand?
-		return 0;
+		return 1;
 	}
 
 }

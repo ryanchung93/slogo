@@ -94,10 +94,11 @@ public class View implements ViewAPI {
 	public StringListener getCommandListener() {
 		return myRefView;
 	}
-	
-	@Override 
+
+	@Override
 	public void display(SLogoException e) {
-		//TODO
+		// TODO
+		System.out.println(e.getMessage());
 	}
 
 	/*************** PRIVATE METHODS *******************/
@@ -180,7 +181,10 @@ public class View implements ViewAPI {
 	 */
 	private void addTextPrompt(Consumer<String> commandConsumer) {
 		double[][] dims = getGridDimensions();
-		myTextPrompt = new TextPromptView(dims[0][1], dims[1][2], commandConsumer);
+		myTextPrompt = new TextPromptView(dims[0][1], dims[1][2], s -> {
+			commandConsumer.accept(s);
+			myHistoryView.updateHistory(s);
+		});
 		myGrid.add(myTextPrompt, 1, 2, 2, 1);
 	}
 
@@ -235,7 +239,7 @@ public class View implements ViewAPI {
 		myHistoryView = new HistoryView(ret[0][0], myRightSP.getHeight() / 2);
 		myRightVBox.getChildren().add(myHistoryView.getParent());
 	}
-	
+
 	/**
 	 * Create a view for toolbar with subcomponents.
 	 */
@@ -245,7 +249,7 @@ public class View implements ViewAPI {
 		myBackgroundOptionView.addBackgroundOptionListener(myCanvas);
 		myToolbarView.addNode(myBackgroundOptionView.getParent());
 		myGrid.add(myToolbarView.getParent(), 0, 0);
-		
+
 	}
 
 	/**
@@ -257,11 +261,11 @@ public class View implements ViewAPI {
 			java.lang.reflect.Method m = myGrid.getClass().getDeclaredMethod("getGrid");
 			m.setAccessible(true);
 			ret = (double[][]) m.invoke(myGrid);
-//			for (int i = 0; i < ret.length; i++) {
-//				for (int j = 0; j < ret[0].length; j++)
-//					System.out.println(i + "," + j + " " + ret[i][j]);
-//			}
-//			System.out.println(ret);
+			// for (int i = 0; i < ret.length; i++) {
+			// for (int j = 0; j < ret[0].length; j++)
+			// System.out.println(i + "," + j + " " + ret[i][j]);
+			// }
+			// System.out.println(ret);
 		} catch (Exception e) {
 			e.printStackTrace();
 			showError(e.getMessage());

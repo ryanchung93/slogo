@@ -10,12 +10,12 @@ import model.VariableManager;
 public class For implements Command {
 
 	private String varName;
-	private int start;
-	private int end;
-	private int increment;
+	private Command start;
+	private Command end;
+	private Command increment;
 	private List<Command> commandList;
 	
-	public For(String variable, int start, int end, int increment, List<Command> input) {
+	public For(String variable, Command start, Command end, Command increment, List<Command> input) {
 		varName = variable;
 		this.start = start;
 		this.end = end;
@@ -26,11 +26,13 @@ public class For implements Command {
 	@Override
 	public double execute(Turtle t, CommandManager commands, VariableManager variables) {
 		double ret = 0;
-		for(int i = start; i < end; i += increment) {
-			variables.setValue(varName, (double)i);
-			for(int c = 0; c < commandList.size(); c++) {
-				ret = commandList.get(c).execute(t, commands, variables);
-			}
+		double st = start.execute(t, commands, variables);
+		double inc = increment.execute(t, commands, variables);
+		double en = end.execute(t, commands, variables);
+		for(double i = st; i <= en; i += inc) {
+			variables.setValue(varName, i);
+			for(Command command : commandList)
+				ret = command.execute(t, commands, variables);
 		}
 		return ret;
 	}

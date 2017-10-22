@@ -23,14 +23,12 @@ public class IfElse implements Command {
 	public double execute(Turtle t, CommandManager commands, VariableManager variables) {
 		double ret = 0;
 		if(expr.execute(t, commands, variables) != 0) {
-			for(Command c : trueCommands) {
+			for(Command c : trueCommands)
 				ret = c.execute(t, commands, variables);
-			}
 		}
 		else {
-			for(Command c : falseCommands) {
+			for(Command c : falseCommands)
 				ret = c.execute(t, commands, variables);
-			}
 		}
 		return ret;
 	}
