@@ -1,6 +1,5 @@
 package view;
 
-import java.awt.Button;
 import java.util.ResourceBundle;
 import java.util.function.Consumer;
 
@@ -21,6 +20,7 @@ import javafx.scene.layout.RowConstraints;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import model.SLogoException;
 import view.API.StringListener;
 import view.API.TurtleListener;
 import view.API.VariableListener;
@@ -93,6 +93,11 @@ public class View implements ViewAPI {
 	@Override
 	public StringListener getCommandListener() {
 		return myRefView;
+	}
+	
+	@Override 
+	public void display(SLogoException e) {
+		//TODO
 	}
 
 	/*************** PRIVATE METHODS *******************/

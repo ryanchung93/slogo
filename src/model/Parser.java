@@ -22,11 +22,15 @@ public class Parser implements TokenDispenser{
 		this.availableCommands = availableCommands;
 	}
 	
-	public String peek() {
+	public String peek() throws SLogoException {
+		if(!hasNextCommand())
+			throw new SLogoException("EOF");
 		return tokens[index];
 	}
 	
-	public String getNextToken() {
+	public String getNextToken() throws SLogoException {
+		if(!hasNextCommand())
+			throw new SLogoException("EOF");
 		index++;
 		return tokens[index-1];
 	}
@@ -35,7 +39,7 @@ public class Parser implements TokenDispenser{
 		return index < tokens.length && tokens[index].length()>0;
 	}
 	
-	public Command getNextCommand() {
+	public Command getNextCommand() throws SLogoException {
 		String s = getNextToken();
 		
 		if(s.matches(syntax.getString("Constant")))
@@ -44,19 +48,20 @@ public class Parser implements TokenDispenser{
 	}
 
 	@Override
-	public List<Command> getNextCommandList() {
+	public List<Command> getNextCommandList() throws SLogoException {
 		return getNextList(()->getNextCommand());
 	}
 
 	@Override
-	public List<String> getNextTokenList() {
+	public List<String> getNextTokenList() throws SLogoException {
 		return getNextList(()->getNextToken());
 	}
 
 	
-	private <T> List<T> getNextList(Supplier<T> supplier){
-		if(!getNextToken().matches(syntax.getString("ListStart")))
-			throw new RuntimeException("TO DO"); //TODO
+	private <T> List<T> getNextList(Supplier<T> supplier) throws SLogoException{
+		String token = getNextToken();
+		if(!token.matches(syntax.getString("ListStart")))
+			throw new SLogoException("ExpectedList", token); 
 		
 		List<T> result = new ArrayList<T>();
 		while(!peek().matches(syntax.getString("ListEnd"))) {
