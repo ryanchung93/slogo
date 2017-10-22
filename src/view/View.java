@@ -74,7 +74,6 @@ public class View implements ViewAPI {
 
 	/**************** PUBLIC METHODS *******************/
 
-	@Override
 	public void start(Consumer<String> commandConsumer) {
 		myTimeline = setupTimeline();
 		setupLayout();
@@ -264,5 +263,6 @@ public class View implements ViewAPI {
 		alert.setContentText(message);
 		alert.showAndWait();
 	}
+
 
 }
