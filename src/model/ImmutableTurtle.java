@@ -18,4 +18,5 @@ public interface ImmutableTurtle {
 	public boolean isVisible();
 
 	public Color getPenColor();
+	public void setPenColor(Color color);
 }

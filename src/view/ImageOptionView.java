@@ -31,7 +31,7 @@ public class ImageOptionView implements ImageOptionDisplay {
 	private VBox optionView;
 	private Label prompt;
 	private ChoiceBox<String> cb;
-	private ResourceBundle myResources = ResourceBundle.getBundle("resources.view/view");
+	private ResourceBundle myResources = ResourceBundle.getBundle("resources.view/choicebox");
 	private TurtleImageListener listener;
 	private List<String> imageNameList;
 	private List<Image> imageList;

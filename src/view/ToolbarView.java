@@ -32,6 +32,7 @@ public class ToolbarView implements SubcomponentViewAPI {
 	private Hyperlink myHelpLink;
 	private BackgroundOptionView myBackgroundOptionView;
 	private ImageOptionView myImageOptionView;
+	private PenOptionView myPenOptionView;
 
 	public ToolbarView(double width) {
 
@@ -40,6 +41,7 @@ public class ToolbarView implements SubcomponentViewAPI {
 		myToolbar.setMinWidth(width);
 		addBackgroundColorOption();
 		addTurtleImageOption();
+		addPenColorOption();
 		addHelpLink();
 
 	}
@@ -52,6 +54,10 @@ public class ToolbarView implements SubcomponentViewAPI {
 	// Must add to API
 	public BackgroundOptionView getBackgroundOptionView() {
 		return myBackgroundOptionView;
+	}
+	
+	public PenOptionView getPenOptionView() {
+		return myPenOptionView;
 	}
 
 	// Must add to API
@@ -92,6 +98,11 @@ public class ToolbarView implements SubcomponentViewAPI {
 		myImageOptionView = new ImageOptionView();
 		myToolbar.getChildren().add(myImageOptionView.getParent());
 
+	}
+
+	private void addPenColorOption() {
+		myPenOptionView = new PenOptionView();
+		myToolbar.getChildren().add(myPenOptionView.getParent());
 	}
 
 	private void showError(String message) {

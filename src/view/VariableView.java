@@ -1,6 +1,7 @@
 package view;
 
 import java.util.Map;
+import java.util.ResourceBundle;
 
 import javafx.scene.Parent;
 import javafx.scene.control.ScrollPane;
@@ -18,13 +19,14 @@ public class VariableView implements VariableDisplay {
 
 	private TextArea ta;
 	private ScrollPane sp;
+	private ResourceBundle myResources = ResourceBundle.getBundle("resources.view/view");
 
 	public VariableView() {
 
-		TextArea ta = new TextArea();
+		ta = new TextArea();
 		ta.setWrapText(true);
 		ta.setEditable(false);
-		ta.appendText("VariableView");
+		ta.appendText(myResources.getString("VariableView"));
 
 		sp = new ScrollPane();
 		sp.setVisible(true);
@@ -35,9 +37,10 @@ public class VariableView implements VariableDisplay {
 
 	@Override
 	public void changedMap(Map<String, Double> vars) {
+		ta.clear();
+		ta.appendText(myResources.getString("VariableView"));
 		for (String key : vars.keySet()) {
-			ta.clear();
-			ta.appendText(key + " : " + vars.get(key));
+			ta.appendText("\n" + key + " : " + vars.get(key));
 		}
 
 	}

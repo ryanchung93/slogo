@@ -85,6 +85,7 @@ public class Turtle implements ImmutableTurtle {
 		listener.visibilityChange(visible);
 	}
 
+	@Override
 	public void setPenColor(Color color) {
 		penColor = color;
 		listener.penColorChange(color);
