@@ -9,18 +9,22 @@ import javafx.scene.control.ScrollPane.ScrollBarPolicy;
 import model.CommandDef;
 import view.API.StringListener;
 
+/**
+ * Class allowing users to see a history of commands.
+ * 
+ * @author DavidTran
+ *
+ */
 public class HistoryView implements StringListener {
 
 	TextArea ta;
 	ScrollPane sp;
-	public HistoryView(double width, double height) {
+	public HistoryView() {
 
 		TextArea ta = new TextArea();
 		ta.setWrapText(true);
 		ta.setEditable(false);
 		ta.appendText("HistoryView");
-		// this.setPrefWidth(width);
-		// this.setPrefHeight(height);
 		sp = new ScrollPane();
 		sp.setVisible(true);
 		sp.setContent(ta);

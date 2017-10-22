@@ -20,24 +20,23 @@ import javafx.scene.paint.Color;
 import view.API.SubcomponentViewAPI;
 
 /**
- * Class to view toolbar.
+ * Class allowing users to view and use toolbar functions.
  * 
  * @author DavidTran
  *
  */
 public class ToolbarView implements SubcomponentViewAPI {
 
-	private static final double NODE_SPACING = 30;
+	private static final double NODE_SPACING = 50;
 	private HBox myToolbar;
 	private Hyperlink myHelpLink;
 	private BackgroundOptionView myBackgroundOptionView;
 
-	public ToolbarView() {
+	public ToolbarView(double width) {
 
-		myToolbar = new HBox();
+		myToolbar = new HBox(NODE_SPACING);
 		myToolbar.setAlignment(Pos.CENTER);
-		myToolbar.setSpacing(NODE_SPACING);
-
+		myToolbar.setMinWidth(width);
 		addBackgroundColorOption();
 		addHelpLink();
 

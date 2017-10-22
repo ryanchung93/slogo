@@ -1,5 +1,6 @@
 import controller.Driver;
 import javafx.application.Application;
+import javafx.scene.input.KeyCode;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import model.ImmutableTurtle;
@@ -65,6 +66,12 @@ public class Main extends Application {
 			public void clearScreen() {
 				// TODO Auto-generated method stub
 
+			}
+
+			@Override
+			public void handleInput(KeyCode code) {
+				// TODO Auto-generated method stub
+				
 			}
 
 		});

@@ -19,6 +19,12 @@ import javafx.scene.paint.Color;
 import view.API.BackgroundOptionDisplay;
 import view.API.BackgroundOptionListener;
 
+/**
+ * Class that allows users to select a canvas color from a choice box.
+ * 
+ * @author DavidTran
+ *
+ */
 public class BackgroundOptionView implements BackgroundOptionDisplay {
 
 	private VBox optionView;
@@ -48,6 +54,8 @@ public class BackgroundOptionView implements BackgroundOptionDisplay {
 
 			}
 		});
+		
+		cb.setId("background_cb");
 		
 		optionView.getChildren().addAll(prompt, cb);
 		optionView.setAlignment(Pos.CENTER);

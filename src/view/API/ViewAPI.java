@@ -1,6 +1,15 @@
 package view.API;
 
+import java.util.function.Consumer;
+
 public interface ViewAPI {
+	
+	/**
+	 * Creates and displays the simulation window.
+	 * 
+	 * @param commandConsumer
+	 */
+	public void start(Consumer<String> commandConsumer);
 	
 	/**
 	 * @return

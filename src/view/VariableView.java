@@ -8,18 +8,24 @@ import javafx.scene.control.ScrollPane.ScrollBarPolicy;
 import javafx.scene.control.TextArea;
 import view.API.VariableDisplay;
 
+/**
+ * Class allowing users to see values of current variables
+ * 
+ * @author DavidTran
+ *
+ */
 public class VariableView implements VariableDisplay {
 
-	TextArea ta;
-	ScrollPane sp;
-	public VariableView(double width, double height) {
+	private TextArea ta;
+	private ScrollPane sp;
+
+	public VariableView() {
 
 		TextArea ta = new TextArea();
 		ta.setWrapText(true);
 		ta.setEditable(false);
 		ta.appendText("VariableView");
-		// this.setPrefWidth(width);
-		// this.setPrefHeight(height);
+
 		sp = new ScrollPane();
 		sp.setVisible(true);
 		sp.setContent(ta);
