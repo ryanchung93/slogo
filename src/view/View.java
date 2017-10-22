@@ -14,7 +14,6 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.ScrollPane.ScrollBarPolicy;
 import javafx.scene.image.Image;
-import javafx.scene.input.KeyCode;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.RowConstraints;
@@ -27,12 +26,6 @@ import view.API.TurtleListener;
 import view.API.VariableListener;
 import view.API.ViewAPI;
 
-/**
- * Class that displays the GUI and SLogo animations.
- * 
- * @author DavidTran
- *
- */
 public class View implements ViewAPI {
 
 	private static final int FRAMES_PER_SECOND = 60;
@@ -41,7 +34,6 @@ public class View implements ViewAPI {
 	private static final int SCREEN_WIDTH = 1000;
 	private static final int SCREEN_HEIGHT = 700;
 	private ResourceBundle myResource = ResourceBundle.getBundle("resources.view/view");
-	private static final String STYLESHEET = "/resources/view/view.css";
 
 	private static final String TURTLE_IMAGE = "turtle.png";
 
@@ -61,6 +53,7 @@ public class View implements ViewAPI {
 	private HistoryView myHistoryView;
 	private TurtleView myTurtleView;
 	private ToolbarView myToolbarView;
+	private BackgroundOptionView myBackgroundOptionView;
 
 	/**
 	 * Constructor for setting up animation.
@@ -75,9 +68,13 @@ public class View implements ViewAPI {
 	public void start(Consumer<String> commandConsumer) {
 		myTimeline = setupTimeline();
 		setupLayout();
-		addAnimationComponents();
-		addScrollPaneComponents();
+		addCanvasView();
+		addTurtle();
 		addTextPrompt(commandConsumer);
+		addVariableView();
+		addReferenceView();
+		addHistoryView();
+		addToolbar();
 		myTimeline.play();
 	}
 
@@ -119,6 +116,8 @@ public class View implements ViewAPI {
 
 	/**
 	 * Steps to update interface.
+	 * 
+	 * @param elaspedTime
 	 */
 	private void step(double elaspedTime) {
 		// Read command
@@ -131,55 +130,50 @@ public class View implements ViewAPI {
 	 */
 	private void setupLayout() {
 		myGrid = new GridPane();
-		
 		myScene = new Scene(myGrid, SCREEN_WIDTH, SCREEN_HEIGHT);
-//		myScene.getStylesheets().add(getClass().getResource("/resources/view/view.css").toExternalForm());
-		myScene.getStylesheets().add(STYLESHEET);
-		myScene.setOnKeyPressed(e -> handleKeyInput(e.getCode()));
-		
 		ColumnConstraints col1 = new ColumnConstraints();
-		col1.setPercentWidth(25);
 		ColumnConstraints col2 = new ColumnConstraints();
-		col2.setPercentWidth(50);
 		ColumnConstraints col3 = new ColumnConstraints();
-		col3.setPercentWidth(25);
 		RowConstraints row1 = new RowConstraints();
-		row1.setPercentHeight(10);
 		RowConstraints row2 = new RowConstraints();
-		row2.setPercentHeight(70);
 		RowConstraints row3 = new RowConstraints();
+		col1.setPercentWidth(25);
+		col2.setPercentWidth(50);
+		col3.setPercentWidth(25);
+		row1.setPercentHeight(10);
+		row2.setPercentHeight(70);
 		row3.setPercentHeight(20);
-
 		myGrid.getColumnConstraints().addAll(col1, col2, col3);
 		myGrid.getRowConstraints().addAll(row1, row2, row3);
+
+		myLeftSP = createScrollPane();
+		myLeftVBox = new VBox();
+		myLeftSP.setContent(myLeftVBox);
+		myGrid.add(myLeftSP, 0, 1, 1, 2);
+
+		myRightSP = createScrollPane();
+		myRightVBox = new VBox();
+		myRightSP.setContent(myRightVBox);
+		myGrid.add(myRightSP, 2, 1, 1, 2);
 
 		myStage.setScene(myScene);
 		myStage.show();
 
 	}
 
-	private void handleKeyInput(KeyCode code) {
-		myTurtleView.handleInput(code);
-		System.out.println("press");
-	}
-
 	/**
-	 * Add canvas and turtle components for viewing animations.
+	 * Add canvas where turtles will be placed.
 	 */
-	private void addAnimationComponents() {
+	private void addCanvasView() {
+
 		double[][] dims = getGridDimensions();
 		myCanvas = new CanvasView(dims[0][1], dims[1][1]);
+
 		myCanvas.setLayoutX(myCanvas.getMaxWidth() / 2);
 		myCanvas.setLayoutY(myCanvas.getMaxHeight() / 2);
 
 		myGrid.add(myCanvas, 1, 1);
 		GridPane.setConstraints(myCanvas, 1, 1, 1, 1, HPos.CENTER, VPos.CENTER);
-	
-		//FOR TESTING
-		Image image = new Image(getClass().getClassLoader().getResourceAsStream("resources/images/" + TURTLE_IMAGE));
-		myTurtleView = new TurtleView(myCanvas, image);
-		
-		myCanvas.getChildren().add(myTurtleView.getImage());
 	}
 
 	/**
@@ -195,7 +189,17 @@ public class View implements ViewAPI {
 	}
 
 	/**
-	 * Create left and right major scrollpanes.
+	 * for testing
+	 */
+	private void addTurtle() {
+		Image image = new Image(getClass().getClassLoader().getResourceAsStream("resources/images/" + TURTLE_IMAGE));
+		myTurtleView = new TurtleView(myCanvas, image);
+		myCanvas.getChildren().add(myTurtleView.getImage());
+
+	}
+
+	/**
+	 * Create major scrollpanes.
 	 * 
 	 * @return
 	 */
@@ -210,31 +214,42 @@ public class View implements ViewAPI {
 	}
 
 	/**
-	 * Add subcomponents of major scroll panes.
+	 * Create a view for supported commands.
 	 */
-	private void addScrollPaneComponents() {
-		
-		myLeftSP = createScrollPane();
-		myLeftVBox = new VBox();
-		myLeftSP.setContent(myLeftVBox);
-		myGrid.add(myLeftSP, 0, 1, 1, 2);
-
-		myRightSP = createScrollPane();
-		myRightVBox = new VBox();
-		myRightSP.setContent(myRightVBox);
-		myGrid.add(myRightSP, 2, 1, 1, 2);
-		
-		myVarView = new VariableView();
-		myRefView = new ReferenceView();
-		myHistoryView = new HistoryView();
-		myToolbarView = new ToolbarView(SCREEN_WIDTH);
-		// set a listener for background color changes.
-		myToolbarView.getBackgroundOptionView().addBackgroundOptionListener(myCanvas);
-		
-		myLeftVBox.getChildren().add(myVarView.getParent());
+	private void addReferenceView() {
+		double[][] ret = getGridDimensions();
+		myRefView = new ReferenceView(ret[0][0], myRightSP.getHeight() / 2);
 		myRightVBox.getChildren().add(myRefView.getParent());
+	}
+
+	/**
+	 * Create a view for current variables.
+	 */
+	private void addVariableView() {
+		double[][] ret = getGridDimensions();
+		myVarView = new VariableView(ret[0][0], myLeftSP.getHeight() / 2);
+		myLeftVBox.getChildren().add(myVarView.getParent());
+	}
+
+	/**
+	 * Create a view for command history.
+	 */
+	private void addHistoryView() {
+		double[][] ret = getGridDimensions();
+		myHistoryView = new HistoryView(ret[0][0], myRightSP.getHeight() / 2);
 		myRightVBox.getChildren().add(myHistoryView.getParent());
+	}
+
+	/**
+	 * Create a view for toolbar with subcomponents.
+	 */
+	private void addToolbar() {
+		myToolbarView = new ToolbarView();
+		myBackgroundOptionView = new BackgroundOptionView();
+		myBackgroundOptionView.addBackgroundOptionListener(myCanvas);
+		myToolbarView.addNode(myBackgroundOptionView.getParent());
 		myGrid.add(myToolbarView.getParent(), 0, 0);
+
 	}
 
 	/**
@@ -255,9 +270,15 @@ public class View implements ViewAPI {
 			e.printStackTrace();
 			showError(e.getMessage());
 		}
+
 		return ret;
 	}
 
+	/**
+	 * Display error message
+	 * 
+	 * @param message
+	 */
 	private void showError(String message) {
 		Alert alert = new Alert(AlertType.ERROR);
 		alert.setContentText(message);

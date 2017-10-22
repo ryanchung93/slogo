@@ -10,12 +10,6 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import view.API.TextPromptDisplay;
 
-/**
- * Class allowing users to enter and clear commands.
- * 
- * @author DavidTran
- *
- */
 public class TextPromptView extends HBox implements TextPromptDisplay {
 	private TextArea tp;
 	private Button runButton;
@@ -31,7 +25,6 @@ public class TextPromptView extends HBox implements TextPromptDisplay {
 		tp = new TextArea();
 		tp.setPrefWidth(width * .75);
 		tp.setPrefHeight(height);
-		tp.setId("text-prompt");
 
 		this.commandConsumer = commandConsumer;
 

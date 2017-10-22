@@ -1,6 +1,5 @@
 package view.API;
 
-import javafx.scene.input.KeyCode;
 import javafx.scene.paint.Color;
 import model.ImmutableTurtle;
 
@@ -9,7 +8,7 @@ import model.ImmutableTurtle;
  * when these changes occur
  *
  */
-public interface TurtleListener{
+public interface TurtleListener {
 	
 	/**
 	 * Gives the listener a Turtle to keep track of the state
@@ -49,11 +48,6 @@ public interface TurtleListener{
 	 * Called when the screen should be cleared
 	 */
 	public void clearScreen();
-	
-	/**
-	 * Called when user presses key to move turtle
-	 */
-	public void handleInput(KeyCode code);
 
 }
 
