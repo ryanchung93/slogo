@@ -43,7 +43,7 @@ public class View implements ViewAPI {
 	private ResourceBundle myResource = ResourceBundle.getBundle("resources.view/view");
 	private static final String STYLESHEET = "/resources/view/view.css";
 
-	private static final String TURTLE_IMAGE = "turtle.png";
+	private static final String TURTLE_IMAGE = "Turtle_up.png";
 
 	private Stage myStage;
 	private Scene myScene;

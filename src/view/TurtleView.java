@@ -44,7 +44,7 @@ public class TurtleView implements TurtleListener {
 		myView.setLayoutY(-HEIGHT / 2);
 		myView.setX(0);
 		myView.setY(0);
-		headingChange(180);
+		headingChange(0);
 
 		setMouseEvents();
 
@@ -139,7 +139,6 @@ public class TurtleView implements TurtleListener {
 		// TODO Auto-generated method stub
 		// create an animation that rotates the shape
 		myView.setRotate(dtheta);
-
 	}
 
 	@Override
