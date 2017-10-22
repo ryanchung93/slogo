@@ -9,7 +9,13 @@ import javafx.scene.paint.Color;
  *
  */
 public interface CanvasDisplay extends SubcomponentViewAPI {
-	
+
+	/**
+	 * Passes a background color to canvas class.
+	 * 
+	 * @param c
+	 *            color of the background
+	 */
 	public void setBackgroundColor(Color c);
-	
+
 }
