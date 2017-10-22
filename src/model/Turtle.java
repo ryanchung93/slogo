@@ -21,7 +21,7 @@ public class Turtle implements ImmutableTurtle {
 	private boolean isVisible;
 	private Color penColor;
 	
-	public static final Color DEFAULT_PEN_COLOR = Color.WHITE;
+	public static final Color DEFAULT_PEN_COLOR = Color.BLACK;
 	
 	public Turtle(double x0, double y0, double heading0) {
 		x = initX = x0;

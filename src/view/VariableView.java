@@ -10,8 +10,8 @@ import view.API.VariableDisplay;
 
 public class VariableView implements VariableDisplay {
 
-	TextArea ta;
-	ScrollPane sp;
+	private TextArea ta;
+	private ScrollPane sp;
 	public VariableView(double width, double height) {
 
 		TextArea ta = new TextArea();
