@@ -43,8 +43,8 @@ public class TurtleView implements TurtleListener {
 
 	@Override
 	public void setTurtle(ImmutableTurtle turtle) {
-		myView.setX(turtle.getX() + myView.getParent().getLayoutX());
-		myView.setY(turtle.getY() + myView.getParent().getLayoutY());
+		myView.setX(turtle.getX());
+		myView.setY(turtle.getY());
 		myHeading = turtle.getHeading();
 		myPenColor = turtle.getPenColor();
 		myPenIsDown = turtle.getPenDown();

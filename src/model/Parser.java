@@ -12,11 +12,11 @@ public class Parser implements TokenDispenser{
 
 	private int index;
 	private String[] tokens;
-	private Map<String, CommandDef> availableCommands;
+	private CommandManager availableCommands;
 	
 	private static ResourceBundle syntax = ResourceBundle.getBundle("resources.languages/Syntax");
 	
-	public Parser(String code, Map<String, CommandDef> availableCommands) {
+	public Parser(String code, CommandManager availableCommands) {
 		index = 0;
 		code = code.replaceAll(syntax.getString("Comment"), " ").toLowerCase();
 		tokens = code.split("\\s+");
@@ -33,7 +33,7 @@ public class Parser implements TokenDispenser{
 	}
 	
 	public boolean hasNextCommand() {
-		return index < tokens.length;
+		return index < tokens.length && tokens[index].length()>0;
 	}
 	
 	public Command getNextCommand() {

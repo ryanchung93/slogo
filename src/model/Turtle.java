@@ -21,7 +21,7 @@ public class Turtle implements ImmutableTurtle {
 	private boolean isVisible;
 	private Color penColor;
 	
-	public static final Color DEFAULT_PEN_COLOR = Color.BLACK;
+	public static final Color DEFAULT_PEN_COLOR = Color.WHITE;
 	
 	public Turtle(double x0, double y0, double heading0) {
 		x = initX = x0;
@@ -65,11 +65,13 @@ public class Turtle implements ImmutableTurtle {
 		x = newX;
 		y = newY;
 		listener.locationChange(newX, newY);
+		System.out.println(x + ", " + y);
 	}
 
 	public void setHeading(double newHeading) {
 		heading = newHeading;
 		listener.headingChange(newHeading);
+		System.out.println("H = " + heading);
 	}
 
 	public void setPenDown(boolean down) {

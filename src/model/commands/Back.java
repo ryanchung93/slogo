@@ -1,9 +1,7 @@
 package model.commands;
 
-import java.util.Map;
-
 import model.Command;
-import model.CommandDef;
+import model.CommandManager;
 import model.Turtle;
 import model.VariableManager;
 
@@ -16,7 +14,7 @@ public class Back implements Command {
 	}
 
 	@Override
-	public double execute(Turtle t, Map<String, CommandDef> commands, VariableManager variables) {
+	public double execute(Turtle t, CommandManager commands, VariableManager variables) {
 		Forward fd = new Forward(input);
 		double result = -1 * fd.execute(new Turtle(0, 0, 0), commands, variables);
 		Forward bk = new Forward(new NumberCommand(result));
