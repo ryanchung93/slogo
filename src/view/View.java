@@ -24,7 +24,6 @@ import model.SLogoException;
 import view.API.StringListener;
 import view.API.TurtleListener;
 import view.API.VariableListener;
-import view.API.NewCommandListener;
 import view.API.ViewAPI;
 
 public class View implements ViewAPI {
@@ -71,7 +70,6 @@ public class View implements ViewAPI {
 		setupLayout();
 		addCanvasView();
 		addTurtle();
-		addHistoryView();
 		addTextPrompt(commandConsumer);
 		addVariableView();
 		addReferenceView();

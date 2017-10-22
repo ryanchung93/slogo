@@ -30,11 +30,6 @@ public class HistoryView implements SubcomponentViewAPI{
 	}
 
 	@Override
-	public void addCommand(String command) {
-		System.out.print(command);
-		ta.appendText("\n" + command);
-	}
-
 	public Parent getParent() {
 		// TODO Auto-generated method stub
 		return sp;
