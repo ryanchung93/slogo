@@ -21,7 +21,7 @@ public class VariableView implements VariableDisplay {
 
 	public VariableView() {
 
-		TextArea ta = new TextArea();
+		ta = new TextArea();
 		ta.setWrapText(true);
 		ta.setEditable(false);
 		ta.appendText("VariableView");
@@ -35,9 +35,9 @@ public class VariableView implements VariableDisplay {
 
 	@Override
 	public void changedMap(Map<String, Double> vars) {
+		ta.clear();
 		for (String key : vars.keySet()) {
-			ta.clear();
-			ta.appendText(key + " : " + vars.get(key));
+			ta.appendText("\n" + key + " : " + vars.get(key));
 		}
 
 	}
