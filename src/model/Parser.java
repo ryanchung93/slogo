@@ -6,6 +6,7 @@ import java.util.ResourceBundle;
 import java.util.function.Supplier;
 
 import model.commands.NumberCommand;
+import model.commands.VariableCommand;
 
 public class Parser implements TokenDispenser{
 
@@ -40,11 +41,22 @@ public class Parser implements TokenDispenser{
 	}
 	
 	public Command getNextCommand() throws SLogoException {
-		String s = getNextToken();
+		String token = getNextToken();
 		
-		if(s.matches(syntax.getString("Constant")))
-			return new NumberCommand(Double.parseDouble(s));
-		return availableCommands.get(s).build(this);
+		if(token.matches(syntax.getString("Constant")))
+			return new NumberCommand(Double.parseDouble(token));
+		if(token.matches(syntax.getString("Variable")))
+			return new VariableCommand(token);
+		if(token.matches(syntax.getString("GroupStart")))
+			return getGroup();
+		if(token.matches(syntax.getString("Command")))
+			return availableCommands.get(token).build(this);
+		throw new SLogoException("UnexpectedToken", token);
+	}
+
+	private Command getGroup() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	@Override

@@ -17,10 +17,13 @@ public class VariableManager {
 	public VariableManager() {
 	}
 	
-	public Double getValue(String s) {
+	public double getValue(String s) {
 		if(getScope().containsKey(s))
 			return getScope().get(s);
-		return globals.get(s);
+		if(globals.containsKey(s))
+			return globals.get(s);
+		setValue(s, 0);
+		return 0;
 	}
 	
 	public void setValue(String s, double val) {
