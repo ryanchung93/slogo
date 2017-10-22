@@ -22,8 +22,8 @@ public class Repeat implements Command {
 	public double execute(Turtle t, CommandManager commands, VariableManager variables) {
 		double times = numTimes.execute(t, commands, variables);
 		double result = 0;
-		for(int i = 0; i < times; i++) {
-			variables.setValue(REP_COUNT, i);
+		for(int repcount = 1; repcount <= times; repcount++) {
+			variables.setValue(REP_COUNT, repcount);
 			for(Command c : commandList) {
 				result = c.execute(t, commands, variables);
 			}

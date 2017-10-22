@@ -13,8 +13,7 @@ public class VariableView implements VariableDisplay {
 	private TextArea ta;
 	private ScrollPane sp;
 	public VariableView(double width, double height) {
-
-		TextArea ta = new TextArea();
+		ta = new TextArea();
 		ta.setWrapText(true);
 		ta.setEditable(false);
 		ta.appendText("VariableView");

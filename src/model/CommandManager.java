@@ -10,17 +10,22 @@ import java.util.ResourceBundle;
 import view.API.StringListener;
 
 public class CommandManager {
-	private static final String PATH = "resources.languages.";
+	public static final String PATH_START = "resources.languages.";
+	public static final String DEFAULT_LANGUAGE = "English";
+	
+	private String builderPropertiesPath;
 	
 	private Map<String, CommandDef> commands = new HashMap<>();
 	private List<StringListener> listeners = new ArrayList<>();
 	
-	public CommandManager(){
+	public CommandManager(String builderPropertiesPath){
+		this.builderPropertiesPath = builderPropertiesPath;
+		setLanguage(DEFAULT_LANGUAGE);
 	}
 
-	public void loadCommands(String propertyFile, String language) {
+	private void loadCommands(String propertyFile, String language) {
 		ResourceBundle classFile = ResourceBundle.getBundle(propertyFile);
-		ResourceBundle acceptedCommands = ResourceBundle.getBundle(PATH+language);
+		ResourceBundle acceptedCommands = ResourceBundle.getBundle(PATH_START+language);
 		Enumeration<String> keys = classFile.getKeys();
 		while(keys.hasMoreElements()) {
 			String command = keys.nextElement();
@@ -35,6 +40,12 @@ public class CommandManager {
 			
 			commands.put(acceptedCommands.getString(command), definition);
 		}
+	}
+	
+	public void setLanguage(String language) {
+		commands.clear();
+		loadCommands(builderPropertiesPath, language);
+		updateListeners();
 	}
 	
 	public void clear() {

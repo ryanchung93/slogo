@@ -2,6 +2,7 @@ package controller;
 
 import controller.API.DriverAPI;
 import javafx.stage.Stage;
+import model.CommandManager;
 import model.Model;
 import model.Turtle;
 import view.View;
@@ -16,7 +17,8 @@ public class Driver implements DriverAPI {
 	 */
 	public Driver(Stage stage) {
 		myView = new View(stage, s -> myModel.execute(s));
-		myModel = new Model();
+		CommandManager commandManager = new CommandManager("resources.builders.basicCommands");
+		myModel = new Model(commandManager);
 	}
 	
 	@Override
