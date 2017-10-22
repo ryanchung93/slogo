@@ -8,26 +8,18 @@ import java.util.ResourceBundle;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
-import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.Tooltip;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import view.API.BackgroundOptionDisplay;
 import view.API.BackgroundOptionListener;
 
-/**
- * Class that allows users to select a canvas color from a choice box.
- * 
- * @author DavidTran
- *
- */
 public class BackgroundOptionView implements BackgroundOptionDisplay {
 
-	private VBox optionView;
+	private HBox optionView;
 	private Label prompt;
 	private ChoiceBox<String> cb;
 	private List<String> colorList;
@@ -36,7 +28,7 @@ public class BackgroundOptionView implements BackgroundOptionDisplay {
 
 	public BackgroundOptionView() {
 
-		optionView = new VBox();
+		optionView = new HBox();
 		
 		prompt = new Label(myResources.getString("BackgroundPrompt"));
 		
@@ -55,10 +47,7 @@ public class BackgroundOptionView implements BackgroundOptionDisplay {
 			}
 		});
 		
-		cb.setId("background_cb");
-		
 		optionView.getChildren().addAll(prompt, cb);
-		optionView.setAlignment(Pos.CENTER);
 	}
 
 	@Override
