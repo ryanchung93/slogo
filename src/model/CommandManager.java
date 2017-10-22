@@ -15,7 +15,8 @@ public class CommandManager {
 	
 	private String builderPropertiesPath;
 	
-	private Map<String, CommandDef> commands = new HashMap<>();
+	private Map<String, CommandDef> builtInCommands = new HashMap<>();
+	private Map<String, CommandDef> userCommands = new HashMap<>();
 	private List<StringListener> listeners = new ArrayList<>();
 	
 	public CommandManager(String builderPropertiesPath){
@@ -29,7 +30,6 @@ public class CommandManager {
 		Enumeration<String> keys = classFile.getKeys();
 		while(keys.hasMoreElements()) {
 			String command = keys.nextElement();
-			
 			CommandDef definition;
 			try {
 				definition = (CommandDef) Class.forName(classFile.getString(command)).newInstance();
@@ -38,25 +38,25 @@ public class CommandManager {
 				throw new RuntimeException("Check basicCommands.properties -- key: " + command);
 			}
 			
-			commands.put(acceptedCommands.getString(command), definition);
+			builtInCommands.put(acceptedCommands.getString(command), definition);
 		}
 	}
 	
 	public void setLanguage(String language) {
-		commands.clear();
+		builtInCommands.clear();
 		loadCommands(builderPropertiesPath, language);
 		updateListeners();
 	}
 	
 	public void clear() {
-		commands.clear();
+		builtInCommands.clear();
 		updateListeners();
 	}
 
 	public CommandDef get(String s) throws SLogoException {
-		for(String regex : commands.keySet()) {
+		for(String regex : builtInCommands.keySet()) {
 			if(s.matches(regex))
-				return commands.get(regex);
+				return builtInCommands.get(regex);
 		}
 		throw new SLogoException("UnexpectedCommand",s);
 	}
@@ -66,12 +66,21 @@ public class CommandManager {
 	}
 	
 	public void put(String name, CommandDef definition) {
-		commands.put(name, definition);
+		builtInCommands.put(name, definition);
 		updateListeners();
+	}
+	
+	public boolean checkIfBuiltIn(String name) {
+		System.out.println(builtInCommands.keySet().toString());
+		for(String regex : builtInCommands.keySet()) {
+			if(name.matches(regex))
+				return true;
+		}
+		return false;
 	}
 
 	private void updateListeners() {
 		for(StringListener listener : listeners)
-			listener.changedMap(commands);
+			listener.changedMap(builtInCommands);
 	}
 }

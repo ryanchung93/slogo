@@ -22,6 +22,7 @@ public class To implements Command {
 	
 	@Override
 	public double execute(Turtle t, CommandManager commands, VariableManager variables) {
+		if(commands.checkIfBuiltIn(name)) return 0;				//can throw error if we want
 		commands.put(name, new CommandBuilder(localVariables, inputCommands));
 		return 1;
 	}

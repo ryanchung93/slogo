@@ -11,7 +11,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 import model.ImmutableTurtle;
-import view.API.PenOptionListener;
+//import view.API.PenOptionListener;
 import view.API.TurtleListener;
 
 /**
@@ -45,6 +45,7 @@ public class TurtleView implements TurtleListener {
 		myView.setLayoutY(-HEIGHT / 2);
 		myView.setX(0);
 		myView.setY(0);
+		headingChange(0);
 
 		myView.setRotate(180);
 		// myHeading = myView.getRotate();
@@ -141,6 +142,7 @@ public class TurtleView implements TurtleListener {
 	public void headingChange(double newHeading) {
 		// TODO Auto-generated method stub
 		// create an animation that rotates the shape
+		// myView.setRotate(dtheta);
 		double newAngle = -newHeading;
 		myView.setRotate(180 - newAngle);
 		System.out.println("NewHeading: " + (-newHeading));
