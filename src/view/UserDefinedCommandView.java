@@ -6,6 +6,12 @@ import javafx.scene.Parent;
 import model.CommandDef;
 import view.API.UserDefinedCommandDisplay;
 
+/**
+ * Class allowing users to see defined functions.
+ * 
+ * @author DavidTran
+ *
+ */
 public class UserDefinedCommandView implements UserDefinedCommandDisplay {
 
 	@Override
