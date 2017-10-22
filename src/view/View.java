@@ -23,6 +23,7 @@ import javafx.util.Duration;
 import view.API.StringListener;
 import view.API.TurtleListener;
 import view.API.VariableListener;
+import view.API.NewCommandListener;
 import view.API.ViewAPI;
 
 public class View implements ViewAPI {
@@ -66,10 +67,10 @@ public class View implements ViewAPI {
 		setupLayout();
 		addCanvasView();
 		addTurtle();
+		addHistoryView();
 		addTextPrompt(commandConsumer);
 		addVariableView();
 		addReferenceView();
-		addHistoryView();
 		myTimeline.play();
 	}
 
@@ -181,6 +182,7 @@ public class View implements ViewAPI {
 	private void addTextPrompt(Consumer<String> commandConsumer) {
 		double[][] dims = getGridDimensions();
 		myTextPrompt = new TextPromptView(dims[0][1], dims[1][2], commandConsumer);
+		myTextPrompt.addCommandListener(myHistoryView);
 		myGrid.add(myTextPrompt, 1, 2, 2, 1);
 	}
 
