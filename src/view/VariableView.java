@@ -42,7 +42,6 @@ public class VariableView implements VariableDisplay {
 		for (String key : vars.keySet()) {
 			ta.appendText("\n" + key + " : " + vars.get(key));
 		}
-
 	}
 
 	@Override

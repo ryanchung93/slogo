@@ -34,10 +34,14 @@ public class VariableManager {
 	}
 	
 	public void setLocalValue(String s, double val) {
+		if(!s.matches(Parser.SYNTAX.getString("Variable")))
+			throw new SLogoException("InvalidVar", s);
 		getScope().put(s, val);
 	}
 	
 	public void setGlobalValue(String s, double val) {
+		if(!s.matches(Parser.SYNTAX.getString("Variable")))
+			throw new SLogoException("InvalidVar", s);
 		updated = true;
 		globals.put(s, val);
 	}

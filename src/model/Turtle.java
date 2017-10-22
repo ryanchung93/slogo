@@ -95,12 +95,11 @@ public class Turtle implements ImmutableTurtle {
 	 * Returns to original position, heading, visibility, and pen position, then notifies the listeners to clear
 	 */
 	public void clearScreen() {
-		x = initX;
-		y = initY;
-		heading = initHeading;
-		penDown = true;
-		isVisible = true;
-		penColor = DEFAULT_PEN_COLOR;
+		setXY(initX, initY);
+		setHeading(initHeading);
+		setPenDown(true);
+		setVisible(true);
+		setPenColor(DEFAULT_PEN_COLOR);
 		listener.clearScreen();
 	}
 }
