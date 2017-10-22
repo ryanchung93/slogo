@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import model.Command;
-import model.CommandDef;
+import model.CommandManager;
 import model.Turtle;
 import model.VariableManager;
 
@@ -19,7 +19,7 @@ public class UserDefinedCommand implements Command {
 	}
 	
 	@Override
-	public double execute(Turtle t, Map<String, CommandDef> commands, VariableManager variables) {
+	public double execute(Turtle t, CommandManager commands, VariableManager variables) {
 		variables.enterLocalScope();
 		for(String var : parameters.keySet())
 			variables.setLocalValue(var, parameters.get(var).execute(t, commands, variables));

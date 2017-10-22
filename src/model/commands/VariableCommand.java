@@ -5,13 +5,17 @@ import model.CommandManager;
 import model.Turtle;
 import model.VariableManager;
 
-public class XCor implements Command {
+public class VariableCommand implements Command {
 
-	public XCor() {}
+	private String name;
+
+	public VariableCommand(String name) {
+		this.name = name;
+	}
 	
 	@Override
 	public double execute(Turtle t, CommandManager commands, VariableManager variables) {
-		return t.getX();
+		return variables.getValue(name);
 	}
 
 }

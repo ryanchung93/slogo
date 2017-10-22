@@ -32,6 +32,7 @@ public class Turtle implements ImmutableTurtle {
 		penColor = DEFAULT_PEN_COLOR;
 	}
 	
+	// need to add to interface
 	public void addTurtleListener(TurtleListener tL) {
 		listener = tL;
 		tL.setTurtle(this);
@@ -65,11 +66,13 @@ public class Turtle implements ImmutableTurtle {
 		x = newX;
 		y = newY;
 		listener.locationChange(newX, newY);
+		System.out.println(x + ", " + y);
 	}
 
 	public void setHeading(double newHeading) {
 		heading = newHeading;
 		listener.headingChange(newHeading);
+		System.out.println("H = " + heading);
 	}
 
 	public void setPenDown(boolean down) {

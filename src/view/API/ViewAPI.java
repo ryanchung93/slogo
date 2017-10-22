@@ -1,5 +1,7 @@
 package view.API;
 
+import model.SLogoException;
+
 public interface ViewAPI {
 	
 	/**
@@ -19,4 +21,9 @@ public interface ViewAPI {
 	 * StringListener that detects changes to list of commands.
 	 */
 	public StringListener getCommandListener();
+
+	/**
+	 * @param e A SLogoException produced when the code is executed
+	 */
+	void display(SLogoException e);
 }

@@ -13,10 +13,16 @@ import javafx.util.Duration;
 import model.ImmutableTurtle;
 import view.API.TurtleListener;
 
+/**
+ * Class to make the turtle viewable.
+ * 
+ * @author DavidTran
+ *
+ */
 public class TurtleView implements TurtleListener {
 
-	private static final double WIDTH = 50;
-	private static final double HEIGHT = 50;
+	private static final double WIDTH = 25;
+	private static final double HEIGHT = 25;
 
 	private ImageView myView;
 	private Color myPenColor;
@@ -24,6 +30,8 @@ public class TurtleView implements TurtleListener {
 	private boolean myPenIsDown;
 	private Pane myParent;
 	private double myHeading;
+	private double offsetX;
+	private double offsetY;
 
 
 	public TurtleView(Pane parent, Image image) {
@@ -35,47 +43,51 @@ public class TurtleView implements TurtleListener {
 		myView.setLayoutY(-HEIGHT/2);
 		myView.setX(0);
 		myView.setY(0);
+		headingChange(180);
 
 		myPenColor = Color.WHITE;
 		myPenIsDown = true;
 		myParent = parent;
+//		parent.getChildren().addAll(myView);
 	}
 
 	@Override
 	public void setTurtle(ImmutableTurtle turtle) {
-		myView.setX(turtle.getX() + myView.getParent().getLayoutX());
-		myView.setY(turtle.getY() + myView.getParent().getLayoutY());
+		offsetX = myView.getParent().getLayoutX();
+		offsetY = myView.getParent().getLayoutY();
+		
+		myView.setX(turtle.getX() + offsetX);
+		myView.setY(turtle.getY() + offsetY);
+		
 		myHeading = turtle.getHeading();
 		myPenColor = turtle.getPenColor();
 		myPenIsDown = turtle.getPenDown();
 		myView.setVisible(turtle.isVisible());
 
 	}
-	
-	public void offset() {
-		myView.setTranslateX(myView.getParent().getLayoutX());
-		myView.setTranslateY(myView.getParent().getLayoutY());
-	}
 
 	@Override
 	public void locationChange(double newX, double newY) {
+//		System.out.println("x :" + myView.getX() + " " + myView.getY());
 		
-		double myX = myView.getX() + myView.getParent().getLayoutX();
-		double myY = myView.getY() + myView.getParent().getLayoutY();
 		// compensate for center offset since center if not (0,0)
-		double offsetNewX = newX + myView.getParent().getLayoutX();
-		double offsetNewY = newY + myView.getParent().getLayoutY();
+		double offsetNewX = newX + offsetX;
+		double offsetNewY = newY + offsetY;
 		
-		Line line = new Line(myX, myY, offsetNewX, offsetNewY);
+		Line line = new Line(myView.getX(), myView.getY(), offsetNewX, offsetNewY);
 		line.setStroke(myPenColor);
-//		lines.add(line);
+		
 		if (myPenIsDown) 
 			myParent.getChildren().add(line);
-//		PathTransition pt = new PathTransition(Duration.millis(1000), line, myView);
-//		pt.play();
 		
-		myView.setX(newX);
-		myView.setY(newY);
+		myView.setX(offsetNewX);
+		myView.setY(offsetNewY);
+		
+//		System.out.println("LayoutX: " +  offsetX + " LayoutY: " + offsetY);
+//		System.out.println("myX: " + myView.getX() + " | myY: " + myView.getY());
+//		System.out.println("newX: " + newX + " | newY: " + newY);
+//		System.out.println("offsetNewX: " + offsetNewX + " | offsetNewY: " + offsetNewY);
+		
 
 	}
 
