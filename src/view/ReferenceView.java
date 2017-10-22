@@ -34,13 +34,15 @@ public class ReferenceView implements StringListener {
 	
 	@Override
 	public void changedMap(Map<String, CommandDef> newMap) {
-		// TODO Auto-generated method stub
+		for (String key : newMap.keySet()) {
+			ta.clear();
+			ta.appendText(key + " : " + newMap.get(key));
+		}
 
 	}
 
 	@Override
 	public Parent getParent() {
-		// TODO Auto-generated method stub
 		return sp;
 	}
 
