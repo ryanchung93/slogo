@@ -21,7 +21,7 @@ public class ReferenceView implements StringListener {
 	ScrollPane sp;
 	public ReferenceView() {
 
-		TextArea ta = new TextArea();
+		ta = new TextArea();
 		ta.setWrapText(true);
 		ta.setEditable(false);
 		ta.appendText("ReferenceView");
@@ -34,9 +34,9 @@ public class ReferenceView implements StringListener {
 	
 	@Override
 	public void changedMap(Map<String, CommandDef> newMap) {
+		ta.clear();
 		for (String key : newMap.keySet()) {
-			ta.clear();
-			ta.appendText(key + " : " + newMap.get(key));
+			ta.appendText(key + "\n");// + " : " + newMap.get(key));
 		}
 
 	}

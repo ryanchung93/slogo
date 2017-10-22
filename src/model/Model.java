@@ -1,12 +1,8 @@
 package model;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
-import model.commandBuilder.ForwardBuilder;
-import model.commandBuilder.RepeatBuilder;
 import view.API.StringListener;
 import view.API.TurtleListener;
 import view.API.VariableListener;
@@ -20,17 +16,15 @@ public class Model {
 	
 	private List<Turtle> turtles;
 	
-	public Model() {
-		
+	public Model(CommandManager commands) {
 		turtleListeners = new ArrayList<TurtleListener>();
-		
-		commands = new CommandManager();
-		commands.loadCommands("resources.builders.basicCommands", "English");
-		
+		this.commands = commands;
 		variables = new VariableManager();
-		
 		turtles = new ArrayList<Turtle>();
+	}
 	
+	public void setLanguage(String language) {
+		commands.setLanguage(language);
 	}
 	
 	public void addTurtleListener(TurtleListener tL) {
@@ -51,7 +45,7 @@ public class Model {
 		turtleListeners.add(tL);
 	}
 	
-	public void execute(String code) {
+	public void execute(String code) throws SLogoException {
 		Parser parser = new Parser(code, commands);
 		while(parser.hasNextCommand()) {
 			parser.getNextCommand().execute(turtles.get(0), commands, variables);

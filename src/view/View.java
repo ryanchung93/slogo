@@ -21,10 +21,10 @@ import javafx.scene.layout.RowConstraints;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import model.SLogoException;
 import view.API.StringListener;
 import view.API.TurtleListener;
 import view.API.VariableListener;
-import view.API.NewCommandListener;
 import view.API.ViewAPI;
 
 /**
@@ -96,6 +96,12 @@ public class View implements ViewAPI {
 	@Override
 	public StringListener getCommandListener() {
 		return myRefView;
+	}
+
+	@Override
+	public void display(SLogoException e) {
+		// TODO
+		System.out.println(e.getMessage());
 	}
 
 	/*************** PRIVATE METHODS *******************/
@@ -181,8 +187,10 @@ public class View implements ViewAPI {
 	 */
 	private void addTextPrompt(Consumer<String> commandConsumer) {
 		double[][] dims = getGridDimensions();
-		myTextPrompt = new TextPromptView(dims[0][1], dims[1][2], commandConsumer);
-		myTextPrompt.addCommandListener(myHistoryView);
+		myTextPrompt = new TextPromptView(dims[0][1], dims[1][2], s -> {
+			commandConsumer.accept(s);
+			myHistoryView.updateHistory(s);
+		});
 		myGrid.add(myTextPrompt, 1, 2, 2, 1);
 	}
 

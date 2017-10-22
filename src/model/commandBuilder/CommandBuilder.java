@@ -6,6 +6,7 @@ import java.util.Map;
 
 import model.Command;
 import model.CommandDef;
+import model.SLogoException;
 import model.TokenDispenser;
 import model.commands.UserDefinedCommand;
 
@@ -18,7 +19,7 @@ public class CommandBuilder implements CommandDef{
 		this.commands = commands;
 	}
 
-	public Command build(TokenDispenser dispenser) {
+	public Command build(TokenDispenser dispenser) throws SLogoException {
 		Map<String, Command> localVars = new HashMap<String, Command>();
 		for(String var : variables) {
 			localVars.put(var, dispenser.getNextCommand());

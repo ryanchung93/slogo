@@ -4,13 +4,13 @@ import model.Command;
 import model.CommandDef;
 import model.SLogoException;
 import model.TokenDispenser;
-import model.commands.IfElse;
+import model.commands.XCor;
 
-public class IfElseBuilder implements CommandDef {
+public class XCorBuilder implements CommandDef {
 
 	@Override
 	public Command build(TokenDispenser dispenser) throws SLogoException {
-		return new IfElse(dispenser.getNextCommand(), dispenser.getNextCommandList(), dispenser.getNextCommandList());
+		return new XCor();
 	}
 
 }

@@ -4,13 +4,13 @@ import model.Command;
 import model.CommandDef;
 import model.SLogoException;
 import model.TokenDispenser;
-import model.commands.IfElse;
+import model.commands.Sum;
 
-public class IfElseBuilder implements CommandDef {
+public class SumBuilder implements CommandDef {
 
 	@Override
 	public Command build(TokenDispenser dispenser) throws SLogoException {
-		return new IfElse(dispenser.getNextCommand(), dispenser.getNextCommandList(), dispenser.getNextCommandList());
+		return new Sum(dispenser.getNextCommand(), dispenser.getNextCommand());
 	}
 
 }
