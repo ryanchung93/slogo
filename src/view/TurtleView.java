@@ -11,6 +11,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 import model.ImmutableTurtle;
+import view.API.TurtleImageListener;
 import view.API.TurtleListener;
 
 /**
@@ -194,6 +195,11 @@ public class TurtleView implements TurtleListener {
 			}
 		}
 
+	}
+
+	@Override
+	public void imageChange(Image image) {
+		myView.setImage(image);
 	}
 
 }

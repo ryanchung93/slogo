@@ -43,7 +43,7 @@ public class View implements ViewAPI {
 	private ResourceBundle myResource = ResourceBundle.getBundle("resources.view/view");
 	private static final String STYLESHEET = "/resources/view/view.css";
 
-	private static final String TURTLE_IMAGE = "turtle.png";
+	private static final String TURTLE_IMAGE = "turtle1.png";
 
 	private Stage myStage;
 	private Scene myScene;
@@ -102,6 +102,7 @@ public class View implements ViewAPI {
 	public void display(SLogoException e) {
 		// TODO
 		System.out.println(e.getMessage());
+		showError(e.getMessage());
 	}
 
 	/*************** PRIVATE METHODS *******************/
@@ -230,6 +231,7 @@ public class View implements ViewAPI {
 		myToolbarView = new ToolbarView(SCREEN_WIDTH);
 		// set a listener for background color changes.
 		myToolbarView.getBackgroundOptionView().addBackgroundOptionListener(myCanvas);
+		myToolbarView.getImageOptionView().addTurtleImageListener(myTurtleView);
 		
 		myLeftVBox.getChildren().add(myVarView.getParent());
 		myRightVBox.getChildren().add(myRefView.getParent());
