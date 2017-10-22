@@ -1,10 +1,9 @@
 package model.commands;
 
 import java.util.List;
-import java.util.Map;
 
 import model.Command;
-import model.CommandDef;
+import model.CommandManager;
 import model.Turtle;
 import model.VariableManager;
 import model.commandBuilder.CommandBuilder;
@@ -22,7 +21,7 @@ public class To implements Command {
 	}
 	
 	@Override
-	public double execute(Turtle t, Map<String, CommandDef> commands, VariableManager variables) {
+	public double execute(Turtle t, CommandManager commands, VariableManager variables) {
 		commands.put(name, new CommandBuilder(localVariables, inputCommands));
 		//handle variables here or in userdefinedcommand?
 		return 0;
