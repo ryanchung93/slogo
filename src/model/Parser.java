@@ -2,7 +2,6 @@ package model;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.function.Supplier;
 
@@ -14,7 +13,7 @@ public class Parser implements TokenDispenser{
 	private String[] tokens;
 	private CommandManager availableCommands;
 	
-	private static ResourceBundle syntax = ResourceBundle.getBundle("resources.languages/Syntax");
+	private static final ResourceBundle syntax = ResourceBundle.getBundle("resources.languages/Syntax");
 	
 	public Parser(String code, CommandManager availableCommands) {
 		index = 0;
@@ -56,11 +55,11 @@ public class Parser implements TokenDispenser{
 
 	
 	private <T> List<T> getNextList(Supplier<T> supplier){
-		if(!getNextToken().equals("["))
+		if(!getNextToken().matches(syntax.getString("ListStart")))
 			throw new RuntimeException("TO DO"); //TODO
 		
 		List<T> result = new ArrayList<T>();
-		while(!peek().equals("]")) {
+		while(!peek().matches(syntax.getString("ListEnd"))) {
 			result.add(supplier.get());
 		}
 		getNextToken();
