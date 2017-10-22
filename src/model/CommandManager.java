@@ -53,12 +53,12 @@ public class CommandManager {
 		updateListeners();
 	}
 
-	public CommandDef get(String s) {
+	public CommandDef get(String s) throws SLogoException {
 		for(String regex : commands.keySet()) {
 			if(s.matches(regex))
 				return commands.get(regex);
 		}
-		throw new RuntimeException("Command '" + s + "' not found!");
+		throw new SLogoException("UnexpectedCommand",s);
 	}
 	
 	public void addListener(StringListener commandListener) {
