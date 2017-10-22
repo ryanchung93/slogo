@@ -9,7 +9,6 @@ import javafx.scene.control.TextArea;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import view.API.TextPromptDisplay;
-import view.API.NewCommandListener;
 
 /**
  * Class allowing users to enter and clear commands.
@@ -18,7 +17,6 @@ import view.API.NewCommandListener;
  *
  */
 public class TextPromptView extends HBox implements TextPromptDisplay {
-	private NewCommandListener listener;
 	private TextArea tp;
 	private Button runButton;
 	private Button clearButton;
@@ -66,7 +64,6 @@ public class TextPromptView extends HBox implements TextPromptDisplay {
 	private void enter() {
 		String code = tp.getText();
 		commandConsumer.accept(code);
-		listener.addCommand(code);
 		clear();
 	}
 
@@ -76,8 +73,4 @@ public class TextPromptView extends HBox implements TextPromptDisplay {
 
 	/*************************** PUBLIC METHODS ********************************/
 
-	
-	public void addCommandListener(NewCommandListener cL) {
-		listener = cL;
-	}
 }

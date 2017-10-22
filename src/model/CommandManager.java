@@ -10,17 +10,22 @@ import java.util.ResourceBundle;
 import view.API.StringListener;
 
 public class CommandManager {
-	private static final String PATH = "resources.languages.";
+	public static final String PATH_START = "resources.languages.";
+	public static final String DEFAULT_LANGUAGE = "English";
+	
+	private String builderPropertiesPath;
 	
 	private Map<String, CommandDef> commands = new HashMap<>();
 	private List<StringListener> listeners = new ArrayList<>();
 	
-	public CommandManager(){
+	public CommandManager(String builderPropertiesPath){
+		this.builderPropertiesPath = builderPropertiesPath;
+		setLanguage(DEFAULT_LANGUAGE);
 	}
 
-	public void loadCommands(String propertyFile, String language) {
+	private void loadCommands(String propertyFile, String language) {
 		ResourceBundle classFile = ResourceBundle.getBundle(propertyFile);
-		ResourceBundle acceptedCommands = ResourceBundle.getBundle(PATH+language);
+		ResourceBundle acceptedCommands = ResourceBundle.getBundle(PATH_START+language);
 		Enumeration<String> keys = classFile.getKeys();
 		while(keys.hasMoreElements()) {
 			String command = keys.nextElement();
@@ -37,25 +42,31 @@ public class CommandManager {
 		}
 	}
 	
+	public void setLanguage(String language) {
+		commands.clear();
+		loadCommands(builderPropertiesPath, language);
+		updateListeners();
+	}
+	
 	public void clear() {
 		commands.clear();
 		updateListeners();
 	}
 
-	public CommandDef get(String s) {
+	public CommandDef get(String s) throws SLogoException {
 		for(String regex : commands.keySet()) {
 			if(s.matches(regex))
 				return commands.get(regex);
 		}
-		throw new RuntimeException("Command '" + s + "' not found!");
+		throw new SLogoException("UnexpectedCommand",s);
 	}
 	
 	public void addListener(StringListener commandListener) {
 		listeners.add(commandListener);
 	}
 	
-	public void put(String regex, CommandDef definition) {
-		commands.put(regex, definition);
+	public void put(String name, CommandDef definition) {
+		commands.put(name, definition);
 		updateListeners();
 	}
 
