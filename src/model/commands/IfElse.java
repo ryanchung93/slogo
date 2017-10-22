@@ -1,10 +1,9 @@
 package model.commands;
 
 import java.util.List;
-import java.util.Map;
 
 import model.Command;
-import model.CommandDef;
+import model.CommandManager;
 import model.Turtle;
 import model.VariableManager;
 
@@ -21,7 +20,7 @@ public class IfElse implements Command {
 	}
 	
 	@Override
-	public double execute(Turtle t, Map<String, CommandDef> commands, VariableManager variables) {
+	public double execute(Turtle t, CommandManager commands, VariableManager variables) {
 		double ret = 0;
 		if(expr.execute(t, commands, variables) != 0) {
 			for(Command c : trueCommands) {

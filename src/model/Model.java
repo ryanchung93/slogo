@@ -14,9 +14,8 @@ import view.API.VariableListener;
 public class Model {
 	
 	private List<TurtleListener> turtleListeners;
-	private List<StringListener> commandListeners;
 	
-	private Map<String, CommandDef> commands;
+	private CommandManager commands;
 	private VariableManager variables;
 	
 	private List<Turtle> turtles;
@@ -24,13 +23,11 @@ public class Model {
 	public Model() {
 		
 		turtleListeners = new ArrayList<TurtleListener>();
-		commandListeners = new ArrayList<StringListener>();
 		
-		commands = new HashMap<String, CommandDef>();
+		commands = new CommandManager();
+		commands.loadCommands("resources.builders.basicCommands", "English");
+		
 		variables = new VariableManager();
-		
-		commands.put("fd", new ForwardBuilder());
-		commands.put("repeat", new RepeatBuilder());
 		
 		turtles = new ArrayList<Turtle>();
 	
@@ -45,7 +42,7 @@ public class Model {
 	}
 	
 	public void addCommandListener(StringListener sL) {
-		commandListeners.add(sL);
+		commands.addListener(sL);
 	}
 	
 	public void addTurtle(Turtle t, TurtleListener tL) {
@@ -56,14 +53,8 @@ public class Model {
 	
 	public void execute(String code) {
 		Parser parser = new Parser(code, commands);
-		Map<String, CommandDef> prevCommands = new HashMap<String, CommandDef>();
-		prevCommands.putAll(commands);
 		while(parser.hasNextCommand()) {
 			parser.getNextCommand().execute(turtles.get(0), commands, variables);
-			if(!prevCommands.equals(commands)) {
-				commandListeners.get(0).changedMap(commands);
-				prevCommands.putAll(commands);
-			}
 			variables.notifyListeners();
 		}
 	}
