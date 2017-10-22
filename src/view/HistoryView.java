@@ -8,6 +8,9 @@ import view.API.SubcomponentViewAPI;
 
 public class HistoryView implements SubcomponentViewAPI{
 
+	TextArea ta;
+	ScrollPane sp;
+	
 	public HistoryView() {
 
 		ta = new TextArea();

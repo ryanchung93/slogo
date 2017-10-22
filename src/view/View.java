@@ -72,6 +72,9 @@ public class View implements ViewAPI {
 		start(commandConsumer);
 	}
 
+	/**************** PUBLIC METHODS *******************/
+
+	@Override
 	public void start(Consumer<String> commandConsumer) {
 		myTimeline = setupTimeline();
 		setupLayout();
@@ -80,9 +83,7 @@ public class View implements ViewAPI {
 		addTextPrompt(commandConsumer);
 		myTimeline.play();
 	}
-
-	/**************** PUBLIC METHODS *******************/
-
+	
 	@Override
 	public TurtleListener getTurtleListener() {
 		return myTurtleView;
