@@ -1,23 +1,17 @@
 package view;
 
-import java.util.Map;
-
 import javafx.scene.Parent;
 import javafx.scene.control.ScrollPane;
-import javafx.scene.control.TextArea;
 import javafx.scene.control.ScrollPane.ScrollBarPolicy;
-import model.CommandDef;
-import view.API.NewCommandListener;
-import view.API.StringListener;
+import javafx.scene.control.TextArea;
+import view.API.SubcomponentViewAPI;
 
-public class HistoryView implements NewCommandListener {
+public class HistoryView implements SubcomponentViewAPI{
 
-	TextArea ta;
-	ScrollPane sp;
-
+	private TextArea ta;
+	private ScrollPane sp;
 	public HistoryView(double width, double height) {
 
-//		TextArea ta = new TextArea();
 		ta = new TextArea();
 		ta.setWrapText(true);
 		ta.setEditable(false);
@@ -30,6 +24,10 @@ public class HistoryView implements NewCommandListener {
 		sp.setVbarPolicy(ScrollBarPolicy.ALWAYS);
 		sp.setHbarPolicy(ScrollBarPolicy.NEVER);
 	}
+	
+	public void updateHistory(String newCode) {
+		ta.appendText("\n" + newCode);
+	}
 
 	@Override
 	public void addCommand(String command) {
@@ -41,11 +39,5 @@ public class HistoryView implements NewCommandListener {
 		// TODO Auto-generated method stub
 		return sp;
 	}
-
-//	@Override
-//	public void changedMap(Map<String, CommandDef> newMap) {
-//		// TODO Auto-generated method stub
-//
-//	}
 
 }

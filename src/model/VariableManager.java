@@ -17,21 +17,24 @@ public class VariableManager {
 	public VariableManager() {
 	}
 	
-	public Double getValue(String s) {
-		if(getLocalScope().containsKey(s))
-			return getLocalScope().get(s);
-		return globals.get(s);
+	public double getValue(String s) {
+		if(getScope().containsKey(s))
+			return getScope().get(s);
+		if(globals.containsKey(s))
+			return globals.get(s);
+		setValue(s, 0);
+		return 0;
 	}
 	
 	public void setValue(String s, double val) {
-		if(getLocalScope().containsKey(s))
+		if(getScope().containsKey(s))
 			setLocalValue(s, val);
 		else
 			setGlobalValue(s, val);
 	}
 	
 	public void setLocalValue(String s, double val) {
-		localScopes.get(localScopes.size()-1);
+		getScope().put(s, val);
 	}
 	
 	public void setGlobalValue(String s, double val) {
@@ -60,7 +63,9 @@ public class VariableManager {
 		}
 	}
 	
-	private Map<String, Double> getLocalScope(){
+	private Map<String, Double> getScope(){
+		if(localScopes.isEmpty())
+			return globals;
 		return localScopes.get(localScopes.size()-1);
 	}
 }

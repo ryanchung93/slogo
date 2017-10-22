@@ -10,11 +10,10 @@ import view.API.VariableDisplay;
 
 public class VariableView implements VariableDisplay {
 
-	TextArea ta;
-	ScrollPane sp;
+	private TextArea ta;
+	private ScrollPane sp;
 	public VariableView(double width, double height) {
-
-		TextArea ta = new TextArea();
+		ta = new TextArea();
 		ta.setWrapText(true);
 		ta.setEditable(false);
 		ta.appendText("VariableView");
@@ -29,19 +28,21 @@ public class VariableView implements VariableDisplay {
 
 	@Override
 	public void changedMap(Map<String, Double> vars) {
-		// TODO Auto-generated method stub
+		for (String key : vars.keySet()) {
+			ta.clear();
+			ta.appendText(key + " : " + vars.get(key));
+		}
 
 	}
 
 	@Override
 	public void clearVariables() {
-		// TODO Auto-generated method stub
+		ta.clear();
 
 	}
 
 	@Override
 	public Parent getParent() {
-		// TODO Auto-generated method stub
 		return sp;
 	}
 

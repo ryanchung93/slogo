@@ -1,9 +1,7 @@
 package model.commands;
 
-import java.util.Map;
-
 import model.Command;
-import model.CommandDef;
+import model.CommandManager;
 import model.Turtle;
 import model.VariableManager;
 
@@ -18,9 +16,10 @@ public class Make implements Command {
 	}
 	
 	@Override
-	public double execute(Turtle t, Map<String, CommandDef> commands, VariableManager variables) {
-		variables.setValue(variable, value.execute(t, commands, variables));
-		return value.execute(t, commands, variables);
+	public double execute(Turtle t, CommandManager commands, VariableManager variables) {
+		double val = value.execute(t, commands, variables);
+		variables.setValue(variable, val);
+		return val;
 	}
 
 }
