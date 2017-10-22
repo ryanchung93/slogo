@@ -1,6 +1,7 @@
 package view;
 
 import java.awt.Button;
+import java.util.ResourceBundle;
 import java.util.function.Consumer;
 
 import javafx.animation.Animation;
@@ -32,6 +33,7 @@ public class View implements ViewAPI {
 	private static final double SECOND_DELAY = 1.0 / FRAMES_PER_SECOND;
 	private static final int SCREEN_WIDTH = 1000;
 	private static final int SCREEN_HEIGHT = 700;
+	private ResourceBundle myResource = ResourceBundle.getBundle("resources.view/view");
 
 	private static final String TURTLE_IMAGE = "turtle.png";
 
@@ -50,6 +52,8 @@ public class View implements ViewAPI {
 	private ReferenceView myRefView;
 	private HistoryView myHistoryView;
 	private TurtleView myTurtleView;
+	private ToolbarView myToolbarView;
+	private BackgroundOptionView myBackgroundOptionView;
 
 	/**
 	 * Constructor for setting up animation.
@@ -70,6 +74,7 @@ public class View implements ViewAPI {
 		addVariableView();
 		addReferenceView();
 		addHistoryView();
+		addToolbar();
 		myTimeline.play();
 	}
 
@@ -77,20 +82,17 @@ public class View implements ViewAPI {
 
 	@Override
 	public TurtleListener getTurtleListener() {
-		// TODO Auto-generated method stub
 		return myTurtleView;
 	}
 
 	@Override
 	public VariableListener getVariableListener() {
-		// TODO Auto-generated method stub
-		return null;
+		return myVarView;
 	}
 
 	@Override
 	public StringListener getCommandListener() {
-		// TODO Auto-generated method stub
-		return null;
+		return myRefView;
 	}
 
 	/*************** PRIVATE METHODS *******************/
@@ -112,9 +114,9 @@ public class View implements ViewAPI {
 	 * @param elaspedTime
 	 */
 	private void step(double elaspedTime) {
-		//Read command
-		
-		//Pass into execute
+		// Read command
+
+		// Pass into execute
 	}
 
 	/**
@@ -138,19 +140,12 @@ public class View implements ViewAPI {
 		myGrid.getColumnConstraints().addAll(col1, col2, col3);
 		myGrid.getRowConstraints().addAll(row1, row2, row3);
 
-		myLeftSP = new ScrollPane();
-		myLeftSP.setFitToWidth(true);
-		myLeftSP.setVbarPolicy(ScrollBarPolicy.ALWAYS);
-		myLeftSP.setHbarPolicy(ScrollBarPolicy.NEVER);
+		myLeftSP = createScrollPane();
 		myLeftVBox = new VBox();
 		myLeftSP.setContent(myLeftVBox);
 		myGrid.add(myLeftSP, 0, 1, 1, 2);
 
-		myRightSP = new ScrollPane();
-		myRightSP.setFitToWidth(true);
-		myRightSP.setPannable(true);
-		myRightSP.setVbarPolicy(ScrollBarPolicy.ALWAYS);
-		myRightSP.setHbarPolicy(ScrollBarPolicy.NEVER);
+		myRightSP = createScrollPane();
 		myRightVBox = new VBox();
 		myRightSP.setContent(myRightVBox);
 		myGrid.add(myRightSP, 2, 1, 1, 2);
@@ -166,12 +161,12 @@ public class View implements ViewAPI {
 	private void addCanvasView() {
 
 		double[][] dims = getGridDimensions();
-
 		myCanvas = new CanvasView(dims[0][1], dims[1][1]);
-		myGrid.add(myCanvas, 1, 1);
+
 		myCanvas.setLayoutX(myCanvas.getMaxWidth() / 2);
 		myCanvas.setLayoutY(myCanvas.getMaxHeight() / 2);
 
+		myGrid.add(myCanvas, 1, 1);
 		GridPane.setConstraints(myCanvas, 1, 1, 1, 1, HPos.CENTER, VPos.CENTER);
 	}
 
@@ -189,52 +184,79 @@ public class View implements ViewAPI {
 	 */
 	private void addTurtle() {
 		Image image = new Image(getClass().getClassLoader().getResourceAsStream("resources/images/" + TURTLE_IMAGE));
-		TurtleView tv = new TurtleView(myCanvas, image);
-		myTurtleView = tv;
-		myCanvas.getChildren().add(tv.getImage());
-		tv.offset();
-//		tv.headingChange(180);
-//		tv.locationChange(0, 100);
-//		tv.headingChange(90);
-// 		tv.clearScreen();
+		myTurtleView = new TurtleView(myCanvas, image);
+		myCanvas.getChildren().add(myTurtleView.getImage());
 
 	}
-	
-	private void addVariableView() {
-		double[][] ret = getGridDimensions();
-		myVarView = new VariableView(ret[0][0], myLeftSP.getHeight()/2);
-		myLeftVBox.getChildren().add(myVarView.getParent());
-		
-//		myGrid.add(myVarView, 0, 1);
+
+	/**
+	 * Create major scrollpanes.
+	 * 
+	 * @return
+	 */
+	private ScrollPane createScrollPane() {
+		ScrollPane sp = new ScrollPane();
+		sp.setFitToWidth(true);
+		sp.setPannable(true);
+		sp.setVbarPolicy(ScrollBarPolicy.ALWAYS);
+		sp.setHbarPolicy(ScrollBarPolicy.NEVER);
+
+		return sp;
 	}
-	
+
+	/**
+	 * Create a view for supported commands.
+	 */
 	private void addReferenceView() {
 		double[][] ret = getGridDimensions();
-		myRefView = new ReferenceView(ret[0][0], myRightSP.getHeight()/2);
+		myRefView = new ReferenceView(ret[0][0], myRightSP.getHeight() / 2);
 		myRightVBox.getChildren().add(myRefView.getParent());
 	}
-	
+
+	/**
+	 * Create a view for current variables.
+	 */
+	private void addVariableView() {
+		double[][] ret = getGridDimensions();
+		myVarView = new VariableView(ret[0][0], myLeftSP.getHeight() / 2);
+		myLeftVBox.getChildren().add(myVarView.getParent());
+	}
+
+	/**
+	 * Create a view for command history.
+	 */
 	private void addHistoryView() {
 		double[][] ret = getGridDimensions();
-		myHistoryView = new HistoryView(ret[0][0], myRightSP.getHeight()/2);
+		myHistoryView = new HistoryView(ret[0][0], myRightSP.getHeight() / 2);
 		myRightVBox.getChildren().add(myHistoryView.getParent());
 	}
 	
 	/**
-	 * @return
-	 * array containing dimensions of cells
-	 */ 
+	 * Create a view for toolbar with subcomponents.
+	 */
+	private void addToolbar() {
+		myToolbarView = new ToolbarView();
+		myBackgroundOptionView = new BackgroundOptionView();
+		myBackgroundOptionView.addBackgroundOptionListener(myCanvas);
+		myToolbarView.addNode(myBackgroundOptionView.getParent());
+		myGrid.add(myToolbarView.getParent(), 0, 0);
+		
+	}
+
+	/**
+	 * @return array containing dimensions of cells in grid
+	 */
 	private double[][] getGridDimensions() {
 		double[][] ret = new double[4][4];
 		try {
 			java.lang.reflect.Method m = myGrid.getClass().getDeclaredMethod("getGrid");
 			m.setAccessible(true);
 			ret = (double[][]) m.invoke(myGrid);
-			for (int i = 0; i < ret.length; i++) {
-				for (int j = 0; j < ret[0].length; j++)
-					System.out.println(i + "," + j + " " + ret[i][j]);
-			}
-			System.out.println(ret);
+//			for (int i = 0; i < ret.length; i++) {
+//				for (int j = 0; j < ret[0].length; j++)
+//					System.out.println(i + "," + j + " " + ret[i][j]);
+//			}
+//			System.out.println(ret);
 		} catch (Exception e) {
 			e.printStackTrace();
 			showError(e.getMessage());

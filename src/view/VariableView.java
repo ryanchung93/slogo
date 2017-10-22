@@ -29,19 +29,21 @@ public class VariableView implements VariableDisplay {
 
 	@Override
 	public void changedMap(Map<String, Double> vars) {
-		// TODO Auto-generated method stub
+		for (String key : vars.keySet()) {
+			ta.clear();
+			ta.appendText(key + " : " + vars.get(key));
+		}
 
 	}
 
 	@Override
 	public void clearVariables() {
-		// TODO Auto-generated method stub
+		ta.clear();
 
 	}
 
 	@Override
 	public Parent getParent() {
-		// TODO Auto-generated method stub
 		return sp;
 	}
 
