@@ -2,6 +2,7 @@ package view;
 
 import java.util.function.Consumer;
 
+import controller.Driver;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -25,6 +26,7 @@ import view.API.StringListener;
 import view.API.TurtleListener;
 import view.API.VariableListener;
 import view.API.ViewAPI;
+
 
 /**
  * Class that displays the GUI and SLogo animations.
@@ -56,6 +58,7 @@ public class View implements ViewAPI {
 	private CanvasView myCanvas;
 	private TurtleView myTurtleView;
 	private TextPromptView myTextPrompt;
+	private Driver myDriver;
 
 	private UserDefinedCommandView myUDCView;
 	private VariableView myVarView;
@@ -69,8 +72,9 @@ public class View implements ViewAPI {
 	 * 
 	 * @param stage
 	 */
-	public View(Stage stage, Consumer<String> commandConsumer) {
+	public View(Stage stage, Driver driver, Consumer<String> commandConsumer) {
 		myStage = stage;
+		myDriver = driver;
 		myStage.setTitle("SLogo Interpreter");
 		start(commandConsumer);
 	}
@@ -253,6 +257,7 @@ public class View implements ViewAPI {
 		myToolbarView.getBackgroundOptionView().addBackgroundOptionListener(myCanvas);
 		myToolbarView.getImageOptionView().addTurtleImageListener(myTurtleView);
 		myToolbarView.getPenOptionView().addPenOptionListener(myTurtleView);
+		myToolbarView.getLanguageOptionView().addLanguageOptionListener(myDriver);
 		myGrid.add(myToolbarView.getParent(), 0, 0);
 	}
 
