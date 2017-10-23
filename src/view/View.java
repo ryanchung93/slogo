@@ -124,7 +124,7 @@ public class View implements ViewAPI {
 
 	@Override
 	public void display(SLogoException e) {
-		// TODO
+		
 		System.out.println(e.getMessage());
 		showError(e.getMessage());
 	}
