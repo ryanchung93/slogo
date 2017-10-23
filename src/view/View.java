@@ -54,12 +54,16 @@ public class View implements ViewAPI {
 	private ScrollPane myRightSP;
 	private VBox myLeftVBox;
 	private VBox myRightVBox;
+
 	private CanvasView myCanvas;
+	private TurtleView myTurtleView;
 	private TextPromptView myTextPrompt;
+
+	private UserDefinedCommandView myUDCView;
 	private VariableView myVarView;
 	private ReferenceView myRefView;
 	private HistoryView myHistoryView;
-	private TurtleView myTurtleView;
+
 	private ToolbarView myToolbarView;
 	private Driver myDriver;
 
@@ -71,6 +75,7 @@ public class View implements ViewAPI {
 	public View(Stage stage, Driver driver, Consumer<String> commandConsumer) {
 		myStage = stage;
 		myDriver = driver;
+		myStage.setTitle("SLogo Interpreter");
 		start(commandConsumer);
 	}
 
@@ -82,6 +87,7 @@ public class View implements ViewAPI {
 		addAnimationComponents();
 		addScrollPaneComponents();
 		addTextPrompt(commandConsumer);
+		addToolbar();
 		myTimeline.play();
 	}
 
@@ -99,11 +105,17 @@ public class View implements ViewAPI {
 	public StringListener getCommandListener() {
 		return myRefView;
 	}
+	
+	@Override
+	public StringListener getUserDefinedCommandListener() {
+		return myUDCView;
+	}
 
 	@Override
 	public void display(SLogoException e) {
 		// TODO
 		System.out.println(e.getMessage());
+		showError(e.getMessage());
 	}
 	
 	public void setDriver(Driver driver) {
@@ -219,7 +231,9 @@ public class View implements ViewAPI {
 	 * Add subcomponents of major scroll panes.
 	 */
 	private void addScrollPaneComponents() {
-
+	    
+		double dims[][] = getGridDimensions();
+		
 		myLeftSP = createScrollPane();
 		myLeftVBox = new VBox();
 		myLeftSP.setContent(myLeftVBox);
@@ -233,9 +247,24 @@ public class View implements ViewAPI {
 		myVarView = new VariableView();
 		myRefView = new ReferenceView();
 		myHistoryView = new HistoryView();
+		
+		myUDCView = new UserDefinedCommandView((dims[1][1] + dims[1][2]) / 2);
+		myVarView = new VariableView((dims[1][1] + dims[1][2]) / 2);
+		myRefView = new ReferenceView((dims[1][1] + dims[1][2]) / 2);
+		myHistoryView = new HistoryView((dims[1][1] + dims[1][2]) / 2);
+
+		myLeftVBox.getChildren().add(myUDCView.getParent());
+		myLeftVBox.getChildren().add(myVarView.getParent());
+		myRightVBox.getChildren().add(myRefView.getParent());
+		myRightVBox.getChildren().add(myHistoryView.getParent());
+
+	}
+
+	private void addToolbar() {
 		myToolbarView = new ToolbarView(SCREEN_WIDTH);
 		// set listeners
 		myToolbarView.getBackgroundOptionView().addBackgroundOptionListener(myCanvas);
+		myToolbarView.getImageOptionView().addTurtleImageListener(myTurtleView);
 		myToolbarView.getPenOptionView().addPenOptionListener(myTurtleView);
 		myToolbarView.getLanguageOptionView().addLanguageOptionListener(myDriver);
 

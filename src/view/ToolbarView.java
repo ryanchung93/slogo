@@ -31,6 +31,7 @@ public class ToolbarView implements SubcomponentViewAPI {
 	private HBox myToolbar;
 	private Hyperlink myHelpLink;
 	private BackgroundOptionView myBackgroundOptionView;
+	private ImageOptionView myImageOptionView;
 	private PenOptionView myPenOptionView;
 	private LanguageOptionView myLanguageOptionView;
 
@@ -40,6 +41,7 @@ public class ToolbarView implements SubcomponentViewAPI {
 		myToolbar.setAlignment(Pos.CENTER);
 		myToolbar.setMinWidth(width);
 		addBackgroundColorOption();
+		addTurtleImageOption();
 		addPenColorOption();
 		addLanguageOption();
 		addHelpLink();
@@ -62,6 +64,11 @@ public class ToolbarView implements SubcomponentViewAPI {
 	
 	public LanguageOptionView getLanguageOptionView() {
 		return myLanguageOptionView;
+	}
+
+	// Must add to API
+	public ImageOptionView getImageOptionView() {
+		return myImageOptionView;
 	}
 
 	private void addHelpLink() {
@@ -90,6 +97,12 @@ public class ToolbarView implements SubcomponentViewAPI {
 	private void addBackgroundColorOption() {
 		myBackgroundOptionView = new BackgroundOptionView();
 		myToolbar.getChildren().add(myBackgroundOptionView.getParent());
+
+	}
+	
+	private void addTurtleImageOption() {
+		myImageOptionView = new ImageOptionView();
+		myToolbar.getChildren().add(myImageOptionView.getParent());
 
 	}
 
