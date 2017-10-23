@@ -23,7 +23,7 @@ public class CommandManager {
 	public CommandManager(String builderPropertiesPath) {
 		this.builderPropertiesPath = builderPropertiesPath;
 		setLanguage(DEFAULT_LANGUAGE);
-	}   
+	}
 
 	private void loadCommands(String propertyFile, String language) {
 		ResourceBundle classFile = ResourceBundle.getBundle(propertyFile);
