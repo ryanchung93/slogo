@@ -66,7 +66,7 @@ public class Turtle implements ImmutableTurtle {
 		x = newX;
 		y = newY;
 		listener.locationChange(newX, newY);
-		System.out.println(x + ", " + y);
+//		System.out.println(x + ", " + y);
 	}
 
 	public void setHeading(double newHeading) {
