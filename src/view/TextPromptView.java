@@ -4,6 +4,7 @@ import java.util.function.Consumer;
 
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.HBox;
@@ -28,7 +29,7 @@ public class TextPromptView extends HBox implements TextPromptDisplay {
 		this.setMaxWidth(width);
 		this.setMaxHeight(height);
 
-		tp = new TextArea(); 
+		tp = new TextArea();
 		tp.setPrefWidth(width * .75);
 		tp.setPrefHeight(height);
 		tp.setId("text-prompt");
@@ -43,7 +44,7 @@ public class TextPromptView extends HBox implements TextPromptDisplay {
 
 	private void addButtons(double width, double height) {
 		buttonPanel = new VBox();
-
+		
 		runButton = makeButton("Run", e -> enter());
 		runButton.setPrefWidth(width);
 		runButton.setPrefHeight(height);
