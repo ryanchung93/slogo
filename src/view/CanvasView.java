@@ -26,7 +26,7 @@ public class CanvasView extends Pane implements CanvasDisplay, BackgroundOptionL
 		this.setScaleY(-1);
 		this.setMaxWidth(width);
 		this.setMaxHeight(height);
-		System.out.println("Canvas width: " + width + " height: " + height);
+		//System.out.println("Canvas width: " + width + " height: " + height);
 	
 	}
 	

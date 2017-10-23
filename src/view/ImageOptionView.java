@@ -58,7 +58,7 @@ public class ImageOptionView implements ImageOptionDisplay {
 
 			@Override
 			public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
-				System.out.println(newValue.intValue());
+				//System.out.println(newValue.intValue());
 				listener.imageChange(imageList.get(newValue.intValue()));
 
 			}

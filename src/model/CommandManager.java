@@ -77,7 +77,6 @@ public class CommandManager {
 	}
 
 	public boolean checkIfBuiltIn(String name) {
-		// System.out.println(builtInCommands.keySet().toString());
 		for (String regex : builtInCommands.keySet()) {
 			if (name.matches(regex))
 				return true;
