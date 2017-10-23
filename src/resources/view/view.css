@@ -13,6 +13,11 @@ HBox {
 	-fx-background-color: #435761;
 }
 
+.text { 
+	color: #000000; 
+	font-family: Rockwell, "Courier Bold", Courier, Georgia, Times, "Times New Roman", serif;
+}
+
 /*.btn {
 	-fx-text-fill: ##3a4b53;
 	-fx-background-color: #dfe5e8;//#45e03a;
@@ -34,11 +39,12 @@ HBox {
 }
 
 .scroll-bar {
-	-fx-background-color: #57707d;
+	-fx-background-color: #435761;
 }
 
+/* BAR */
 .scroll-bar .thumb {
-	-fx-background-color: #3a4b53;
+	-fx-background-color: #7d97a5;
 }
 
 /*.btn {
@@ -58,10 +64,6 @@ HBox {
   -fx-background-color: #7d97a5;
 }
 
-#language_cb .menu-item:focused {
-  -fx-background-color: #7d97a5;
-}
-
 /*LIST-CELLS*/
 #background_cb .context-menu {
     -fx-background-color: #435761;
@@ -70,12 +72,7 @@ HBox {
 #pen_cb .context-menu {
 	-fx-background-color: #435761;
 }
-
-#language_cb .context-menu {
-	-fx-background-color: #435761;
-}
-
-/*ARROW*/
+/* ARROW & CHOSEN CELL */
 #background_cb {
   -fx-mark-color: #435761;
   -fx-background-color: #7d97a5;
@@ -86,18 +83,15 @@ HBox {
   -fx-background-color: #7d97a5;	
 }
 
-#language_cb {
-  -fx-mark-color: #435761;
-  -fx-background-color: #7d97a5;
-}
-
-
 
 .text-area {
 	-fx-text-fill: #f5f7f8;
 	-fx-prompt-text-fill: #f5f7f8;
 	-fx-background-color: #435761;
 	-fx-focus-color: #000000;
+
+	-fx-font-family: Rockwell, "Courier Bold", Courier, Georgia, Times, "Times New Roman", serif;
+
 }
 
 .text-area .content{

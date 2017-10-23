@@ -31,8 +31,8 @@ public class ToolbarView implements SubcomponentViewAPI {
 	private HBox myToolbar;
 	private Hyperlink myHelpLink;
 	private BackgroundOptionView myBackgroundOptionView;
+	private ImageOptionView myImageOptionView;
 	private PenOptionView myPenOptionView;
-	private LanguageOptionView myLanguageOptionView;
 
 	public ToolbarView(double width) {
 
@@ -40,8 +40,8 @@ public class ToolbarView implements SubcomponentViewAPI {
 		myToolbar.setAlignment(Pos.CENTER);
 		myToolbar.setMinWidth(width);
 		addBackgroundColorOption();
+		addTurtleImageOption();
 		addPenColorOption();
-		addLanguageOption();
 		addHelpLink();
 
 	}
@@ -55,13 +55,14 @@ public class ToolbarView implements SubcomponentViewAPI {
 	public BackgroundOptionView getBackgroundOptionView() {
 		return myBackgroundOptionView;
 	}
-
+	
 	public PenOptionView getPenOptionView() {
 		return myPenOptionView;
 	}
-	
-	public LanguageOptionView getLanguageOptionView() {
-		return myLanguageOptionView;
+
+	// Must add to API
+	public ImageOptionView getImageOptionView() {
+		return myImageOptionView;
 	}
 
 	private void addHelpLink() {
@@ -92,15 +93,16 @@ public class ToolbarView implements SubcomponentViewAPI {
 		myToolbar.getChildren().add(myBackgroundOptionView.getParent());
 
 	}
+	
+	private void addTurtleImageOption() {
+		myImageOptionView = new ImageOptionView();
+		myToolbar.getChildren().add(myImageOptionView.getParent());
+
+	}
 
 	private void addPenColorOption() {
 		myPenOptionView = new PenOptionView();
 		myToolbar.getChildren().add(myPenOptionView.getParent());
-	}
-	
-	private void addLanguageOption() {
-		myLanguageOptionView = new LanguageOptionView();
-		myToolbar.getChildren().add(myLanguageOptionView.getParent());
 	}
 
 	private void showError(String message) {

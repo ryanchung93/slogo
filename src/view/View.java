@@ -2,7 +2,6 @@ package view;
 
 import java.util.function.Consumer;
 
-import controller.Driver;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -22,7 +21,6 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import model.SLogoException;
-import view.API.LanguageListener;
 import view.API.StringListener;
 import view.API.TurtleListener;
 import view.API.VariableListener;
@@ -54,23 +52,26 @@ public class View implements ViewAPI {
 	private ScrollPane myRightSP;
 	private VBox myLeftVBox;
 	private VBox myRightVBox;
+
 	private CanvasView myCanvas;
+	private TurtleView myTurtleView;
 	private TextPromptView myTextPrompt;
+
+	private UserDefinedCommandView myUDCView;
 	private VariableView myVarView;
 	private ReferenceView myRefView;
 	private HistoryView myHistoryView;
-	private TurtleView myTurtleView;
+
 	private ToolbarView myToolbarView;
-	private Driver myDriver;
 
 	/**
 	 * Constructor for setting up animation.
 	 * 
 	 * @param stage
 	 */
-	public View(Stage stage, Driver driver, Consumer<String> commandConsumer) {
+	public View(Stage stage, Consumer<String> commandConsumer) {
 		myStage = stage;
-		myDriver = driver;
+		myStage.setTitle("SLogo Interpreter");
 		start(commandConsumer);
 	}
 
@@ -82,6 +83,7 @@ public class View implements ViewAPI {
 		addAnimationComponents();
 		addScrollPaneComponents();
 		addTextPrompt(commandConsumer);
+		addToolbar();
 		myTimeline.play();
 	}
 
@@ -99,15 +101,17 @@ public class View implements ViewAPI {
 	public StringListener getCommandListener() {
 		return myRefView;
 	}
+	
+	@Override
+	public StringListener getUserDefinedCommandListener() {
+		return myUDCView;
+	}
 
 	@Override
 	public void display(SLogoException e) {
 		// TODO
 		System.out.println(e.getMessage());
-	}
-	
-	public void setDriver(Driver driver) {
-		myDriver = driver;
+		showError(e.getMessage());
 	}
 
 	/*************** PRIVATE METHODS *******************/
@@ -219,7 +223,8 @@ public class View implements ViewAPI {
 	 * Add subcomponents of major scroll panes.
 	 */
 	private void addScrollPaneComponents() {
-
+		double dims[][] = getGridDimensions();
+		
 		myLeftSP = createScrollPane();
 		myLeftVBox = new VBox();
 		myLeftSP.setContent(myLeftVBox);
@@ -230,18 +235,24 @@ public class View implements ViewAPI {
 		myRightSP.setContent(myRightVBox);
 		myGrid.add(myRightSP, 2, 1, 1, 2);
 
-		myVarView = new VariableView();
-		myRefView = new ReferenceView();
-		myHistoryView = new HistoryView();
-		myToolbarView = new ToolbarView(SCREEN_WIDTH);
-		// set listeners
-		myToolbarView.getBackgroundOptionView().addBackgroundOptionListener(myCanvas);
-		myToolbarView.getPenOptionView().addPenOptionListener(myTurtleView);
-		myToolbarView.getLanguageOptionView().addLanguageOptionListener(myDriver);
+		myUDCView = new UserDefinedCommandView((dims[1][1] + dims[1][2]) / 2);
+		myVarView = new VariableView((dims[1][1] + dims[1][2]) / 2);
+		myRefView = new ReferenceView((dims[1][1] + dims[1][2]) / 2);
+		myHistoryView = new HistoryView((dims[1][1] + dims[1][2]) / 2);
 
+		myLeftVBox.getChildren().add(myUDCView.getParent());
 		myLeftVBox.getChildren().add(myVarView.getParent());
 		myRightVBox.getChildren().add(myRefView.getParent());
 		myRightVBox.getChildren().add(myHistoryView.getParent());
+
+	}
+
+	private void addToolbar() {
+		myToolbarView = new ToolbarView(SCREEN_WIDTH);
+		// set a listener for background color changes.
+		myToolbarView.getBackgroundOptionView().addBackgroundOptionListener(myCanvas);
+//		myToolbarView.getImageOptionView().addTurtleImageListener(myTurtleView);
+		myToolbarView.getPenOptionView().addPenOptionListener(myTurtleView);
 		myGrid.add(myToolbarView.getParent(), 0, 0);
 	}
 

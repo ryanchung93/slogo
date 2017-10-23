@@ -1,6 +1,7 @@
 package view.API;
 
 import java.util.Map;
+import java.util.Set;
 
 import model.CommandDef;
 
@@ -15,5 +16,5 @@ public interface StringListener extends SubcomponentViewAPI {
 	 * @param s
 	 *            The new String
 	 */
-	public void changedMap(Map<String, CommandDef> newMap);
+	public void changedMap(Set<String> set, Set<String> commandSet);
 }

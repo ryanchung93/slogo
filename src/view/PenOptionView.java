@@ -15,7 +15,9 @@ import javafx.scene.control.Label;
 import javafx.scene.control.Tooltip;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import view.API.BackgroundOptionListener;
 import view.API.PenOptionDisplay;
+import view.API.PenOptionListener;
 import view.API.TurtleListener;
 
 /**
@@ -30,7 +32,7 @@ public class PenOptionView implements PenOptionDisplay {
 	private Label prompt;
 	private ChoiceBox<String> cb;
 	private List<String> colorList;
-	private ResourceBundle myResources = ResourceBundle.getBundle("resources.view/pen");
+	private ResourceBundle myResources = ResourceBundle.getBundle("resources.view/choicebox");
 	private TurtleListener listener;
 
 	public PenOptionView() {

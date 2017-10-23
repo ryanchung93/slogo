@@ -1,13 +1,14 @@
 package view;
 
+import java.util.List;
+
 import javafx.event.EventHandler;
-import javafx.scene.effect.ColorAdjust;
+import javafx.scene.Node;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
-import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 import model.ImmutableTurtle;
@@ -22,8 +23,8 @@ import view.API.TurtleListener;
  */
 public class TurtleView implements TurtleListener {
 
-	private static final double WIDTH = 25;
-	private static final double HEIGHT = 25;
+	private static final double WIDTH = 35;
+	private static final double HEIGHT = 35;
 
 	private ImageView myView;
 
@@ -168,8 +169,9 @@ public class TurtleView implements TurtleListener {
 	@Override
 	public void clearScreen() {
 		// remove image from pane
-		((Pane) myView.getParent()).getChildren().remove(myView);
-
+		List<Node> nodes = ((Pane) myView.getParent()).getChildren();
+		nodes.clear();
+		nodes.add(myView);
 	}
 
 	@Override
@@ -197,6 +199,11 @@ public class TurtleView implements TurtleListener {
 			}
 		}
 
+	}
+
+	@Override
+	public void imageChange(Image image) {
+		myView.setImage(image);
 	}
 
 }

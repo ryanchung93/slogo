@@ -19,8 +19,10 @@ public class SetXY implements Command {
 	public double execute(Turtle t, CommandManager commands, VariableManager variables) {
 		double newX = x.execute(t, commands, variables);
 		double newY = y.execute(t, commands, variables);
+		double dx = newX - t.getX();
+		double dy = newY - t.getY();
 		t.setXY(newX, newY);
-		return Math.sqrt(Math.pow(newX - t.getX(), 2) + Math.pow(newY - t.getY(), 2));
+		return Math.sqrt(Math.pow(dx, 2) + Math.pow(dy, 2));
 	}
 
 }

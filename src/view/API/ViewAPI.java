@@ -30,9 +30,16 @@ public interface ViewAPI {
 	 * StringListener that detects changes to list of commands.
 	 */
 	public StringListener getCommandListener();
+	
+	/**
+	 * @return
+	 * StringListener that detects changes to list of user commands.
+	 */
+	public StringListener getUserDefinedCommandListener();
 
 	/**
 	 * @param e A SLogoException produced when the code is executed
 	 */
 	void display(SLogoException e);
+	
 }
