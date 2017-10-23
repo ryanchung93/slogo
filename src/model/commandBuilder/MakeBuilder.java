@@ -10,7 +10,7 @@ public class MakeBuilder implements CommandDef {
 
 	@Override
 	public Command build(TokenDispenser dispenser) throws SLogoException {
-		return new Make(dispenser.getNextToken(), dispenser.getNextCommand());
+		return new Make(dispenser.getNextVariable(), dispenser.getNextCommand());
 	}
 
 }

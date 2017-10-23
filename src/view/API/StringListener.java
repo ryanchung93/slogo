@@ -16,5 +16,5 @@ public interface StringListener extends SubcomponentViewAPI {
 	 * @param s
 	 *            The new String
 	 */
-	public void changedMap(Map<String, CommandDef> refMap, Set<String> commandSet);
+	public void changedMap(Set<String> set, Set<String> commandSet);
 }

@@ -10,7 +10,7 @@ public class ToBuilder implements CommandDef {
 
 	@Override
 	public Command build(TokenDispenser dispenser) throws SLogoException {
-		return new To(dispenser.getNextToken(), dispenser.getNextTokenList(), dispenser.getNextCommandList());
+		return new To(dispenser.getNextToken(), dispenser.getNextVariableList(), dispenser.getNextCommandList());
 	}
 
 }

@@ -11,7 +11,7 @@ public class DoTimesBuilder implements CommandDef {
 
 	@Override
 	public Command build(TokenDispenser dispenser) throws SLogoException {
-		return new For(dispenser.getNextToken(), new NumberCommand(1), dispenser.getNextCommand(), new NumberCommand(1),
+		return new For(dispenser.getNextVariable(), new NumberCommand(1), dispenser.getNextCommand(), new NumberCommand(1),
 				dispenser.getNextCommandList());
 	}
 

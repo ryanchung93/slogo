@@ -36,6 +36,13 @@ public class Parser implements TokenDispenser{
 		return tokens[index-1];
 	}
 	
+	public String getNextVariable() throws SLogoException {
+		String name = getNextToken();
+		if(!name.matches(SYNTAX.getString("Variable")))
+			throw new SLogoException("InvalidVar", name);
+		return name;
+	}
+	
 	public boolean hasNextCommand() {
 		return index < tokens.length && tokens[index].length()>0;
 	}
@@ -47,17 +54,10 @@ public class Parser implements TokenDispenser{
 			return new NumberCommand(Double.parseDouble(token));
 		if(token.matches(SYNTAX.getString("Variable")))
 			return new VariableCommand(token);
-		//if(token.matches(SYNTAX.getString("GroupStart")))
-			//return getGroup();
 		if(token.matches(SYNTAX.getString("Command")))
 			return availableCommands.get(token).build(this);
 		throw new SLogoException("UnexpectedToken", token);
 	}
-
-	//private Command getGroup() {
-		// TODO Auto-generated method stub
-		//return null;
-	//}
 
 	@Override
 	public List<Command> getNextCommandList() throws SLogoException {
@@ -67,6 +67,11 @@ public class Parser implements TokenDispenser{
 	@Override
 	public List<String> getNextTokenList() throws SLogoException {
 		return getNextList(()->getNextToken());
+	}
+	
+	@Override
+	public List<String> getNextVariableList() throws SLogoException {
+		return getNextList(()->getNextVariable());
 	}
 
 	
