@@ -26,6 +26,15 @@ import view.API.StringListener;
 import view.API.TurtleListener;
 import view.API.VariableListener;
 import view.API.ViewAPI;
+import view.CommandIO.CanvasView;
+import view.CommandIO.TextPromptView;
+import view.CommandIO.TurtleManager;
+import view.CommandIO.TurtleView;
+import view.SidePanes.HistoryView;
+import view.SidePanes.ReferenceView;
+import view.SidePanes.UserDefinedCommandView;
+import view.SidePanes.VariableView;
+import view.Toolbar.ToolbarView;
 
 
 /**
@@ -56,6 +65,7 @@ public class View implements ViewAPI {
 	private VBox myRightVBox;
 
 	private CanvasView myCanvas;
+	private TurtleManager myTurtleManager;
 	private TurtleView myTurtleView;
 	private TextPromptView myTextPrompt;
 	private Driver myDriver;
@@ -93,7 +103,7 @@ public class View implements ViewAPI {
 
 	@Override
 	public TurtleListener getTurtleListener() {
-		return myTurtleView;
+		return myTurtleManager;
 	}
 
 	@Override
@@ -173,7 +183,7 @@ public class View implements ViewAPI {
 	}
 
 	private void handleKeyInput(KeyCode code) {
-		myTurtleView.handleInput(code);
+		myTurtleManager.handleInput(code);
 		System.out.println("press");
 	}
 
@@ -189,11 +199,10 @@ public class View implements ViewAPI {
 		myGrid.add(myCanvas, 1, 1);
 		GridPane.setConstraints(myCanvas, 1, 1, 1, 1, HPos.CENTER, VPos.CENTER);
 
+
 		// FOR TESTING
 		Image image = new Image(getClass().getClassLoader().getResourceAsStream("resources/images/" + TURTLE_IMAGE));
-		myTurtleView = new TurtleView(myCanvas, image);
-
-		myCanvas.getChildren().add(myTurtleView.getImage());
+		myTurtleManager = new TurtleManager(myCanvas, image);
 	}
 
 	/**
@@ -251,12 +260,15 @@ public class View implements ViewAPI {
 
 	}
 
+	/**
+	 * Add toolbar and its subcomponents.
+	 */
 	private void addToolbar() {
 		myToolbarView = new ToolbarView(SCREEN_WIDTH);
 		// set a listener for background color changes.
 		myToolbarView.getBackgroundOptionView().addBackgroundOptionListener(myCanvas);
-		myToolbarView.getImageOptionView().addTurtleImageListener(myTurtleView);
-		myToolbarView.getPenOptionView().addPenOptionListener(myTurtleView);
+		myToolbarView.getImageOptionView().addTurtleImageListener(myTurtleManager);
+		myToolbarView.getPenOptionView().addPenOptionListener(myTurtleManager);
 		myToolbarView.getLanguageOptionView().addLanguageOptionListener(myDriver);
 		myGrid.add(myToolbarView.getParent(), 0, 0);
 	}

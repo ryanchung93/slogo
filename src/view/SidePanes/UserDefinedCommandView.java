@@ -1,4 +1,4 @@
-package view;
+package view.SidePanes;
 
 import java.util.Map;
 import java.util.ResourceBundle;
@@ -6,45 +6,51 @@ import java.util.Set;
 
 import javafx.scene.Parent;
 import javafx.scene.control.ScrollPane;
-import javafx.scene.control.ScrollPane.ScrollBarPolicy;
 import javafx.scene.control.TextArea;
+import javafx.scene.control.ScrollPane.ScrollBarPolicy;
 import model.CommandDef;
-import view.API.StringListener;
+import view.API.UserDefinedCommandDisplay;
 
 /**
- * A Pane representing the basic instructions for using SLogo.
+ * Class allowing users to see defined functions.
  * 
  * @author DavidTran
  *
  */
-public class ReferenceView implements StringListener {
+public class UserDefinedCommandView implements UserDefinedCommandDisplay {
 
 	TextArea ta;
 	private ResourceBundle myResources = ResourceBundle.getBundle("resources.view/view");
 
-	public ReferenceView(double height) {
+	public UserDefinedCommandView(double height) {
 
 		ta = new TextArea();
 		ta.setMinHeight(height);
 		ta.setWrapText(true);
 		ta.setEditable(false);
-		ta.appendText(myResources.getString("ReferenceView"));
+
+		ta.appendText(myResources.getString("UserDefinedCommandView"));
 	}
 
 	@Override
 	public void changedMap(Set<String> refMap, Set<String> commandSet) {
 		ta.clear();
-		ta.appendText(myResources.getString("ReferenceView") + "\n\n");
-		for (String key : refMap) {
-			ta.appendText(key + "\n");// + " : " + newMap.get(key));
+		ta.appendText(myResources.getString("UserDefinedCommandView") + "\n\n");
+		for (String key : commandSet) {
+			ta.appendText(key + "\n");
 		}
-		ta.setScrollTop(0);
 
 	}
 
 	@Override
 	public Parent getParent() {
 		return ta;
+	}
+
+	@Override
+	public void clearCommands() {
+		// TODO Auto-generated method stub
+
 	}
 
 }

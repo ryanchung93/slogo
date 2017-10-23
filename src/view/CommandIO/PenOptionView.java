@@ -1,8 +1,8 @@
-package view;
+package view.CommandIO;
 
-import java.util.List;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.ResourceBundle;
 
 import javafx.beans.value.ChangeListener;
@@ -14,46 +14,48 @@ import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.Tooltip;
 import javafx.scene.layout.VBox;
-import view.API.LanguageListener;
-import view.API.LanguageOptionDisplay;
+import javafx.scene.paint.Color;
+import view.API.BackgroundOptionListener;
+import view.API.PenOptionDisplay;
+import view.API.PenOptionListener;
+import view.API.TurtleListener;
 
 /**
- * Class that allows users to select a language from a choice box.
+ * Class that allows users to select a pen color from a choice box.
  * 
  * @author taekwhunchung
  *
  */
+public class PenOptionView implements PenOptionDisplay {
 
-public class LanguageOptionView implements LanguageOptionDisplay {
-	
 	private VBox optionView;
 	private Label prompt;
 	private ChoiceBox<String> cb;
-	private List<String> languageList;
+	private List<String> colorList;
 	private ResourceBundle myResources = ResourceBundle.getBundle("resources.view/choicebox");
-	private LanguageListener listener;
-	
-	public LanguageOptionView() {
-		
+	private TurtleListener listener;
+
+	public PenOptionView() {
+
 		optionView = new VBox();
-		
-		prompt = new Label(myResources.getString("LanguagePrompt"));
-		
-		languageList = new ArrayList<String>(
-				Arrays.asList(myResources.getString("Languages").replaceAll("\\s+", "").split(",")));
-		
-		cb = new ChoiceBox<String>(FXCollections.observableArrayList(languageList));
-		cb.setTooltip(new Tooltip("Select language"));
+
+		prompt = new Label(myResources.getString("PenPrompt"));
+
+		colorList = new ArrayList<String>(
+				Arrays.asList(myResources.getString("PenColors").replaceAll("\\s+", "").split(",")));
+
+		cb = new ChoiceBox<String>(FXCollections.observableArrayList(colorList));
+		cb.setTooltip(new Tooltip("Select the pen color"));
 		cb.getSelectionModel().selectedIndexProperty().addListener(new ChangeListener<Number>() {
-			
+
 			@Override
 			public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
-				listener.LanguageChange(languageList.get(newValue.intValue()));
+				listener.penColorChange(Color.valueOf((colorList.get(newValue.intValue()))));
 			}
 		});
-		
-		cb.setId("language_cb");
-		
+
+		cb.setId("pen_cb");
+
 		optionView.getChildren().addAll(prompt, cb);
 		optionView.setAlignment(Pos.CENTER);
 	}
@@ -64,7 +66,8 @@ public class LanguageOptionView implements LanguageOptionDisplay {
 	}
 
 	@Override
-	public void addLanguageOptionListener(LanguageListener l) {
+	public void addPenOptionListener(TurtleListener l) {
 		listener = l;
 	}
+
 }

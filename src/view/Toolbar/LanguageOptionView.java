@@ -1,8 +1,8 @@
-package view;
+package view.Toolbar;
 
+import java.util.List;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 import java.util.ResourceBundle;
 
 import javafx.beans.value.ChangeListener;
@@ -13,49 +13,46 @@ import javafx.scene.Parent;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.Tooltip;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
-import view.API.BackgroundOptionDisplay;
-import view.API.BackgroundOptionListener;
+import view.API.LanguageListener;
+import view.API.LanguageOptionDisplay;
 
 /**
- * Class that allows users to select a canvas color from a choice box.
+ * Class that allows users to select a language from a choice box.
  * 
- * @author DavidTran
+ * @author taekwhunchung
  *
  */
-public class BackgroundOptionView implements BackgroundOptionDisplay {
 
+public class LanguageOptionView implements LanguageOptionDisplay {
+	
 	private VBox optionView;
 	private Label prompt;
 	private ChoiceBox<String> cb;
-	private List<String> colorList;
+	private List<String> languageList;
 	private ResourceBundle myResources = ResourceBundle.getBundle("resources.view/choicebox");
-	private BackgroundOptionListener listener;
-
-	public BackgroundOptionView() {
-
+	private LanguageListener listener;
+	
+	public LanguageOptionView() {
+		
 		optionView = new VBox();
 		
-		prompt = new Label(myResources.getString("BackgroundPrompt"));
+		prompt = new Label(myResources.getString("LanguagePrompt"));
 		
-		colorList = new ArrayList<String>(
-				Arrays.asList(myResources.getString("BackgroundColors").replaceAll("\\s+", "").split(",")));
-
-		cb = new ChoiceBox<String>(FXCollections.observableArrayList(colorList));
-		cb.setTooltip(new Tooltip("Select the background color"));
+		languageList = new ArrayList<String>(
+				Arrays.asList(myResources.getString("Languages").replaceAll("\\s+", "").split(",")));
+		
+		cb = new ChoiceBox<String>(FXCollections.observableArrayList(languageList));
+		cb.setTooltip(new Tooltip("Select language"));
 		cb.getSelectionModel().selectedIndexProperty().addListener(new ChangeListener<Number>() {
-
+			
 			@Override
 			public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
-				System.out.println(newValue.intValue());
-				listener.backgroundColorChange(Color.valueOf((colorList.get(newValue.intValue()))));
-
+				listener.LanguageChange(languageList.get(newValue.intValue()));
 			}
 		});
 		
-		cb.setId("background_cb");
+		cb.setId("language_cb");
 		
 		optionView.getChildren().addAll(prompt, cb);
 		optionView.setAlignment(Pos.CENTER);
@@ -67,9 +64,7 @@ public class BackgroundOptionView implements BackgroundOptionDisplay {
 	}
 
 	@Override
-	public void addBackgroundOptionListener(BackgroundOptionListener l) {
+	public void addLanguageOptionListener(LanguageListener l) {
 		listener = l;
-
 	}
-
 }
