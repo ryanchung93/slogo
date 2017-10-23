@@ -33,7 +33,6 @@ public class ToolbarView implements SubcomponentViewAPI {
 	private BackgroundOptionView myBackgroundOptionView;
 	private ImageOptionView myImageOptionView;
 	private PenOptionView myPenOptionView;
-	private LanguageOptionView myLanguageOptionView;
 
 	public ToolbarView(double width) {
 
@@ -57,13 +56,9 @@ public class ToolbarView implements SubcomponentViewAPI {
 	public BackgroundOptionView getBackgroundOptionView() {
 		return myBackgroundOptionView;
 	}
-
+	
 	public PenOptionView getPenOptionView() {
 		return myPenOptionView;
-	}
-	
-	public LanguageOptionView getLanguageOptionView() {
-		return myLanguageOptionView;
 	}
 
 	// Must add to API
@@ -109,11 +104,6 @@ public class ToolbarView implements SubcomponentViewAPI {
 	private void addPenColorOption() {
 		myPenOptionView = new PenOptionView();
 		myToolbar.getChildren().add(myPenOptionView.getParent());
-	}
-	
-	private void addLanguageOption() {
-		myLanguageOptionView = new LanguageOptionView();
-		myToolbar.getChildren().add(myLanguageOptionView.getParent());
 	}
 
 	private void showError(String message) {
