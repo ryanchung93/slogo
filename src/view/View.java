@@ -6,7 +6,6 @@ import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.geometry.HPos;
-import javafx.geometry.Insets;
 import javafx.geometry.VPos;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
@@ -77,7 +76,7 @@ public class View implements ViewAPI {
 		start(commandConsumer);
 	}
 
-	/******************* PUBLIC METHODS **********************/
+	/**************** PUBLIC METHODS *******************/
 
 	public void start(Consumer<String> commandConsumer) {
 		myTimeline = setupTimeline();
@@ -103,7 +102,7 @@ public class View implements ViewAPI {
 	public StringListener getCommandListener() {
 		return myRefView;
 	}
-
+	
 	@Override
 	public StringListener getUserDefinedCommandListener() {
 		return myUDCView;
@@ -134,6 +133,7 @@ public class View implements ViewAPI {
 	 */
 	private void step(double elaspedTime) {
 		// Read command
+
 		// Pass into execute
 	}
 
@@ -144,6 +144,7 @@ public class View implements ViewAPI {
 		myGrid = new GridPane();
 
 		myScene = new Scene(myGrid, SCREEN_WIDTH, SCREEN_HEIGHT);
+		// myScene.getStylesheets().add(getClass().getResource("/resources/view/view.css").toExternalForm());
 		myScene.getStylesheets().add(STYLESHEET);
 		myScene.setOnKeyPressed(e -> handleKeyInput(e.getCode()));
 
@@ -168,9 +169,6 @@ public class View implements ViewAPI {
 
 	}
 
-	/**
-	 * Handle key inputs to move the turtle.
-	 */
 	private void handleKeyInput(KeyCode code) {
 		myTurtleView.handleInput(code);
 		System.out.println("press");
@@ -209,9 +207,10 @@ public class View implements ViewAPI {
 
 	/**
 	 * Create left and right major scrollpanes.
+	 * 
+	 * @return
 	 */
 	private ScrollPane createScrollPane() {
-
 		ScrollPane sp = new ScrollPane();
 		sp.setFitToWidth(true);
 		sp.setPannable(true);
@@ -226,7 +225,7 @@ public class View implements ViewAPI {
 	 */
 	private void addScrollPaneComponents() {
 		double dims[][] = getGridDimensions();
-
+		
 		myLeftSP = createScrollPane();
 		myLeftVBox = new VBox();
 		myLeftSP.setContent(myLeftVBox);
@@ -236,7 +235,7 @@ public class View implements ViewAPI {
 		myRightVBox = new VBox();
 		myRightSP.setContent(myRightVBox);
 		myGrid.add(myRightSP, 2, 1, 1, 2);
-		
+
 		myUDCView = new UserDefinedCommandView((dims[1][1] + dims[1][2]) / 2);
 		myVarView = new VariableView((dims[1][1] + dims[1][2]) / 2);
 		myRefView = new ReferenceView((dims[1][1] + dims[1][2]) / 2);
@@ -246,19 +245,15 @@ public class View implements ViewAPI {
 		myLeftVBox.getChildren().add(myVarView.getParent());
 		myRightVBox.getChildren().add(myRefView.getParent());
 		myRightVBox.getChildren().add(myHistoryView.getParent());
+
 	}
 
-	/**
-	 * Add toolbar with its subcomponents.
-	 */
 	private void addToolbar() {
 		myToolbarView = new ToolbarView(SCREEN_WIDTH);
 		// set a listener for background color changes.
 		myToolbarView.getBackgroundOptionView().addBackgroundOptionListener(myCanvas);
 		myToolbarView.getImageOptionView().addTurtleImageListener(myTurtleView);
 		myToolbarView.getPenOptionView().addPenOptionListener(myTurtleView);
-		myToolbarView.getLanguageOptionView().addLanguageOptionListener(myDriver);
-
 		myGrid.add(myToolbarView.getParent(), 0, 0);
 	}
 
