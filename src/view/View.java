@@ -28,6 +28,7 @@ import view.API.TurtleListener;
 import view.API.VariableListener;
 import view.API.ViewAPI;
 
+
 /**
  * Class that displays the GUI and SLogo animations.
  * 
