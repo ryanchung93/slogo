@@ -1,4 +1,4 @@
-package view;
+package view.Toolbar;
 
 import java.util.ArrayList;
 import java.util.Arrays;

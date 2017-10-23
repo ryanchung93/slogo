@@ -252,12 +252,12 @@ public class TurtleView implements TurtleListener, TurtleImageViewAPI {
                     myBackEndTurtle.translate(1, 0);
                     break;
                 case R:
-                    headingChange(180 + myView.getRotate() - 2);
-                    myBackEndTurtle.rotate(-2);
-                    break;
-                case T:
                     headingChange(180 + myView.getRotate() + 2);
                     myBackEndTurtle.rotate(2);
+                    break;
+                case T:
+                    headingChange(180 + myView.getRotate() - 2);
+                    myBackEndTurtle.rotate(-2);
                     break;
                 default:
                     break;
