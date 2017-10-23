@@ -32,7 +32,7 @@ public class UserDefinedCommandView implements UserDefinedCommandDisplay {
 	}
 
 	@Override
-	public void changedMap(Map<String, CommandDef> refMap, Set<String> commandSet) {
+	public void changedMap(Set<String> refMap, Set<String> commandSet) {
 		ta.clear();
 		ta.appendText(myResources.getString("UserDefinedCommandView") + "\n\n");
 		for (String key : commandSet) {
