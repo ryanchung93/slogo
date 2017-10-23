@@ -88,7 +88,7 @@ public class TurtleView implements TurtleListener {
 			@Override
 			public void handle(MouseEvent t) {
 				// do stuff (toggle turtle)
-				System.out.println("Clicked turtle");
+				//System.out.println("Clicked turtle");
 				if (myIsToggled)
 					myView.setStyle("-fx-background-color:transparent");
 				else
@@ -146,7 +146,7 @@ public class TurtleView implements TurtleListener {
 		// myView.setRotate(dtheta);
 		double newAngle = -newHeading;
 		myView.setRotate(180 - newAngle);
-		System.out.println("NewHeading: " + (-newHeading));
+		//System.out.println("NewHeading: " + (-newHeading));
 	}
 
 	@Override
@@ -176,7 +176,7 @@ public class TurtleView implements TurtleListener {
 
 	@Override
 	public void handleInput(KeyCode code) {
-		System.out.println(code);
+		//System.out.println(code);
 
 		// must change the back-end turtle!!!
 
