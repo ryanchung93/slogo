@@ -1,23 +1,19 @@
-package view;
+package view.Toolbar;
 
 import java.awt.Desktop;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.ResourceBundle;
 
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Hyperlink;
-import javafx.scene.layout.Border;
-import javafx.scene.layout.BorderStroke;
-import javafx.scene.layout.BorderStrokeStyle;
-import javafx.scene.layout.BorderWidths;
-import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.HBox;
-import javafx.scene.paint.Color;
 import view.API.SubcomponentViewAPI;
+import view.CommandIO.PenOptionView;
 
 /**
  * Class allowing users to view and use toolbar functions.
@@ -27,6 +23,7 @@ import view.API.SubcomponentViewAPI;
  */
 public class ToolbarView implements SubcomponentViewAPI {
 
+    private ResourceBundle myResources = ResourceBundle.getBundle("resources.view/view");
 	private static final double NODE_SPACING = 50;
 	private HBox myToolbar;
 	private Hyperlink myHelpLink;
@@ -57,7 +54,7 @@ public class ToolbarView implements SubcomponentViewAPI {
 	public BackgroundOptionView getBackgroundOptionView() {
 		return myBackgroundOptionView;
 	}
-
+	
 	public PenOptionView getPenOptionView() {
 		return myPenOptionView;
 	}
@@ -80,7 +77,7 @@ public class ToolbarView implements SubcomponentViewAPI {
 			if (Desktop.isDesktopSupported()) {
 				try {
 					Desktop.getDesktop().browse(
-							new URI("http://www.cs.duke.edu/courses/compsci308/current/assign/03_slogo/commands.php"));
+							new URI(myResources.getString("HelpURL")));
 				} catch (IOException e1) {
 					e1.printStackTrace();
 					showError(e1.getMessage());

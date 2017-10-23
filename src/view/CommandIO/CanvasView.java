@@ -1,4 +1,4 @@
-package view;
+package view.CommandIO;
 
 import javafx.geometry.Insets;
 import javafx.scene.layout.Background;

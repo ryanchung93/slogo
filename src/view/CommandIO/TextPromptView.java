@@ -1,4 +1,4 @@
-package view;
+package view.CommandIO;
 
 import java.util.function.Consumer;
 

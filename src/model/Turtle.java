@@ -8,7 +8,7 @@ import view.API.TurtleListener;
  * TurtleListeners when changes are made to the state.
  *
  */
-public class Turtle implements ImmutableTurtle {
+public class Turtle implements ImmutableTurtle, UserTurtle {
 	
 	private TurtleListener listener;
 	private double x;
@@ -35,9 +35,9 @@ public class Turtle implements ImmutableTurtle {
 	// need to add to interface
 	public void addTurtleListener(TurtleListener tL) {
 		listener = tL;
-		tL.setTurtle(this);
+		tL.setTurtle(this, this);
 	}
-	
+
 	public double getX() {
 		return x;
 	}
@@ -91,7 +91,18 @@ public class Turtle implements ImmutableTurtle {
 		listener.penColorChange(color);
 	}
 
-	/**
+    @Override
+    public void translate(double dx, double dy) {
+        x += dx;
+        y += dy;
+    }
+
+    @Override
+    public void rotate(double dtheta) {
+        heading += dtheta;
+    }
+
+    /**
 	 * Returns to original position, heading, visibility, and pen position, then notifies the listeners to clear
 	 */
 	public void clearScreen() {

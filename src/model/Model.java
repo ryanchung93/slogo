@@ -48,8 +48,13 @@ public class Model {
 	public void execute(String code) throws SLogoException {
 		Parser parser = new Parser(code, commands);
 		while(parser.hasNextCommand()) {
-			parser.getNextCommand().execute(turtles.get(0), commands, variables);
-			variables.notifyListeners();
+
+			for (Turtle turtle : turtles) {
+			    // must implement if turtle is toggled
+				parser.getNextCommand().execute(turtle, commands, variables);
+				variables.notifyListeners();
+			}
+
 		}
 	}
 }

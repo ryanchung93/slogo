@@ -1,4 +1,4 @@
-package view;
+package view.Toolbar;
 
 import java.util.List;
 import java.util.ArrayList;
@@ -30,7 +30,7 @@ public class LanguageOptionView implements LanguageOptionDisplay {
 	private Label prompt;
 	private ChoiceBox<String> cb;
 	private List<String> languageList;
-	private ResourceBundle myResources = ResourceBundle.getBundle("resources.view/language");
+	private ResourceBundle myResources = ResourceBundle.getBundle("resources.view/choicebox");
 	private LanguageListener listener;
 	
 	public LanguageOptionView() {

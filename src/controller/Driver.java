@@ -46,6 +46,4 @@ public class Driver implements DriverAPI, LanguageListener {
 		myModel.setLanguage(language);
 		
 	}
-
-
 }

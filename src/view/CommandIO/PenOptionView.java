@@ -1,4 +1,4 @@
-package view;
+package view.CommandIO;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -15,7 +15,9 @@ import javafx.scene.control.Label;
 import javafx.scene.control.Tooltip;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import view.API.BackgroundOptionListener;
 import view.API.PenOptionDisplay;
+import view.API.PenOptionListener;
 import view.API.TurtleListener;
 
 /**

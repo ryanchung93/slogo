@@ -23,11 +23,20 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import model.SLogoException;
-import view.API.LanguageListener;
 import view.API.StringListener;
 import view.API.TurtleListener;
 import view.API.VariableListener;
 import view.API.ViewAPI;
+import view.CommandIO.CanvasView;
+import view.CommandIO.TextPromptView;
+import view.CommandIO.TurtleManager;
+import view.CommandIO.TurtleView;
+import view.SidePanes.HistoryView;
+import view.SidePanes.ReferenceView;
+import view.SidePanes.UserDefinedCommandView;
+import view.SidePanes.VariableView;
+import view.Toolbar.ToolbarView;
+
 
 /**
  * Class that displays the GUI and SLogo animations.
@@ -57,8 +66,10 @@ public class View implements ViewAPI {
 	private VBox myRightVBox;
 
 	private CanvasView myCanvas;
+	private TurtleManager myTurtleManager;
 	private TurtleView myTurtleView;
 	private TextPromptView myTextPrompt;
+	private Driver myDriver;
 
 	private UserDefinedCommandView myUDCView;
 	private VariableView myVarView;
@@ -66,7 +77,6 @@ public class View implements ViewAPI {
 	private HistoryView myHistoryView;
 
 	private ToolbarView myToolbarView;
-	private Driver myDriver;
 
 	/**
 	 * Constructor for setting up animation.
@@ -94,7 +104,7 @@ public class View implements ViewAPI {
 
 	@Override
 	public TurtleListener getTurtleListener() {
-		return myTurtleView;
+		return myTurtleManager;
 	}
 
 	@Override
@@ -117,10 +127,6 @@ public class View implements ViewAPI {
 		// TODO
 		System.out.println(e.getMessage());
 		showError(e.getMessage());
-	}
-	
-	public void setDriver(Driver driver) {
-		myDriver = driver;
 	}
 
 	/*************** PRIVATE METHODS *******************/
@@ -179,7 +185,7 @@ public class View implements ViewAPI {
 	 * Handle key inputs to move the turtle.
 	 */
 	private void handleKeyInput(KeyCode code) {
-		myTurtleView.handleInput(code);
+		myTurtleManager.handleInput(code);
 		System.out.println("press");
 	}
 
@@ -195,11 +201,10 @@ public class View implements ViewAPI {
 		myGrid.add(myCanvas, 1, 1);
 		GridPane.setConstraints(myCanvas, 1, 1, 1, 1, HPos.CENTER, VPos.CENTER);
 
+
 		// FOR TESTING
 		Image image = new Image(getClass().getClassLoader().getResourceAsStream("resources/images/" + TURTLE_IMAGE));
-		myTurtleView = new TurtleView(myCanvas, image);
-
-		myCanvas.getChildren().add(myTurtleView.getImage());
+		myTurtleManager = new TurtleManager(myCanvas, image);
 	}
 
 	/**
@@ -232,7 +237,6 @@ public class View implements ViewAPI {
 	 * Add subcomponents of major scroll panes.
 	 */
 	private void addScrollPaneComponents() {
-	    
 		double dims[][] = getGridDimensions();
 
 		myLeftSP = createScrollPane();
@@ -244,7 +248,7 @@ public class View implements ViewAPI {
 		myRightVBox = new VBox();
 		myRightSP.setContent(myRightVBox);
 		myGrid.add(myRightSP, 2, 1, 1, 2);
-		
+
 		myUDCView = new UserDefinedCommandView((dims[1][1] + dims[1][2]) / 2);
 		myVarView = new VariableView((dims[1][1] + dims[1][2]) / 2);
 		myRefView = new ReferenceView((dims[1][1] + dims[1][2]) / 2);
@@ -257,14 +261,18 @@ public class View implements ViewAPI {
 	}
 
 	/**
+<<<<<<< HEAD
 	 * Add toolbar with its subcomponents.
+=======
+	 * Add toolbar and its subcomponents.
+>>>>>>> test
 	 */
 	private void addToolbar() {
 		myToolbarView = new ToolbarView(SCREEN_WIDTH);
-		// set listeners
+		// set a listener for background color changes.
 		myToolbarView.getBackgroundOptionView().addBackgroundOptionListener(myCanvas);
-		myToolbarView.getImageOptionView().addTurtleImageListener(myTurtleView);
-		myToolbarView.getPenOptionView().addPenOptionListener(myTurtleView);
+		myToolbarView.getImageOptionView().addTurtleImageListener(myTurtleManager);
+		myToolbarView.getPenOptionView().addPenOptionListener(myTurtleManager);
 		myToolbarView.getLanguageOptionView().addLanguageOptionListener(myDriver);
 
 		myGrid.add(myToolbarView.getParent(), 0, 0);
