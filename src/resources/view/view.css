@@ -71,9 +71,10 @@ HBox {
 	-fx-background-color: #435761;
 }
 
-#language_cb .menu-item:focused {
-	-fx-background-color: #7d97a5;
+#language_cb .context-menu {
+	-fx-background-color: #435761;
 }
+
 /*ARROW*/
 #background_cb {
   -fx-mark-color: #435761;
@@ -85,9 +86,11 @@ HBox {
   -fx-background-color: #7d97a5;	
 }
 
-#language_cb .menu-item:focused {
+#language_cb {
+  -fx-mark-color: #435761;
   -fx-background-color: #7d97a5;
 }
+
 
 
 .text-area {

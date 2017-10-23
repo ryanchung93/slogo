@@ -68,8 +68,9 @@ public class View implements ViewAPI {
 	 * 
 	 * @param stage
 	 */
-	public View(Stage stage, Consumer<String> commandConsumer) {
+	public View(Stage stage, Driver driver, Consumer<String> commandConsumer) {
 		myStage = stage;
+		myDriver = driver;
 		start(commandConsumer);
 	}
 

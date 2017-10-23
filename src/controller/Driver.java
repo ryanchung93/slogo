@@ -18,7 +18,7 @@ public class Driver implements DriverAPI, LanguageListener {
 	 * Constructor
 	 */
 	public Driver(Stage stage) {
-		myView = new View(stage, s -> execute(s));
+		myView = new View(stage, this, s -> execute(s));
 		CommandManager commandManager = new CommandManager("resources.builders.basicCommands");
 		myModel = new Model(commandManager);
 	}
@@ -34,7 +34,6 @@ public class Driver implements DriverAPI, LanguageListener {
 	@Override
 	public void run() {
 		Turtle t = new Turtle(0, 0, 0);
-		myView.setDriver(this);
 		myModel.addTurtle(t, myView.getTurtleListener());
 		myModel.addCommandListener(myView.getCommandListener());
 		myModel.addVariableListener(myView.getVariableListener());
