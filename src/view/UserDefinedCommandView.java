@@ -22,9 +22,10 @@ public class UserDefinedCommandView implements UserDefinedCommandDisplay {
 	TextArea ta;
 	private ResourceBundle myResources = ResourceBundle.getBundle("resources.view/view");
 
-	public UserDefinedCommandView() {
+	public UserDefinedCommandView(double height) {
 
 		ta = new TextArea();
+		ta.setMinHeight(height);
 		ta.setWrapText(true);
 		ta.setEditable(false);
 

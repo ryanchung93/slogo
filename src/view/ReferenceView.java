@@ -22,9 +22,10 @@ public class ReferenceView implements StringListener {
 	TextArea ta;
 	private ResourceBundle myResources = ResourceBundle.getBundle("resources.view/view");
 
-	public ReferenceView() {
+	public ReferenceView(double height) {
 
 		ta = new TextArea();
+		ta.setMinHeight(height);
 		ta.setWrapText(true);
 		ta.setEditable(false);
 		ta.appendText(myResources.getString("ReferenceView"));

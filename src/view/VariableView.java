@@ -20,9 +20,10 @@ public class VariableView implements VariableDisplay {
 	private TextArea ta;
 	private ResourceBundle myResources = ResourceBundle.getBundle("resources.view/view");
 
-	public VariableView() {
+	public VariableView(double height) {
 
 		ta = new TextArea();
+		ta.setMinHeight(height);
 		ta.setWrapText(true);
 		ta.setEditable(false);
 		ta.appendText(myResources.getString("VariableView"));
