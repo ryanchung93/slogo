@@ -40,9 +40,8 @@ public class ToolbarView implements SubcomponentViewAPI {
 		myToolbar.setAlignment(Pos.CENTER);
 		myToolbar.setMinWidth(width);
 		addBackgroundColorOption();
-		addPenColorOption();
 		addTurtleImageOption();
-		addLanguageOption();
+		addPenColorOption();
 		addHelpLink();
 
 	}
