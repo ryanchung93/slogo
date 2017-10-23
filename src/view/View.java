@@ -253,6 +253,8 @@ public class View implements ViewAPI {
 		myToolbarView.getBackgroundOptionView().addBackgroundOptionListener(myCanvas);
 		myToolbarView.getImageOptionView().addTurtleImageListener(myTurtleView);
 		myToolbarView.getPenOptionView().addPenOptionListener(myTurtleView);
+		myToolbarView.getLanguageOptionView().addLanguageOptionListener(myDriver);
+		
 		myGrid.add(myToolbarView.getParent(), 0, 0);
 	}
 
