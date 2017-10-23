@@ -7,8 +7,9 @@ import model.Model;
 import model.SLogoException;
 import model.Turtle;
 import view.View;
+import view.API.LanguageListener;
 
-public class Driver implements DriverAPI {
+public class Driver implements DriverAPI, LanguageListener {
 
 	private View myView;
 	private Model myModel;
@@ -17,7 +18,7 @@ public class Driver implements DriverAPI {
 	 * Constructor
 	 */
 	public Driver(Stage stage) {
-		myView = new View(stage, s -> execute(s));
+		myView = new View(stage, this, s -> execute(s));
 		CommandManager commandManager = new CommandManager("resources.builders.basicCommands");
 		myModel = new Model(commandManager);
 	}
@@ -38,5 +39,13 @@ public class Driver implements DriverAPI {
 		myModel.addCommandListener(myView.getUserDefinedCommandListener());
 		myModel.addVariableListener(myView.getVariableListener());
 	}
+
+	@Override
+	public void LanguageChange(String language) {
+		System.out.println(language);
+		myModel.setLanguage(language);
+		
+	}
+
 
 }
