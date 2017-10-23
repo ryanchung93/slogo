@@ -251,7 +251,7 @@ public class View implements ViewAPI {
 		myToolbarView = new ToolbarView(SCREEN_WIDTH);
 		// set a listener for background color changes.
 		myToolbarView.getBackgroundOptionView().addBackgroundOptionListener(myCanvas);
-//		myToolbarView.getImageOptionView().addTurtleImageListener(myTurtleView);
+		myToolbarView.getImageOptionView().addTurtleImageListener(myTurtleView);
 		myToolbarView.getPenOptionView().addPenOptionListener(myTurtleView);
 		myGrid.add(myToolbarView.getParent(), 0, 0);
 	}
