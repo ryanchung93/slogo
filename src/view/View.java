@@ -244,9 +244,6 @@ public class View implements ViewAPI {
 		myRightSP.setContent(myRightVBox);
 		myGrid.add(myRightSP, 2, 1, 1, 2);
 
-		myVarView = new VariableView();
-		myRefView = new ReferenceView();
-		myHistoryView = new HistoryView();
 		
 		myUDCView = new UserDefinedCommandView((dims[1][1] + dims[1][2]) / 2);
 		myVarView = new VariableView((dims[1][1] + dims[1][2]) / 2);
@@ -267,11 +264,7 @@ public class View implements ViewAPI {
 		myToolbarView.getImageOptionView().addTurtleImageListener(myTurtleView);
 		myToolbarView.getPenOptionView().addPenOptionListener(myTurtleView);
 		myToolbarView.getLanguageOptionView().addLanguageOptionListener(myDriver);
-
-		myLeftVBox.getChildren().add(myVarView.getParent());
-		myRightVBox.getChildren().add(myRefView.getParent());
-		myRightVBox.getChildren().add(myHistoryView.getParent());
-		myGrid.add(myToolbarView.getParent(), 0, 0);
+		myGrid.add(myToolbarView.getParent(),0, 0);
 	}
 
 	/**
