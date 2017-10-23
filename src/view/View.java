@@ -2,7 +2,6 @@ package view;
 
 import java.util.function.Consumer;
 
-import controller.Driver;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -22,6 +21,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import model.SLogoException;
+import view.API.LanguageListener;
 import view.API.StringListener;
 import view.API.TurtleListener;
 import view.API.VariableListener;
@@ -58,7 +58,7 @@ public class View implements ViewAPI {
 	private CanvasView myCanvas;
 	private TurtleView myTurtleView;
 	private TextPromptView myTextPrompt;
-	private Driver myDriver;
+	private LanguageListener languageListener;
 
 	private UserDefinedCommandView myUDCView;
 	private VariableView myVarView;
@@ -72,9 +72,9 @@ public class View implements ViewAPI {
 	 * 
 	 * @param stage
 	 */
-	public View(Stage stage, Driver driver, Consumer<String> commandConsumer) {
+	public View(Stage stage, LanguageListener langListener, Consumer<String> commandConsumer) {
 		myStage = stage;
-		myDriver = driver;
+		languageListener = langListener;
 		myStage.setTitle("SLogo Interpreter");
 		start(commandConsumer);
 	}
@@ -114,7 +114,7 @@ public class View implements ViewAPI {
 	@Override
 	public void display(SLogoException e) {
 		// TODO
-		System.out.println(e.getMessage());
+		//System.out.println(e.getMessage());
 		showError(e.getMessage());
 	}
 
@@ -174,7 +174,7 @@ public class View implements ViewAPI {
 
 	private void handleKeyInput(KeyCode code) {
 		myTurtleView.handleInput(code);
-		System.out.println("press");
+		//System.out.println("press");
 	}
 
 	/**
@@ -257,7 +257,7 @@ public class View implements ViewAPI {
 		myToolbarView.getBackgroundOptionView().addBackgroundOptionListener(myCanvas);
 		myToolbarView.getImageOptionView().addTurtleImageListener(myTurtleView);
 		myToolbarView.getPenOptionView().addPenOptionListener(myTurtleView);
-		myToolbarView.getLanguageOptionView().addLanguageOptionListener(myDriver);
+		myToolbarView.getLanguageOptionView().addLanguageOptionListener(languageListener);
 		myGrid.add(myToolbarView.getParent(), 0, 0);
 	}
 
