@@ -1,5 +1,7 @@
 package view;
 
+import java.util.Arrays;
+import java.util.ResourceBundle;
 import java.util.function.Consumer;
 
 import javafx.animation.Animation;
@@ -36,14 +38,13 @@ import view.TextArea.UserDefinedCommandView;
 import view.TextArea.VariableView;
 import view.Toolbar.ToolbarView;
 
-
 /**
  * Class that displays the GUI and SLogo animations.
  * 
  * @author DavidTran
  *
  */
-public class View implements ViewAPI {
+public class View implements ViewAPI, LanguageListener {
 
 	private static final int FRAMES_PER_SECOND = 60;
 	private static final int MILLISECOND_DELAY = 1000 / FRAMES_PER_SECOND;
@@ -51,6 +52,7 @@ public class View implements ViewAPI {
 	private static final int SCREEN_WIDTH = 1000;
 	private static final int SCREEN_HEIGHT = 700;
 	private static final String STYLESHEET = "/resources/view/view.css";
+	private static final String DEFAULT_LANGUAGE = "English";
 
 	private static final String TURTLE_IMAGE = "Turtle_up.png";
 
@@ -66,17 +68,16 @@ public class View implements ViewAPI {
 
 	private CanvasView myCanvas;
 	private TurtleViewManager myTurtleManager;
-	private TurtleView myTurtleView;
 	private TextPromptView myTextPrompt;
-	private LanguageListener languageListener;
 
 	private UserDefinedCommandView myUDCView;
 	private VariableView myVarView;
 	private ReferenceView myRefView;
 	private HistoryView myHistoryView;
-
 	private ToolbarView myToolbarView;
 
+	private LanguageListener myLanguageListener;
+	private ResourceBundle acceptedCommands;
 	/**
 	 * Constructor for setting up animation.
 	 * 
@@ -84,7 +85,8 @@ public class View implements ViewAPI {
 	 */
 	public View(Stage stage, LanguageListener langListener, Consumer<String> commandConsumer) {
 		myStage = stage;
-		languageListener = langListener;
+		myLanguageListener = langListener;
+		acceptedCommands = ResourceBundle.getBundle("resources.languages." + DEFAULT_LANGUAGE);
 		myStage.setTitle("SLogo Interpreter");
 		start(commandConsumer);
 	}
@@ -117,6 +119,11 @@ public class View implements ViewAPI {
 	}
 	
 	@Override
+	public LanguageListener getLanguageListener() {
+		return this;
+	}
+
+	@Override
 	public StringListener getUserDefinedCommandListener() {
 		return myUDCView;
 	}
@@ -126,6 +133,7 @@ public class View implements ViewAPI {
 		System.out.println(e.getMessage());
 		showError(e.getMessage());
 	}
+	
 
 	/*************** PRIVATE METHODS *******************/
 
@@ -182,8 +190,32 @@ public class View implements ViewAPI {
 	}
 
 	private void handleKeyInput(KeyCode code) {
-		myTurtleManager.handleInput(code);
-		System.out.println("press");
+		switch (code) {
+		case W:
+			myTextPrompt.runCommand(acceptedCommands.getString("Forward").split("\\|")[0] + " " + 1);
+			break;
+		case S:
+			myTextPrompt.runCommand(acceptedCommands.getString("Backward").split("\\|")[0] + " " + 1);
+			break;
+		case A:
+			myTextPrompt.runCommand(acceptedCommands.getString("Left").split("\\|")[0] + " " + 90);
+			myTextPrompt.runCommand(acceptedCommands.getString("Forward").split("\\|")[0] + " " + 1);
+			myTextPrompt.runCommand(acceptedCommands.getString("Right").split("\\|")[0] + " " + 90);
+			break;
+		case D:
+			myTextPrompt.runCommand(acceptedCommands.getString("Right").split("\\|")[0] + " " + 90);
+			myTextPrompt.runCommand(acceptedCommands.getString("Forward").split("\\|")[0] + " " + 1);
+			myTextPrompt.runCommand(acceptedCommands.getString("Left").split("\\|")[0] + " " + 90);
+			break;
+		case R:
+			myTextPrompt.runCommand(acceptedCommands.getString("Left").split("\\|")[0] + " " + 1);
+			break;
+		case T:
+			myTextPrompt.runCommand(acceptedCommands.getString("Right").split("\\|")[0] + " " + 1);
+			break;
+		default:
+			break;
+		}
 	}
 
 	/**
@@ -197,7 +229,6 @@ public class View implements ViewAPI {
 
 		myGrid.add(myCanvas, 1, 1);
 		GridPane.setConstraints(myCanvas, 1, 1, 1, 1, HPos.CENTER, VPos.CENTER);
-
 
 		// FOR TESTING
 		Image image = new Image(getClass().getClassLoader().getResourceAsStream("resources/images/" + TURTLE_IMAGE));
@@ -236,7 +267,7 @@ public class View implements ViewAPI {
 	 */
 	private void addScrollPaneComponents() {
 		double dims[][] = getGridDimensions();
-		
+
 		myLeftSP = createScrollPane();
 		myLeftVBox = new VBox();
 		myLeftSP.setContent(myLeftVBox);
@@ -268,7 +299,8 @@ public class View implements ViewAPI {
 		myToolbarView.getBackgroundOptionView().addBackgroundOptionListener(myCanvas);
 		myToolbarView.getImageOptionView().addTurtleImageListener(myTurtleManager);
 		myToolbarView.getPenOptionView().addPenOptionListener(myTurtleManager);
-		myToolbarView.getLanguageOptionView().addLanguageOptionListener(languageListener);
+		myToolbarView.getLanguageOptionView().addLanguageOptionListener(myLanguageListener);
+		myToolbarView.getLanguageOptionView().addLanguageOptionListener(this);
 		myGrid.add(myToolbarView.getParent(), 0, 0);
 	}
 
@@ -297,6 +329,12 @@ public class View implements ViewAPI {
 		Alert alert = new Alert(AlertType.ERROR);
 		alert.setContentText(message);
 		alert.showAndWait();
+	}
+
+	@Override
+	public void languageChange(String language) {
+		acceptedCommands = ResourceBundle.getBundle("resources.languages." + language);
+		
 	}
 
 }

@@ -1,7 +1,5 @@
 package view.API.CommandIOAPI;
 
-import javafx.scene.image.Image;
-
 /**
  * Allows detection of image changes for turtles.
  * 

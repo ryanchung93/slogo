@@ -8,7 +8,7 @@ import view.API.CommandIOAPI.TurtleListener;
  * TurtleListeners when changes are made to the state.
  *
  */
-public class Turtle implements ImmutableTurtle, UserTurtle {
+public class Turtle implements ImmutableTurtle {
 	
 	private TurtleListener listener;
 	private double x;
@@ -35,7 +35,7 @@ public class Turtle implements ImmutableTurtle, UserTurtle {
 	// need to add to interface
 	public void addTurtleListener(TurtleListener tL) {
 		listener = tL;
-		tL.setTurtle(this, this);
+		tL.setTurtle(this);
 	}
 
 	public double getX() {
@@ -82,23 +82,11 @@ public class Turtle implements ImmutableTurtle, UserTurtle {
 		isVisible = visible;
 		listener.visibilityChange(visible);
 	}
-
-	@Override
+	
 	public void setPenColor(int index) {
 		penColorIndex = index;
 		listener.penColorChange(index);
 	}
-
-    @Override
-    public void translate(double dx, double dy) {
-        x += dx;
-        y += dy;
-    }
-
-    @Override
-    public void rotate(double dtheta) {
-        heading += dtheta;
-    }
 
     /**
 	 * Returns to original position, heading, visibility, and pen position, then notifies the listeners to clear

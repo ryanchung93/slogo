@@ -41,7 +41,7 @@ public class Driver implements DriverAPI, LanguageListener {
 	}
 
 	@Override
-	public void LanguageChange(String language) {
+	public void languageChange(String language) {
 		//System.out.println(language);
 		myModel.setLanguage(language);
 		

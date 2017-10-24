@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 import javafx.event.EventHandler;
-import javafx.scene.Node;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.image.Image;
@@ -17,9 +16,6 @@ import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 import model.ImmutableTurtle;
-//import view.API.PenOptionListener;
-import model.Turtle;
-import model.UserTurtle;
 import view.API.CommandIOAPI.TurtleImageViewAPI;
 import view.API.CommandIOAPI.TurtleListener;
 
@@ -44,7 +40,6 @@ public class TurtleView implements TurtleListener, TurtleImageViewAPI {
 	private Pane myParent;
 	private double myHeading;
 	private boolean myIsToggled;
-	private UserTurtle myBackEndTurtle;
 
 	private double myOffsetX;
 	private double myOffsetY;
@@ -77,18 +72,17 @@ public class TurtleView implements TurtleListener, TurtleImageViewAPI {
 	}
 
 	@Override
-	public void setTurtle(ImmutableTurtle immutableTurtle, UserTurtle userTurtle) {
+	public void setTurtle(ImmutableTurtle turtle) {
 		myOffsetX = myParent.getLayoutX();
 		myOffsetY = myParent.getLayoutY();
 
-		myView.setX(immutableTurtle.getX() + myOffsetX);
-		myView.setY(immutableTurtle.getY() + myOffsetY);
+		myView.setX(turtle.getX() + myOffsetX);
+		myView.setY(turtle.getY() + myOffsetY);
 
-		myBackEndTurtle = userTurtle;
-		myHeading = immutableTurtle.getHeading() + 180;
-		myPenColor = Color.valueOf(colorList.get(immutableTurtle.getPenColorIndex()));
-		myPenIsDown = immutableTurtle.getPenDown();
-		myView.setVisible(immutableTurtle.isVisible());
+		myHeading = turtle.getHeading() + 180;
+		myPenColor = Color.valueOf(colorList.get(turtle.getPenColorIndex()));
+		myPenIsDown = turtle.getPenDown();
+		myView.setVisible(turtle.isVisible());
 
 	}
 
@@ -244,45 +238,6 @@ public class TurtleView implements TurtleListener, TurtleImageViewAPI {
 	}
 
 	@Override
-	public void handleInput(KeyCode code) {
-		System.out.println(code);
-
-		// must change the back-end turtle!!!
-
-		if (myIsToggled) {
-			switch (code) {
-			case W:
-				locationChange(myView.getX() - myOffsetX, myView.getY() - myOffsetY + 1);
-				myBackEndTurtle.translate(0, 1);
-				break;
-			case S:
-				locationChange(myView.getX() - myOffsetX, myView.getY() - myOffsetY - 1);
-				myBackEndTurtle.translate(0, -1);
-				break;
-			case A:
-				locationChange(myView.getX() - myOffsetX - 1, myView.getY() - myOffsetY);
-				myBackEndTurtle.translate(-1, 0);
-				break;
-			case D:
-				locationChange(myView.getX() - myOffsetX + 1, myView.getY() - myOffsetY);
-				myBackEndTurtle.translate(1, 0);
-				break;
-			case R:
-				headingChange(180 + myView.getRotate() + 2);
-				myBackEndTurtle.rotate(2);
-				break;
-			case T:
-				headingChange(180 + myView.getRotate() - 2);
-				myBackEndTurtle.rotate(-2);
-				break;
-			default:
-				break;
-			}
-		}
-
-	}
-
-	@Override
 	public void imageChange(int imageIndex) {
 		if (myIsToggled)
 			myView.setImage(imageList.get(imageIndex));
@@ -295,10 +250,6 @@ public class TurtleView implements TurtleListener, TurtleImageViewAPI {
 	@Override
 	public ImageView getImageView() {
 		return myView;
-	}
-
-	public UserTurtle getMyTurtle() {
-		return myBackEndTurtle;
 	}
 
 	private void showError(String message) {

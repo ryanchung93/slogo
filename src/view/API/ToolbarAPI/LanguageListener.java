@@ -11,7 +11,6 @@ public interface LanguageListener {
 	/**
 	 * Changes language.
 	 */
-	
-	void LanguageChange(String language);
+	public void languageChange(String language);
 	
 }

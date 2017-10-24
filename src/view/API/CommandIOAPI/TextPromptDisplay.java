@@ -8,4 +8,12 @@ import view.API.SubcomponentViewAPI;
  *
  */
 public interface TextPromptDisplay extends SubcomponentViewAPI {
+
+	/**
+	 * Called when a command needs to be added to prompt and run.
+	 * 
+	 * @param s
+	 *            string to be add to text prompt
+	 */
+	public void runCommand(String s);
 }

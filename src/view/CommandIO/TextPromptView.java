@@ -61,7 +61,7 @@ public class TextPromptView extends HBox implements TextPromptDisplay {
 		return ret;
 	}
 
-	private void enter() {
+	public void enter() {
 		String code = tp.getText();
 		commandConsumer.accept(code);
 		clear();
@@ -71,6 +71,14 @@ public class TextPromptView extends HBox implements TextPromptDisplay {
 		tp.clear();
 	}
 
+
 	/*************************** PUBLIC METHODS ********************************/
 
+
+	@Override
+	public void runCommand(String s) {
+		commandConsumer.accept(s);
+		
+	}
+	
 }

@@ -31,7 +31,7 @@ public class LanguageOptionView implements LanguageOptionDisplay {
 	private ChoiceBox<String> cb;
 	private List<String> languageList;
 	private ResourceBundle myResources = ResourceBundle.getBundle("resources.view/choicebox");
-	private LanguageListener listener;
+	private List<LanguageListener> listeners = new ArrayList<>();;
 	
 	public LanguageOptionView() {
 		
@@ -47,7 +47,8 @@ public class LanguageOptionView implements LanguageOptionDisplay {
 			
 			@Override
 			public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
-				listener.LanguageChange(languageList.get(newValue.intValue()));
+				for (LanguageListener listener : listeners)
+					listener.languageChange(languageList.get(newValue.intValue()));
 			}
 		});
 		
@@ -62,6 +63,6 @@ public class LanguageOptionView implements LanguageOptionDisplay {
 
 	@Override
 	public void addLanguageOptionListener(LanguageListener l) {
-		listener = l;
+		listeners.add(l);
 	}
 }

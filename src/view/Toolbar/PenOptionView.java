@@ -57,8 +57,6 @@ public class PenOptionView implements PenOptionDisplay {
 			}
 		});
 
-		cb.setId("pen_cb");
-
 		optionView.getChildren().addAll(prompt, cb);
 		optionView.setAlignment(Pos.CENTER);
 	}

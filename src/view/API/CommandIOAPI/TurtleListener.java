@@ -1,9 +1,7 @@
 package view.API.CommandIOAPI;
 
 import javafx.scene.input.KeyCode;
-import javafx.scene.paint.Color;
 import model.ImmutableTurtle;
-import model.UserTurtle;
 
 /**
  * Listens for modifications to a turtle's state -- its methods must be called
@@ -17,7 +15,7 @@ public interface TurtleListener extends TurtleImageListener {
 	 * @param turtle A turtle with an observable state
      * @param userTurtle A turtle that can be changed
 	 */
-	public void setTurtle(ImmutableTurtle turtle, UserTurtle userTurtle);
+	public void setTurtle(ImmutableTurtle turtle);
 
 	/**
 	 * Called when the turtle moves coordinates
@@ -51,11 +49,6 @@ public interface TurtleListener extends TurtleImageListener {
 	 * Called when the screen should be cleared
 	 */
 	public void clearScreen();
-	
-	/**
-	 * Called when user presses key to move turtle
-	 */
-	public void handleInput(KeyCode code);
 
 
 }

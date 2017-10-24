@@ -1,24 +1,19 @@
 package view.CommandIO;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.Pane;
-import javafx.scene.paint.Color;
 import model.ImmutableTurtle;
-import model.UserTurtle;
 import view.API.CommandIOAPI.TurtleListener;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.ResourceBundle;
 
 /**
  * Created by DavidTran on 10/23/17.
  */
 public class TurtleViewManager implements TurtleListener {
 
-	
 	List<TurtleView> turtleList = new ArrayList<TurtleView>();
 	Pane myParent;
 	Image myImage;
@@ -29,9 +24,9 @@ public class TurtleViewManager implements TurtleListener {
 	}
 
 	@Override
-	public void setTurtle(ImmutableTurtle turtle, UserTurtle userTurtle) {
+	public void setTurtle(ImmutableTurtle turtle) {
 		TurtleView turtleView = new TurtleView(myParent, myImage);
-		turtleView.setTurtle(turtle, userTurtle);
+		turtleView.setTurtle(turtle);
 		turtleList.add(turtleView);
 		myParent.getChildren().add(turtleView.getImageView());
 
@@ -74,13 +69,6 @@ public class TurtleViewManager implements TurtleListener {
 	public void clearScreen() {
 		for (TurtleView turtle : turtleList) {
 			turtle.clearScreen();
-		}
-	}
-
-	@Override
-	public void handleInput(KeyCode code) {
-		for (TurtleView turtle : turtleList) {
-			turtle.handleInput(code);
 		}
 	}
 

@@ -18,4 +18,5 @@ public interface StringListener extends SubcomponentViewAPI {
 	 *            The new String
 	 */
 	public void changedMap(Set<String> set, Set<String> commandSet);
+	
 }
