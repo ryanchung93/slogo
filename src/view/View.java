@@ -21,19 +21,19 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import model.SLogoException;
-import view.API.LanguageListener;
-import view.API.StringListener;
-import view.API.TurtleListener;
-import view.API.VariableListener;
 import view.API.ViewAPI;
+import view.API.CommandIOAPI.TurtleListener;
+import view.API.TextAreaAPI.StringListener;
+import view.API.TextAreaAPI.VariableListener;
+import view.API.ToolbarAPI.LanguageListener;
 import view.CommandIO.CanvasView;
 import view.CommandIO.TextPromptView;
-import view.CommandIO.TurtleManager;
+import view.CommandIO.TurtleViewManager;
 import view.CommandIO.TurtleView;
-import view.SidePanes.HistoryView;
-import view.SidePanes.ReferenceView;
-import view.SidePanes.UserDefinedCommandView;
-import view.SidePanes.VariableView;
+import view.TextArea.HistoryView;
+import view.TextArea.ReferenceView;
+import view.TextArea.UserDefinedCommandView;
+import view.TextArea.VariableView;
 import view.Toolbar.ToolbarView;
 
 
@@ -65,7 +65,7 @@ public class View implements ViewAPI {
 	private VBox myRightVBox;
 
 	private CanvasView myCanvas;
-	private TurtleManager myTurtleManager;
+	private TurtleViewManager myTurtleManager;
 	private TurtleView myTurtleView;
 	private TextPromptView myTextPrompt;
 	private LanguageListener languageListener;
@@ -201,7 +201,7 @@ public class View implements ViewAPI {
 
 		// FOR TESTING
 		Image image = new Image(getClass().getClassLoader().getResourceAsStream("resources/images/" + TURTLE_IMAGE));
-		myTurtleManager = new TurtleManager(myCanvas, image);
+		myTurtleManager = new TurtleViewManager(myCanvas, image);
 	}
 
 	/**

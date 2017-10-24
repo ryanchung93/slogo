@@ -1,4 +1,4 @@
-package view.API;
+package view.API.CommandIOAPI;
 
 import javafx.scene.image.Image;
 
@@ -10,6 +10,6 @@ import javafx.scene.image.Image;
  */
 public interface TurtleImageListener {
 
-	public void imageChange(Image image);
+	public void imageChange(int imageIndex);
 
 }

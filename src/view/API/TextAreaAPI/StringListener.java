@@ -1,9 +1,10 @@
-package view.API;
+package view.API.TextAreaAPI;
 
 import java.util.Map;
 import java.util.Set;
 
 import model.CommandDef;
+import view.API.SubcomponentViewAPI;
 
 /**
  * Listens for the addition of new strings -- specifically used to get

@@ -1,4 +1,4 @@
-package view.API;
+package view.API.CommandIOAPI;
 
 import javafx.scene.input.KeyCode;
 import javafx.scene.paint.Color;
@@ -45,7 +45,7 @@ public interface TurtleListener extends TurtleImageListener {
 	/**
 	 * Called when the pen color is changed
 	 */
-	public void penColorChange(Color color);
+	public void penColorChange(int colorIndex);
 
 	/**
 	 * Called when the screen should be cleared

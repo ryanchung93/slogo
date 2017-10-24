@@ -1,4 +1,6 @@
-package view.API;
+package view.API.CommandIOAPI;
+
+import view.API.SubcomponentViewAPI;
 
 /**
  * The pane containing a text field where users can enter commands to be sent to

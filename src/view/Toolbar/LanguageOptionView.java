@@ -14,8 +14,8 @@ import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.Tooltip;
 import javafx.scene.layout.VBox;
-import view.API.LanguageListener;
-import view.API.LanguageOptionDisplay;
+import view.API.ToolbarAPI.LanguageListener;
+import view.API.ToolbarAPI.LanguageOptionDisplay;
 
 /**
  * Class that allows users to select a language from a choice box.
@@ -43,7 +43,6 @@ public class LanguageOptionView implements LanguageOptionDisplay {
 				Arrays.asList(myResources.getString("Languages").replaceAll("\\s+", "").split(",")));
 		
 		cb = new ChoiceBox<String>(FXCollections.observableArrayList(languageList));
-		cb.setTooltip(new Tooltip("Select language"));
 		cb.getSelectionModel().selectedIndexProperty().addListener(new ChangeListener<Number>() {
 			
 			@Override
@@ -51,8 +50,6 @@ public class LanguageOptionView implements LanguageOptionDisplay {
 				listener.LanguageChange(languageList.get(newValue.intValue()));
 			}
 		});
-		
-		cb.setId("language_cb");
 		
 		optionView.getChildren().addAll(prompt, cb);
 		optionView.setAlignment(Pos.CENTER);

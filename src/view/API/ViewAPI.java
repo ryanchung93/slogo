@@ -3,6 +3,9 @@ package view.API;
 import java.util.function.Consumer;
 
 import model.SLogoException;
+import view.API.CommandIOAPI.TurtleListener;
+import view.API.TextAreaAPI.StringListener;
+import view.API.TextAreaAPI.VariableListener;
 
 public interface ViewAPI {
 	

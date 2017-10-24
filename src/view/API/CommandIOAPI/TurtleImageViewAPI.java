@@ -1,4 +1,4 @@
-package view.API;
+package view.API.CommandIOAPI;
 
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;

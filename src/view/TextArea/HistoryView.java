@@ -1,4 +1,4 @@
-package view.SidePanes;
+package view.TextArea;
 
 import java.util.ResourceBundle;
 

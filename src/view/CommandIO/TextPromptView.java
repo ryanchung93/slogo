@@ -8,7 +8,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import view.API.TextPromptDisplay;
+import view.API.CommandIOAPI.TextPromptDisplay;
 
 /**
  * Class allowing users to enter and clear commands.

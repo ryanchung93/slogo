@@ -1,9 +1,14 @@
 package view.CommandIO;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.ResourceBundle;
 
 import javafx.event.EventHandler;
 import javafx.scene.Node;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
@@ -15,8 +20,8 @@ import model.ImmutableTurtle;
 //import view.API.PenOptionListener;
 import model.Turtle;
 import model.UserTurtle;
-import view.API.TurtleImageViewAPI;
-import view.API.TurtleListener;
+import view.API.CommandIOAPI.TurtleImageViewAPI;
+import view.API.CommandIOAPI.TurtleListener;
 
 /**
  * Class to make the turtle viewable.
@@ -25,264 +30,281 @@ import view.API.TurtleListener;
  */
 public class TurtleView implements TurtleListener, TurtleImageViewAPI {
 
-    private static final double WIDTH = 35;
-    private static final double HEIGHT = 35;
+	private static final double WIDTH = 35;
+	private static final double HEIGHT = 35;
+	private static final ResourceBundle myResources = ResourceBundle.getBundle("resources.view/choicebox");
 
-    private ImageView myView;
+	private ImageView myView;
+	private ArrayList<String> imageNameList = new ArrayList<String>(new ArrayList<String>(
+			Arrays.asList(myResources.getString("TurtleImages").replaceAll("\\s+", "").split(","))));
+	private List<Image> imageList = new ArrayList<Image>();
+	private List<String> colorList;
+	private Color myPenColor;
+	private boolean myPenIsDown;
+	private Pane myParent;
+	private double myHeading;
+	private boolean myIsToggled;
+	private UserTurtle myBackEndTurtle;
 
-    private Color myPenColor;
-    private boolean myPenIsDown;
-    private Pane myParent;
-    private double myHeading;
-    private boolean myIsToggled;
-    private UserTurtle myBackEndTurtle;
+	private double myOffsetX;
+	private double myOffsetY;
+	private double myPrevNewX;
+	private double myPrevNewY;
 
-    private double myOffsetX;
-    private double myOffsetY;
-    private double myPrevNewX;
-    private double myPrevNewY;
+	public TurtleView(Pane parent, Image image) {
+		myView = new ImageView(image);
+		myView.setFitWidth(WIDTH);
+		myView.setFitHeight(HEIGHT);
+		myView.setLayoutX(-WIDTH / 2);
+		myView.setLayoutY(-HEIGHT / 2);
+		myView.setX(0);
+		myView.setY(0);
+		myView.setRotate(180);
+		myView.setStyle("-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 15, 0, 0, 0)");
 
-    public TurtleView(Pane parent, Image image) {
-        // for testing
-        myView = new ImageView(image);
-        myView.setFitWidth(WIDTH);
-        myView.setFitHeight(HEIGHT);
-        myView.setLayoutX(-WIDTH / 2);
-        myView.setLayoutY(-HEIGHT / 2);
-        myView.setX(0);
-        myView.setY(0);
-        headingChange(0);
+		myPenColor = Color.WHITE;
+		myPenIsDown = true;
+		myIsToggled = true;
+		myParent = parent;
+		setMouseEvents();
 
-        myView.setRotate(180);
+		for (String s : imageNameList) {
+			Image fileImage = new Image(getClass().getClassLoader().getResourceAsStream("resources/images/" + s));
+			imageList.add(fileImage);
+		}
+		colorList = new ArrayList<String>(
+				Arrays.asList(myResources.getString("PenColors").replaceAll("\\s+", "").split(",")));
+	}
 
-        setMouseEvents();
+	@Override
+	public void setTurtle(ImmutableTurtle immutableTurtle, UserTurtle userTurtle) {
+		myOffsetX = myParent.getLayoutX();
+		myOffsetY = myParent.getLayoutY();
 
-        myPenColor = Color.WHITE;
-        myPenIsDown = true;
-        myIsToggled = false;
-        myParent = parent;
-    }
+		myView.setX(immutableTurtle.getX() + myOffsetX);
+		myView.setY(immutableTurtle.getY() + myOffsetY);
 
-    @Override
-    public void setTurtle(ImmutableTurtle immutableTurtle, UserTurtle userTurtle) {
-        myOffsetX = myParent.getLayoutX();
-        myOffsetY = myParent.getLayoutY();
+		myBackEndTurtle = userTurtle;
+		myHeading = immutableTurtle.getHeading() + 180;
+		myPenColor = Color.valueOf(colorList.get(immutableTurtle.getPenColorIndex()));
+		myPenIsDown = immutableTurtle.getPenDown();
+		myView.setVisible(immutableTurtle.isVisible());
 
-        myView.setX(immutableTurtle.getX() + myOffsetX);
-        myView.setY(immutableTurtle.getY() + myOffsetY);
+	}
 
-        myBackEndTurtle = userTurtle;
-        myHeading = immutableTurtle.getHeading() + 180;
-        myPenColor = immutableTurtle.getPenColor();
-        myPenIsDown = immutableTurtle.getPenDown();
-        myView.setVisible(immutableTurtle.isVisible());
+	/**
+	 * Allow turtle imageviews to change with mouse interactions
+	 */
+	private void setMouseEvents() {
 
-    }
+		myView.setOnMouseClicked(new EventHandler<MouseEvent>() {
+			@Override
+			public void handle(MouseEvent t) {
+				// do stuff (toggle turtle)
+				System.out.println("Clicked turtle");
+				if (myIsToggled)
+					myView.setStyle("-fx-background-color:transparent");
+				else
+					myView.setStyle("-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 15, 0, 0, 0)");
+				myIsToggled = !myIsToggled;
 
+				// MUST NOTIFY MODEL
 
-    /**
-     * Allow turtle imageviews to change with mouse interactions
-     */
-    private void setMouseEvents() {
+			}
+		});
 
-        myView.setOnMouseClicked(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent t) {
-                // do stuff (toggle turtle)
-                System.out.println("Clicked turtle");
-                if (myIsToggled)
-                    myView.setStyle("-fx-background-color:transparent");
-                else
-                    myView.setStyle("-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 15, 0, 0, 0)");
-                myIsToggled = !myIsToggled;
+		myView.setOnMouseEntered(new EventHandler<MouseEvent>() {
+			@Override
+			public void handle(MouseEvent t) {
+				if (!myIsToggled)
+					myView.setStyle("-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0, 0, 0)");
+			}
+		});
 
-                //MUST NOTIFY MODEL
+		myView.setOnMouseExited(new EventHandler<MouseEvent>() {
+			@Override
+			public void handle(MouseEvent t) {
+				if (!myIsToggled)
+					myView.setStyle("-fx-background-color:transparent;");
+			}
+		});
 
-            }
-        });
+	}
 
-        myView.setOnMouseEntered(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent t) {
-                if (!myIsToggled)
-                    myView.setStyle("-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0, 0, 0)");
-            }
-        });
+	@Override
+	public void locationChange(double newX, double newY) {
 
-        myView.setOnMouseExited(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent t) {
-                if (!myIsToggled)
-                    myView.setStyle("-fx-background-color:transparent;");
-            }
-        });
+		// compensate for center offset since center if not (0,0), returns value
+		// referenced from center.
+		double offsetNewX = newX + myOffsetX;
+		double offsetNewY = newY + myOffsetY;
 
-    }
+		double coordInsideX = offsetNewX % (myOffsetX * 2);
+		double coordInsideY = offsetNewY % (myOffsetY * 2);
 
-    @Override
-    public void locationChange(double newX, double newY) {
+		boolean rightBound = (offsetNewX) / (myOffsetX * 2) >= 1.0;
+		boolean upperBound = (offsetNewY) / (myOffsetY * 2) >= 1.0;
+		boolean leftBound = (offsetNewX - myPrevNewX) / (myOffsetX * 2) <= -1.0;
+		boolean lowerBound = (offsetNewY - myPrevNewY) / (myOffsetY * 2) <= -1.0;
 
-        // compensate for center offset since center if not (0,0), returns value
-        // referenced from center.
-        double offsetNewX = newX + myOffsetX;
-        double offsetNewY = newY + myOffsetY;
+		Line line;
 
-        double coordInsideX = offsetNewX % (myOffsetX * 2);
-        double coordInsideY = offsetNewY % (myOffsetY * 2);
+		// if (rightBound && upperBound) {
+		// line = new Line(myView.getX(), myView.getY(), myOffsetX * 2 - myPrevNewX,
+		// myOffsetY * 2 - myPrevNewY);
+		// line.setStroke(myPenColor);
+		// myParent.getChildren().add(line);
+		// myView.setX(0);
+		// myView.setY(0);
+		// System.out.println("OOB");
+		// }
+		// else if (rightBound) {
+		// line = new Line(myView.getX(), myView.getY(), myOffsetX * 2 - myPrevNewX,
+		// coordInsideY);
+		// line.setStroke(myPenColor);
+		// myParent.getChildren().add(line);
+		// myView.setX(0);
+		// System.out.println("OOB");
+		// }
+		// else if (upperBound) {
+		// line = new Line(myView.getX(), myView.getY(), coordInsideX, myOffsetY * 2);
+		// line.setStroke(myPenColor);
+		// myParent.getChildren().add(line);
+		// myView.setY(0);
+		// System.out.println("OOB");
+		// }
 
-        boolean rightBound = (offsetNewX) / (myOffsetX * 2) >= 1.0;
-        boolean upperBound = (offsetNewY) / (myOffsetY * 2) >= 1.0;
-        boolean leftBound = (offsetNewX - myPrevNewX) / (myOffsetX * 2) <= -1.0;
-        boolean lowerBound = (offsetNewY - myPrevNewY) / (myOffsetY * 2) <= -1.0;
+		// line = new Line(myView.getX(), myView.getY(), coordInsideX, coordInsideY);
+		// line.setStroke(myPenColor);
+		// myParent.getChildren().add(line);
+		// myView.setX(coordInsideX);
+		// myView.setY(coordInsideY);
 
-        Line line;
+		if (myPenIsDown) {
+			line = new Line(myView.getX(), myView.getY(), offsetNewX, offsetNewY);
+			line.setStroke(myPenColor);
+			myParent.getChildren().add(line);
+		}
 
-        // if (rightBound && upperBound) {
-        // line = new Line(myView.getX(), myView.getY(), myOffsetX * 2 - myPrevNewX,
-        // myOffsetY * 2 - myPrevNewY);
-        // line.setStroke(myPenColor);
-        // myParent.getChildren().add(line);
-        // myView.setX(0);
-        // myView.setY(0);
-        // System.out.println("OOB");
-        // }
-        // else if (rightBound) {
-        // line = new Line(myView.getX(), myView.getY(), myOffsetX * 2 - myPrevNewX,
-        // coordInsideY);
-        // line.setStroke(myPenColor);
-        // myParent.getChildren().add(line);
-        // myView.setX(0);
-        // System.out.println("OOB");
-        // }
-        // else if (upperBound) {
-        // line = new Line(myView.getX(), myView.getY(), coordInsideX, myOffsetY * 2);
-        // line.setStroke(myPenColor);
-        // myParent.getChildren().add(line);
-        // myView.setY(0);
-        // System.out.println("OOB");
-        // }
+		myView.setX(offsetNewX);
+		myView.setY(offsetNewY);
 
-        // line = new Line(myView.getX(), myView.getY(), coordInsideX, coordInsideY);
-        // line.setStroke(myPenColor);
-        // myParent.getChildren().add(line);
-        // myView.setX(coordInsideX);
-        // myView.setY(coordInsideY);
+		myPrevNewX = newX;
+		myPrevNewY = newY;
 
-        if (myPenIsDown) {
-            line = new Line(myView.getX(), myView.getY(), offsetNewX, offsetNewY);
-            line.setStroke(myPenColor);
-            myParent.getChildren().add(line);
-        }
+		System.out.println("LayoutX: " + myOffsetX + " LayoutY: " + myOffsetY);
+		System.out.println("myX: " + myView.getX() + " | myY: " + myView.getY());
+		System.out.println("newX: " + newX + " | newY: " + newY);
+		System.out.println("offsetNewX: " + offsetNewX + " | offsetNewY: " + offsetNewY);
+	}
 
-        myView.setX(offsetNewX);
-        myView.setY(offsetNewY);
+	@Override
+	public void headingChange(double newHeading) {
+		// create an animation that rotates the shape
+		if (myIsToggled) {
+			double newAngle = -newHeading;
+			myView.setRotate(180 - newAngle);
+			System.out.println("NewHeading: " + (-newHeading));
+		}
+	}
 
-        myPrevNewX = newX;
-        myPrevNewY = newY;
+	@Override
+	public void penChange(boolean newState) {
+		if (myIsToggled)
+			myPenIsDown = newState;
+	}
 
-        System.out.println("LayoutX: " + myOffsetX + " LayoutY: " + myOffsetY);
-        System.out.println("myX: " + myView.getX() + " | myY: " + myView.getY());
-        System.out.println("newX: " + newX + " | newY: " + newY);
-        System.out.println("offsetNewX: " + offsetNewX + " | offsetNewY: " + offsetNewY);
-    }
+	@Override
+	public void penColorChange(int colorIndex) {
+		try {
+			if (myIsToggled) {
+				myPenColor = Color.valueOf(colorList.get(colorIndex));
+				// if ( color != myBackEndTurtle.getPenColor())
+				// myBackEndTurtle.setPenColor(color);
+			}
+		} catch (Exception e) {
+			showError(e.getMessage());
+		}
 
-    @Override
-    public void headingChange(double newHeading) {
-        // create an animation that rotates the shape
-        if (myIsToggled) {
-            double newAngle = -newHeading;
-            myView.setRotate(180 - newAngle);
-            System.out.println("NewHeading: " + (-newHeading));
-        }
-    }
+	}
 
-    @Override
-    public void penChange(boolean newState) {
-        if (myIsToggled)
-            myPenIsDown = newState;
-    }
+	@Override
+	public void visibilityChange(boolean visibility) {
+		if (myIsToggled)
+			myView.setVisible(visibility);
 
-    @Override
-    public void penColorChange(Color color) {
-        if (myIsToggled) {
-            myPenColor = color;
-//            if ( color != myBackEndTurtle.getPenColor())
-//                myBackEndTurtle.setPenColor(color);
-        }
+	}
 
-    }
+	@Override
+	public void clearScreen() {
+		// remove image from pane
+		if (myIsToggled)
+			myParent.getChildren().remove(myView);
 
-    @Override
-    public void visibilityChange(boolean visibility) {
-        if (myIsToggled)
-            myView.setVisible(visibility);
+	}
 
-    }
+	@Override
+	public void handleInput(KeyCode code) {
+		System.out.println(code);
 
-    @Override
-    public void clearScreen() {
-        // remove image from pane
-        if (myIsToggled)
-            myParent.getChildren().remove(myView);
+		// must change the back-end turtle!!!
 
-    }
+		if (myIsToggled) {
+			switch (code) {
+			case W:
+				locationChange(myView.getX() - myOffsetX, myView.getY() - myOffsetY + 1);
+				myBackEndTurtle.translate(0, 1);
+				break;
+			case S:
+				locationChange(myView.getX() - myOffsetX, myView.getY() - myOffsetY - 1);
+				myBackEndTurtle.translate(0, -1);
+				break;
+			case A:
+				locationChange(myView.getX() - myOffsetX - 1, myView.getY() - myOffsetY);
+				myBackEndTurtle.translate(-1, 0);
+				break;
+			case D:
+				locationChange(myView.getX() - myOffsetX + 1, myView.getY() - myOffsetY);
+				myBackEndTurtle.translate(1, 0);
+				break;
+			case R:
+				headingChange(180 + myView.getRotate() + 2);
+				myBackEndTurtle.rotate(2);
+				break;
+			case T:
+				headingChange(180 + myView.getRotate() - 2);
+				myBackEndTurtle.rotate(-2);
+				break;
+			default:
+				break;
+			}
+		}
 
-    @Override
-    public void handleInput(KeyCode code) {
-        System.out.println(code);
+	}
 
-        // must change the back-end turtle!!!
+	@Override
+	public void imageChange(int imageIndex) {
+		if (myIsToggled)
+			myView.setImage(imageList.get(imageIndex));
+	}
 
-        if (myIsToggled) {
-            switch (code) {
-                case W:
-                    locationChange(myView.getX() - myOffsetX, myView.getY() - myOffsetY + 1);
-                    myBackEndTurtle.translate(0, 1);
-                    break;
-                case S:
-                    locationChange(myView.getX() - myOffsetX, myView.getY() - myOffsetY - 1);
-                    myBackEndTurtle.translate(0, -1);
-                    break;
-                case A:
-                    locationChange(myView.getX() - myOffsetX - 1, myView.getY() - myOffsetY);
-                    myBackEndTurtle.translate(-1, 0);
-                    break;
-                case D:
-                    locationChange(myView.getX() - myOffsetX + 1, myView.getY() - myOffsetY);
-                    myBackEndTurtle.translate(1, 0);
-                    break;
-                case R:
-                    headingChange(180 + myView.getRotate() + 2);
-                    myBackEndTurtle.rotate(2);
-                    break;
-                case T:
-                    headingChange(180 + myView.getRotate() - 2);
-                    myBackEndTurtle.rotate(-2);
-                    break;
-                default:
-                    break;
-            }
-        }
+	public boolean isToggled() {
+		return myIsToggled;
+	}
 
-    }
+	@Override
+	public ImageView getImageView() {
+		return myView;
+	}
 
-    @Override
-    public void imageChange(Image image) {
-        if (myIsToggled)
-            myView.setImage(image);
-    }
+	public UserTurtle getMyTurtle() {
+		return myBackEndTurtle;
+	}
 
-    public boolean isToggled() {
-        return myIsToggled;
-    }
-
-    @Override
-    public ImageView getImageView() {
-        return myView;
-    }
-
-    public UserTurtle getMyTurtle() {
-        return myBackEndTurtle;
-    }
+	private void showError(String message) {
+		Alert alert = new Alert(AlertType.ERROR);
+		alert.setContentText(message);
+		alert.showAndWait();
+	}
 
 }
