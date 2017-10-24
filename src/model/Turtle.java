@@ -1,7 +1,7 @@
 package model;
 
 import javafx.scene.paint.Color;
-import view.API.TurtleListener;
+import view.API.CommandIOAPI.TurtleListener;
 
 /**
  * A representation of the state of the turtle at a given time. Notifies all
@@ -19,9 +19,9 @@ public class Turtle implements ImmutableTurtle, UserTurtle {
 	private double initHeading;
 	private boolean penDown;
 	private boolean isVisible;
-	private Color penColor;
+	private int penColorIndex;
 	
-	public static final Color DEFAULT_PEN_COLOR = Color.BLACK;
+	public static final int DEFAULT_PEN_COLOR_INDEX = 0;
 	
 	public Turtle(double x0, double y0, double heading0) {
 		x = initX = x0;
@@ -29,7 +29,7 @@ public class Turtle implements ImmutableTurtle, UserTurtle {
 		heading = initHeading = heading0;
 		penDown = true;
 		isVisible = true;
-		penColor = DEFAULT_PEN_COLOR;
+		penColorIndex = DEFAULT_PEN_COLOR_INDEX;
 	}
 	
 	// need to add to interface
@@ -58,8 +58,8 @@ public class Turtle implements ImmutableTurtle, UserTurtle {
 		return isVisible;
 	}
 
-	public Color getPenColor() {
-		return penColor;
+	public int getPenColorIndex() {
+		return penColorIndex;
 	}
 
 	public void setXY(double newX, double newY) {
@@ -84,9 +84,9 @@ public class Turtle implements ImmutableTurtle, UserTurtle {
 	}
 
 	@Override
-	public void setPenColor(Color color) {
-		penColor = color;
-		listener.penColorChange(color);
+	public void setPenColor(int index) {
+		penColorIndex = index;
+		listener.penColorChange(index);
 	}
 
     @Override
@@ -108,7 +108,7 @@ public class Turtle implements ImmutableTurtle, UserTurtle {
 		setHeading(initHeading);
 		setPenDown(true);
 		setVisible(true);
-		setPenColor(DEFAULT_PEN_COLOR);
+		setPenColor(DEFAULT_PEN_COLOR_INDEX);
 		listener.clearScreen();
 	}
 }

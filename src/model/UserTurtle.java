@@ -7,7 +7,7 @@ import javafx.scene.paint.Color;
  */
 public interface UserTurtle {
 
-    public void setPenColor(Color color);
+    public void setPenColor(int index);
 
     public void translate(double dx, double dy);
 

@@ -3,9 +3,9 @@ package model;
 import java.util.ArrayList;
 import java.util.List;
 
-import view.API.StringListener;
-import view.API.TurtleListener;
-import view.API.VariableListener;
+import view.API.CommandIOAPI.TurtleListener;
+import view.API.TextAreaAPI.StringListener;
+import view.API.TextAreaAPI.VariableListener;
 
 public class Model {
 	
