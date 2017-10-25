@@ -11,6 +11,7 @@ import view.API.CommandIOAPI.TurtleListener;
 public class Turtle implements ImmutableTurtle {
 	
 	private TurtleListener listener;
+	private int id;
 	private double x;
 	private double initX;
 	private double y;
@@ -23,7 +24,8 @@ public class Turtle implements ImmutableTurtle {
 	
 	public static final int DEFAULT_PEN_COLOR_INDEX = 0;
 	
-	public Turtle(double x0, double y0, double heading0) {
+	public Turtle(double x0, double y0, double heading0, int id) {
+		this.id = id;
 		x = initX = x0;
 		y = initY = y0;
 		heading = initHeading = heading0;
@@ -36,6 +38,10 @@ public class Turtle implements ImmutableTurtle {
 	public void addTurtleListener(TurtleListener tL) {
 		listener = tL;
 		tL.setTurtle(this);
+	}
+	
+	public int getID() {
+		return id;
 	}
 
 	public double getX() {

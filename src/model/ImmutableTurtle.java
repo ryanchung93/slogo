@@ -7,6 +7,8 @@ import javafx.scene.paint.Color;
  * @see Turtle
  */
 public interface ImmutableTurtle {
+	public int getID();
+	
 	public double getX();
 
 	public double getY();

@@ -1,4 +1,4 @@
-package view.TextArea;
+package view.SidePane;
 
 import java.util.Map;
 import java.util.ResourceBundle;
@@ -6,7 +6,7 @@ import java.util.ResourceBundle;
 import javafx.scene.Parent;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.ScrollPane.ScrollBarPolicy;
-import view.API.TextAreaAPI.VariableDisplay;
+import view.API.SidePane.VariableDisplay;
 import javafx.scene.control.TextArea;
 
 /**

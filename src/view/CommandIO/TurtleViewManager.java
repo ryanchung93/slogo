@@ -8,15 +8,17 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.layout.Pane;
 import model.ImmutableTurtle;
 import view.API.CommandIOAPI.TurtleListener;
+import view.SidePane.TurtleStateView;
 
 /**
  * Created by DavidTran on 10/23/17.
  */
 public class TurtleViewManager implements TurtleListener {
 
-	List<TurtleView> turtleList = new ArrayList<TurtleView>();
-	Pane myParent;
-	Image myImage;
+	private List<TurtleView> turtleList = new ArrayList<TurtleView>();
+	private final Pane myParent;
+	private Image myImage;
+	private TurtleStateView listener;
 
 	public TurtleViewManager(Pane parent, Image image) {
 		myParent = parent;
@@ -25,9 +27,11 @@ public class TurtleViewManager implements TurtleListener {
 
 	@Override
 	public void setTurtle(ImmutableTurtle turtle) {
-		TurtleView turtleView = new TurtleView(myParent, myImage);
-		turtleView.setTurtle(turtle);
+		System.out.println("set");
+		TurtleView turtleView = new TurtleView(myParent, myImage, turtle.getID());
 		turtleList.add(turtleView);
+		addTurtleStateListener(listener);
+		turtleView.setTurtle(turtle);
 		myParent.getChildren().add(turtleView.getImageView());
 
 	}
@@ -77,5 +81,14 @@ public class TurtleViewManager implements TurtleListener {
 		for (TurtleView turtle : turtleList) {
 			turtle.imageChange(imageIndex);
 		}
+	}
+
+	@Override
+	public void addTurtleStateListener(TurtleStateView l) {
+		listener = l;
+		for (TurtleView turtle : turtleList) {
+			turtle.addTurtleStateListener(l);
+		}
+		
 	}
 }

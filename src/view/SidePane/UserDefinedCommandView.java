@@ -1,4 +1,4 @@
-package view.TextArea;
+package view.SidePane;
 
 import java.util.Map;
 import java.util.ResourceBundle;
@@ -9,7 +9,7 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.ScrollPane.ScrollBarPolicy;
 import model.CommandDef;
-import view.API.TextAreaAPI.UserDefinedCommandDisplay;
+import view.API.SidePane.UserDefinedCommandDisplay;
 
 /**
  * Class allowing users to see defined functions.

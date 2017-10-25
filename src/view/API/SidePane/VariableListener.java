@@ -1,4 +1,4 @@
-package view.API.TextAreaAPI;
+package view.API.SidePane;
 
 import java.util.Map;
 

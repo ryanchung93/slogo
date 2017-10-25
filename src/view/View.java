@@ -1,6 +1,5 @@
 package view;
 
-import java.util.Arrays;
 import java.util.ResourceBundle;
 import java.util.function.Consumer;
 
@@ -25,17 +24,17 @@ import javafx.util.Duration;
 import model.SLogoException;
 import view.API.ViewAPI;
 import view.API.CommandIOAPI.TurtleListener;
-import view.API.TextAreaAPI.StringListener;
-import view.API.TextAreaAPI.VariableListener;
+import view.API.SidePane.StringListener;
+import view.API.SidePane.VariableListener;
 import view.API.ToolbarAPI.LanguageListener;
 import view.CommandIO.CanvasView;
 import view.CommandIO.TextPromptView;
 import view.CommandIO.TurtleViewManager;
-import view.CommandIO.TurtleView;
-import view.TextArea.HistoryView;
-import view.TextArea.ReferenceView;
-import view.TextArea.UserDefinedCommandView;
-import view.TextArea.VariableView;
+import view.SidePane.HistoryView;
+import view.SidePane.ReferenceView;
+import view.SidePane.TurtleStateView;
+import view.SidePane.UserDefinedCommandView;
+import view.SidePane.VariableView;
 import view.Toolbar.ToolbarView;
 
 /**
@@ -75,6 +74,7 @@ public class View implements ViewAPI, LanguageListener {
 	private ReferenceView myRefView;
 	private HistoryView myHistoryView;
 	private ToolbarView myToolbarView;
+	private TurtleStateView myTurtleStateView;
 
 	private LanguageListener myLanguageListener;
 	private ResourceBundle acceptedCommands;
@@ -96,8 +96,8 @@ public class View implements ViewAPI, LanguageListener {
 	public void start(Consumer<String> commandConsumer) {
 		myTimeline = setupTimeline();
 		setupLayout();
-		addAnimationComponents();
 		addScrollPaneComponents();
+		addAnimationComponents();
 		addTextPrompt(commandConsumer);
 		addToolbar();
 		myTimeline.play();
@@ -233,6 +233,7 @@ public class View implements ViewAPI, LanguageListener {
 		// FOR TESTING
 		Image image = new Image(getClass().getClassLoader().getResourceAsStream("resources/images/" + TURTLE_IMAGE));
 		myTurtleManager = new TurtleViewManager(myCanvas, image);
+		myTurtleManager.addTurtleStateListener(myTurtleStateView);
 	}
 
 	/**
@@ -280,10 +281,12 @@ public class View implements ViewAPI, LanguageListener {
 
 		myUDCView = new UserDefinedCommandView((dims[1][1] + dims[1][2]) / 2);
 		myVarView = new VariableView((dims[1][1] + dims[1][2]) / 2);
+		myTurtleStateView = new TurtleStateView((dims[1][1] + dims[1][2]) / 2);;
 		myRefView = new ReferenceView((dims[1][1] + dims[1][2]) / 2);
 		myHistoryView = new HistoryView((dims[1][1] + dims[1][2]) / 2);
 
 		myLeftVBox.getChildren().add(myUDCView.getParent());
+		myLeftVBox.getChildren().add(myTurtleStateView.getParent());
 		myLeftVBox.getChildren().add(myVarView.getParent());
 		myRightVBox.getChildren().add(myRefView.getParent());
 		myRightVBox.getChildren().add(myHistoryView.getParent());

@@ -1,7 +1,7 @@
 package view.API.CommandIOAPI;
 
-import javafx.scene.input.KeyCode;
 import model.ImmutableTurtle;
+import view.SidePane.TurtleStateView;
 
 /**
  * Listens for modifications to a turtle's state -- its methods must be called
@@ -49,6 +49,11 @@ public interface TurtleListener extends TurtleImageListener {
 	 * Called when the screen should be cleared
 	 */
 	public void clearScreen();
+	
+	/**
+	 * Called when display needs turtle attributes
+	 */
+	public void addTurtleStateListener(TurtleStateView l);
 
 
 }

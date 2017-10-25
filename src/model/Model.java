@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import view.API.CommandIOAPI.TurtleListener;
-import view.API.TextAreaAPI.StringListener;
-import view.API.TextAreaAPI.VariableListener;
+import view.API.SidePane.StringListener;
+import view.API.SidePane.VariableListener;
 import view.API.ToolbarAPI.LanguageListener;
 
 public class Model {
@@ -51,7 +51,7 @@ public class Model {
 		while(parser.hasNextCommand()) {
 
 			for (Turtle turtle : turtles) {
-			    // must implement if turtle is toggled
+			    // must implement if turtle is toggled - discuss
 				parser.getNextCommand().execute(turtle, commands, variables);
 				variables.notifyListeners();
 			}

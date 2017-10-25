@@ -4,8 +4,8 @@ import java.util.function.Consumer;
 
 import model.SLogoException;
 import view.API.CommandIOAPI.TurtleListener;
-import view.API.TextAreaAPI.StringListener;
-import view.API.TextAreaAPI.VariableListener;
+import view.API.SidePane.StringListener;
+import view.API.SidePane.VariableListener;
 import view.API.ToolbarAPI.LanguageListener;
 
 public interface ViewAPI {
