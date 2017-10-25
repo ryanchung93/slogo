@@ -33,7 +33,6 @@ public class TurtleView implements TurtleListener, TurtleImageDisplay, Immutable
 			Arrays.asList(myResources.getString("PenColors").replaceAll("\\s+", "").split(",")));
 
 	private ImageView myView;
-	
 
 	private List<Image> imageList = new ArrayList<Image>();
 	private int myPenColorIndex;
@@ -75,6 +74,8 @@ public class TurtleView implements TurtleListener, TurtleImageDisplay, Immutable
 			imageList.add(fileImage);
 		}
 	}
+	
+	/*************************** PUBLIC METHODS ********************************/
 
 	@Override
 	public void setTurtle(ImmutableTurtle turtle) {
@@ -157,7 +158,7 @@ public class TurtleView implements TurtleListener, TurtleImageDisplay, Immutable
 		System.out.println("myX: " + myView.getX() + " | myY: " + myView.getY());
 		System.out.println("newX: " + newX + " | newY: " + newY);
 		System.out.println("offsetNewX: " + offsetNewX + " | offsetNewY: " + offsetNewY);
-		
+
 		updateListener();
 	}
 
@@ -189,7 +190,6 @@ public class TurtleView implements TurtleListener, TurtleImageDisplay, Immutable
 		} catch (Exception e) {
 			showError(e.getMessage());
 		}
-
 	}
 
 	@Override
@@ -217,41 +217,6 @@ public class TurtleView implements TurtleListener, TurtleImageDisplay, Immutable
 	@Override
 	public ImageView getImageView() {
 		return myView;
-	}
-
-	private void showError(String message) {
-		Alert alert = new Alert(AlertType.ERROR);
-		alert.setContentText(message);
-		alert.showAndWait();
-	}
-
-	/**
-	 * Make toggling noticeable
-	 */
-	private void clicked() {
-		System.out.println("Clicked turtle");
-		if (myIsToggled)
-			myView.setStyle("-fx-background-color:transparent");
-		else
-			myView.setStyle("-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 15, 0, 0, 0)");
-		myIsToggled = !myIsToggled;
-
-		updateListener();
-
-		// MUST NOTIFY MODEL
-	}
-
-	/**
-	 * Make mouse hovering noticeable.
-	 */
-	private void entered() {
-		if (!myIsToggled)
-			myView.setStyle("-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0, 0, 0)");
-	}
-
-	private void exited() {
-		if (!myIsToggled)
-			myView.setStyle("-fx-background-color:transparent;");
 	}
 
 	@Override
@@ -291,11 +256,48 @@ public class TurtleView implements TurtleListener, TurtleImageDisplay, Immutable
 		// TODO Auto-generated method stub
 		return myPenColorIndex;
 	}
-	
+
 	@Override
 	public void addTurtleStateListener(TurtleStateView l) {
 		listener = l;
-		
+
+	}
+	
+	/*************************** PRIVATE METHODS ********************************/
+
+	private void showError(String message) {
+		Alert alert = new Alert(AlertType.ERROR);
+		alert.setContentText(message);
+		alert.showAndWait();
+	}
+
+	/**
+	 * Make toggling noticeable
+	 */
+	private void clicked() {
+		System.out.println("Clicked turtle");
+		if (myIsToggled)
+			myView.setStyle("-fx-background-color:transparent");
+		else
+			myView.setStyle("-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 15, 0, 0, 0)");
+		myIsToggled = !myIsToggled;
+
+		updateListener();
+
+		// MUST NOTIFY MODEL
+	}
+
+	/**
+	 * Make mouse hovering noticeable.
+	 */
+	private void entered() {
+		if (!myIsToggled)
+			myView.setStyle("-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0, 0, 0)");
+	}
+
+	private void exited() {
+		if (!myIsToggled)
+			myView.setStyle("-fx-background-color:transparent;");
 	}
 
 	private void updateListener() {

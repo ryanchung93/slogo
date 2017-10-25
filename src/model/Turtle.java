@@ -1,6 +1,5 @@
 package model;
 
-import javafx.scene.paint.Color;
 import view.API.CommandIOAPI.TurtleListener;
 
 /**

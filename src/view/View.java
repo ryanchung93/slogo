@@ -52,7 +52,6 @@ public class View implements ViewAPI, LanguageListener {
 	private static final int SCREEN_HEIGHT = 700;
 	private static final String STYLESHEET = "/resources/view/view.css";
 	private static final String DEFAULT_LANGUAGE = "English";
-
 	private static final String TURTLE_IMAGE = "Turtle_up.png";
 
 	private Stage myStage;

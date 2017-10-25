@@ -4,14 +4,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javafx.scene.image.Image;
-import javafx.scene.input.KeyCode;
 import javafx.scene.layout.Pane;
 import model.ImmutableTurtle;
 import view.API.CommandIOAPI.TurtleListener;
 import view.SidePane.TurtleStateView;
 
 /**
- * Created by DavidTran on 10/23/17.
+ * Class that manages the viewing of turtles.
+ * 
+ * @author DavidTran
  */
 public class TurtleViewManager implements TurtleListener {
 
@@ -27,11 +28,10 @@ public class TurtleViewManager implements TurtleListener {
 
 	@Override
 	public void setTurtle(ImmutableTurtle turtle) {
-		System.out.println("set");
 		TurtleView turtleView = new TurtleView(myParent, myImage, turtle.getID());
-		turtleList.add(turtleView);
-		addTurtleStateListener(listener);
+		turtleView.addTurtleStateListener(listener);
 		turtleView.setTurtle(turtle);
+		turtleList.add(turtleView);
 		myParent.getChildren().add(turtleView.getImageView());
 
 	}
@@ -52,7 +52,9 @@ public class TurtleViewManager implements TurtleListener {
 
 	@Override
 	public void penChange(boolean down) {
-
+		for (TurtleView turtle : turtleList) {
+			turtle.penChange(down);
+		}
 	}
 
 	@Override
@@ -86,9 +88,5 @@ public class TurtleViewManager implements TurtleListener {
 	@Override
 	public void addTurtleStateListener(TurtleStateView l) {
 		listener = l;
-		for (TurtleView turtle : turtleList) {
-			turtle.addTurtleStateListener(l);
-		}
-		
 	}
 }

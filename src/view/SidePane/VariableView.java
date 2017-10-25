@@ -4,10 +4,9 @@ import java.util.Map;
 import java.util.ResourceBundle;
 
 import javafx.scene.Parent;
-import javafx.scene.control.ScrollPane;
-import javafx.scene.control.ScrollPane.ScrollBarPolicy;
-import view.API.SidePane.VariableDisplay;
 import javafx.scene.control.TextArea;
+import javafx.scene.layout.VBox;
+import view.API.SidePane.VariableDisplay;
 
 /**
  * Class allowing users to see values of current variables
@@ -18,21 +17,22 @@ import javafx.scene.control.TextArea;
 public class VariableView implements VariableDisplay {
 
 	private TextArea ta;
+	private VBox view;
 	private ResourceBundle myResources = ResourceBundle.getBundle("resources.view/view");
 
 	public VariableView(double height) {
+		view = new VBox();
+		view.setMinHeight(height);
 
-		ta = new TextArea();
-		ta.setMinHeight(height);
-		ta.setWrapText(true);
-		ta.setEditable(false);
-		ta.appendText(myResources.getString("VariableView"));
+		ta = createTA(height);
+		view.getChildren().addAll(ta);
 	}
+
+	/*************************** PUBLIC METHODS ********************************/
 
 	@Override
 	public void changedMap(Map<String, Double> vars) {
-		ta.clear();
-		ta.appendText(myResources.getString("VariableView") + "\n\n");
+		clear();
 		for (String key : vars.keySet()) {
 			ta.appendText(key + " : " + vars.get(key) + "\n");
 		}
@@ -40,13 +40,29 @@ public class VariableView implements VariableDisplay {
 
 	@Override
 	public void clearVariables() {
-		ta.clear();
+		clear();
+		
+		// NOTIFY MODEL (that vars map should be empty)
 
 	}
 
-	@Override
 	public Parent getParent() {
-		return ta;
+		return view;
 	}
 
+	/*************************** PRIVATE METHODS ********************************/
+
+	private TextArea createTA(double height) {
+		TextArea ret = new TextArea();
+		ret.setMinHeight(height);
+		ret.setWrapText(true);
+		ret.setEditable(false);
+		ret.appendText(myResources.getString("VariableView") + "\n");
+		return ret;
+	}
+
+	private void clear() {
+		ta.clear();
+		ta.appendText(myResources.getString("VariableView") + "\n");
+	}
 }
