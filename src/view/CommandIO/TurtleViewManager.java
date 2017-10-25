@@ -28,7 +28,7 @@ public class TurtleViewManager implements TurtleListener {
 
 	@Override
 	public void setTurtle(ImmutableTurtle turtle) {
-		TurtleView turtleView = new TurtleView(myParent, myImage, turtle.getID());
+		TurtleView turtleView = new TurtleView(myParent, myImage);
 		turtleView.addTurtleStateListener(listener);
 		turtleView.setTurtle(turtle);
 		turtleList.add(turtleView);
@@ -75,6 +75,7 @@ public class TurtleViewManager implements TurtleListener {
 	public void clearScreen() {
 		for (TurtleView turtle : turtleList) {
 			turtle.clearScreen();
+			turtleList.remove(turtle);
 		}
 	}
 

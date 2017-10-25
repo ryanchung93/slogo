@@ -41,9 +41,6 @@ public class VariableView implements VariableDisplay {
 	@Override
 	public void clearVariables() {
 		clear();
-		
-		// NOTIFY MODEL (that vars map should be empty)
-
 	}
 
 	public Parent getParent() {
