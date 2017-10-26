@@ -35,6 +35,8 @@ public class Driver implements DriverAPI, LanguageListener {
 	public void run() {
 		Turtle t = new Turtle(0, 0, 0, 0);
 		myModel.addTurtle(t, myView.getTurtleListener());
+		Turtle t2 = new Turtle(50, 50, 0, 1);
+		myModel.addTurtle(t2, myView.getTurtleListener());
 		myModel.addCommandListener(myView.getCommandListener());
 		myModel.addCommandListener(myView.getUserDefinedCommandListener());
 		myModel.addVariableListener(myView.getVariableListener());
