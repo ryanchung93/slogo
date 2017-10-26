@@ -1,12 +1,12 @@
 package model.commandBuilder;
 
 import model.Command;
-import model.CommandDef;
+import model.CommandBuilder;
 import model.SLogoException;
 import model.TokenDispenser;
 import model.commands.ClearScreen;
 
-public class ClearScreenBuilder implements CommandDef {
+public class ClearScreenBuilder implements CommandBuilder {
 
 	@Override
 	public Command build(TokenDispenser dispenser) throws SLogoException {
