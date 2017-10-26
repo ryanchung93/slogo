@@ -16,9 +16,9 @@ import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
-import view.API.CommandIOAPI.TurtleImageListener;
+import view.API.CommandIOAPI.TurtleImageOptionListener;
 import view.API.ToolbarAPI.BackgroundOptionListener;
-import view.API.ToolbarAPI.ImageOptionDisplay;
+import view.API.ToolbarAPI.TurtleImageOptionDisplay;
 
 /**
  * Class that allows users to select a canvas color from a choice box.
@@ -26,13 +26,13 @@ import view.API.ToolbarAPI.ImageOptionDisplay;
  * @author DavidTran
  *
  */
-public class ImageOptionView implements ImageOptionDisplay {
+public class ImageOptionView implements TurtleImageOptionDisplay {
 
 	private VBox optionView;
 	private Label prompt;
 	private ChoiceBox<String> cb;
 	private ResourceBundle myResources = ResourceBundle.getBundle("resources.view/choicebox");
-	private TurtleImageListener listener;
+	private TurtleImageOptionListener listener;
 	private List<String> imageNameList;
 
 	public ImageOptionView() {
@@ -69,7 +69,7 @@ public class ImageOptionView implements ImageOptionDisplay {
 	}
 
 	@Override
-	public void addTurtleImageListener(TurtleImageListener l) {
+	public void addTurtleImageListener(TurtleImageOptionListener l) {
 		listener = l;
 
 	}

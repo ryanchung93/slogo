@@ -23,8 +23,10 @@ public class TextPromptView extends HBox implements TextPromptDisplay {
 	private VBox buttonPanel;
 
 	private Consumer<String> commandConsumer;
+	private Consumer<String> historyConsumer;
 
-	public TextPromptView(double width, double height, Consumer<String> commandConsumer) {
+	public TextPromptView(double width, double height, Consumer<String> commandConsumer,
+			Consumer<String> historyConsumer) {
 		this.setMaxWidth(width);
 		this.setMaxHeight(height);
 
@@ -34,6 +36,7 @@ public class TextPromptView extends HBox implements TextPromptDisplay {
 		tp.setId("text-prompt");
 
 		this.commandConsumer = commandConsumer;
+		this.historyConsumer = historyConsumer;
 
 		this.getChildren().add(tp);
 
@@ -64,6 +67,7 @@ public class TextPromptView extends HBox implements TextPromptDisplay {
 	public void enter() {
 		String code = tp.getText();
 		commandConsumer.accept(code);
+		historyConsumer.accept(code);
 		clear();
 	}
 

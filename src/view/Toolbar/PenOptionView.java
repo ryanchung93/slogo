@@ -7,18 +7,13 @@ import java.util.ResourceBundle;
 
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
-import javafx.collections.FXCollections;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
-import javafx.scene.control.Tooltip;
 import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
 import view.API.CommandIOAPI.TurtleListener;
-import view.API.ToolbarAPI.BackgroundOptionListener;
 import view.API.ToolbarAPI.PenOptionDisplay;
-import view.API.ToolbarAPI.PenOptionListener;
 
 /**
  * Class that allows users to select a pen color from a choice box.
@@ -67,7 +62,7 @@ public class PenOptionView implements PenOptionDisplay {
 	}
 
 	@Override
-	public void addPenOptionListener(TurtleListener l) {
+	public void addTurtleListener(TurtleListener l) {
 		listener = l;
 	}
 

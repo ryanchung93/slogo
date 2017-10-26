@@ -8,7 +8,7 @@ import view.SidePane.TurtleStateView;
  * when these changes occur
  *
  */
-public interface TurtleListener extends TurtleImageListener {
+public interface TurtleListener extends TurtleImageOptionListener {
 	
 	/**
 	 * Gives the listener a Turtle to keep track of the state
