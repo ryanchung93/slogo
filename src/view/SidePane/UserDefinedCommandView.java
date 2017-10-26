@@ -1,15 +1,7 @@
 package view.SidePane;
 
-import java.util.Map;
-import java.util.ResourceBundle;
 import java.util.Set;
-
-import javafx.scene.Parent;
-import javafx.scene.control.ScrollPane;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.ScrollPane.ScrollBarPolicy;
-import model.CommandBuilder;
-import view.API.SidePane.UserDefinedCommandDisplay;
+import view.API.SidePane.StringListener;
 
 /**
  * Class allowing users to see defined functions.
@@ -17,18 +9,10 @@ import view.API.SidePane.UserDefinedCommandDisplay;
  * @author DavidTran
  *
  */
-public class UserDefinedCommandView implements UserDefinedCommandDisplay {
-
-	TextArea ta;
-	private ResourceBundle myResources = ResourceBundle.getBundle("resources.view/view");
+public class UserDefinedCommandView extends Window implements StringListener {
 
 	public UserDefinedCommandView(double height) {
-
-		ta = new TextArea();
-		ta.setMinHeight(height);
-		ta.setWrapText(true);
-		ta.setEditable(false);
-
+		super(height);
 		ta.appendText(myResources.getString("UserDefinedCommandView"));
 	}
 
@@ -39,18 +23,6 @@ public class UserDefinedCommandView implements UserDefinedCommandDisplay {
 		for (String key : commandSet) {
 			ta.appendText(key + "\n");
 		}
-
-	}
-
-	@Override
-	public Parent getParent() {
-		return ta;
-	}
-
-	@Override
-	public void clearCommands() {
-		// TODO Auto-generated method stub
-
 	}
 
 }

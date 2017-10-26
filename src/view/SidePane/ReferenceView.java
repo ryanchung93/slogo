@@ -1,14 +1,6 @@
 package view.SidePane;
 
-import java.util.Map;
-import java.util.ResourceBundle;
 import java.util.Set;
-
-import javafx.scene.Parent;
-import javafx.scene.control.ScrollPane;
-import javafx.scene.control.ScrollPane.ScrollBarPolicy;
-import javafx.scene.control.TextArea;
-import model.CommandBuilder;
 import view.API.SidePane.StringListener;
 
 /**
@@ -17,18 +9,11 @@ import view.API.SidePane.StringListener;
  * @author DavidTran
  *
  */
-public class ReferenceView implements StringListener {
-
-	TextArea ta;
-	private ResourceBundle myResources = ResourceBundle.getBundle("resources.view/view");
+public class ReferenceView extends Window implements StringListener {
 
 	public ReferenceView(double height) {
-
-		ta = new TextArea();
-		ta.setMinHeight(height);
-		ta.setWrapText(true);
-		ta.setEditable(false);
-		ta.appendText(myResources.getString("ReferenceView"));
+		super(height);
+		ta.appendText(myResources.getString("ReferenceView") + "\n");
 	}
 
 	@Override
@@ -36,15 +21,10 @@ public class ReferenceView implements StringListener {
 		ta.clear();
 		ta.appendText(myResources.getString("ReferenceView") + "\n\n");
 		for (String key : refMap) {
-			ta.appendText(key + "\n");// + " : " + newMap.get(key));
+			ta.appendText(key + "\n");
 		}
 		ta.setScrollTop(0);
 
-	}
-
-	@Override
-	public Parent getParent() {
-		return ta;
 	}
 
 }

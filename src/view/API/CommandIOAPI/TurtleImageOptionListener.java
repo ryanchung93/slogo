@@ -6,7 +6,7 @@ package view.API.CommandIOAPI;
  * @author DavidTran
  *
  */
-public interface TurtleImageListener {
+public interface TurtleImageOptionListener {
 
 	public void imageChange(int imageIndex);
 

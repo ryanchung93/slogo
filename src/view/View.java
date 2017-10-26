@@ -77,6 +77,7 @@ public class View implements ViewAPI, LanguageListener {
 
 	private LanguageListener myLanguageListener;
 	private ResourceBundle acceptedCommands;
+
 	/**
 	 * Constructor for setting up animation.
 	 * 
@@ -97,7 +98,7 @@ public class View implements ViewAPI, LanguageListener {
 		setupLayout();
 		addScrollPaneComponents();
 		addAnimationComponents();
-		addTextPrompt(commandConsumer);
+		addTextPrompt(commandConsumer, s -> myHistoryView.updateHistory(s));
 		addToolbar();
 		myTimeline.play();
 	}
@@ -105,6 +106,10 @@ public class View implements ViewAPI, LanguageListener {
 	@Override
 	public TurtleListener getTurtleListener() {
 		return myTurtleViewManager;
+	}
+	
+	public TurtleListener getStateViewListener() {
+		return myTurtleStateView;
 	}
 
 	@Override
@@ -115,11 +120,6 @@ public class View implements ViewAPI, LanguageListener {
 	@Override
 	public StringListener getCommandListener() {
 		return myRefView;
-	}
-	
-	@Override
-	public LanguageListener getLanguageListener() {
-		return this;
 	}
 
 	@Override
@@ -132,7 +132,6 @@ public class View implements ViewAPI, LanguageListener {
 		System.out.println(e.getMessage());
 		showError(e.getMessage());
 	}
-	
 
 	/*************** PRIVATE METHODS *******************/
 
@@ -238,12 +237,11 @@ public class View implements ViewAPI, LanguageListener {
 	/**
 	 * Add text prompt where commands are entered and run.
 	 */
-	private void addTextPrompt(Consumer<String> commandConsumer) {
+	private void addTextPrompt(Consumer<String> commandConsumer, Consumer<String> historyConsumer) {
 		double[][] dims = getGridDimensions();
 		myTextPrompt = new TextPromptView(dims[0][1], dims[1][2], s -> {
 			commandConsumer.accept(s);
-			myHistoryView.updateHistory(s);
-		});
+		}, historyConsumer);
 		myGrid.add(myTextPrompt, 1, 2, 2, 1);
 	}
 
@@ -280,7 +278,8 @@ public class View implements ViewAPI, LanguageListener {
 
 		myUDCView = new UserDefinedCommandView((dims[1][1] + dims[1][2]) / 2);
 		myVarView = new VariableView((dims[1][1] + dims[1][2]) / 2);
-		myTurtleStateView = new TurtleStateView((dims[1][1] + dims[1][2]) / 2);;
+		myTurtleStateView = new TurtleStateView((dims[1][1] + dims[1][2]) / 2);
+		;
 		myRefView = new ReferenceView((dims[1][1] + dims[1][2]) / 2);
 		myHistoryView = new HistoryView((dims[1][1] + dims[1][2]) / 2);
 
@@ -300,7 +299,7 @@ public class View implements ViewAPI, LanguageListener {
 		// set a listener for background color changes.
 		myToolbarView.getBackgroundOptionView().addBackgroundOptionListener(myCanvas);
 		myToolbarView.getImageOptionView().addTurtleImageListener(myTurtleViewManager);
-		myToolbarView.getPenOptionView().addPenOptionListener(myTurtleViewManager);
+		myToolbarView.getPenOptionView().addTurtleListener(myTurtleViewManager);
 		myToolbarView.getLanguageOptionView().addLanguageOptionListener(myLanguageListener);
 		myToolbarView.getLanguageOptionView().addLanguageOptionListener(this);
 		myGrid.add(myToolbarView.getParent(), 0, 0);
@@ -336,7 +335,6 @@ public class View implements ViewAPI, LanguageListener {
 	@Override
 	public void languageChange(String language) {
 		acceptedCommands = ResourceBundle.getBundle("resources.languages." + language);
-		
 	}
 
 }

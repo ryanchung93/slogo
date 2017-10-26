@@ -1,9 +1,9 @@
 package view.API.ToolbarAPI;
 
 import view.API.SubcomponentViewAPI;
-import view.API.CommandIOAPI.TurtleImageListener;
+import view.API.CommandIOAPI.TurtleImageOptionListener;
 
-public interface ImageOptionDisplay extends SubcomponentViewAPI{
+public interface TurtleImageOptionDisplay extends SubcomponentViewAPI{
 
 	/**
 	 * Give a listener to the color option box to detect selections.
@@ -11,6 +11,6 @@ public interface ImageOptionDisplay extends SubcomponentViewAPI{
 	 * @param l
 	 *            Listener that detects when user selects a color option.
 	 */
-	public void addTurtleImageListener(TurtleImageListener l);
+	public void addTurtleImageListener(TurtleImageOptionListener l);
 	
 }

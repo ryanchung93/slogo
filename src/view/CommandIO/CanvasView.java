@@ -22,33 +22,28 @@ import view.API.ToolbarAPI.BackgroundOptionListener;
  */
 public class CanvasView extends Pane implements CanvasDisplay, BackgroundOptionListener {
 
-	private Color myBackgroundColor = Color.WHITE;
 	private ResourceBundle myResources = ResourceBundle.getBundle("resources.view/choicebox");
-	private List<String> colorList;
+	private final List<String> colorList = new ArrayList<String>(
+			Arrays.asList(myResources.getString("BackgroundColors").replaceAll("\\s+", "").split(",")));
+
 	/**
 	 * Constructor
 	 */
 	public CanvasView(double width, double height) {
-		this.setBackgroundColor(myBackgroundColor);
+		this.setBackgroundColor(Color.valueOf(colorList.get(0)));
 		this.setScaleY(-1);
 		this.setMaxWidth(width);
 		this.setMaxHeight(height);
-		//System.out.println("Canvas width: " + width + " height: " + height);
-		colorList = new ArrayList<String>(
-				Arrays.asList(myResources.getString("BackgroundColors").replaceAll("\\s+", "").split(",")));
-	
 	}
-	
+
 	@Override
 	public void setBackgroundColor(Color c) {
 		this.setBackground(new Background(new BackgroundFill(c, CornerRadii.EMPTY, Insets.EMPTY)));
-		
 	}
 
 	@Override
 	public void backgroundColorChange(int colorIndex) {
 		this.setBackgroundColor(Color.valueOf(colorList.get(colorIndex)));
-		
 	}
 
 }

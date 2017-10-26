@@ -22,7 +22,7 @@ import view.SidePane.TurtleStateView;
  *
  * @author DavidTran
  */
-public class TurtleView implements TurtleListener, TurtleImageDisplay, ImmutableTurtle {
+public class TurtleView implements TurtleListener, TurtleImageDisplay/*, ImmutableTurtle*/ {
 
 	private static final double WIDTH = 35;
 	private static final double HEIGHT = 35;
@@ -33,39 +33,33 @@ public class TurtleView implements TurtleListener, TurtleImageDisplay, Immutable
 			Arrays.asList(myResources.getString("PenColors").replaceAll("\\s+", "").split(",")));
 
 	private ImageView myView;
-
-	private List<Image> imageList = new ArrayList<Image>();
+	private int myID;
+	private double myHeading;
 	private int myPenColorIndex;
 	private boolean myPenIsDown;
 	private Pane myParent;
-	private double myHeading;
 	private boolean myIsToggled;
-	private int myID;
 
 	private TurtleStateView listener;
+	private List<Image> imageList = new ArrayList<Image>();
 
 	private double myOffsetX;
 	private double myOffsetY;
 	private double myPrevNewX;
 	private double myPrevNewY;
 
-	public TurtleView(Pane parent, Image image, int id) {
+	public TurtleView(Pane parent, Image image) {
 		myView = new ImageView(image);
 		myView.setFitWidth(WIDTH);
 		myView.setFitHeight(HEIGHT);
 		myView.setLayoutX(-WIDTH / 2);
 		myView.setLayoutY(-HEIGHT / 2);
-		myView.setX(0);
-		myView.setY(0);
 		myView.setRotate(180);
 		myView.setStyle("-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 15, 0, 0, 0)");
 		myView.setOnMouseClicked(e -> clicked());
 		myView.setOnMouseEntered(e -> entered());
 		myView.setOnMouseEntered(e -> exited());
 
-		myID = id;
-		myPenColorIndex = 0;
-		myPenIsDown = true;
 		myIsToggled = true;
 		myParent = parent;
 
@@ -74,7 +68,7 @@ public class TurtleView implements TurtleListener, TurtleImageDisplay, Immutable
 			imageList.add(fileImage);
 		}
 	}
-	
+
 	/*************************** PUBLIC METHODS ********************************/
 
 	@Override
@@ -85,11 +79,12 @@ public class TurtleView implements TurtleListener, TurtleImageDisplay, Immutable
 		myView.setX(turtle.getX() + myOffsetX);
 		myView.setY(turtle.getY() + myOffsetY);
 
+		myID = turtle.getID();
 		myHeading = turtle.getHeading();
 		myPenColorIndex = turtle.getPenColorIndex();
 		myPenIsDown = turtle.getPenDown();
 		myView.setVisible(turtle.isVisible());
-		updateListener();
+		//updateListener();
 
 	}
 
@@ -159,7 +154,7 @@ public class TurtleView implements TurtleListener, TurtleImageDisplay, Immutable
 		System.out.println("newX: " + newX + " | newY: " + newY);
 		System.out.println("offsetNewX: " + offsetNewX + " | offsetNewY: " + offsetNewY);
 
-		updateListener();
+		//updateListener();
 	}
 
 	@Override
@@ -168,7 +163,7 @@ public class TurtleView implements TurtleListener, TurtleImageDisplay, Immutable
 		if (myIsToggled) {
 			myHeading = -newHeading;
 			myView.setRotate(180 - myHeading);
-			updateListener();
+			//updateListener();
 		}
 	}
 
@@ -176,7 +171,7 @@ public class TurtleView implements TurtleListener, TurtleImageDisplay, Immutable
 	public void penChange(boolean newState) {
 		if (myIsToggled) {
 			myPenIsDown = newState;
-			updateListener();
+			//updateListener();
 		}
 	}
 
@@ -185,7 +180,7 @@ public class TurtleView implements TurtleListener, TurtleImageDisplay, Immutable
 		try {
 			if (myIsToggled) {
 				myPenColorIndex = index;
-				updateListener();
+				//updateListener();
 			}
 		} catch (Exception e) {
 			showError(e.getMessage());
@@ -196,16 +191,13 @@ public class TurtleView implements TurtleListener, TurtleImageDisplay, Immutable
 	public void visibilityChange(boolean visibility) {
 		if (myIsToggled) {
 			myView.setVisible(visibility);
-			updateListener();
+			//updateListener();
 		}
 	}
 
 	@Override
 	public void clearScreen() {
-		// remove image from pane
-		if (myIsToggled)
-			myParent.getChildren().remove(myView);
-
+		myParent.getChildren().remove(myView);
 	}
 
 	@Override
@@ -219,7 +211,7 @@ public class TurtleView implements TurtleListener, TurtleImageDisplay, Immutable
 		return myView;
 	}
 
-	@Override
+	/*@Override
 	public int getID() {
 		return myID;
 	}
@@ -255,24 +247,18 @@ public class TurtleView implements TurtleListener, TurtleImageDisplay, Immutable
 	public int getPenColorIndex() {
 		// TODO Auto-generated method stub
 		return myPenColorIndex;
-	}
+	}*/
 
 	@Override
 	public void addTurtleStateListener(TurtleStateView l) {
 		listener = l;
 
 	}
-	
+
 	/*************************** PRIVATE METHODS ********************************/
 
-	private void showError(String message) {
-		Alert alert = new Alert(AlertType.ERROR);
-		alert.setContentText(message);
-		alert.showAndWait();
-	}
-
 	/**
-	 * Make toggling noticeable
+	 * Make toggling viewable.
 	 */
 	private void clicked() {
 		System.out.println("Clicked turtle");
@@ -282,9 +268,9 @@ public class TurtleView implements TurtleListener, TurtleImageDisplay, Immutable
 			myView.setStyle("-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 15, 0, 0, 0)");
 		myIsToggled = !myIsToggled;
 
-		updateListener();
+		//updateListener();
 
-		// MUST NOTIFY MODEL
+		// MUST NOTIFY MODEL (that turtle is toggled)
 	}
 
 	/**
@@ -300,8 +286,13 @@ public class TurtleView implements TurtleListener, TurtleImageDisplay, Immutable
 			myView.setStyle("-fx-background-color:transparent;");
 	}
 
-	private void updateListener() {
-		listener.update(this);
+//	private void updateListener() {
+	// listener.update(this);
+
+	private void showError(String message) {
+		Alert alert = new Alert(AlertType.ERROR);
+		alert.setContentText(message);
+		alert.showAndWait();
 	}
 
 }

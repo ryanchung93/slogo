@@ -36,11 +36,6 @@ public interface ViewAPI {
 	 * @return StringListener that detects changes to list of user commands.
 	 */
 	public StringListener getUserDefinedCommandListener();
-
-	/**
-	 * @return StringListener that detects changes to language.
-	 */
-	public LanguageListener getLanguageListener();
 	
 	/**
 	 * @param e
