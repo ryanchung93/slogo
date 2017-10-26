@@ -1,7 +1,6 @@
 package view.SidePane;
 
 import java.util.Set;
-
 import view.API.SidePane.StringListener;
 
 /**

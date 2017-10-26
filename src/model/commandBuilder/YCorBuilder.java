@@ -1,12 +1,12 @@
 package model.commandBuilder;
 
 import model.Command;
-import model.CommandDef;
+import model.CommandBuilder;
 import model.SLogoException;
 import model.TokenDispenser;
 import model.commands.YCor;
 
-public class YCorBuilder implements CommandDef {
+public class YCorBuilder implements CommandBuilder {
 
 	@Override
 	public Command build(TokenDispenser dispenser) throws SLogoException {
