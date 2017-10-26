@@ -19,7 +19,7 @@ public class Parser implements TokenDispenser{
 	public Parser(String code, CommandManager availableCommands) {
 		index = 0;
 		code = code.replaceAll(SYNTAX.getString("Comment"), " ").toLowerCase();
-		tokens = code.split("\\s+");
+		tokens = code.split(SYNTAX.getString("Whitespace"));
 		this.availableCommands = availableCommands;
 	}
 	
@@ -58,6 +58,8 @@ public class Parser implements TokenDispenser{
 			return new NumberCommand(Double.parseDouble(token));
 		if(token.matches(SYNTAX.getString("Variable")))
 			return new VariableCommand(token);
+		//if(token.matches(SYNTAX.getString("GroupStart")))
+			//return generateGroup();
 		if(token.matches(SYNTAX.getString("Command")))
 			return availableCommands.get(token).build(this);
 		throw new SLogoException("UnexpectedToken", token);
