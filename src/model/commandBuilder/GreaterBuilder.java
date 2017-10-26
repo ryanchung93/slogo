@@ -5,7 +5,6 @@ import model.CommandDef;
 import model.SLogoException;
 import model.TokenDispenser;
 import model.commands.Greater;
-import model.commands.Less;
 
 public class GreaterBuilder implements CommandDef {
 
