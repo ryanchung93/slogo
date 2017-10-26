@@ -17,6 +17,6 @@ public interface PenOptionDisplay extends SubcomponentViewAPI {
 	 * @param l
 	 *            Listener that detects when user selects a color option
 	 */
-	public void addPenOptionListener(TurtleListener l);
+	public void addTurtleListener(TurtleListener l);
 
 }
