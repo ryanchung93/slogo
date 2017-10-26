@@ -17,7 +17,7 @@ public class VariableManager {
 	public VariableManager() {
 	}
 	
-	public double getValue(String s) {
+	public double getValue(String s){
 		if(getScope().containsKey(s))
 			return getScope().get(s);
 		if(globals.containsKey(s))
@@ -26,20 +26,20 @@ public class VariableManager {
 		return 0;
 	}
 	
-	public void setValue(String s, double val) {
+	public void setValue(String s, double val) throws SLogoException{
 		if(getScope().containsKey(s))
 			setLocalValue(s, val);
 		else
 			setGlobalValue(s, val);
 	}
 	
-	public void setLocalValue(String s, double val) {
+	public void setLocalValue(String s, double val) throws SLogoException{
 		if(!s.matches(Parser.SYNTAX.getString("Variable")))
 			throw new SLogoException("InvalidVar", s);
 		getScope().put(s, val);
 	}
 	
-	public void setGlobalValue(String s, double val) {
+	public void setGlobalValue(String s, double val) throws SLogoException{
 		if(!s.matches(Parser.SYNTAX.getString("Variable")))
 			throw new SLogoException("InvalidVar", s);
 		updated = true;
