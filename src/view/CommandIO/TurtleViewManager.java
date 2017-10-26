@@ -16,12 +16,13 @@ import view.SidePane.TurtleStateView;
  */
 public class TurtleViewManager implements TurtleListener {
 
-	private List<TurtleView> turtleList = new ArrayList<TurtleView>();
+	private List<TurtleView> turtleList;
 	private final Pane myParent;
 	private Image myImage;
-	private TurtleStateView listener;
+	private TurtleStateView stateView;
 
 	public TurtleViewManager(Pane parent, Image image) {
+		turtleList = new ArrayList<TurtleView>();
 		myParent = parent;
 		myImage = image;
 	}
@@ -29,7 +30,7 @@ public class TurtleViewManager implements TurtleListener {
 	@Override
 	public void setTurtle(ImmutableTurtle turtle) {
 		TurtleView turtleView = new TurtleView(myParent, myImage);
-		turtleView.addTurtleStateListener(listener);
+		turtleView.addTurtleStateListener(stateView);
 		turtleView.setTurtle(turtle);
 		turtleList.add(turtleView);
 		myParent.getChildren().add(turtleView.getImageView());
@@ -88,6 +89,6 @@ public class TurtleViewManager implements TurtleListener {
 
 	@Override
 	public void addTurtleStateListener(TurtleStateView l) {
-		listener = l;
+		stateView = l;
 	}
 }

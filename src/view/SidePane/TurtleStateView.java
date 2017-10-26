@@ -1,6 +1,7 @@
 package view.SidePane;
 
 import model.ImmutableTurtle;
+import view.API.CommandIOAPI.TurtleListener;
 import view.CommandIO.TurtleView;
 
 /**
@@ -9,15 +10,16 @@ import view.CommandIO.TurtleView;
  * @author DavidTran
  *
  */
-public class TurtleStateView extends Window {
-
+public class TurtleStateView extends Window implements TurtleListener {
+	private ImmutableTurtle turtle;
+	
 	public TurtleStateView(double height) {
 		super(height);
 		ta.appendText(myResources.getString("TurtleStateView"));
 	}
 
-	// add to interface
-	public void update(ImmutableTurtle turtle) {
+	// add to interface	
+	private void update() {
 		ta.clear();
 
 		ta.appendText(myResources.getString("TurtleStateView") + "\n\n");
@@ -29,6 +31,51 @@ public class TurtleStateView extends Window {
 		ta.appendText("Pen Color: " + TurtleView.colorList.get(turtle.getPenColorIndex()) + "\n");
 		ta.appendText("Visibility: " + Boolean.toString(turtle.isVisible()) + "\n");
 
+	}
+
+	@Override
+	public void imageChange(int imageIndex) {
+		update();
+	}
+
+	@Override
+	public void setTurtle(ImmutableTurtle turtle) {
+		this.turtle = turtle;
+	}
+
+	@Override
+	public void locationChange(double newX, double newY) {
+		update();
+	}
+
+	@Override
+	public void headingChange(double newAngle) {
+		update();
+	}
+
+	@Override
+	public void penChange(boolean down) {
+		update();
+	}
+
+	@Override
+	public void visibilityChange(boolean isVisible) {
+		update();
+	}
+
+	@Override
+	public void penColorChange(int colorIndex) {
+		update();
+	}
+
+	@Override
+	public void clearScreen() {
+		update();
+	}
+
+	@Override
+	public void addTurtleStateListener(TurtleStateView l) {
+		update();
 	}
 
 }
