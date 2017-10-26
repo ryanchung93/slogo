@@ -16,8 +16,8 @@ public class CommandManager {
 
 	private String builderPropertiesPath;
 
-	private Map<String, CommandDef> builtInCommands = new HashMap<>();
-	private Map<String, CommandDef> userCommands = new HashMap<>();
+	private Map<String, CommandBuilder> builtInCommands = new HashMap<>();
+	private Map<String, CommandBuilder> userCommands = new HashMap<>();
 	private List<StringListener> listeners = new ArrayList<>();
 
 	public CommandManager(String builderPropertiesPath) {
@@ -31,9 +31,9 @@ public class CommandManager {
 		Enumeration<String> keys = classFile.getKeys();
 		while (keys.hasMoreElements()) {
 			String command = keys.nextElement();
-			CommandDef definition;
+			CommandBuilder definition;
 			try {
-				definition = (CommandDef) Class.forName(classFile.getString(command)).newInstance();
+				definition = (CommandBuilder) Class.forName(classFile.getString(command)).newInstance();
 			} catch (InstantiationException | IllegalAccessException | ClassNotFoundException e) {
 				e.printStackTrace();
 				throw new RuntimeException("Check basicCommands.properties -- key: " + command);
@@ -55,7 +55,7 @@ public class CommandManager {
 		updateListeners();
 	}
 
-	public CommandDef get(String s) throws SLogoException {
+	public CommandBuilder get(String s) throws SLogoException {
 		for (String regex : builtInCommands.keySet()) {
 			if (s.matches(regex))
 				return builtInCommands.get(regex);
@@ -70,7 +70,7 @@ public class CommandManager {
 		updateListeners();
 	}
 
-	public void put(String name, CommandDef definition) {
+	public void put(String name, CommandBuilder definition) {
 		builtInCommands.put(name, definition);
 		userCommands.put(name, definition);
 		updateListeners();

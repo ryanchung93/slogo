@@ -3,7 +3,7 @@ package view.API.SidePane;
 import java.util.Map;
 import java.util.Set;
 
-import model.CommandDef;
+import model.CommandBuilder;
 import view.API.SubcomponentViewAPI;
 
 /**

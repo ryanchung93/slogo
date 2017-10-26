@@ -1,27 +1,20 @@
 package model;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import view.API.CommandIOAPI.TurtleListener;
 import view.API.SidePane.StringListener;
 import view.API.SidePane.VariableListener;
 import view.API.ToolbarAPI.LanguageListener;
 
 public class Model {
-	
-	private List<TurtleListener> turtleListeners;
-	
+
 	private CommandManager commands;
 	private VariableManager variables;
-	
-	private List<Turtle> turtles;
+	private TurtleManager turtles;
 	
 	public Model(CommandManager commands) {
-		turtleListeners = new ArrayList<TurtleListener>();
 		this.commands = commands;
 		variables = new VariableManager();
-		turtles = new ArrayList<Turtle>();
+		turtles = new TurtleManager();
 	}
 	
 	public void setLanguage(String language) {
@@ -29,7 +22,7 @@ public class Model {
 	}
 	
 	public void addTurtleListener(TurtleListener tL) {
-		turtleListeners.add(tL);
+		turtles.addTurtleViewManager(tL);
 	}
 	
 	public void addVariableListener(VariableListener vL) {
@@ -41,21 +34,18 @@ public class Model {
 	}
 	
 	public void addTurtle(Turtle t, TurtleListener tL) {
-		turtles.add(t);
+		turtles.addTurtle(t);
 		t.addTurtleListener(tL);
-		turtleListeners.add(tL);
 	}
 	
 	public void execute(String code) throws SLogoException {
-		Parser parser = new Parser(code, commands);
-		while(parser.hasNextCommand()) {
-
-			for (Turtle turtle : turtles) {
+		for (Turtle turtle : turtles.getTurtles()) {
+			turtle.setParser(new Parser(code, commands));
+			while(turtle.getParser().hasNextCommand()) {
 			    // must implement if turtle is toggled - discuss
-				parser.getNextCommand().execute(turtle, commands, variables);
+				turtle.getParser().getNextCommand().execute(turtle, commands, variables);
 				variables.notifyListeners();
 			}
-
 		}
 	}
 }

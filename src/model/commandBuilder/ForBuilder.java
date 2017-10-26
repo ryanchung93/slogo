@@ -3,13 +3,13 @@ package model.commandBuilder;
 import java.util.List;
 
 import model.Command;
-import model.CommandDef;
+import model.CommandBuilder;
 import model.Parser;
 import model.SLogoException;
 import model.TokenDispenser;
 import model.commands.For;
 
-public class ForBuilder implements CommandDef {
+public class ForBuilder implements CommandBuilder {
 
 	@Override
 	public Command build(TokenDispenser dispenser) throws SLogoException {

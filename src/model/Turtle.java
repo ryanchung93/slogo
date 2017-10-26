@@ -10,6 +10,7 @@ import view.API.CommandIOAPI.TurtleListener;
 public class Turtle implements ImmutableTurtle {
 	
 	private TurtleListener listener;
+	private Parser myParser;
 	private int id;
 	private double x;
 	private double initX;
@@ -37,6 +38,14 @@ public class Turtle implements ImmutableTurtle {
 	public void addTurtleListener(TurtleListener tL) {
 		listener = tL;
 		tL.setTurtle(this);
+	}
+	
+	public void setParser(Parser p) {
+		myParser = p;
+	}
+	
+	public Parser getParser() {
+		return myParser;
 	}
 	
 	public int getID() {

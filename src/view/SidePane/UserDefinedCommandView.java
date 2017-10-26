@@ -8,7 +8,7 @@ import javafx.scene.Parent;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.ScrollPane.ScrollBarPolicy;
-import model.CommandDef;
+import model.CommandBuilder;
 import view.API.SidePane.UserDefinedCommandDisplay;
 
 /**

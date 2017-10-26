@@ -1,12 +1,12 @@
 package model.commandBuilder;
 
 import model.Command;
-import model.CommandDef;
+import model.CommandBuilder;
 import model.SLogoException;
 import model.TokenDispenser;
 import model.commands.ATan;
 
-public class ATanBuilder implements CommandDef {
+public class ATanBuilder implements CommandBuilder {
 
 	@Override
 	public Command build(TokenDispenser dispenser) throws SLogoException {

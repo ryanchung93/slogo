@@ -1,13 +1,13 @@
 package model.commandBuilder;
 
 import model.Command;
-import model.CommandDef;
+import model.CommandBuilder;
 import model.SLogoException;
 import model.TokenDispenser;
 import model.commands.For;
 import model.commands.NumberCommand;
 
-public class DoTimesBuilder implements CommandDef {
+public class DoTimesBuilder implements CommandBuilder {
 
 	@Override
 	public Command build(TokenDispenser dispenser) throws SLogoException {

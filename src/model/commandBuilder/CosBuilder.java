@@ -1,14 +1,14 @@
 package model.commandBuilder;
 
 import model.Command;
-import model.CommandDef;
+import model.CommandBuilder;
 import model.SLogoException;
 import model.TokenDispenser;
 import model.commands.NumberCommand;
 import model.commands.Sin;
 import model.commands.Sum;
 
-public class CosBuilder implements CommandDef {
+public class CosBuilder implements CommandBuilder {
 
 	@Override
 	public Command build(TokenDispenser dispenser) throws SLogoException {

@@ -65,7 +65,7 @@ public class View implements ViewAPI, LanguageListener {
 	private VBox myRightVBox;
 
 	private CanvasView myCanvas;
-	private TurtleViewManager myTurtleManager;
+	private TurtleViewManager myTurtleViewManager;
 	private TextPromptView myTextPrompt;
 
 	private UserDefinedCommandView myUDCView;
@@ -104,7 +104,7 @@ public class View implements ViewAPI, LanguageListener {
 
 	@Override
 	public TurtleListener getTurtleListener() {
-		return myTurtleManager;
+		return myTurtleViewManager;
 	}
 
 	@Override
@@ -231,8 +231,8 @@ public class View implements ViewAPI, LanguageListener {
 
 		// FOR TESTING
 		Image image = new Image(getClass().getClassLoader().getResourceAsStream("resources/images/" + TURTLE_IMAGE));
-		myTurtleManager = new TurtleViewManager(myCanvas, image);
-		myTurtleManager.addTurtleStateListener(myTurtleStateView);
+		myTurtleViewManager = new TurtleViewManager(myCanvas, image);
+		myTurtleViewManager.addTurtleStateListener(myTurtleStateView);
 	}
 
 	/**
@@ -299,8 +299,8 @@ public class View implements ViewAPI, LanguageListener {
 		myToolbarView = new ToolbarView(SCREEN_WIDTH);
 		// set a listener for background color changes.
 		myToolbarView.getBackgroundOptionView().addBackgroundOptionListener(myCanvas);
-		myToolbarView.getImageOptionView().addTurtleImageListener(myTurtleManager);
-		myToolbarView.getPenOptionView().addPenOptionListener(myTurtleManager);
+		myToolbarView.getImageOptionView().addTurtleImageListener(myTurtleViewManager);
+		myToolbarView.getPenOptionView().addPenOptionListener(myTurtleViewManager);
 		myToolbarView.getLanguageOptionView().addLanguageOptionListener(myLanguageListener);
 		myToolbarView.getLanguageOptionView().addLanguageOptionListener(this);
 		myGrid.add(myToolbarView.getParent(), 0, 0);
