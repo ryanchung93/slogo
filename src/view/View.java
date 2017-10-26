@@ -106,6 +106,10 @@ public class View implements ViewAPI, LanguageListener {
 	public TurtleListener getTurtleListener() {
 		return myTurtleViewManager;
 	}
+	
+	public TurtleListener getStateViewListener() {
+		return myTurtleStateView;
+	}
 
 	@Override
 	public VariableListener getVariableListener() {

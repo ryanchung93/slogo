@@ -33,17 +33,30 @@ public class Model {
 		commands.addListener(sL);
 	}
 	
-	public void addTurtle(Turtle t, TurtleListener tL) {
+	public void addTurtle(Turtle t, TurtleListener... tL) {
 		turtles.addTurtle(t);
-		t.addTurtleListener(tL);
+		for(TurtleListener listener : tL) {
+			t.addTurtleListener(listener);
+		}
 	}
 	
+//	public void execute(String code) throws SLogoException {
+//		for (Turtle turtle : turtles.getTurtles()) {
+//			turtle.setParser(new Parser(code, commands));
+//			while(turtle.getParser().hasNextCommand()) {
+//			    // must implement if turtle is toggled - discuss
+//				turtle.getParser().getNextCommand().execute(turtle, commands, variables);
+//				variables.notifyListeners();
+//			}
+//		}
+//	}
+	
 	public void execute(String code) throws SLogoException {
-		for (Turtle turtle : turtles.getTurtles()) {
-			turtle.setParser(new Parser(code, commands));
-			while(turtle.getParser().hasNextCommand()) {
-			    // must implement if turtle is toggled - discuss
-				turtle.getParser().getNextCommand().execute(turtle, commands, variables);
+		Parser parser = new Parser(code, commands);
+		while(parser.hasNextCommand()) {
+			Command command = parser.getNextCommand();
+			for(Turtle turtle : turtles.getTurtles()) {
+				command.execute(turtle, commands, variables);
 				variables.notifyListeners();
 			}
 		}
