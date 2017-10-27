@@ -1,7 +1,6 @@
-package view.SidePane;
+package view.Windows;
 
 import java.util.Set;
-import view.API.SidePane.StringListener;
 
 /**
  * A Pane representing the basic instructions for using SLogo.

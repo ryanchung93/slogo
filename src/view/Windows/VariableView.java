@@ -1,8 +1,6 @@
-package view.SidePane;
+package view.Windows;
 
 import java.util.Map;
-
-import view.API.SidePane.VariableListener;
 
 /**
  * Class allowing users to see values of current variables

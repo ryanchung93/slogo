@@ -1,7 +1,6 @@
-package view.SidePane;
+package view.Windows;
 
 import java.util.Set;
-import view.API.SidePane.StringListener;
 
 /**
  * Class allowing users to see defined functions.

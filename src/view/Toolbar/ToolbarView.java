@@ -12,7 +12,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Hyperlink;
 import javafx.scene.layout.HBox;
-import view.API.SubcomponentViewAPI;
+import view.SubcomponentViewAPI;
 
 /**
  * Class allowing users to view and use toolbar functions.
@@ -27,7 +27,7 @@ public class ToolbarView implements SubcomponentViewAPI {
 	private HBox myToolbar;
 	private Hyperlink myHelpLink;
 	private BackgroundOptionView myBackgroundOptionView;
-	private ImageOptionView myImageOptionView;
+	private TurtleImageOptionView myImageOptionView;
 	private PenOptionView myPenOptionView;
 	private LanguageOptionView myLanguageOptionView;
 
@@ -63,7 +63,7 @@ public class ToolbarView implements SubcomponentViewAPI {
 	}
 
 	// Must add to API
-	public ImageOptionView getImageOptionView() {
+	public TurtleImageOptionView getImageOptionView() {
 		return myImageOptionView;
 	}
 
@@ -97,7 +97,7 @@ public class ToolbarView implements SubcomponentViewAPI {
 	}
 	
 	private void addTurtleImageOption() {
-		myImageOptionView = new ImageOptionView();
+		myImageOptionView = new TurtleImageOptionView();
 		myToolbar.getChildren().add(myImageOptionView.getParent());
 
 	}

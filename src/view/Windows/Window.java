@@ -1,11 +1,11 @@
-package view.SidePane;
+package view.Windows;
 
 import java.util.ResourceBundle;
 
 import javafx.scene.Parent;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.VBox;
-import view.API.SubcomponentViewAPI;
+import view.SubcomponentViewAPI;
 
 public class Window implements SubcomponentViewAPI {
 

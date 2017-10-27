@@ -1,6 +1,6 @@
-package view.API.ToolbarAPI;
+package view.Toolbar;
 
-import view.API.SubcomponentViewAPI;
+import view.SubcomponentViewAPI;
 
 /**
  * Allows detection of language change
@@ -9,7 +9,7 @@ import view.API.SubcomponentViewAPI;
  *
  */
 
-public interface LanguageOptionDisplay extends SubcomponentViewAPI {
+public interface LanguageOptionAPI {
 
 	/**
 	 * Give a listener to the language option box to detect selections.

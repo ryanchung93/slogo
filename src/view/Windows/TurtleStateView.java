@@ -1,8 +1,8 @@
-package view.SidePane;
+package view.Windows;
 
 import model.ImmutableTurtle;
-import view.API.CommandIOAPI.TurtleListener;
-import view.CommandIO.TurtleView;
+import view.Animation.TurtleListener;
+import view.Animation.TurtleView;
 
 /**
  * Class allowing users to see attributes of current turtle.
@@ -41,6 +41,7 @@ public class TurtleStateView extends Window implements TurtleListener {
 	@Override
 	public void setTurtle(ImmutableTurtle turtle) {
 		this.turtle = turtle;
+		update();
 	}
 
 	@Override

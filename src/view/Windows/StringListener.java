@@ -1,10 +1,10 @@
-package view.API.SidePane;
+package view.Windows;
 
 import java.util.Map;
 import java.util.Set;
 
 import model.CommandBuilder;
-import view.API.SubcomponentViewAPI;
+import view.SubcomponentViewAPI;
 
 /**
  * Listens for the addition of new strings -- specifically used to get

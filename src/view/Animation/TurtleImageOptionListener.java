@@ -1,4 +1,4 @@
-package view.API.CommandIOAPI;
+package view.Animation;
 
 /**
  * Allows detection of image changes for turtles.
@@ -8,6 +8,12 @@ package view.API.CommandIOAPI;
  */
 public interface TurtleImageOptionListener {
 
+	/**
+	 * Called when image changes
+	 * 
+	 * @param imageIndex
+	 *            index of image list
+	 */
 	public void imageChange(int imageIndex);
 
 }

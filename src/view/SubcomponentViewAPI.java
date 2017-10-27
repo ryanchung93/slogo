@@ -1,4 +1,4 @@
-package view.API;
+package view;
 
 import javafx.scene.Parent;
 

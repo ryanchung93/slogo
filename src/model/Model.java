@@ -1,9 +1,8 @@
 package model;
 
-import view.API.CommandIOAPI.TurtleListener;
-import view.API.SidePane.StringListener;
-import view.API.SidePane.VariableListener;
-import view.API.ToolbarAPI.LanguageListener;
+import view.Animation.TurtleListener;
+import view.Windows.StringListener;
+import view.Windows.VariableListener;
 
 public class Model {
 

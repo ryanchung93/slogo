@@ -59,56 +59,82 @@ ImmutableTurtle
 	public int getPenColorIndex()
 Changed to index -- colors are stored by view. 
 
+**Internal View:**
 
-
-
-
-
-
-Internal View: 
 SubcomponentViewAPI
+	
 	public Parent getParent()
 
+* Allows View.java to obtain the node represented by each view component class.
+
 BackgroundOptionListener
+	
 	public void backgroundColorChange(int index)
 
+* Enables communication between background color choice box and canvas class.
+
 TurtleImageOptionListener
+	
 	public void imageChange(int index)
 
+* Enables communication between turtle image choice box and TurtleImageListener class.
+
 PenOptionListener
+	
 	public void penColorChange(int index)
 
+* Enables communication between turtle image choice box and TurtleListener.
+
 BackgroundColorDisplay
+	
 	public void addBackgroundOptionListener(BackgroundOptionListener listener)
 
+* Passes the instance of BackgroundOptionListener in order to call public methods on it.
+
 TurtleImageOptionDisplay
+	
 	public void addTurtleImageListener(TurtleImageListener listener)
 
+* Passes the instance of TurtleImageListener in order to call public methods on it.
+
 PenOptionDisplay
+	
 	public void addPenOptionListener(TurtleListener listener)
 
+* Passes the instance of TurtleListener in order to call public methods on it.
+
 LanguageOptionDisplay
-	public void addLanguageOptionListener(TurtleListener listener)
+	
+	public void addLanguageOptionListener(LanguageListener listener)
 
-CanvasDisplay
-	public void setBackgroundColor(Color c)
+* Passes the LanguageListener in order to call public methods on it.
 
-TextpromptDisplay
+TextPromptDisplay
+	
 	public void runCommand(String s)
 
+* Allows View.java to send a command to TextPrompt when user inputs key commands.
 
 
-
-External View:
+**External View:**
 
 View
+	
 	public void start(Consumer<String> commandConsumer)
 	public void display(SlogoException e)
 	public void getUserdefinedCommandListener()
 
+* Allows errors messages to be send from model to View, Controller to start stage setup in View, and to pass a listener from View to Model to update user defined commands displayed.
+
 TurtleListener
+	
 	public void addTurtleStateListener(TurtleStateListener listener)
 	public void penColorChange(int index)
 
+* Allows hanged parameter from color to index.
+
 LanguageListener
+	
 	public void languageChange(String s)
+
+* Allows communication to change language between language option choice-box (in View) and model.
