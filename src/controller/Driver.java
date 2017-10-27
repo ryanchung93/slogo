@@ -5,6 +5,7 @@ import javafx.stage.Stage;
 import model.CommandManager;
 import model.Model;
 import model.SLogoException;
+import model.SingularTurtle;
 import model.Turtle;
 import view.View;
 
@@ -32,10 +33,9 @@ public class Driver implements DriverAPI {
 
 	@Override
 	public void run() {
-		Turtle t = new Turtle(0, 0, 0, 0);
+		SingularTurtle t = new SingularTurtle(0, 0, 0, 0);
 		myModel.addTurtle(t, myView.getTurtleListener());
-		Turtle t2 = new Turtle(50, 50, 0, 1);
-
+		SingularTurtle t2 = new SingularTurtle(50, 50, 0, 1);
 		myModel.addTurtle(t2, myView.getTurtleListener(), myView.getStateViewListener());
 		myModel.addCommandListener(myView.getCommandListener());
 		myModel.addCommandListener(myView.getUserDefinedCommandListener());

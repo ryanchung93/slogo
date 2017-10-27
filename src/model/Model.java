@@ -32,7 +32,7 @@ public class Model {
 		commands.addListener(sL);
 	}
 	
-	public void addTurtle(Turtle t, TurtleListener... tL) {
+	public void addTurtle(SingularTurtle t, TurtleListener... tL) {
 		turtles.addTurtle(t);
 		for(TurtleListener listener : tL) {
 			t.addTurtleListener(listener);
@@ -54,7 +54,7 @@ public class Model {
 		Parser parser = new Parser(code, commands);
 		while(parser.hasNextCommand()) {
 			Command command = parser.getNextCommand();
-			for(Turtle turtle : turtles.getTurtles()) {
+			for(SingularTurtle turtle : turtles.getTurtles()) {
 				command.execute(turtle, commands, variables);
 				variables.notifyListeners();
 			}
