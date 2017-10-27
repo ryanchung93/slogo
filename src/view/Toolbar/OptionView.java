@@ -7,7 +7,7 @@ import javafx.scene.Parent;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
-import view.API.SubcomponentViewAPI;
+import view.SubcomponentViewAPI;
 
 public class OptionView implements SubcomponentViewAPI {
 

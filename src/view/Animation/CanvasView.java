@@ -11,7 +11,7 @@ import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
-import view.API.ToolbarAPI.BackgroundColorListener;
+import view.Toolbar.BackgroundColorListener;
 
 /**
  * Class for setting up the canvas where turtles are placed.

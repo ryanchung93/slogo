@@ -6,7 +6,6 @@ import java.util.List;
 import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
 import model.ImmutableTurtle;
-import view.API.AnimationAPI.TurtleListener;
 import view.Windows.TurtleStateView;
 
 /**

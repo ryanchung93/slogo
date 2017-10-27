@@ -1,4 +1,4 @@
-package view.API.AnimationAPI;
+package view.Animation;
 
 import javafx.scene.image.ImageView;
 

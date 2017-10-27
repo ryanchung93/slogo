@@ -1,12 +1,12 @@
-package view.API;
+package view;
 
 import java.util.function.Consumer;
 
 import model.SLogoException;
-import view.API.AnimationAPI.TurtleListener;
-import view.API.ToolbarAPI.LanguageListener;
-import view.API.WindowsAPI.StringListener;
-import view.API.WindowsAPI.VariableListener;
+import view.Animation.TurtleListener;
+import view.Toolbar.LanguageListener;
+import view.Windows.StringListener;
+import view.Windows.VariableListener;
 
 public interface ViewAPI {
 

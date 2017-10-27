@@ -1,6 +1,6 @@
-package view.API.ToolbarAPI;
+package view.Toolbar;
 
-import view.API.SubcomponentViewAPI;
+import view.SubcomponentViewAPI;
 
 /**
  * Allows detection of language change

@@ -1,8 +1,8 @@
 package model;
 
-import view.API.AnimationAPI.TurtleListener;
-import view.API.WindowsAPI.StringListener;
-import view.API.WindowsAPI.VariableListener;
+import view.Animation.TurtleListener;
+import view.Windows.StringListener;
+import view.Windows.VariableListener;
 
 public class Model {
 

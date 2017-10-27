@@ -1,4 +1,4 @@
-package view.API.WindowsAPI;
+package view.Windows;
 
 import java.util.Map;
 

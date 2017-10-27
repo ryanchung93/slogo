@@ -9,8 +9,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import view.API.AnimationAPI.TextPromptAPI;
-import view.API.ToolbarAPI.LanguageListener;
+import view.Toolbar.LanguageListener;
 
 /**
  * Class allowing users to enter and clear commands.

@@ -1,6 +1,6 @@
-package view.API.AnimationAPI;
+package view.Animation;
 
-import view.API.SubcomponentViewAPI;
+import view.SubcomponentViewAPI;
 
 /**
  * The pane containing a text field where users can enter commands to be sent to

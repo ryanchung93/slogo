@@ -1,4 +1,4 @@
-package view.API.AnimationAPI;
+package view.Animation;
 
 import model.ImmutableTurtle;
 import view.Windows.TurtleStateView;

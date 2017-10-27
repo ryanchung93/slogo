@@ -6,7 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import view.API.WindowsAPI.VariableListener;
+import view.Windows.VariableListener;
 
 public class VariableManager {
 	private Map<String, Double> globals = new HashMap<>();

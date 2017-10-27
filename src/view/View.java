@@ -21,19 +21,18 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import model.SLogoException;
-import view.API.ViewAPI;
-import view.API.AnimationAPI.TurtleListener;
-import view.API.ToolbarAPI.LanguageListener;
-import view.API.WindowsAPI.StringListener;
-import view.API.WindowsAPI.VariableListener;
 import view.Animation.CanvasView;
 import view.Animation.TextPromptView;
+import view.Animation.TurtleListener;
 import view.Animation.TurtleViewManager;
+import view.Toolbar.LanguageListener;
 import view.Toolbar.ToolbarView;
 import view.Windows.HistoryView;
 import view.Windows.ReferenceView;
+import view.Windows.StringListener;
 import view.Windows.TurtleStateView;
 import view.Windows.UserDefinedCommandView;
+import view.Windows.VariableListener;
 import view.Windows.VariableView;
 
 /**

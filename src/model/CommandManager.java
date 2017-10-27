@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
 
-import view.API.WindowsAPI.StringListener;
+import view.Windows.StringListener;
 
 public class CommandManager {
 	public static final String PATH_START = "resources.languages.";

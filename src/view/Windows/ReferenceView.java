@@ -2,8 +2,6 @@ package view.Windows;
 
 import java.util.Set;
 
-import view.API.WindowsAPI.StringListener;
-
 /**
  * A Pane representing the basic instructions for using SLogo.
  * 

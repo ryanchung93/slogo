@@ -6,7 +6,7 @@ import java.util.List;
 
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
-import view.API.AnimationAPI.TextPromptInserter;
+import view.Animation.TextPromptInserter;
 import view.Animation.TextPromptView;
 
 /**

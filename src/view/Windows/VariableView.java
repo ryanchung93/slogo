@@ -2,8 +2,6 @@ package view.Windows;
 
 import java.util.Map;
 
-import view.API.WindowsAPI.VariableListener;
-
 /**
  * Class allowing users to see values of current variables
  * 

@@ -12,8 +12,7 @@ import javafx.scene.Parent;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
-import view.API.AnimationAPI.TurtleImageOptionListener;
-import view.API.ToolbarAPI.TurtleImageOptionAPI;
+import view.Animation.TurtleImageOptionListener;
 
 /**
  * Class that allows users to select a canvas color from a choice box.

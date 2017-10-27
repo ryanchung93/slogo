@@ -13,8 +13,6 @@ import javafx.scene.Parent;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
-import view.API.ToolbarAPI.LanguageListener;
-import view.API.ToolbarAPI.LanguageOptionAPI;
 
 /**
  * Class that allows users to select a language from a choice box.

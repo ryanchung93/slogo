@@ -1,4 +1,4 @@
-package view.API.AnimationAPI;
+package view.Animation;
 
 /**
  * Allows detection of image changes for turtles.

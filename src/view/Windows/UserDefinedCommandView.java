@@ -2,8 +2,6 @@ package view.Windows;
 
 import java.util.Set;
 
-import view.API.WindowsAPI.StringListener;
-
 /**
  * Class allowing users to see defined functions.
  * 

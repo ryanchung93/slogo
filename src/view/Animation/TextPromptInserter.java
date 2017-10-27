@@ -1,6 +1,4 @@
-package view.API.AnimationAPI;
-
-import view.Animation.TextPromptView;
+package view.Animation;
 
 public interface TextPromptInserter {
 
