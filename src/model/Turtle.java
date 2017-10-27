@@ -12,8 +12,8 @@ import view.Animation.TurtleListener;
  */
 public class Turtle implements ImmutableTurtle {
 	
+	private TurtleListener listener;
 	private List<TurtleListener> listeners;
-	private Parser myParser;
 	private int id;
 	private double x;
 	private double initX;
@@ -23,6 +23,7 @@ public class Turtle implements ImmutableTurtle {
 	private double initHeading;
 	private boolean penDown;
 	private boolean isVisible;
+	private boolean isActive;
 	private int penColorIndex;
 	
 	public static final int DEFAULT_PEN_COLOR_INDEX = 0;
@@ -34,6 +35,7 @@ public class Turtle implements ImmutableTurtle {
 		heading = initHeading = heading0;
 		penDown = true;
 		isVisible = true;
+		isActive = true;
 		penColorIndex = DEFAULT_PEN_COLOR_INDEX;
 		listeners = new ArrayList<>();
 	}
@@ -42,14 +44,6 @@ public class Turtle implements ImmutableTurtle {
 	public void addTurtleListener(TurtleListener tL) {
 		listeners.add(tL);
 		tL.setTurtle(this);
-	}
-	
-	public void setParser(Parser p) {
-		myParser = p;
-	}
-	
-	public Parser getParser() {
-		return myParser;
 	}
 	
 	public int getID() {
@@ -74,6 +68,10 @@ public class Turtle implements ImmutableTurtle {
 
 	public boolean isVisible() {
 		return isVisible;
+	}
+	
+	public boolean isActive() {
+		return isActive;
 	}
 
 	public int getPenColorIndex() {
@@ -117,6 +115,12 @@ public class Turtle implements ImmutableTurtle {
 		setPenColor(DEFAULT_PEN_COLOR_INDEX);
 		for(TurtleListener tL : listeners) tL.clearScreen();
 	}
+
+	@Override
+	public void setActive(boolean active) {
+		isActive = active;
+		listener.activeToggle(active);
+	}
 	
 	public double forward(Command par, CommandManager commands, VariableManager variables) {
 		double result = par.execute(this, commands, variables);
@@ -155,5 +159,5 @@ public class Turtle implements ImmutableTurtle {
 		double dtheta = newHeading - getHeading();
 		setHeading(newHeading);
 		return dtheta;
-	}	
+	}
 }

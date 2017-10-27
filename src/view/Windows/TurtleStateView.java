@@ -79,4 +79,9 @@ public class TurtleStateView extends Window implements TurtleListener {
 		update();
 	}
 
+	@Override
+	public void activeToggle(boolean active) {
+		update();
+	}
+
 }

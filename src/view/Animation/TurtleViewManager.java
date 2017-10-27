@@ -28,7 +28,7 @@ public class TurtleViewManager implements TurtleListener {
 
 	@Override
 	public void setTurtle(ImmutableTurtle turtle) {
-		TurtleView turtleView = new TurtleView(myParent, myImage);
+		TurtleView turtleView = new TurtleView(myParent, myImage, turtle.getID());
 		turtleView.addTurtleStateListener(stateView);
 		turtleView.setTurtle(turtle);
 		
@@ -90,5 +90,10 @@ public class TurtleViewManager implements TurtleListener {
 	@Override
 	public void addTurtleStateListener(TurtleStateView l) {
 		stateView = l;
+	}
+
+	@Override
+	public void activeToggle(boolean active) {
+		//for(TurtleView turtle : turtles)
 	}
 }

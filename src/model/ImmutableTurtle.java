@@ -20,5 +20,7 @@ public interface ImmutableTurtle {
 	public boolean isVisible();
 
 	public int getPenColorIndex();
+	
+	public void setActive(boolean active);
 
 }

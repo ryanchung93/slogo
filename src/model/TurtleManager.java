@@ -1,12 +1,13 @@
 package model;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.function.Function;
 
 import view.Animation.TurtleListener;
 
-public class TurtleManager {
+public class TurtleManager implements Iterable<Turtle>{
 
 	private List<TurtleListener> turtleViewManagers;
 	private List<Turtle> turtles;
@@ -34,6 +35,37 @@ public class TurtleManager {
 	public void addTurtleViewManager(TurtleListener tL) {
 		turtleViewManagers.add(tL);
 	}
+
+	@Override
+	public Iterator<Turtle> iterator() {
+		return new Iterator<Turtle>() {
+
+			private List<Turtle> activeTurtles = getActiveTurtles();
+			private int nextIndex = 0;
+			
+			@Override
+			public boolean hasNext() {
+				if(nextIndex < activeTurtles.size()) return true;
+				return false;
+			}
+
+			@Override
+			public Turtle next() {
+				Turtle ret = activeTurtles.get(nextIndex);
+				nextIndex++;
+				return ret;
+			}
+			
+		};
+	}
+	
+	private List<Turtle> getActiveTurtles() {
+		List<Turtle> activeTurtles = new ArrayList<>();
+		for(Turtle t : turtles) {
+			if(t.isActive()) activeTurtles.add(t);
+		}
+		return activeTurtles;
+	}
  	
 	public double forward(Command command, CommandManager commands, VariableManager variables) {
 		return doToEach(t->t.forward(command, commands, variables));
@@ -58,6 +90,7 @@ public class TurtleManager {
 	public double clearScreen(CommandManager commands, VariableManager variables) {
 		for(Turtle t : this)
 			t.clearScreen();
+		return 1; //TODO return distance moved?
 	}
 	
 	public void setPenDown(boolean b) {

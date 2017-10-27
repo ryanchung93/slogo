@@ -30,15 +30,15 @@ public class TurtleView implements TurtleListener, TurtleImageAPI {
 	public static final List<String> colorList = new ArrayList<String>(
 			Arrays.asList(myResources.getString("PenColors").replaceAll("\\s+", "").split(",")));
 
+	private ImmutableTurtle turtle;
 	private ImageView myView;
-	private int myID;
-	private double myHeading;
 	private int myPenColorIndex;
 	private boolean myPenIsDown;
 	private Pane myParent;
-	private boolean myIsToggled;
-
-	private TurtleStateView listener;
+	private double myHeading;
+	private boolean myIsActive;
+	private int myID;
+	private TurtleStateView stateListener;
 	private List<Image> imageList = new ArrayList<Image>();
 
 	private double myOffsetX;
@@ -46,7 +46,7 @@ public class TurtleView implements TurtleListener, TurtleImageAPI {
 	private double myPrevNewX;
 	private double myPrevNewY;
 
-	public TurtleView(Pane parent, Image image) {
+	public TurtleView(Pane parent, Image image, int id) {
 		myView = new ImageView(image);
 		myView.setFitWidth(WIDTH);
 		myView.setFitHeight(HEIGHT);
@@ -58,7 +58,10 @@ public class TurtleView implements TurtleListener, TurtleImageAPI {
 		myView.setOnMouseEntered(e -> entered());
 		myView.setOnMouseEntered(e -> exited());
 
-		myIsToggled = true;
+		myID = id;
+		myPenColorIndex = 0;
+		myPenIsDown = true;
+		myIsActive = true;
 		myParent = parent;
 
 		for (String s : imageNameList) {
@@ -71,6 +74,8 @@ public class TurtleView implements TurtleListener, TurtleImageAPI {
 
 	@Override
 	public void setTurtle(ImmutableTurtle turtle) {
+		this.turtle = turtle;
+		
 		myOffsetX = myParent.getLayoutX();
 		myOffsetY = myParent.getLayoutY();
 
@@ -82,8 +87,7 @@ public class TurtleView implements TurtleListener, TurtleImageAPI {
 		myPenColorIndex = turtle.getPenColorIndex();
 		myPenIsDown = turtle.getPenDown();
 		myView.setVisible(turtle.isVisible());
-		//updateListener();
-
+		//
 	}
 
 	@Override
@@ -151,34 +155,33 @@ public class TurtleView implements TurtleListener, TurtleImageAPI {
 		System.out.println("myX: " + myView.getX() + " | myY: " + myView.getY());
 		System.out.println("newX: " + newX + " | newY: " + newY);
 		System.out.println("offsetNewX: " + offsetNewX + " | offsetNewY: " + offsetNewY);
-
-		//updateListener();
+		//
 	}
 
 	@Override
 	public void headingChange(double newHeading) {
 		// create an animation that rotates the shape
-		if (myIsToggled) {
+		if (myIsActive) {
 			myHeading = -newHeading;
 			myView.setRotate(180 - myHeading);
-			//updateListener();
+			//
 		}
 	}
 
 	@Override
 	public void penChange(boolean newState) {
-		if (myIsToggled) {
+		if (myIsActive) {
 			myPenIsDown = newState;
-//			updateListener();
+			//
 		}
 	}
 
 	@Override
 	public void penColorChange(int index) {
 		try {
-			if (myIsToggled) {
+			if (myIsActive) {
 				myPenColorIndex = index;
-				//updateListener();
+				//
 			}
 		} catch (Exception e) {
 			showError(e.getMessage());
@@ -187,20 +190,29 @@ public class TurtleView implements TurtleListener, TurtleImageAPI {
 
 	@Override
 	public void visibilityChange(boolean visibility) {
-		if (myIsToggled) {
+		if (myIsActive) {
 			myView.setVisible(visibility);
-			//updateListener();
+			//
 		}
+	}
+	
+	@Override
+	public void activeToggle(boolean active) {
+		myIsActive = active;
+		turtle.setActive(active);
 	}
 
 	@Override
 	public void clearScreen() {
+		// remove image from pane
+		if (myIsActive)
+			myParent.getChildren().remove(myView);
 		myParent.getChildren().remove(myView);
 	}
 
 	@Override
 	public void imageChange(int imageIndex) {
-		if (myIsToggled)
+		if (myIsActive)
 			myView.setImage(imageList.get(imageIndex));
 	}
 
@@ -208,11 +220,9 @@ public class TurtleView implements TurtleListener, TurtleImageAPI {
 	public ImageView getImageView() {
 		return myView;
 	}
-
-	@Override
+	
 	public void addTurtleStateListener(TurtleStateView l) {
-		listener = l;
-
+		stateListener = l;
 	}
 
 	/*************************** PRIVATE METHODS ********************************/
@@ -222,30 +232,26 @@ public class TurtleView implements TurtleListener, TurtleImageAPI {
 	 */
 	private void clicked() {
 		System.out.println("Clicked turtle");
-		if (myIsToggled)
+		if (myIsActive)
 			myView.setStyle("-fx-background-color:transparent");
 		else
 			myView.setStyle("-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 15, 0, 0, 0)");
-		myIsToggled = !myIsToggled;
-
-		//updateListener();
-
-		// MUST NOTIFY MODEL (that turtle is toggled)
+		activeToggle(!myIsActive);
 	}
 
 	/**
 	 * Make mouse hovering noticeable.
 	 */
 	private void entered() {
-		if (!myIsToggled)
+		if (!myIsActive)
 			myView.setStyle("-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0, 0, 0)");
 	}
 
 	private void exited() {
-		if (!myIsToggled)
+		if (!myIsActive)
 			myView.setStyle("-fx-background-color:transparent;");
 	}
-
+	
 	private void showError(String message) {
 		Alert alert = new Alert(AlertType.ERROR);
 		alert.setContentText(message);
