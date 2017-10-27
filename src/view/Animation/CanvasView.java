@@ -1,4 +1,4 @@
-package view.CommandIO;
+package view.Animation;
 
 import java.util.ArrayList;
 import java.util.Arrays;

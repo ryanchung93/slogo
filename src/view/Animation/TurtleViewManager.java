@@ -1,4 +1,4 @@
-package view.CommandIO;
+package view.Animation;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -6,8 +6,8 @@ import java.util.List;
 import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
 import model.ImmutableTurtle;
-import view.API.CommandIOAPI.TurtleListener;
-import view.SidePane.TurtleStateView;
+import view.API.AnimationAPI.TurtleListener;
+import view.Windows.TurtleStateView;
 
 /**
  * Class that manages the viewing of turtles.

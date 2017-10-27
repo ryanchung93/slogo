@@ -1,4 +1,4 @@
-package view.CommandIO;
+package view.Animation;
 
 import java.util.ResourceBundle;
 import java.util.function.Consumer;
@@ -9,7 +9,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import view.API.CommandIOAPI.TextPromptAPI;
+import view.API.AnimationAPI.TextPromptAPI;
 import view.API.ToolbarAPI.LanguageListener;
 
 /**

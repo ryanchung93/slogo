@@ -7,8 +7,8 @@ import java.util.ResourceBundle;
 
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
-import view.API.CommandIOAPI.TextPromptInserter;
-import view.CommandIO.TextPromptView;
+import view.API.AnimationAPI.TextPromptInserter;
+import view.Animation.TextPromptView;
 
 /**
  * Class that allows users to select a canvas color from a choice box.

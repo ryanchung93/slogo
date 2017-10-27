@@ -1,4 +1,4 @@
-package view.API.CommandIOAPI;
+package view.API.AnimationAPI;
 
 import view.API.SubcomponentViewAPI;
 

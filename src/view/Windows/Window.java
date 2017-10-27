@@ -1,4 +1,4 @@
-package view.SidePane;
+package view.Windows;
 
 import java.util.ResourceBundle;
 

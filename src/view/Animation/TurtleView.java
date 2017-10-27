@@ -1,4 +1,4 @@
-package view.CommandIO;
+package view.Animation;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -13,9 +13,9 @@ import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 import model.ImmutableTurtle;
-import view.API.CommandIOAPI.TurtleImageAPI;
-import view.API.CommandIOAPI.TurtleListener;
-import view.SidePane.TurtleStateView;
+import view.API.AnimationAPI.TurtleImageAPI;
+import view.API.AnimationAPI.TurtleListener;
+import view.Windows.TurtleStateView;
 
 /**
  * Class to make the turtle viewable.

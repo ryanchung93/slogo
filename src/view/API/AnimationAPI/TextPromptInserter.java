@@ -1,6 +1,6 @@
-package view.API.CommandIOAPI;
+package view.API.AnimationAPI;
 
-import view.CommandIO.TextPromptView;
+import view.Animation.TextPromptView;
 
 public interface TextPromptInserter {
 

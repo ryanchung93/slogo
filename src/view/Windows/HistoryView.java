@@ -1,4 +1,4 @@
-package view.SidePane;
+package view.Windows;
 
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;

@@ -3,10 +3,10 @@ package view.API;
 import java.util.function.Consumer;
 
 import model.SLogoException;
-import view.API.CommandIOAPI.TurtleListener;
-import view.API.SidePane.StringListener;
-import view.API.SidePane.VariableListener;
+import view.API.AnimationAPI.TurtleListener;
 import view.API.ToolbarAPI.LanguageListener;
+import view.API.WindowsAPI.StringListener;
+import view.API.WindowsAPI.VariableListener;
 
 public interface ViewAPI {
 

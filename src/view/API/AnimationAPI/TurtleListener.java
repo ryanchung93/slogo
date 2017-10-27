@@ -1,7 +1,7 @@
-package view.API.CommandIOAPI;
+package view.API.AnimationAPI;
 
 import model.ImmutableTurtle;
-import view.SidePane.TurtleStateView;
+import view.Windows.TurtleStateView;
 
 /**
  * Listens for modifications to a turtle's state -- its methods must be called

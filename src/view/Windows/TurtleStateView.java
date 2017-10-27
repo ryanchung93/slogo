@@ -1,8 +1,8 @@
-package view.SidePane;
+package view.Windows;
 
 import model.ImmutableTurtle;
-import view.API.CommandIOAPI.TurtleListener;
-import view.CommandIO.TurtleView;
+import view.API.AnimationAPI.TurtleListener;
+import view.Animation.TurtleView;
 
 /**
  * Class allowing users to see attributes of current turtle.

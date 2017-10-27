@@ -22,19 +22,19 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 import model.SLogoException;
 import view.API.ViewAPI;
-import view.API.CommandIOAPI.TurtleListener;
-import view.API.SidePane.StringListener;
-import view.API.SidePane.VariableListener;
+import view.API.AnimationAPI.TurtleListener;
 import view.API.ToolbarAPI.LanguageListener;
-import view.CommandIO.CanvasView;
-import view.CommandIO.TextPromptView;
-import view.CommandIO.TurtleViewManager;
-import view.SidePane.HistoryView;
-import view.SidePane.ReferenceView;
-import view.SidePane.TurtleStateView;
-import view.SidePane.UserDefinedCommandView;
-import view.SidePane.VariableView;
+import view.API.WindowsAPI.StringListener;
+import view.API.WindowsAPI.VariableListener;
+import view.Animation.CanvasView;
+import view.Animation.TextPromptView;
+import view.Animation.TurtleViewManager;
 import view.Toolbar.ToolbarView;
+import view.Windows.HistoryView;
+import view.Windows.ReferenceView;
+import view.Windows.TurtleStateView;
+import view.Windows.UserDefinedCommandView;
+import view.Windows.VariableView;
 
 /**
  * Class that displays the GUI and SLogo animations.
