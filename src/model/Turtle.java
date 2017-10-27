@@ -14,7 +14,6 @@ public class Turtle implements ImmutableTurtle {
 	
 	private TurtleListener listener;
 	private List<TurtleListener> listeners;
-	private Parser myParser;
 	private int id;
 	private double x;
 	private double initX;
@@ -116,10 +115,49 @@ public class Turtle implements ImmutableTurtle {
 		setPenColor(DEFAULT_PEN_COLOR_INDEX);
 		for(TurtleListener tL : listeners) tL.clearScreen();
 	}
-	
+
 	@Override
 	public void setActive(boolean active) {
 		isActive = active;
 		listener.activeToggle(active);
+	}
+	
+	public double forward(Command par, CommandManager commands, VariableManager variables) {
+		double result = par.execute(this, commands, variables);
+		setXY(getX() - result * Math.sin(Math.toRadians(getHeading())),
+				getY() + result * Math.cos(Math.toRadians(getHeading())));
+		return result;
+	}
+
+	public double left(Command input, CommandManager commands, VariableManager variables) {
+		double result = input.execute(this, commands, variables);
+		setHeading(getHeading() + result);
+		return result;
+	}
+
+	public double setHeading(Command input, CommandManager commands, VariableManager variables) {
+		double result = input.execute(this, commands, variables);
+		setHeading(result);
+		return Math.abs(getHeading() - result);
+	}
+
+	public double setXY(Command xCor, Command yCor, CommandManager commands, VariableManager variables) {
+		double xC = xCor.execute(this, commands, variables);
+		double yC = yCor.execute(this, commands, variables);
+		double dx = xC - getX();
+		double dy = yC - getY();
+		setXY(xC,yC);
+		return Math.sqrt(dx*dx+dy*dy);
+	}
+
+	public double setTowards(Command xCor, Command yCor, CommandManager commands, VariableManager variables) {
+		double newHeading = Math.toDegrees(
+				Math.atan2(getX() - xCor.execute(this, commands, variables), 
+						yCor.execute(this, commands, variables) - getY()));
+		if(newHeading < 0)
+			newHeading += 360;
+		double dtheta = newHeading - getHeading();
+		setHeading(newHeading);
+		return dtheta;
 	}
 }

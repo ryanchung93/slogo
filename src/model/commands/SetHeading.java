@@ -15,9 +15,7 @@ public class SetHeading implements Command {
 	
 	@Override
 	public double execute(Turtle t, CommandManager commands, VariableManager variables) {
-		double result = input.execute(t, commands, variables);
-		t.setHeading(result);
-		return Math.abs(t.getHeading() - result);
+		return t.setHeading(input, commands, variables);
 	}
 
 }

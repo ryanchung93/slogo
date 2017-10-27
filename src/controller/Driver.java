@@ -35,6 +35,7 @@ public class Driver implements DriverAPI {
 		Turtle t = new Turtle(0, 0, 0, 0);
 		myModel.addTurtle(t, myView.getTurtleListener());
 		Turtle t2 = new Turtle(50, 50, 0, 1);
+
 		myModel.addTurtle(t2, myView.getTurtleListener(), myView.getStateViewListener());
 		myModel.addCommandListener(myView.getCommandListener());
 		myModel.addCommandListener(myView.getUserDefinedCommandListener());

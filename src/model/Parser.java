@@ -58,8 +58,6 @@ public class Parser implements TokenDispenser{
 			return new NumberCommand(Double.parseDouble(token));
 		if(token.matches(SYNTAX.getString("Variable")))
 			return new VariableCommand(token);
-		//if(token.matches(SYNTAX.getString("GroupStart")))
-			//return generateGroup();
 		if(token.matches(SYNTAX.getString("Command")))
 			return availableCommands.get(token).build(this);
 		throw new SLogoException("UnexpectedToken", token);

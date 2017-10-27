@@ -15,10 +15,7 @@ public class Forward implements Command {
 
 	@Override
 	public double execute(Turtle t, CommandManager commands, VariableManager variables) {
-		double result = input.execute(t, commands, variables);
-		t.setXY(t.getX() - result * Math.sin(Math.toRadians(t.getHeading())),
-				t.getY() + result * Math.cos(Math.toRadians(t.getHeading())));
-		return result;
+		return t.forward(input, commands, variables);
 	}
 
 }

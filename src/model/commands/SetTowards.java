@@ -17,13 +17,6 @@ public class SetTowards implements Command {
 
 	@Override
 	public double execute(Turtle t, CommandManager commands, VariableManager variables) {
-		double newHeading = Math.toDegrees(
-				Math.atan2(t.getX() - x.execute(t, commands, variables), 
-						y.execute(t, commands, variables) - t.getY()));
-		if(newHeading < 0)
-			newHeading += 360;
-		double dtheta = newHeading - t.getHeading();
-		t.setHeading(newHeading);
-		return dtheta;
+		return t.setTowards(x, y, commands, variables);
 	}
 }

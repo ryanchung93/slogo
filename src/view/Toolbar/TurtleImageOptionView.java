@@ -3,15 +3,9 @@ package view.Toolbar;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.ResourceBundle;
 
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
-import javafx.geometry.Pos;
-import javafx.scene.Parent;
-import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.Label;
-import javafx.scene.layout.VBox;
 import view.Animation.TurtleImageOptionListener;
 
 /**
@@ -20,52 +14,35 @@ import view.Animation.TurtleImageOptionListener;
  * @author DavidTran
  *
  */
-public class TurtleImageOptionView implements TurtleImageOptionAPI {
+public class TurtleImageOptionView extends OptionView implements TurtleImageOptionAPI {
 
-	private VBox optionView;
-	private Label prompt;
-	private ChoiceBox<String> cb;
-	private ResourceBundle myResources = ResourceBundle.getBundle("resources.view/choicebox");
-	private TurtleImageOptionListener listener;
+	private List<TurtleImageOptionListener> listeners = new ArrayList<>();
 	private List<String> imageNameList;
+	private static final String PROMPT = "TurtleImagePrompt";
 
 	public TurtleImageOptionView() {
-
-		optionView = new VBox();
-
-		prompt = new Label(myResources.getString("TurtleImagePrompt"));
+		super(PROMPT);
 
 		imageNameList = new ArrayList<String>(new ArrayList<String>(
 				Arrays.asList(myResources.getString("TurtleImages").replaceAll("\\s+", "").split(","))));
-		
-		cb = new ChoiceBox<String>();
+
 		for (String imageName : imageNameList) {
 			cb.getItems().add(imageNameList.indexOf(imageName) + ". " + imageName);
 		}
-		
+
 		cb.getSelectionModel().selectedIndexProperty().addListener(new ChangeListener<Number>() {
 
 			@Override
 			public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
-				//System.out.println(newValue.intValue());
-				listener.imageChange(newValue.intValue());
-
+				for (TurtleImageOptionListener listener : listeners)
+					listener.imageChange(newValue.intValue());
 			}
 		});
-
-		optionView.getChildren().addAll(prompt, cb);
-		optionView.setAlignment(Pos.CENTER);
-	}
-
-	@Override
-	public Parent getParent() {
-		return optionView;
 	}
 
 	@Override
 	public void addTurtleImageListener(TurtleImageOptionListener l) {
-		listener = l;
-
+		listeners.add(l);
 	}
 
 }
