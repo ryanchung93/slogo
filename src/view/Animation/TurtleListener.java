@@ -8,7 +8,7 @@ import view.Windows.TurtleStateView;
  * when these changes occur
  *
  */
-public interface TurtleListener extends TurtleImageOptionListener {
+public interface TurtleListener {
 	
 	/**
 	 * Gives the listener a Turtle to keep track of the state
@@ -49,11 +49,6 @@ public interface TurtleListener extends TurtleImageOptionListener {
 	 * Called when the screen should be cleared
 	 */
 	public void clearScreen();
-	
-	/**
-	 * Called when display needs turtle attributes
-	 */
-	public void addTurtleStateListener(TurtleStateView l);
 
 	/**
 	 * Called when a Turtle's active state is changed
