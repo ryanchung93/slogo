@@ -1,6 +1,7 @@
 package view.Windows;
 
 import model.ImmutableTurtle;
+import view.Animation.TurtleImageOptionListener;
 import view.Animation.TurtleListener;
 import view.Animation.TurtleView;
 
@@ -10,7 +11,7 @@ import view.Animation.TurtleView;
  * @author DavidTran
  *
  */
-public class TurtleStateView extends Window implements TurtleListener {
+public class TurtleStateView extends Window implements TurtleListener, TurtleImageOptionListener {
 	private ImmutableTurtle turtle;
 	
 	public TurtleStateView(double height) {
@@ -24,6 +25,7 @@ public class TurtleStateView extends Window implements TurtleListener {
 
 		ta.appendText(myResources.getString("TurtleStateView") + "\n\n");
 		ta.appendText("ID: " + Integer.toString(turtle.getID()) + "\n");
+		ta.appendText("Active: " + Boolean.toString(turtle.isActive()) + "\n");
 		ta.appendText("X: " + Double.toString(turtle.getX()) + "\n");
 		ta.appendText("Y: " + Double.toString(turtle.getY()) + "\n");
 		ta.appendText("Heading: " + Double.toString(turtle.getHeading()) + "\n");
@@ -71,11 +73,6 @@ public class TurtleStateView extends Window implements TurtleListener {
 
 	@Override
 	public void clearScreen() {
-		update();
-	}
-
-	@Override
-	public void addTurtleStateListener(TurtleStateView l) {
 		update();
 	}
 

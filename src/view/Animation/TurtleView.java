@@ -199,7 +199,6 @@ public class TurtleView implements TurtleListener, TurtleImageAPI, TurtleImageOp
 	@Override
 	public void activeToggle(boolean active) {
 		myIsActive = active;
-		turtle.setActive(active);
 	}
 
 	@Override
@@ -233,6 +232,7 @@ public class TurtleView implements TurtleListener, TurtleImageAPI, TurtleImageOp
 		else
 			myView.setStyle("-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 15, 0, 0, 0)");
 		activeToggle(!myIsActive);
+		turtle.setActive(myIsActive);
 	}
 
 	/**
