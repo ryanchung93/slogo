@@ -3,7 +3,7 @@ package view.Toolbar;
 import view.SubcomponentViewAPI;
 import view.Animation.TurtleImageOptionListener;
 
-public interface TurtleImageOptionAPI extends SubcomponentViewAPI{
+public interface TurtleImageOptionAPI {
 
 	/**
 	 * Give a listener to the color option box to detect selections.

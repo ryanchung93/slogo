@@ -21,41 +21,29 @@ import javafx.scene.layout.VBox;
  *
  */
 
-public class LanguageOptionView implements LanguageOptionAPI {
-	
-	private VBox optionView;
-	private Label prompt;
-	private ChoiceBox<String> cb;
+public class LanguageOptionView extends OptionView implements LanguageOptionAPI {
+
 	private List<String> languageList;
-	private ResourceBundle myResources = ResourceBundle.getBundle("resources.view/choicebox");
-	private List<LanguageListener> listeners = new ArrayList<>();;
-	
+	private List<LanguageListener> listeners = new ArrayList<>();
+	private static final String PROMPT = "LanguagePrompt";
+
 	public LanguageOptionView() {
-		
-		optionView = new VBox();
-		
-		prompt = new Label(myResources.getString("LanguagePrompt"));
-		
+		super(PROMPT);
+
 		languageList = new ArrayList<String>(
 				Arrays.asList(myResources.getString("Languages").replaceAll("\\s+", "").split(",")));
-		
-		cb = new ChoiceBox<String>(FXCollections.observableArrayList(languageList));
+
+		for (String language : languageList)
+			cb.getItems().add(language);
+
 		cb.getSelectionModel().selectedIndexProperty().addListener(new ChangeListener<Number>() {
-			
+
 			@Override
 			public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
 				for (LanguageListener listener : listeners)
 					listener.languageChange(languageList.get(newValue.intValue()));
 			}
 		});
-		
-		optionView.getChildren().addAll(prompt, cb);
-		optionView.setAlignment(Pos.CENTER);
-	}
-
-	@Override
-	public Parent getParent() {
-		return optionView;
 	}
 
 	@Override

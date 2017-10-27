@@ -9,7 +9,7 @@ import view.SubcomponentViewAPI;
  *
  */
 
-public interface LanguageOptionAPI extends SubcomponentViewAPI {
+public interface LanguageOptionAPI {
 
 	/**
 	 * Give a listener to the language option box to detect selections.
