@@ -3,16 +3,9 @@ package view.Toolbar;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.ResourceBundle;
 
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
-import javafx.collections.FXCollections;
-import javafx.geometry.Pos;
-import javafx.scene.Parent;
-import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.Label;
-import javafx.scene.layout.VBox;
 
 /**
  * Class that allows users to select a language from a choice box.

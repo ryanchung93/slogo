@@ -8,8 +8,6 @@ import javafx.animation.Timeline;
 import javafx.geometry.HPos;
 import javafx.geometry.VPos;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.ScrollPane.ScrollBarPolicy;
 import javafx.scene.image.Image;
@@ -124,8 +122,7 @@ public class View implements ViewAPI {
 
 	@Override
 	public void display(SLogoException e) {
-		System.out.println(e.getMessage());
-		showError(e.getMessage());
+		new ErrorWindow(e.getMessage());
 	}
 
 	/*************** PRIVATE METHODS *******************/
@@ -277,12 +274,8 @@ public class View implements ViewAPI {
 		myRefView = new ReferenceView((dims[1][1] + dims[1][2]) / 2);
 		myHistoryView = new HistoryView((dims[1][1] + dims[1][2]) / 2);
 
-		myLeftVBox.getChildren().add(myUDCView.getParent());
-		myLeftVBox.getChildren().add(myTurtleStateView.getParent());
-		myLeftVBox.getChildren().add(myVarView.getParent());
-		myRightVBox.getChildren().add(myRefView.getParent());
-		myRightVBox.getChildren().add(myHistoryView.getParent());
-
+		myLeftVBox.getChildren().addAll(myTurtleStateView.getParent(), myUDCView.getParent(), myVarView.getParent());
+		myRightVBox.getChildren().addAll(myRefView.getParent(), myHistoryView.getParent());
 	}
 
 	/**
@@ -315,15 +308,10 @@ public class View implements ViewAPI {
 			// System.out.println(ret);
 		} catch (Exception e) {
 			e.printStackTrace();
-			showError(e.getMessage());
+			new ErrorWindow(e.getMessage());
 		}
 		return ret;
 	}
 
-	private void showError(String message) {
-		Alert alert = new Alert(AlertType.ERROR);
-		alert.setContentText(message);
-		alert.showAndWait();
-	}
 
 }

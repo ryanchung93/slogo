@@ -1,7 +1,5 @@
 package model;
 
-import javafx.scene.paint.Color;
-
 /**
  * A view-only version of 
  * @see Turtle
