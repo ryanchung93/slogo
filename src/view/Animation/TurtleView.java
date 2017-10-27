@@ -30,6 +30,7 @@ public class TurtleView implements TurtleListener, TurtleImageAPI {
 	public static final List<String> colorList = new ArrayList<String>(
 			Arrays.asList(myResources.getString("PenColors").replaceAll("\\s+", "").split(",")));
 
+	private ImmutableTurtle turtle;
 	private ImageView myView;
 	private int myPenColorIndex;
 	private boolean myPenIsDown;
@@ -37,9 +38,7 @@ public class TurtleView implements TurtleListener, TurtleImageAPI {
 	private double myHeading;
 	private boolean myIsActive;
 	private int myID;
-
 	private TurtleStateView stateListener;
-	private boolean myIsToggled;
 	private List<Image> imageList = new ArrayList<Image>();
 
 	private double myOffsetX;
@@ -63,7 +62,6 @@ public class TurtleView implements TurtleListener, TurtleImageAPI {
 		myPenColorIndex = 0;
 		myPenIsDown = true;
 		myIsActive = true;
-		myIsToggled = true;
 		myParent = parent;
 
 		for (String s : imageNameList) {
@@ -76,6 +74,8 @@ public class TurtleView implements TurtleListener, TurtleImageAPI {
 
 	@Override
 	public void setTurtle(ImmutableTurtle turtle) {
+		this.turtle = turtle;
+		
 		myOffsetX = myParent.getLayoutX();
 		myOffsetY = myParent.getLayoutY();
 
@@ -199,7 +199,7 @@ public class TurtleView implements TurtleListener, TurtleImageAPI {
 	@Override
 	public void activeToggle(boolean active) {
 		myIsActive = active;
-		//
+		turtle.setActive(active);
 	}
 
 	@Override
@@ -236,10 +236,7 @@ public class TurtleView implements TurtleListener, TurtleImageAPI {
 			myView.setStyle("-fx-background-color:transparent");
 		else
 			myView.setStyle("-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 15, 0, 0, 0)");
-		myIsActive = !myIsActive;
-		//
-
-		// MUST NOTIFY MODEL (that turtle is toggled)
+		activeToggle(!myIsActive);
 	}
 
 	/**

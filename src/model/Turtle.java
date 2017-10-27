@@ -70,6 +70,10 @@ public class Turtle implements ImmutableTurtle {
 	public boolean isVisible() {
 		return isVisible;
 	}
+	
+	public boolean isActive() {
+		return isActive;
+	}
 
 	public int getPenColorIndex() {
 		return penColorIndex;
@@ -113,6 +117,7 @@ public class Turtle implements ImmutableTurtle {
 		for(TurtleListener tL : listeners) tL.clearScreen();
 	}
 	
+	@Override
 	public void setActive(boolean active) {
 		isActive = active;
 		listener.activeToggle(active);

@@ -39,28 +39,31 @@ public class TurtleManager implements Iterable<Turtle>{
 	public Iterator<Turtle> iterator() {
 		return new Iterator<Turtle>() {
 
-			//private List<Turtle> activeTurtles = 
+			private List<Turtle> activeTurtles = getActiveTurtles();
+			private int nextIndex = 0;
 			
 			@Override
 			public boolean hasNext() {
-				// TODO Auto-generated method stub
+				if(nextIndex < activeTurtles.size()) return true;
 				return false;
 			}
 
 			@Override
 			public Turtle next() {
-				// TODO Auto-generated method stub
-				return null;
+				Turtle ret = activeTurtles.get(nextIndex);
+				nextIndex++;
+				return ret;
 			}
 			
 		};
 	}
 	
-//	private List<Turtle> getActiveTurtles() {
-//		List<Turtle> activeTurtles = new ArrayList<>();
-//		for(Turtle t : turtles) {
-//			
-//		}
-//	}
+	private List<Turtle> getActiveTurtles() {
+		List<Turtle> activeTurtles = new ArrayList<>();
+		for(Turtle t : turtles) {
+			if(t.isActive()) activeTurtles.add(t);
+		}
+		return activeTurtles;
+	}
  	
 }
