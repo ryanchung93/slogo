@@ -20,7 +20,7 @@ import view.Windows.TurtleStateView;
  *
  * @author DavidTran
  */
-public class TurtleView implements TurtleListener, TurtleImageAPI {
+public class TurtleView implements TurtleListener, TurtleImageAPI, TurtleImageOptionListener {
 
 	private static final double WIDTH = 35;
 	private static final double HEIGHT = 35;
@@ -199,7 +199,6 @@ public class TurtleView implements TurtleListener, TurtleImageAPI {
 	@Override
 	public void activeToggle(boolean active) {
 		myIsActive = active;
-		turtle.setActive(active);
 	}
 
 	@Override
@@ -233,6 +232,7 @@ public class TurtleView implements TurtleListener, TurtleImageAPI {
 		else
 			myView.setStyle("-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 15, 0, 0, 0)");
 		activeToggle(!myIsActive);
+		turtle.setActive(myIsActive);
 	}
 
 	/**
