@@ -1,29 +1,20 @@
-package view.SidePane;
-
-import java.util.ResourceBundle;
+package view.Windows;
 
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
-import javafx.scene.control.TextArea;
-import javafx.scene.layout.VBox;
-import view.API.SubcomponentViewAPI;
 
-public class HistoryView implements SubcomponentViewAPI {
+public class HistoryView extends Window {
 
-	private TextArea ta;
-	private VBox view;
 	private Button clearButton;
-	private ResourceBundle myResources = ResourceBundle.getBundle("resources.view/view");
 
 	public HistoryView(double height) {
-		view = new VBox();
-		view.setMinHeight(height);
-
+		super(height);
+		ta.appendText(myResources.getString("HistoryView") + "\n");
 		clearButton = makeButton("Clear History", e -> clear());
-		ta = createTA(height);
-		view.getChildren().addAll(ta, clearButton);
+		view.getChildren().addAll(clearButton);
+
 	}
 
 	/*************************** PUBLIC METHODS ********************************/
@@ -38,15 +29,6 @@ public class HistoryView implements SubcomponentViewAPI {
 	}
 
 	/*************************** PRIVATE METHODS ********************************/
-
-	private TextArea createTA(double height) {
-		TextArea ret = new TextArea();
-		ret.setMinHeight(height);
-		ret.setWrapText(true);
-		ret.setEditable(false);
-		ret.appendText(myResources.getString("HistoryView") + "\n");
-		return ret;
-	}
 
 	private Button makeButton(String name, EventHandler<ActionEvent> e) {
 		Button ret = new Button(name);

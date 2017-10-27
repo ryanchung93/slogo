@@ -1,4 +1,4 @@
-package view.API.SidePane;
+package view.Windows;
 
 import java.util.Map;
 

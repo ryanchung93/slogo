@@ -1,12 +1,12 @@
-package view.API;
+package view;
 
 import java.util.function.Consumer;
 
 import model.SLogoException;
-import view.API.CommandIOAPI.TurtleListener;
-import view.API.SidePane.StringListener;
-import view.API.SidePane.VariableListener;
-import view.API.ToolbarAPI.LanguageListener;
+import view.Animation.TurtleListener;
+import view.Toolbar.LanguageListener;
+import view.Windows.StringListener;
+import view.Windows.VariableListener;
 
 public interface ViewAPI {
 
@@ -36,11 +36,6 @@ public interface ViewAPI {
 	 * @return StringListener that detects changes to list of user commands.
 	 */
 	public StringListener getUserDefinedCommandListener();
-
-	/**
-	 * @return StringListener that detects changes to language.
-	 */
-	public LanguageListener getLanguageListener();
 	
 	/**
 	 * @param e

@@ -1,14 +1,14 @@
-package view.API.CommandIOAPI;
+package view.Animation;
 
 import model.ImmutableTurtle;
-import view.SidePane.TurtleStateView;
+import view.Windows.TurtleStateView;
 
 /**
  * Listens for modifications to a turtle's state -- its methods must be called
  * when these changes occur
  *
  */
-public interface TurtleListener extends TurtleImageListener {
+public interface TurtleListener extends TurtleImageOptionListener {
 	
 	/**
 	 * Gives the listener a Turtle to keep track of the state

@@ -1,9 +1,8 @@
 package model;
 
-import view.API.CommandIOAPI.TurtleListener;
-import view.API.SidePane.StringListener;
-import view.API.SidePane.VariableListener;
-import view.API.ToolbarAPI.LanguageListener;
+import view.Animation.TurtleListener;
+import view.Windows.StringListener;
+import view.Windows.VariableListener;
 
 public class Model {
 
@@ -40,12 +39,22 @@ public class Model {
 		}
 	}
 	
+//	public void execute(String code) throws SLogoException {
+//		for (Turtle turtle : turtles.getTurtles()) {
+//			turtle.setParser(new Parser(code, commands));
+//			while(turtle.getParser().hasNextCommand()) {
+//			    // must implement if turtle is toggled - discuss
+//				turtle.getParser().getNextCommand().execute(turtle, commands, variables);
+//				variables.notifyListeners();
+//			}
+//		}
+//	}
+	
 	public void execute(String code) throws SLogoException {
 		Parser parser = new Parser(code, commands);
 		while(parser.hasNextCommand()) {
 			Command command = parser.getNextCommand();
 			for(Turtle turtle : turtles.getTurtles()) {
-				
 				command.execute(turtle, commands, variables);
 				variables.notifyListeners();
 			}

@@ -1,4 +1,4 @@
-package view.CommandIO;
+package view.Animation;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -13,16 +13,14 @@ import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 import model.ImmutableTurtle;
-import view.API.CommandIOAPI.TurtleImageDisplay;
-import view.API.CommandIOAPI.TurtleListener;
-import view.SidePane.TurtleStateView;
+import view.Windows.TurtleStateView;
 
 /**
  * Class to make the turtle viewable.
  *
  * @author DavidTran
  */
-public class TurtleView implements TurtleListener, TurtleImageDisplay, ImmutableTurtle {
+public class TurtleView implements TurtleListener, TurtleImageAPI {
 
 	private static final double WIDTH = 35;
 	private static final double HEIGHT = 35;
@@ -33,8 +31,6 @@ public class TurtleView implements TurtleListener, TurtleImageDisplay, Immutable
 			Arrays.asList(myResources.getString("PenColors").replaceAll("\\s+", "").split(",")));
 
 	private ImageView myView;
-
-	private List<Image> imageList = new ArrayList<Image>();
 	private int myPenColorIndex;
 	private boolean myPenIsDown;
 	private Pane myParent;
@@ -43,6 +39,8 @@ public class TurtleView implements TurtleListener, TurtleImageDisplay, Immutable
 	private int myID;
 
 	private TurtleStateView stateListener;
+	private boolean myIsToggled;
+	private List<Image> imageList = new ArrayList<Image>();
 
 	private double myOffsetX;
 	private double myOffsetY;
@@ -55,8 +53,6 @@ public class TurtleView implements TurtleListener, TurtleImageDisplay, Immutable
 		myView.setFitHeight(HEIGHT);
 		myView.setLayoutX(-WIDTH / 2);
 		myView.setLayoutY(-HEIGHT / 2);
-		myView.setX(0);
-		myView.setY(0);
 		myView.setRotate(180);
 		myView.setStyle("-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 15, 0, 0, 0)");
 		myView.setOnMouseClicked(e -> clicked());
@@ -67,6 +63,7 @@ public class TurtleView implements TurtleListener, TurtleImageDisplay, Immutable
 		myPenColorIndex = 0;
 		myPenIsDown = true;
 		myIsActive = true;
+		myIsToggled = true;
 		myParent = parent;
 
 		for (String s : imageNameList) {
@@ -74,7 +71,7 @@ public class TurtleView implements TurtleListener, TurtleImageDisplay, Immutable
 			imageList.add(fileImage);
 		}
 	}
-	
+
 	/*************************** PUBLIC METHODS ********************************/
 
 	@Override
@@ -85,12 +82,12 @@ public class TurtleView implements TurtleListener, TurtleImageDisplay, Immutable
 		myView.setX(turtle.getX() + myOffsetX);
 		myView.setY(turtle.getY() + myOffsetY);
 
+		myID = turtle.getID();
 		myHeading = turtle.getHeading();
 		myPenColorIndex = turtle.getPenColorIndex();
 		myPenIsDown = turtle.getPenDown();
 		myView.setVisible(turtle.isVisible());
-		updateStateListener();
-
+		//
 	}
 
 	@Override
@@ -158,8 +155,7 @@ public class TurtleView implements TurtleListener, TurtleImageDisplay, Immutable
 		System.out.println("myX: " + myView.getX() + " | myY: " + myView.getY());
 		System.out.println("newX: " + newX + " | newY: " + newY);
 		System.out.println("offsetNewX: " + offsetNewX + " | offsetNewY: " + offsetNewY);
-
-		updateStateListener();
+		//
 	}
 
 	@Override
@@ -168,7 +164,7 @@ public class TurtleView implements TurtleListener, TurtleImageDisplay, Immutable
 		if (myIsActive) {
 			myHeading = -newHeading;
 			myView.setRotate(180 - myHeading);
-			updateStateListener();
+			//
 		}
 	}
 
@@ -176,7 +172,7 @@ public class TurtleView implements TurtleListener, TurtleImageDisplay, Immutable
 	public void penChange(boolean newState) {
 		if (myIsActive) {
 			myPenIsDown = newState;
-			updateStateListener();
+			//
 		}
 	}
 
@@ -185,7 +181,7 @@ public class TurtleView implements TurtleListener, TurtleImageDisplay, Immutable
 		try {
 			if (myIsActive) {
 				myPenColorIndex = index;
-				updateStateListener();
+				//
 			}
 		} catch (Exception e) {
 			showError(e.getMessage());
@@ -196,14 +192,14 @@ public class TurtleView implements TurtleListener, TurtleImageDisplay, Immutable
 	public void visibilityChange(boolean visibility) {
 		if (myIsActive) {
 			myView.setVisible(visibility);
-			updateStateListener();
+			//
 		}
 	}
 	
 	@Override
 	public void activeToggle(boolean active) {
 		myIsActive = active;
-		updateStateListener();
+		//
 	}
 
 	@Override
@@ -211,7 +207,7 @@ public class TurtleView implements TurtleListener, TurtleImageDisplay, Immutable
 		// remove image from pane
 		if (myIsActive)
 			myParent.getChildren().remove(myView);
-
+		myParent.getChildren().remove(myView);
 	}
 
 	@Override
@@ -224,57 +220,15 @@ public class TurtleView implements TurtleListener, TurtleImageDisplay, Immutable
 	public ImageView getImageView() {
 		return myView;
 	}
-
-	@Override
-	public int getID() {
-		return myID;
-	}
-
-	@Override
-	public double getX() {
-		return myView.getX();
-	}
-
-	@Override
-	public double getY() {
-		return myView.getY();
-	}
-
-	@Override
-	public double getHeading() {
-		return myHeading;
-	}
-
-	@Override
-	public boolean getPenDown() {
-		return myPenIsDown;
-	}
-
-	@Override
-	public boolean isVisible() {
-		return myView.isVisible();
-	}
-
-	@Override
-	public int getPenColorIndex() {
-		return myPenColorIndex;
-	}
-
-	@Override
+	
 	public void addTurtleStateListener(TurtleStateView l) {
 		stateListener = l;
 	}
-	
+
 	/*************************** PRIVATE METHODS ********************************/
 
-	private void showError(String message) {
-		Alert alert = new Alert(AlertType.ERROR);
-		alert.setContentText(message);
-		alert.showAndWait();
-	}
-
 	/**
-	 * Make toggling noticeable
+	 * Make toggling viewable.
 	 */
 	private void clicked() {
 		System.out.println("Clicked turtle");
@@ -283,10 +237,9 @@ public class TurtleView implements TurtleListener, TurtleImageDisplay, Immutable
 		else
 			myView.setStyle("-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 15, 0, 0, 0)");
 		myIsActive = !myIsActive;
+		//
 
-		updateStateListener();
-
-		// MUST NOTIFY MODEL
+		// MUST NOTIFY MODEL (that turtle is toggled)
 	}
 
 	/**
@@ -301,9 +254,11 @@ public class TurtleView implements TurtleListener, TurtleImageDisplay, Immutable
 		if (!myIsActive)
 			myView.setStyle("-fx-background-color:transparent;");
 	}
-
-	private void updateStateListener() {
-		stateListener.update(this);
+	
+	private void showError(String message) {
+		Alert alert = new Alert(AlertType.ERROR);
+		alert.setContentText(message);
+		alert.showAndWait();
 	}
 
 }

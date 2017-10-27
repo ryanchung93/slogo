@@ -1,5 +1,6 @@
-package view.CommandIO;
+package view.Animation;
 
+import java.util.ResourceBundle;
 import java.util.function.Consumer;
 
 import javafx.event.ActionEvent;
@@ -8,7 +9,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import view.API.CommandIOAPI.TextPromptDisplay;
+import view.Toolbar.LanguageListener;
 
 /**
  * Class allowing users to enter and clear commands.
@@ -16,15 +17,19 @@ import view.API.CommandIOAPI.TextPromptDisplay;
  * @author DavidTran
  *
  */
-public class TextPromptView extends HBox implements TextPromptDisplay {
+public class TextPromptView extends HBox implements TextPromptAPI, LanguageListener {
 	private TextArea tp;
 	private Button runButton;
 	private Button clearButton;
 	private VBox buttonPanel;
+	private static final String DEFAULT_LANGUAGE = "English";
 
 	private Consumer<String> commandConsumer;
+	private Consumer<String> historyConsumer;
+	private ResourceBundle acceptedCommands;
 
-	public TextPromptView(double width, double height, Consumer<String> commandConsumer) {
+	public TextPromptView(double width, double height, Consumer<String> commandConsumer,
+			Consumer<String> historyConsumer) {
 		this.setMaxWidth(width);
 		this.setMaxHeight(height);
 
@@ -32,10 +37,13 @@ public class TextPromptView extends HBox implements TextPromptDisplay {
 		tp.setPrefWidth(width * .75);
 		tp.setPrefHeight(height);
 		tp.setId("text-prompt");
+		this.getChildren().add(tp);
 
 		this.commandConsumer = commandConsumer;
+		this.historyConsumer = historyConsumer;
+		acceptedCommands = ResourceBundle.getBundle("resources.languages." + DEFAULT_LANGUAGE);
 
-		this.getChildren().add(tp);
+
 
 		addButtons(width - tp.getPrefWidth(), height / 2);
 
@@ -64,6 +72,7 @@ public class TextPromptView extends HBox implements TextPromptDisplay {
 	public void enter() {
 		String code = tp.getText();
 		commandConsumer.accept(code);
+		historyConsumer.accept(code);
 		clear();
 	}
 
@@ -74,9 +83,14 @@ public class TextPromptView extends HBox implements TextPromptDisplay {
 	/*************************** PUBLIC METHODS ********************************/
 
 	@Override
-	public void runCommand(String s) {
-		commandConsumer.accept(s);
+	public void runCommand(String s, int index) {
+		String command = acceptedCommands.getString(s).split("\\|")[0] + " " + index;
+		commandConsumer.accept(command);
+	}
 
+	@Override
+	public void languageChange(String language) {
+		acceptedCommands = ResourceBundle.getBundle("resources.languages." + language);
 	}
 
 }

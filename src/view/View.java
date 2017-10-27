@@ -1,6 +1,5 @@
 package view;
 
-import java.util.ResourceBundle;
 import java.util.function.Consumer;
 
 import javafx.animation.Animation;
@@ -22,20 +21,19 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import model.SLogoException;
-import view.API.ViewAPI;
-import view.API.CommandIOAPI.TurtleListener;
-import view.API.SidePane.StringListener;
-import view.API.SidePane.VariableListener;
-import view.API.ToolbarAPI.LanguageListener;
-import view.CommandIO.CanvasView;
-import view.CommandIO.TextPromptView;
-import view.CommandIO.TurtleViewManager;
-import view.SidePane.HistoryView;
-import view.SidePane.ReferenceView;
-import view.SidePane.TurtleStateView;
-import view.SidePane.UserDefinedCommandView;
-import view.SidePane.VariableView;
+import view.Animation.CanvasView;
+import view.Animation.TextPromptView;
+import view.Animation.TurtleListener;
+import view.Animation.TurtleViewManager;
+import view.Toolbar.LanguageListener;
 import view.Toolbar.ToolbarView;
+import view.Windows.HistoryView;
+import view.Windows.ReferenceView;
+import view.Windows.StringListener;
+import view.Windows.TurtleStateView;
+import view.Windows.UserDefinedCommandView;
+import view.Windows.VariableListener;
+import view.Windows.VariableView;
 
 /**
  * Class that displays the GUI and SLogo animations.
@@ -43,7 +41,7 @@ import view.Toolbar.ToolbarView;
  * @author DavidTran
  *
  */
-public class View implements ViewAPI, LanguageListener {
+public class View implements ViewAPI {
 
 	private static final int FRAMES_PER_SECOND = 60;
 	private static final int MILLISECOND_DELAY = 1000 / FRAMES_PER_SECOND;
@@ -51,7 +49,6 @@ public class View implements ViewAPI, LanguageListener {
 	private static final int SCREEN_WIDTH = 1000;
 	private static final int SCREEN_HEIGHT = 700;
 	private static final String STYLESHEET = "/resources/view/view.css";
-	private static final String DEFAULT_LANGUAGE = "English";
 	private static final String TURTLE_IMAGE = "Turtle_up.png";
 
 	private Stage myStage;
@@ -76,7 +73,7 @@ public class View implements ViewAPI, LanguageListener {
 	private TurtleStateView myTurtleStateView;
 
 	private LanguageListener myLanguageListener;
-	private ResourceBundle acceptedCommands;
+
 	/**
 	 * Constructor for setting up animation.
 	 * 
@@ -85,7 +82,6 @@ public class View implements ViewAPI, LanguageListener {
 	public View(Stage stage, LanguageListener langListener, Consumer<String> commandConsumer) {
 		myStage = stage;
 		myLanguageListener = langListener;
-		acceptedCommands = ResourceBundle.getBundle("resources.languages." + DEFAULT_LANGUAGE);
 		myStage.setTitle("SLogo Interpreter");
 		start(commandConsumer);
 	}
@@ -97,7 +93,7 @@ public class View implements ViewAPI, LanguageListener {
 		setupLayout();
 		addScrollPaneComponents();
 		addAnimationComponents();
-		addTextPrompt(commandConsumer);
+		addTextPrompt(commandConsumer, s -> myHistoryView.updateHistory(s));
 		addToolbar();
 		myTimeline.play();
 	}
@@ -105,6 +101,10 @@ public class View implements ViewAPI, LanguageListener {
 	@Override
 	public TurtleListener getTurtleListener() {
 		return myTurtleViewManager;
+	}
+
+	public TurtleListener getStateViewListener() {
+		return myTurtleStateView;
 	}
 
 	@Override
@@ -115,11 +115,6 @@ public class View implements ViewAPI, LanguageListener {
 	@Override
 	public StringListener getCommandListener() {
 		return myRefView;
-	}
-	
-	@Override
-	public LanguageListener getLanguageListener() {
-		return this;
 	}
 
 	@Override
@@ -132,7 +127,6 @@ public class View implements ViewAPI, LanguageListener {
 		System.out.println(e.getMessage());
 		showError(e.getMessage());
 	}
-	
 
 	/*************** PRIVATE METHODS *******************/
 
@@ -191,26 +185,26 @@ public class View implements ViewAPI, LanguageListener {
 	private void handleKeyInput(KeyCode code) {
 		switch (code) {
 		case W:
-			myTextPrompt.runCommand(acceptedCommands.getString("Forward").split("\\|")[0] + " " + 1);
+			myTextPrompt.runCommand("Forward", 1);
 			break;
 		case S:
-			myTextPrompt.runCommand(acceptedCommands.getString("Backward").split("\\|")[0] + " " + 1);
+			myTextPrompt.runCommand("Backward", 1);
 			break;
 		case A:
-			myTextPrompt.runCommand(acceptedCommands.getString("Left").split("\\|")[0] + " " + 90);
-			myTextPrompt.runCommand(acceptedCommands.getString("Forward").split("\\|")[0] + " " + 1);
-			myTextPrompt.runCommand(acceptedCommands.getString("Right").split("\\|")[0] + " " + 90);
+			myTextPrompt.runCommand("Left", 90);
+			myTextPrompt.runCommand("Forward", 1);
+			myTextPrompt.runCommand("Right", 90);
 			break;
 		case D:
-			myTextPrompt.runCommand(acceptedCommands.getString("Right").split("\\|")[0] + " " + 90);
-			myTextPrompt.runCommand(acceptedCommands.getString("Forward").split("\\|")[0] + " " + 1);
-			myTextPrompt.runCommand(acceptedCommands.getString("Left").split("\\|")[0] + " " + 90);
+			myTextPrompt.runCommand("Right", 90);
+			myTextPrompt.runCommand("Forward", 1);
+			myTextPrompt.runCommand("Left", 90);
 			break;
 		case R:
-			myTextPrompt.runCommand(acceptedCommands.getString("Left").split("\\|")[0] + " " + 1);
+			myTextPrompt.runCommand("Left", 1);
 			break;
 		case T:
-			myTextPrompt.runCommand(acceptedCommands.getString("Right").split("\\|")[0] + " " + 1);
+			myTextPrompt.runCommand("Right", 1);
 			break;
 		default:
 			break;
@@ -238,12 +232,11 @@ public class View implements ViewAPI, LanguageListener {
 	/**
 	 * Add text prompt where commands are entered and run.
 	 */
-	private void addTextPrompt(Consumer<String> commandConsumer) {
+	private void addTextPrompt(Consumer<String> commandConsumer, Consumer<String> historyConsumer) {
 		double[][] dims = getGridDimensions();
 		myTextPrompt = new TextPromptView(dims[0][1], dims[1][2], s -> {
 			commandConsumer.accept(s);
-			myHistoryView.updateHistory(s);
-		});
+		}, historyConsumer);
 		myGrid.add(myTextPrompt, 1, 2, 2, 1);
 	}
 
@@ -280,7 +273,8 @@ public class View implements ViewAPI, LanguageListener {
 
 		myUDCView = new UserDefinedCommandView((dims[1][1] + dims[1][2]) / 2);
 		myVarView = new VariableView((dims[1][1] + dims[1][2]) / 2);
-		myTurtleStateView = new TurtleStateView((dims[1][1] + dims[1][2]) / 2);;
+		myTurtleStateView = new TurtleStateView((dims[1][1] + dims[1][2]) / 2);
+
 		myRefView = new ReferenceView((dims[1][1] + dims[1][2]) / 2);
 		myHistoryView = new HistoryView((dims[1][1] + dims[1][2]) / 2);
 
@@ -298,11 +292,11 @@ public class View implements ViewAPI, LanguageListener {
 	private void addToolbar() {
 		myToolbarView = new ToolbarView(SCREEN_WIDTH);
 		// set a listener for background color changes.
-		myToolbarView.getBackgroundOptionView().addBackgroundOptionListener(myCanvas);
+		myToolbarView.getBackgroundOptionView().addTextPrompt(myTextPrompt);
+		myToolbarView.getPenOptionView().addTextPrompt(myTextPrompt);
 		myToolbarView.getImageOptionView().addTurtleImageListener(myTurtleViewManager);
-		myToolbarView.getPenOptionView().addPenOptionListener(myTurtleViewManager);
 		myToolbarView.getLanguageOptionView().addLanguageOptionListener(myLanguageListener);
-		myToolbarView.getLanguageOptionView().addLanguageOptionListener(this);
+		myToolbarView.getLanguageOptionView().addLanguageOptionListener(myTextPrompt);
 		myGrid.add(myToolbarView.getParent(), 0, 0);
 	}
 
@@ -331,12 +325,6 @@ public class View implements ViewAPI, LanguageListener {
 		Alert alert = new Alert(AlertType.ERROR);
 		alert.setContentText(message);
 		alert.showAndWait();
-	}
-
-	@Override
-	public void languageChange(String language) {
-		acceptedCommands = ResourceBundle.getBundle("resources.languages." + language);
-		
 	}
 
 }

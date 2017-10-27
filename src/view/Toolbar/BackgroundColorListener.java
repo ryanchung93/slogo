@@ -1,6 +1,4 @@
-package view.API.ToolbarAPI;
-
-import javafx.scene.paint.Color;
+package view.Toolbar;
 
 /**
  * Class for detecting changes to background choice box.
@@ -8,7 +6,7 @@ import javafx.scene.paint.Color;
  * @author DavidTran
  *
  */
-public interface BackgroundOptionListener {
+public interface BackgroundColorListener {
 
 	/**
 	 * Changes the background color.

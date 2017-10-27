@@ -1,4 +1,4 @@
-package view.API.ToolbarAPI;
+package view.Toolbar;
 
 /**
  * Class for detecting changes to language choice box.

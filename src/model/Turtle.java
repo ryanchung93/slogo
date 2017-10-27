@@ -1,6 +1,9 @@
 package model;
 
-import view.API.CommandIOAPI.TurtleListener;
+import java.util.ArrayList;
+import java.util.List;
+
+import view.Animation.TurtleListener;
 
 /**
  * A representation of the state of the turtle at a given time. Notifies all
@@ -10,6 +13,8 @@ import view.API.CommandIOAPI.TurtleListener;
 public class Turtle implements ImmutableTurtle {
 	
 	private TurtleListener listener;
+	private List<TurtleListener> listeners;
+	private Parser myParser;
 	private int id;
 	private double x;
 	private double initX;
@@ -33,11 +38,12 @@ public class Turtle implements ImmutableTurtle {
 		isVisible = true;
 		isActive = true;
 		penColorIndex = DEFAULT_PEN_COLOR_INDEX;
+		listeners = new ArrayList<>();
 	}
 	
 	// need to add to interface
 	public void addTurtleListener(TurtleListener tL) {
-		listener = tL;
+		listeners.add(tL);
 		tL.setTurtle(this);
 	}
 	
@@ -72,27 +78,27 @@ public class Turtle implements ImmutableTurtle {
 	public void setXY(double newX, double newY) {
 		x = newX;
 		y = newY;
-		listener.locationChange(newX, newY);
+		for(TurtleListener tL : listeners) tL.locationChange(newX, newY);
 	}
 
 	public void setHeading(double newHeading) {
 		heading = newHeading;
-		listener.headingChange(newHeading);
+		for(TurtleListener tL : listeners) tL.headingChange(newHeading);
 	}
 
 	public void setPenDown(boolean down) {
 		penDown = down;
-		listener.penChange(down);
+		for(TurtleListener tL : listeners) tL.penChange(down);
 	}
 
 	public void setVisible(boolean visible) {
 		isVisible = visible;
-		listener.visibilityChange(visible);
+		for(TurtleListener tL : listeners) tL.visibilityChange(visible);
 	}
 	
 	public void setPenColor(int index) {
 		penColorIndex = index;
-		listener.penColorChange(index);
+		for(TurtleListener tL : listeners) tL.penColorChange(index);
 	}
 
     /**
@@ -104,7 +110,7 @@ public class Turtle implements ImmutableTurtle {
 		setPenDown(true);
 		setVisible(true);
 		setPenColor(DEFAULT_PEN_COLOR_INDEX);
-		listener.clearScreen();
+		for(TurtleListener tL : listeners) tL.clearScreen();
 	}
 	
 	public void setActive(boolean active) {
