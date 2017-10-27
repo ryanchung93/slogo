@@ -1,11 +1,12 @@
 package model;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import view.API.CommandIOAPI.TurtleListener;
 
-public class TurtleManager {
+public class TurtleManager implements Iterable<Turtle>{
 
 	private List<TurtleListener> turtleViewManagers;
 	private List<Turtle> turtles;
@@ -33,5 +34,33 @@ public class TurtleManager {
 	public void addTurtleViewManager(TurtleListener tL) {
 		turtleViewManagers.add(tL);
 	}
+
+	@Override
+	public Iterator<Turtle> iterator() {
+		return new Iterator<Turtle>() {
+
+			//private List<Turtle> activeTurtles = 
+			
+			@Override
+			public boolean hasNext() {
+				// TODO Auto-generated method stub
+				return false;
+			}
+
+			@Override
+			public Turtle next() {
+				// TODO Auto-generated method stub
+				return null;
+			}
+			
+		};
+	}
+	
+//	private List<Turtle> getActiveTurtles() {
+//		List<Turtle> activeTurtles = new ArrayList<>();
+//		for(Turtle t : turtles) {
+//			
+//		}
+//	}
  	
 }

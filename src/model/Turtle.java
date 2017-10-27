@@ -10,7 +10,6 @@ import view.API.CommandIOAPI.TurtleListener;
 public class Turtle implements ImmutableTurtle {
 	
 	private TurtleListener listener;
-	private Parser myParser;
 	private int id;
 	private double x;
 	private double initX;
@@ -20,6 +19,7 @@ public class Turtle implements ImmutableTurtle {
 	private double initHeading;
 	private boolean penDown;
 	private boolean isVisible;
+	private boolean isActive;
 	private int penColorIndex;
 	
 	public static final int DEFAULT_PEN_COLOR_INDEX = 0;
@@ -31,6 +31,7 @@ public class Turtle implements ImmutableTurtle {
 		heading = initHeading = heading0;
 		penDown = true;
 		isVisible = true;
+		isActive = true;
 		penColorIndex = DEFAULT_PEN_COLOR_INDEX;
 	}
 	
@@ -38,14 +39,6 @@ public class Turtle implements ImmutableTurtle {
 	public void addTurtleListener(TurtleListener tL) {
 		listener = tL;
 		tL.setTurtle(this);
-	}
-	
-	public void setParser(Parser p) {
-		myParser = p;
-	}
-	
-	public Parser getParser() {
-		return myParser;
 	}
 	
 	public int getID() {
@@ -112,5 +105,10 @@ public class Turtle implements ImmutableTurtle {
 		setVisible(true);
 		setPenColor(DEFAULT_PEN_COLOR_INDEX);
 		listener.clearScreen();
+	}
+	
+	public void setActive(boolean active) {
+		isActive = active;
+		listener.activeToggle(active);
 	}
 }

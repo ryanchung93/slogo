@@ -55,6 +55,11 @@ public interface TurtleListener extends TurtleImageListener {
 	 */
 	public void addTurtleStateListener(TurtleStateView l);
 
+	/**
+	 * Called when a Turtle's active state is changed
+	 */
+	public void activeToggle(boolean active);
+
 
 }
 

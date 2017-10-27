@@ -90,4 +90,9 @@ public class TurtleViewManager implements TurtleListener {
 	public void addTurtleStateListener(TurtleStateView l) {
 		stateView = l;
 	}
+
+	@Override
+	public void activeToggle(boolean active) {
+		//for(TurtleView turtle : turtles)
+	}
 }

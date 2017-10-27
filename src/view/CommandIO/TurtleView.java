@@ -39,10 +39,10 @@ public class TurtleView implements TurtleListener, TurtleImageDisplay, Immutable
 	private boolean myPenIsDown;
 	private Pane myParent;
 	private double myHeading;
-	private boolean myIsToggled;
+	private boolean myIsActive;
 	private int myID;
 
-	private TurtleStateView listener;
+	private TurtleStateView stateListener;
 
 	private double myOffsetX;
 	private double myOffsetY;
@@ -66,7 +66,7 @@ public class TurtleView implements TurtleListener, TurtleImageDisplay, Immutable
 		myID = id;
 		myPenColorIndex = 0;
 		myPenIsDown = true;
-		myIsToggled = true;
+		myIsActive = true;
 		myParent = parent;
 
 		for (String s : imageNameList) {
@@ -89,7 +89,7 @@ public class TurtleView implements TurtleListener, TurtleImageDisplay, Immutable
 		myPenColorIndex = turtle.getPenColorIndex();
 		myPenIsDown = turtle.getPenDown();
 		myView.setVisible(turtle.isVisible());
-		updateListener();
+		updateStateListener();
 
 	}
 
@@ -159,33 +159,33 @@ public class TurtleView implements TurtleListener, TurtleImageDisplay, Immutable
 		System.out.println("newX: " + newX + " | newY: " + newY);
 		System.out.println("offsetNewX: " + offsetNewX + " | offsetNewY: " + offsetNewY);
 
-		updateListener();
+		updateStateListener();
 	}
 
 	@Override
 	public void headingChange(double newHeading) {
 		// create an animation that rotates the shape
-		if (myIsToggled) {
+		if (myIsActive) {
 			myHeading = -newHeading;
 			myView.setRotate(180 - myHeading);
-			updateListener();
+			updateStateListener();
 		}
 	}
 
 	@Override
 	public void penChange(boolean newState) {
-		if (myIsToggled) {
+		if (myIsActive) {
 			myPenIsDown = newState;
-			updateListener();
+			updateStateListener();
 		}
 	}
 
 	@Override
 	public void penColorChange(int index) {
 		try {
-			if (myIsToggled) {
+			if (myIsActive) {
 				myPenColorIndex = index;
-				updateListener();
+				updateStateListener();
 			}
 		} catch (Exception e) {
 			showError(e.getMessage());
@@ -194,23 +194,29 @@ public class TurtleView implements TurtleListener, TurtleImageDisplay, Immutable
 
 	@Override
 	public void visibilityChange(boolean visibility) {
-		if (myIsToggled) {
+		if (myIsActive) {
 			myView.setVisible(visibility);
-			updateListener();
+			updateStateListener();
 		}
+	}
+	
+	@Override
+	public void activeToggle(boolean active) {
+		myIsActive = active;
+		updateStateListener();
 	}
 
 	@Override
 	public void clearScreen() {
 		// remove image from pane
-		if (myIsToggled)
+		if (myIsActive)
 			myParent.getChildren().remove(myView);
 
 	}
 
 	@Override
 	public void imageChange(int imageIndex) {
-		if (myIsToggled)
+		if (myIsActive)
 			myView.setImage(imageList.get(imageIndex));
 	}
 
@@ -231,13 +237,11 @@ public class TurtleView implements TurtleListener, TurtleImageDisplay, Immutable
 
 	@Override
 	public double getY() {
-		// TODO Auto-generated method stub
 		return myView.getY();
 	}
 
 	@Override
 	public double getHeading() {
-		// TODO Auto-generated method stub
 		return myHeading;
 	}
 
@@ -253,14 +257,12 @@ public class TurtleView implements TurtleListener, TurtleImageDisplay, Immutable
 
 	@Override
 	public int getPenColorIndex() {
-		// TODO Auto-generated method stub
 		return myPenColorIndex;
 	}
 
 	@Override
 	public void addTurtleStateListener(TurtleStateView l) {
-		listener = l;
-
+		stateListener = l;
 	}
 	
 	/*************************** PRIVATE METHODS ********************************/
@@ -276,13 +278,13 @@ public class TurtleView implements TurtleListener, TurtleImageDisplay, Immutable
 	 */
 	private void clicked() {
 		System.out.println("Clicked turtle");
-		if (myIsToggled)
+		if (myIsActive)
 			myView.setStyle("-fx-background-color:transparent");
 		else
 			myView.setStyle("-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 15, 0, 0, 0)");
-		myIsToggled = !myIsToggled;
+		myIsActive = !myIsActive;
 
-		updateListener();
+		updateStateListener();
 
 		// MUST NOTIFY MODEL
 	}
@@ -291,17 +293,17 @@ public class TurtleView implements TurtleListener, TurtleImageDisplay, Immutable
 	 * Make mouse hovering noticeable.
 	 */
 	private void entered() {
-		if (!myIsToggled)
+		if (!myIsActive)
 			myView.setStyle("-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0, 0, 0)");
 	}
 
 	private void exited() {
-		if (!myIsToggled)
+		if (!myIsActive)
 			myView.setStyle("-fx-background-color:transparent;");
 	}
 
-	private void updateListener() {
-		listener.update(this);
+	private void updateStateListener() {
+		stateListener.update(this);
 	}
 
 }
