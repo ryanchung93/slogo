@@ -220,10 +220,6 @@ public class TurtleView implements TurtleListener, TurtleImageAPI {
 	public ImageView getImageView() {
 		return myView;
 	}
-	
-	public void addTurtleStateListener(TurtleStateView l) {
-		stateListener = l;
-	}
 
 	/*************************** PRIVATE METHODS ********************************/
 

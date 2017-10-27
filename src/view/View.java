@@ -99,8 +99,8 @@ public class View implements ViewAPI {
 	}
 
 	@Override
-	public TurtleListener getTurtleListener() {
-		return myTurtleViewManager;
+	public TurtleListener getTurtleListener(int id) {
+		return myTurtleViewManager.getListener(id);
 	}
 
 	public TurtleListener getStateViewListener() {
@@ -226,7 +226,6 @@ public class View implements ViewAPI {
 		// FOR TESTING
 		Image image = new Image(getClass().getClassLoader().getResourceAsStream("resources/images/" + TURTLE_IMAGE));
 		myTurtleViewManager = new TurtleViewManager(myCanvas, image);
-		myTurtleViewManager.addTurtleStateListener(myTurtleStateView);
 	}
 
 	/**

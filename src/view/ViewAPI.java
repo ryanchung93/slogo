@@ -18,11 +18,6 @@ public interface ViewAPI {
 	public void start(Consumer<String> commandConsumer);
 
 	/**
-	 * @return TurtleListener that detects changes to Turtle states.
-	 */
-	public TurtleListener getTurtleListener();
-
-	/**
 	 * @return VariableListener that detects changes to current variables.
 	 */
 	public VariableListener getVariableListener();
@@ -42,6 +37,8 @@ public interface ViewAPI {
 	 *            A SLogoException produced when the code is executed
 	 */
 	public void display(SLogoException e);
+
+	TurtleListener getTurtleListener(int id);
 
 
 	
