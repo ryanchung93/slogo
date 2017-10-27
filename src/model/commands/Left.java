@@ -15,9 +15,7 @@ public class Left implements Command {
 
 	@Override
 	public double execute(Turtle t, CommandManager commands, VariableManager variables) {
-		double result = input.execute(t, commands, variables);
-		t.setHeading(t.getHeading() + result);
-		return result;
+		return t.left(input, commands, variables);
 	}
 
 }
