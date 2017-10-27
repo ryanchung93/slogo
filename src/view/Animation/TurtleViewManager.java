@@ -13,7 +13,7 @@ import view.Windows.TurtleStateView;
  * 
  * @author DavidTran
  */
-public class TurtleViewManager implements TurtleListener {
+public class TurtleViewManager implements TurtleListener, TurtleImageOptionListener {
 
 	private List<TurtleView> turtleList;
 	private final Pane myParent;
@@ -84,11 +84,6 @@ public class TurtleViewManager implements TurtleListener {
 		for (TurtleView turtle : turtleList) {
 			turtle.imageChange(imageIndex);
 		}
-	}
-
-	@Override
-	public void addTurtleStateListener(TurtleStateView l) {
-		stateView = l;
 	}
 
 	@Override
