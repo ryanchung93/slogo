@@ -11,8 +11,7 @@ import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
-import view.API.CommandIOAPI.CanvasDisplay;
-import view.API.ToolbarAPI.BackgroundOptionListener;
+import view.API.ToolbarAPI.BackgroundColorListener;
 
 /**
  * Class for setting up the canvas where turtles are placed.
@@ -20,8 +19,9 @@ import view.API.ToolbarAPI.BackgroundOptionListener;
  * @author DavidTran
  *
  */
-public class CanvasView extends Pane implements CanvasDisplay, BackgroundOptionListener {
+public class CanvasView extends Pane implements BackgroundColorListener {
 
+	private Color DEFAULT_COLOR = Color.WHITE;
 	private ResourceBundle myResources = ResourceBundle.getBundle("resources.view/choicebox");
 	private final List<String> colorList = new ArrayList<String>(
 			Arrays.asList(myResources.getString("BackgroundColors").replaceAll("\\s+", "").split(",")));
@@ -30,14 +30,13 @@ public class CanvasView extends Pane implements CanvasDisplay, BackgroundOptionL
 	 * Constructor
 	 */
 	public CanvasView(double width, double height) {
-		this.setBackgroundColor(Color.valueOf(colorList.get(0)));
+		this.setBackgroundColor(DEFAULT_COLOR);
 		this.setScaleY(-1);
 		this.setMaxWidth(width);
 		this.setMaxHeight(height);
 	}
 
-	@Override
-	public void setBackgroundColor(Color c) {
+	private void setBackgroundColor(Color c) {
 		this.setBackground(new Background(new BackgroundFill(c, CornerRadii.EMPTY, Insets.EMPTY)));
 	}
 

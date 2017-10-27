@@ -32,6 +32,7 @@ public class TurtleViewManager implements TurtleListener {
 		TurtleView turtleView = new TurtleView(myParent, myImage);
 		turtleView.addTurtleStateListener(stateView);
 		turtleView.setTurtle(turtle);
+		
 		turtleList.add(turtleView);
 		myParent.getChildren().add(turtleView.getImageView());
 

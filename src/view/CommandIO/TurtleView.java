@@ -13,7 +13,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 import model.ImmutableTurtle;
-import view.API.CommandIOAPI.TurtleImageDisplay;
+import view.API.CommandIOAPI.TurtleImageAPI;
 import view.API.CommandIOAPI.TurtleListener;
 import view.SidePane.TurtleStateView;
 
@@ -22,7 +22,7 @@ import view.SidePane.TurtleStateView;
  *
  * @author DavidTran
  */
-public class TurtleView implements TurtleListener, TurtleImageDisplay/*, ImmutableTurtle*/ {
+public class TurtleView implements TurtleListener, TurtleImageAPI {
 
 	private static final double WIDTH = 35;
 	private static final double HEIGHT = 35;
@@ -171,7 +171,7 @@ public class TurtleView implements TurtleListener, TurtleImageDisplay/*, Immutab
 	public void penChange(boolean newState) {
 		if (myIsToggled) {
 			myPenIsDown = newState;
-			//updateListener();
+//			updateListener();
 		}
 	}
 
@@ -211,44 +211,6 @@ public class TurtleView implements TurtleListener, TurtleImageDisplay/*, Immutab
 		return myView;
 	}
 
-	/*@Override
-	public int getID() {
-		return myID;
-	}
-
-	@Override
-	public double getX() {
-		return myView.getX();
-	}
-
-	@Override
-	public double getY() {
-		// TODO Auto-generated method stub
-		return myView.getY();
-	}
-
-	@Override
-	public double getHeading() {
-		// TODO Auto-generated method stub
-		return myHeading;
-	}
-
-	@Override
-	public boolean getPenDown() {
-		return myPenIsDown;
-	}
-
-	@Override
-	public boolean isVisible() {
-		return myView.isVisible();
-	}
-
-	@Override
-	public int getPenColorIndex() {
-		// TODO Auto-generated method stub
-		return myPenColorIndex;
-	}*/
-
 	@Override
 	public void addTurtleStateListener(TurtleStateView l) {
 		listener = l;
@@ -285,9 +247,6 @@ public class TurtleView implements TurtleListener, TurtleImageDisplay/*, Immutab
 		if (!myIsToggled)
 			myView.setStyle("-fx-background-color:transparent;");
 	}
-
-//	private void updateListener() {
-	// listener.update(this);
 
 	private void showError(String message) {
 		Alert alert = new Alert(AlertType.ERROR);

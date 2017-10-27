@@ -7,13 +7,14 @@ import view.API.SubcomponentViewAPI;
  * the model. Must have access to a Consumer<String>.
  *
  */
-public interface TextPromptDisplay extends SubcomponentViewAPI {
+public interface TextPromptAPI extends SubcomponentViewAPI {
 
 	/**
 	 * Called when a command needs to be added to prompt and run.
 	 * 
 	 * @param s
-	 *            string to be add to text prompt
+	 *            string to be add to text prompt 
+	 * @param parameter
 	 */
-	public void runCommand(String s);
+	public void runCommand(String s, int param);
 }

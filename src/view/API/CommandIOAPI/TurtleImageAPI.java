@@ -5,7 +5,7 @@ import javafx.scene.image.ImageView;
 /**
  * Created by DavidTran on 10/23/17.
  */
-public interface TurtleImageDisplay {
+public interface TurtleImageAPI {
 
     /**
      * Returns image associated with turtle.

@@ -8,6 +8,12 @@ package view.API.CommandIOAPI;
  */
 public interface TurtleImageOptionListener {
 
+	/**
+	 * Called when image changes
+	 * 
+	 * @param imageIndex
+	 *            index of image list
+	 */
 	public void imageChange(int imageIndex);
 
 }

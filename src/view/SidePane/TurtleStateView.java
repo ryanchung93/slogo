@@ -41,6 +41,7 @@ public class TurtleStateView extends Window implements TurtleListener {
 	@Override
 	public void setTurtle(ImmutableTurtle turtle) {
 		this.turtle = turtle;
+		update();
 	}
 
 	@Override
