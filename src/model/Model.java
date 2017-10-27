@@ -54,10 +54,8 @@ public class Model {
 		Parser parser = new Parser(code, commands);
 		while(parser.hasNextCommand()) {
 			Command command = parser.getNextCommand();
-			for(SingularTurtle turtle : turtles.getTurtles()) {
-				command.execute(turtle, commands, variables);
-				variables.notifyListeners();
-			}
+			command.execute(turtles, commands, variables);
+			variables.notifyListeners();
 		}
 	}
 }

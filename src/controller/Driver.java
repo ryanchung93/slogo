@@ -34,9 +34,9 @@ public class Driver implements DriverAPI {
 	@Override
 	public void run() {
 		SingularTurtle t = new SingularTurtle(0, 0, 0, 0);
-		myModel.addTurtle(t, myView.getTurtleListener());
+		myModel.addTurtle(t, myView.getTurtleListener(0));
 		SingularTurtle t2 = new SingularTurtle(50, 50, 0, 1);
-		myModel.addTurtle(t2, myView.getTurtleListener(), myView.getStateViewListener());
+		myModel.addTurtle(t2, myView.getTurtleListener(1), myView.getStateViewListener());
 		myModel.addCommandListener(myView.getCommandListener());
 		myModel.addCommandListener(myView.getUserDefinedCommandListener());
 		myModel.addVariableListener(myView.getVariableListener());
