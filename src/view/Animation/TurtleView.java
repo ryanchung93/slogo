@@ -20,7 +20,7 @@ import view.Windows.TurtleStateView;
  *
  * @author DavidTran
  */
-public class TurtleView implements TurtleListener, TurtleImageAPI {
+public class TurtleView implements TurtleListener, TurtleImageAPI, TurtleImageOptionListener {
 
 	private static final double WIDTH = 35;
 	private static final double HEIGHT = 35;
@@ -219,10 +219,6 @@ public class TurtleView implements TurtleListener, TurtleImageAPI {
 	@Override
 	public ImageView getImageView() {
 		return myView;
-	}
-	
-	public void addTurtleStateListener(TurtleStateView l) {
-		stateListener = l;
 	}
 
 	/*************************** PRIVATE METHODS ********************************/

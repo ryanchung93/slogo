@@ -29,7 +29,6 @@ public class TurtleViewManager implements TurtleListener {
 	@Override
 	public void setTurtle(ImmutableTurtle turtle) {
 		TurtleView turtleView = new TurtleView(myParent, myImage, turtle.getID());
-		turtleView.addTurtleStateListener(stateView);
 		turtleView.setTurtle(turtle);
 		
 		turtleList.add(turtleView);
