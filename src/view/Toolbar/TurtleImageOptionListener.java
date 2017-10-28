@@ -1,11 +1,5 @@
-package view.Animation;
+package view.Toolbar;
 
-/**
- * Allows detection of image changes for turtles.
- * 
- * @author DavidTran
- *
- */
 public interface TurtleImageOptionListener {
 
 	/**
@@ -15,5 +9,5 @@ public interface TurtleImageOptionListener {
 	 *            index of image list
 	 */
 	public void imageChange(int imageIndex);
-
+	
 }

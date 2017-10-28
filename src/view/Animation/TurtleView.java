@@ -5,22 +5,21 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.ResourceBundle;
 
-import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 import model.ImmutableTurtle;
-import view.Windows.TurtleStateView;
+import view.ErrorWindow;
+import view.Toolbar.TurtleImageOptionListener;
 
 /**
  * Class to make the turtle viewable.
  *
  * @author DavidTran
  */
-public class TurtleView implements TurtleListener, TurtleImageAPI, TurtleImageOptionListener {
+public class TurtleView implements TurtleListener, TurtleImageOptionListener {
 
 	private static final double WIDTH = 35;
 	private static final double HEIGHT = 35;
@@ -38,7 +37,6 @@ public class TurtleView implements TurtleListener, TurtleImageAPI, TurtleImageOp
 	private double myHeading;
 	private boolean myIsActive;
 	private int myID;
-	private TurtleStateView stateListener;
 	private List<Image> imageList = new ArrayList<Image>();
 
 	private double myOffsetX;
@@ -46,21 +44,9 @@ public class TurtleView implements TurtleListener, TurtleImageAPI, TurtleImageOp
 	private double myPrevNewX;
 	private double myPrevNewY;
 
-	public TurtleView(Pane parent, Image image, int id) {
-		myView = new ImageView(image);
-		myView.setFitWidth(WIDTH);
-		myView.setFitHeight(HEIGHT);
-		myView.setLayoutX(-WIDTH / 2);
-		myView.setLayoutY(-HEIGHT / 2);
-		myView.setRotate(180);
-		myView.setStyle("-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 15, 0, 0, 0)");
-		myView.setOnMouseClicked(e -> clicked());
-		myView.setOnMouseEntered(e -> entered());
-		myView.setOnMouseEntered(e -> exited());
+	public TurtleView(Pane parent, Image image) {
 
-		myID = id;
-		myPenColorIndex = 0;
-		myPenIsDown = true;
+		myView = setupImageView(image);
 		myIsActive = true;
 		myParent = parent;
 
@@ -74,97 +60,144 @@ public class TurtleView implements TurtleListener, TurtleImageAPI, TurtleImageOp
 
 	@Override
 	public void setTurtle(ImmutableTurtle turtle) {
-		this.turtle = turtle;
-		
-		myOffsetX = myParent.getLayoutX();
-		myOffsetY = myParent.getLayoutY();
-
-		myView.setX(turtle.getX() + myOffsetX);
-		myView.setY(turtle.getY() + myOffsetY);
 
 		myID = turtle.getID();
+		System.out.println("ID: " + myID);
 		myHeading = turtle.getHeading();
 		myPenColorIndex = turtle.getPenColorIndex();
 		myPenIsDown = turtle.getPenDown();
 		myView.setVisible(turtle.isVisible());
-		//
+
+		this.turtle = turtle;
+
+		myOffsetX = myParent.getLayoutX();
+		myOffsetY = myParent.getLayoutY();
+		myView.setX(turtle.getX() + myOffsetX);
+		myView.setY(turtle.getY() + myOffsetY);
+		myPrevNewX = turtle.getX() + myOffsetX;
+		myPrevNewY = turtle.getY() + myOffsetY;
+
 	}
 
 	@Override
 	public void locationChange(double newX, double newY) {
+		if (myIsActive) {
+			// compensate for center offset since center if not (0,0), returns value
+			// referenced from center.
+			double offsetNewX = newX + myOffsetX;
+			double offsetNewY = newY + myOffsetY;
+			System.out.println("Turtle ID: " + myID);
+			System.out.println("prevX: " + myPrevNewX + " | prevY: " + myPrevNewY);
+			System.out.println("offsetNewX: " + offsetNewX + " | offsetNewY: " + offsetNewY);
 
-		// compensate for center offset since center if not (0,0), returns value
-		// referenced from center.
-		double offsetNewX = newX + myOffsetX;
-		double offsetNewY = newY + myOffsetY;
+			double coordInsideX = offsetNewX % (myOffsetX * 2);
+			double coordInsideY = offsetNewY % (myOffsetY * 2);
 
-		double coordInsideX = offsetNewX % (myOffsetX * 2);
-		double coordInsideY = offsetNewY % (myOffsetY * 2);
+			boolean rightBound = offsetNewX - myPrevNewX + myView.getX() >= myOffsetX * 2;
+			boolean upperBound = offsetNewY - myPrevNewY + myView.getY() >= myOffsetY * 2;
+			boolean leftBound = offsetNewX - myPrevNewX + myView.getX() <= 0;
+			boolean lowerBound = offsetNewY - myPrevNewY + myView.getY() <= 0;
 
-		boolean rightBound = (offsetNewX) / (myOffsetX * 2) >= 1.0;
-		boolean upperBound = (offsetNewY) / (myOffsetY * 2) >= 1.0;
-		boolean leftBound = (offsetNewX - myPrevNewX) / (myOffsetX * 2) <= -1.0;
-		boolean lowerBound = (offsetNewY - myPrevNewY) / (myOffsetY * 2) <= -1.0;
+			double prevX = myPrevNewX;
+			double prevY = myPrevNewY;
+			myPrevNewX = offsetNewX;
+			myPrevNewY = offsetNewY;
+			double distX = offsetNewX - prevX + myView.getX();
+			double distY = offsetNewY - prevY + myView.getY();
 
-		Line line;
+			Line line;
 
-		// if (rightBound && upperBound) {
-		// line = new Line(myView.getX(), myView.getY(), myOffsetX * 2 - myPrevNewX,
-		// myOffsetY * 2 - myPrevNewY);
-		// line.setStroke(myPenColor);
-		// myParent.getChildren().add(line);
-		// myView.setX(0);
-		// myView.setY(0);
-		// System.out.println("OOB");
-		// }
-		// else if (rightBound) {
-		// line = new Line(myView.getX(), myView.getY(), myOffsetX * 2 - myPrevNewX,
-		// coordInsideY);
-		// line.setStroke(myPenColor);
-		// myParent.getChildren().add(line);
-		// myView.setX(0);
-		// System.out.println("OOB");
-		// }
-		// else if (upperBound) {
-		// line = new Line(myView.getX(), myView.getY(), coordInsideX, myOffsetY * 2);
-		// line.setStroke(myPenColor);
-		// myParent.getChildren().add(line);
-		// myView.setY(0);
-		// System.out.println("OOB");
-		// }
+			if (rightBound) {
+				while (distX >= (myOffsetX * 2)) {
 
-		// line = new Line(myView.getX(), myView.getY(), coordInsideX, coordInsideY);
-		// line.setStroke(myPenColor);
-		// myParent.getChildren().add(line);
-		// myView.setX(coordInsideX);
-		// myView.setY(coordInsideY);
+					if (distY > prevY + 0.05 || distY < prevY - 0.05)
+						distY = myView.getY()
+								+ (offsetNewY - prevY) * ((myOffsetX * 2 - myView.getX()) / (offsetNewX - prevX));
+					if (myPenIsDown) {
+						line = new Line(myView.getX(), myView.getY(), myOffsetX * 2, distY);
+						line.setStroke(Color.valueOf(colorList.get(myPenColorIndex)));
+						myParent.getChildren().add(line);
+					}
+					myView.setX(0);
+					myView.setY(distY);
 
-		if (myPenIsDown) {
-			line = new Line(myView.getX(), myView.getY(), offsetNewX, offsetNewY);
-			line.setStroke(Color.valueOf(colorList.get(myPenColorIndex)));
-			myParent.getChildren().add(line);
+					offsetNewX = offsetNewX - myOffsetX * 2;
+					distX = offsetNewX - prevX + myView.getX();
+					System.out.println("OOB");
+					System.out.println("Now x= " + myView.getX() + " | y=" + myView.getY());
+					System.out.println("Now offsetnewx= " + offsetNewX + " | offsetnewy=" + offsetNewY);
+				}
+			}
+			// else if (leftBound) {
+			// while (distX <= 0) {
+			//
+			// if (distY > prevY+0.05 || distY < prevY - 0.05)
+			// distY = myView.getY() + (offsetNewY - prevY)*((0 + myView.getX()) /
+			// (offsetNewX - prevX));
+			// if (myPenIsDown) {
+			// line = new Line(myView.getX(), myView.getY(), 0, distY);
+			// line.setStroke(Color.valueOf(colorList.get(myPenColorIndex)));
+			// myParent.getChildren().add(line);
+			// }
+			// myView.setX(myOffsetX * 2);
+			// myView.setY(distY);
+			//
+			// offsetNewX = offsetNewX + myOffsetX * 2;
+			// distX = offsetNewX - prevX + myView.getX();
+			// System.out.println("OOB");
+			// System.out.println("Now x= " + myView.getX() + " | y=" + myView.getY());
+			// System.out.println("Now offsetnewx= " + offsetNewX + " | offsetnewy=" +
+			// offsetNewY);
+			// }
+			// }
+			// else if (rightBound) {
+			// line = new Line(myView.getX(), myView.getY(), myOffsetX * 2 - myPrevNewX,
+			// coordInsideY);
+			// line.setStroke(myPenColor);
+			// myParent.getChildren().add(line);
+			// myView.setX(0);
+			// System.out.println("OOB");
+			// }
+			// else if (upperBound) {
+			// line = new Line(myView.getX(), myView.getY(), coordInsideX, myOffsetY * 2);
+			// line.setStroke(myPenColor);
+			// myParent.getChildren().add(line);
+			// myView.setY(0);
+			// System.out.println("OOB");
+			// }
+
+			// line = new Line(myView.getX(), myView.getY(), coordInsideX, coordInsideY);
+			// line.setStroke(myPenColor);
+			// myParent.getChildren().add(line);
+			// myView.setX(coordInsideX);
+			// myView.setY(coordInsideY);
+
+			if (myPenIsDown) {
+				line = new Line(myView.getX(), myView.getY(), coordInsideX, coordInsideY);
+				line.setStroke(Color.valueOf(colorList.get(myPenColorIndex)));
+				myParent.getChildren().add(line);
+			}
+
+			myView.setX(coordInsideX);
+			myView.setY(coordInsideY);
+
+			System.out.println("OOB");
+			System.out.println("Final x= " + myView.getX() + " | y=" + myView.getY());
+
+			// System.out.println("LayoutX: " + myOffsetX + " LayoutY: " + myOffsetY);
+			// System.out.println("myX: " + myView.getX() + " | myY: " + myView.getY());
+			// System.out.println("newX: " + newX + " | newY: " + newY);
+			// System.out.println("offsetNewX: " + offsetNewX + " | offsetNewY: " +
+			// offsetNewY);
+
 		}
-
-		myView.setX(offsetNewX);
-		myView.setY(offsetNewY);
-
-		myPrevNewX = newX;
-		myPrevNewY = newY;
-
-		System.out.println("LayoutX: " + myOffsetX + " LayoutY: " + myOffsetY);
-		System.out.println("myX: " + myView.getX() + " | myY: " + myView.getY());
-		System.out.println("newX: " + newX + " | newY: " + newY);
-		System.out.println("offsetNewX: " + offsetNewX + " | offsetNewY: " + offsetNewY);
-		//
 	}
 
 	@Override
 	public void headingChange(double newHeading) {
-		// create an animation that rotates the shape
 		if (myIsActive) {
 			myHeading = -newHeading;
 			myView.setRotate(180 - myHeading);
-			//
 		}
 	}
 
@@ -172,7 +205,6 @@ public class TurtleView implements TurtleListener, TurtleImageAPI, TurtleImageOp
 	public void penChange(boolean newState) {
 		if (myIsActive) {
 			myPenIsDown = newState;
-			//
 		}
 	}
 
@@ -181,10 +213,9 @@ public class TurtleView implements TurtleListener, TurtleImageAPI, TurtleImageOp
 		try {
 			if (myIsActive) {
 				myPenColorIndex = index;
-				//
 			}
 		} catch (Exception e) {
-			showError(e.getMessage());
+			new ErrorWindow(e.getMessage());
 		}
 	}
 
@@ -192,10 +223,9 @@ public class TurtleView implements TurtleListener, TurtleImageAPI, TurtleImageOp
 	public void visibilityChange(boolean visibility) {
 		if (myIsActive) {
 			myView.setVisible(visibility);
-			//
 		}
 	}
-	
+
 	@Override
 	public void activeToggle(boolean active) {
 		myIsActive = active;
@@ -203,10 +233,10 @@ public class TurtleView implements TurtleListener, TurtleImageAPI, TurtleImageOp
 
 	@Override
 	public void clearScreen() {
-		// remove image from pane
-		if (myIsActive)
+		if (myIsActive) {
 			myParent.getChildren().remove(myView);
-		myParent.getChildren().remove(myView);
+			myIsActive = false;
+		}
 	}
 
 	@Override
@@ -215,12 +245,28 @@ public class TurtleView implements TurtleListener, TurtleImageAPI, TurtleImageOp
 			myView.setImage(imageList.get(imageIndex));
 	}
 
-	@Override
+	/**
+	 * Returns image associated with turtle.
+	 */
 	public ImageView getImageView() {
 		return myView;
 	}
 
 	/*************************** PRIVATE METHODS ********************************/
+
+	private ImageView setupImageView(Image image) {
+		ImageView ret = new ImageView(image);
+		ret.setFitWidth(WIDTH);
+		ret.setFitHeight(HEIGHT);
+		ret.setLayoutX(-WIDTH / 2);
+		ret.setLayoutY(-HEIGHT / 2);
+		ret.setRotate(180);
+		ret.setStyle("-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 15, 0, 0, 0)");
+		ret.setOnMouseClicked(e -> clicked());
+		ret.setOnMouseEntered(e -> entered());
+		ret.setOnMouseExited(e -> exited());
+		return ret;
+	}
 
 	/**
 	 * Make toggling viewable.
@@ -229,10 +275,12 @@ public class TurtleView implements TurtleListener, TurtleImageAPI, TurtleImageOp
 		System.out.println("Clicked turtle");
 		if (myIsActive)
 			myView.setStyle("-fx-background-color:transparent");
-		else
+		else {
 			myView.setStyle("-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 15, 0, 0, 0)");
+		}
 		activeToggle(!myIsActive);
 		turtle.setActive(myIsActive);
+		System.out.println(myIsActive);
 	}
 
 	/**
@@ -247,11 +295,4 @@ public class TurtleView implements TurtleListener, TurtleImageAPI, TurtleImageOp
 		if (!myIsActive)
 			myView.setStyle("-fx-background-color:transparent;");
 	}
-	
-	private void showError(String message) {
-		Alert alert = new Alert(AlertType.ERROR);
-		alert.setContentText(message);
-		alert.showAndWait();
-	}
-
 }

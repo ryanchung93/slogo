@@ -6,7 +6,6 @@ import model.CommandManager;
 import model.Model;
 import model.SLogoException;
 import model.SingularTurtle;
-import model.Turtle;
 import view.View;
 
 public class Driver implements DriverAPI {
@@ -22,7 +21,7 @@ public class Driver implements DriverAPI {
 		CommandManager commandManager = new CommandManager("resources.builders.basicCommands");
 		myModel = new Model(commandManager);
 	}
-	
+
 	private void execute(String s) {
 		try {
 			myModel.execute(s);
@@ -34,7 +33,7 @@ public class Driver implements DriverAPI {
 	@Override
 	public void run() {
 		SingularTurtle t = new SingularTurtle(0, 0, 0, 0);
-		myModel.addTurtle(t, myView.getTurtleListener(0));
+		myModel.addTurtle(t, myView.getTurtleListener(0), myView.getStateViewListener());
 		SingularTurtle t2 = new SingularTurtle(50, 50, 0, 1);
 		myModel.addTurtle(t2, myView.getTurtleListener(1), myView.getStateViewListener());
 		myModel.addCommandListener(myView.getCommandListener());
@@ -43,8 +42,7 @@ public class Driver implements DriverAPI {
 	}
 
 	private void languageChange(String language) {
-		//System.out.println(language);
 		myModel.setLanguage(language);
-		
+
 	}
 }
