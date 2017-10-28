@@ -12,13 +12,14 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 import model.ImmutableTurtle;
 import view.ErrorWindow;
+import view.Toolbar.TurtleImageOptionListener;
 
 /**
  * Class to make the turtle viewable.
  *
  * @author DavidTran
  */
-public class TurtleView implements TurtleListener, TurtleImageAPI, TurtleImageOptionListener {
+public class TurtleView implements TurtleListener, TurtleImageOptionListener {
 
 	private static final double WIDTH = 35;
 	private static final double HEIGHT = 35;
@@ -45,7 +46,7 @@ public class TurtleView implements TurtleListener, TurtleImageAPI, TurtleImageOp
 
 	public TurtleView(Pane parent, Image image) {
 
-		setupImageView(image);
+		myView = setupImageView(image);
 		myIsActive = true;
 		myParent = parent;
 
@@ -108,9 +109,10 @@ public class TurtleView implements TurtleListener, TurtleImageAPI, TurtleImageOp
 
 			if (rightBound) {
 				while (distX >= (myOffsetX * 2)) {
-					
-					if (distY > prevY+0.05 || distY < prevY - 0.05)
-						distY = myView.getY() + (offsetNewY - prevY)*((myOffsetX * 2 - myView.getX()) / (offsetNewX - prevX));
+
+					if (distY > prevY + 0.05 || distY < prevY - 0.05)
+						distY = myView.getY()
+								+ (offsetNewY - prevY) * ((myOffsetX * 2 - myView.getX()) / (offsetNewX - prevX));
 					if (myPenIsDown) {
 						line = new Line(myView.getX(), myView.getY(), myOffsetX * 2, distY);
 						line.setStroke(Color.valueOf(colorList.get(myPenColorIndex)));
@@ -126,26 +128,28 @@ public class TurtleView implements TurtleListener, TurtleImageAPI, TurtleImageOp
 					System.out.println("Now offsetnewx= " + offsetNewX + " | offsetnewy=" + offsetNewY);
 				}
 			}
-//			else if (leftBound) {
-//				while (distX <= 0) {
-//					
-//					if (distY > prevY+0.05 || distY < prevY - 0.05)
-//						distY = myView.getY() + (offsetNewY - prevY)*((0 + myView.getX()) / (offsetNewX - prevX));
-//					if (myPenIsDown) {
-//						line = new Line(myView.getX(), myView.getY(), 0, distY);
-//						line.setStroke(Color.valueOf(colorList.get(myPenColorIndex)));
-//						myParent.getChildren().add(line);
-//					}
-//					myView.setX(myOffsetX * 2);
-//					myView.setY(distY);
-//
-//					offsetNewX = offsetNewX + myOffsetX * 2;
-//					distX = offsetNewX - prevX + myView.getX();
-//					System.out.println("OOB");
-//					System.out.println("Now x= " + myView.getX() + " | y=" + myView.getY());
-//					System.out.println("Now offsetnewx= " + offsetNewX + " | offsetnewy=" + offsetNewY);
-//				}
-//			}
+			// else if (leftBound) {
+			// while (distX <= 0) {
+			//
+			// if (distY > prevY+0.05 || distY < prevY - 0.05)
+			// distY = myView.getY() + (offsetNewY - prevY)*((0 + myView.getX()) /
+			// (offsetNewX - prevX));
+			// if (myPenIsDown) {
+			// line = new Line(myView.getX(), myView.getY(), 0, distY);
+			// line.setStroke(Color.valueOf(colorList.get(myPenColorIndex)));
+			// myParent.getChildren().add(line);
+			// }
+			// myView.setX(myOffsetX * 2);
+			// myView.setY(distY);
+			//
+			// offsetNewX = offsetNewX + myOffsetX * 2;
+			// distX = offsetNewX - prevX + myView.getX();
+			// System.out.println("OOB");
+			// System.out.println("Now x= " + myView.getX() + " | y=" + myView.getY());
+			// System.out.println("Now offsetnewx= " + offsetNewX + " | offsetnewy=" +
+			// offsetNewY);
+			// }
+			// }
 			// else if (rightBound) {
 			// line = new Line(myView.getX(), myView.getY(), myOffsetX * 2 - myPrevNewX,
 			// coordInsideY);
@@ -241,24 +245,27 @@ public class TurtleView implements TurtleListener, TurtleImageAPI, TurtleImageOp
 			myView.setImage(imageList.get(imageIndex));
 	}
 
-	@Override
+	/**
+	 * Returns image associated with turtle.
+	 */
 	public ImageView getImageView() {
 		return myView;
 	}
 
 	/*************************** PRIVATE METHODS ********************************/
 
-	private void setupImageView(Image image) {
-		myView = new ImageView(image);
-		myView.setFitWidth(WIDTH);
-		myView.setFitHeight(HEIGHT);
-		myView.setLayoutX(-WIDTH / 2);
-		myView.setLayoutY(-HEIGHT / 2);
-		myView.setRotate(180);
-		myView.setStyle("-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 15, 0, 0, 0)");
-		myView.setOnMouseClicked(e -> clicked());
-		myView.setOnMouseEntered(e -> entered());
-		myView.setOnMouseExited(e -> exited());
+	private ImageView setupImageView(Image image) {
+		ImageView ret = new ImageView(image);
+		ret.setFitWidth(WIDTH);
+		ret.setFitHeight(HEIGHT);
+		ret.setLayoutX(-WIDTH / 2);
+		ret.setLayoutY(-HEIGHT / 2);
+		ret.setRotate(180);
+		ret.setStyle("-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 15, 0, 0, 0)");
+		ret.setOnMouseClicked(e -> clicked());
+		ret.setOnMouseEntered(e -> entered());
+		ret.setOnMouseExited(e -> exited());
+		return ret;
 	}
 
 	/**

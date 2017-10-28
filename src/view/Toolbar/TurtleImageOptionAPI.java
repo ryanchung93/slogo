@@ -1,7 +1,5 @@
 package view.Toolbar;
 
-import view.Animation.TurtleImageOptionListener;
-
 public interface TurtleImageOptionAPI {
 
 	/**

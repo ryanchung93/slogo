@@ -34,6 +34,8 @@ public class CanvasView extends Pane implements BackgroundColorListener {
 		this.setScaleY(-1);
 		this.setMaxWidth(width);
 		this.setMaxHeight(height);
+		this.setLayoutX(this.getMaxWidth() / 2);
+		this.setLayoutY(this.getMaxHeight() / 2);
 	}
 
 	private void setBackgroundColor(Color c) {

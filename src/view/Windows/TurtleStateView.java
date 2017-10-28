@@ -4,9 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import model.ImmutableTurtle;
-import view.Animation.TurtleImageOptionListener;
 import view.Animation.TurtleListener;
 import view.Animation.TurtleView;
+import view.Toolbar.TurtleImageOptionListener;
 
 /**
  * Class allowing users to see attributes of current turtle.

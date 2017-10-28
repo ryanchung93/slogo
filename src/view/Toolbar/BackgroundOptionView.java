@@ -7,7 +7,6 @@ import java.util.ResourceBundle;
 
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
-import view.Animation.TextPromptInserter;
 import view.Animation.TextPromptView;
 
 /**
@@ -16,7 +15,7 @@ import view.Animation.TextPromptView;
  * @author DavidTran
  *
  */
-public class BackgroundOptionView extends OptionView implements TextPromptInserter {
+public class BackgroundOptionView extends OptionView {
 
 	private static final String PROMPT = "BackgroundPrompt";
 	private List<String> colorList;
@@ -42,8 +41,7 @@ public class BackgroundOptionView extends OptionView implements TextPromptInsert
 			}
 		});
 	}
-
-	@Override
+	
 	public void addTextPrompt(TextPromptView tp) {
 		this.tp = tp;
 	}

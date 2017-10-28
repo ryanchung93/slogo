@@ -5,6 +5,7 @@ import java.util.List;
 
 import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
+import view.Toolbar.TurtleImageOptionListener;
 
 /**
  * Class that manages the viewing of turtles.

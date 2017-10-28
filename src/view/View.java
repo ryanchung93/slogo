@@ -27,6 +27,7 @@ import view.Toolbar.LanguageListener;
 import view.Toolbar.ToolbarView;
 import view.Windows.HistoryView;
 import view.Windows.ReferenceView;
+import view.Windows.ScrollPaneView;
 import view.Windows.StringListener;
 import view.Windows.TurtleStateView;
 import view.Windows.UserDefinedCommandView;
@@ -47,7 +48,7 @@ public class View implements ViewAPI {
 	private static final int SCREEN_WIDTH = 1000;
 	private static final int SCREEN_HEIGHT = 700;
 	private static final String STYLESHEET = "/resources/view/view.css";
-	private static final String TURTLE_IMAGE = "Turtle_up.png";
+	private static final String DEFAULT_TURTLE_IMAGE = "Turtle_up.png";
 
 	private Stage myStage;
 	private Scene myScene;
@@ -62,14 +63,12 @@ public class View implements ViewAPI {
 	private CanvasView myCanvas;
 	private TurtleViewManager myTurtleViewManager;
 	private TextPromptView myTextPrompt;
-
 	private UserDefinedCommandView myUDCView;
 	private VariableView myVarView;
 	private ReferenceView myRefView;
 	private HistoryView myHistoryView;
 	private ToolbarView myToolbarView;
 	private TurtleStateView myTurtleStateView;
-
 	private LanguageListener myLanguageListener;
 
 	/**
@@ -86,6 +85,7 @@ public class View implements ViewAPI {
 
 	/**************** PUBLIC METHODS *******************/
 
+	@Override
 	public void start(Consumer<String> commandConsumer) {
 		myTimeline = setupTimeline();
 		setupLayout();
@@ -143,7 +143,6 @@ public class View implements ViewAPI {
 	 */
 	private void step(double elaspedTime) {
 		// Read command
-
 		// Pass into execute
 	}
 
@@ -154,7 +153,6 @@ public class View implements ViewAPI {
 		myGrid = new GridPane();
 
 		myScene = new Scene(myGrid, SCREEN_WIDTH, SCREEN_HEIGHT);
-		// myScene.getStylesheets().add(getClass().getResource("/resources/view/view.css").toExternalForm());
 		myScene.getStylesheets().add(STYLESHEET);
 		myScene.setOnKeyPressed(e -> handleKeyInput(e.getCode()));
 
@@ -180,32 +178,7 @@ public class View implements ViewAPI {
 	}
 
 	private void handleKeyInput(KeyCode code) {
-		switch (code) {
-		case W:
-			myTextPrompt.runCommand("Forward", 1);
-			break;
-		case S:
-			myTextPrompt.runCommand("Backward", 1);
-			break;
-		case A:
-			myTextPrompt.runCommand("Left", 90);
-			myTextPrompt.runCommand("Forward", 1);
-			myTextPrompt.runCommand("Right", 90);
-			break;
-		case D:
-			myTextPrompt.runCommand("Right", 90);
-			myTextPrompt.runCommand("Forward", 1);
-			myTextPrompt.runCommand("Left", 90);
-			break;
-		case R:
-			myTextPrompt.runCommand("Left", 1);
-			break;
-		case T:
-			myTextPrompt.runCommand("Right", 1);
-			break;
-		default:
-			break;
-		}
+		myTextPrompt.handleInput(code);
 	}
 
 	/**
@@ -214,14 +187,11 @@ public class View implements ViewAPI {
 	private void addAnimationComponents() {
 		double[][] dims = getGridDimensions();
 		myCanvas = new CanvasView(dims[0][1], dims[1][1]);
-		myCanvas.setLayoutX(myCanvas.getMaxWidth() / 2);
-		myCanvas.setLayoutY(myCanvas.getMaxHeight() / 2);
 
 		myGrid.add(myCanvas, 1, 1);
 		GridPane.setConstraints(myCanvas, 1, 1, 1, 1, HPos.CENTER, VPos.CENTER);
 
-		// FOR TESTING
-		Image image = new Image(getClass().getClassLoader().getResourceAsStream("resources/images/" + TURTLE_IMAGE));
+		Image image = new Image(getClass().getClassLoader().getResourceAsStream("resources/images/" + DEFAULT_TURTLE_IMAGE));
 		myTurtleViewManager = new TurtleViewManager(myCanvas, image);
 	}
 
@@ -237,32 +207,17 @@ public class View implements ViewAPI {
 	}
 
 	/**
-	 * Create left and right major scrollpanes.
-	 * 
-	 * @return
-	 */
-	private ScrollPane createScrollPane() {
-		ScrollPane sp = new ScrollPane();
-		sp.setFitToWidth(true);
-		sp.setPannable(true);
-		sp.setVbarPolicy(ScrollBarPolicy.ALWAYS);
-		sp.setHbarPolicy(ScrollBarPolicy.NEVER);
-
-		return sp;
-	}
-
-	/**
 	 * Add subcomponents of major scroll panes.
 	 */
 	private void addScrollPaneComponents() {
 		double dims[][] = getGridDimensions();
 
-		myLeftSP = createScrollPane();
+		myLeftSP = (ScrollPane) new ScrollPaneView().getParent();
 		myLeftVBox = new VBox();
 		myLeftSP.setContent(myLeftVBox);
 		myGrid.add(myLeftSP, 0, 1, 1, 2);
 
-		myRightSP = createScrollPane();
+		myRightSP = (ScrollPane) new ScrollPaneView().getParent();
 		myRightVBox = new VBox();
 		myRightSP.setContent(myRightVBox);
 		myGrid.add(myRightSP, 2, 1, 1, 2);
@@ -270,10 +225,9 @@ public class View implements ViewAPI {
 		myUDCView = new UserDefinedCommandView((dims[1][1] + dims[1][2]) / 2);
 		myVarView = new VariableView((dims[1][1] + dims[1][2]) / 2);
 		myTurtleStateView = new TurtleStateView((dims[1][1] + dims[1][2]) / 2);
-
 		myRefView = new ReferenceView((dims[1][1] + dims[1][2]) / 2);
 		myHistoryView = new HistoryView((dims[1][1] + dims[1][2]) / 2);
-
+		
 		myLeftVBox.getChildren().addAll(myTurtleStateView.getParent(), myUDCView.getParent(), myVarView.getParent());
 		myRightVBox.getChildren().addAll(myRefView.getParent(), myHistoryView.getParent());
 	}
@@ -283,7 +237,7 @@ public class View implements ViewAPI {
 	 */
 	private void addToolbar() {
 		myToolbarView = new ToolbarView(SCREEN_WIDTH);
-		// set a listener for background color changes.
+		// set a listener for background, pen, image, language changes.
 		myToolbarView.getBackgroundOptionView().addTextPrompt(myTextPrompt);
 		myToolbarView.getPenOptionView().addTextPrompt(myTextPrompt);
 		myToolbarView.getImageOptionView().addTurtleImageListener(myTurtleViewManager);
@@ -301,17 +255,11 @@ public class View implements ViewAPI {
 			java.lang.reflect.Method m = myGrid.getClass().getDeclaredMethod("getGrid");
 			m.setAccessible(true);
 			ret = (double[][]) m.invoke(myGrid);
-			// for (int i = 0; i < ret.length; i++) {
-			// for (int j = 0; j < ret[0].length; j++)
-			// System.out.println(i + "," + j + " " + ret[i][j]);
-			// }
-			// System.out.println(ret);
 		} catch (Exception e) {
 			e.printStackTrace();
 			new ErrorWindow(e.getMessage());
 		}
 		return ret;
 	}
-
 
 }
