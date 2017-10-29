@@ -87,13 +87,11 @@ public class TurtleStateView extends Window implements TurtleListener {
 	@Override
 	public void penSizeChange(double thickness) {
 		update();
-		
 	}
 
 	@Override
 	public void shapeChange(int index) {
 		update();
-		
 	}
 
 	@Override

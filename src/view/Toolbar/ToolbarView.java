@@ -29,6 +29,7 @@ public class ToolbarView implements SubcomponentViewAPI {
 	private BackgroundOptionView myBackgroundOptionView;
 	private PenOptionView myPenOptionView;
 	private PenSlider myPenSlider;
+	private PenButtons myPenButtons;
 	private TurtleImageOptionView myImageOptionView;
 	private LanguageOptionView myLanguageOptionView;
 
@@ -40,6 +41,7 @@ public class ToolbarView implements SubcomponentViewAPI {
 		addBackgroundColorOption();
 		addPenColorOption();
 		addPenSlider();
+		addPenButtons();
 		addTurtleImageOption();
 		addLanguageOption();
 		addHelpLink();
@@ -62,6 +64,10 @@ public class ToolbarView implements SubcomponentViewAPI {
 
 	public PenSlider getPenSlider() {
 		return myPenSlider;
+	}
+	
+	public PenButtons getPenButtons() {
+		return myPenButtons;
 	}
 
 	public LanguageOptionView getLanguageOptionView() {
@@ -98,7 +104,6 @@ public class ToolbarView implements SubcomponentViewAPI {
 	private void addBackgroundColorOption() {
 		myBackgroundOptionView = new BackgroundOptionView();
 		myToolbar.getChildren().add(myBackgroundOptionView.getParent());
-
 	}
 
 	private void addPenColorOption() {
@@ -110,11 +115,15 @@ public class ToolbarView implements SubcomponentViewAPI {
 		myPenSlider = new PenSlider();
 		myToolbar.getChildren().add(myPenSlider.getParent());
 	}
+	
+	private void addPenButtons() {
+		myPenButtons = new PenButtons();
+		myToolbar.getChildren().add(myPenButtons.getParent());
+	}
 
 	private void addTurtleImageOption() {
 		myImageOptionView = new TurtleImageOptionView();
 		myToolbar.getChildren().add(myImageOptionView.getParent());
-
 	}
 
 	private void addLanguageOption() {
