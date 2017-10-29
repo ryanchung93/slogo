@@ -1,9 +1,7 @@
 package view.Windows;
 
-import java.util.Map;
 import java.util.Set;
 
-import model.CommandBuilder;
 import view.SubcomponentViewAPI;
 
 /**

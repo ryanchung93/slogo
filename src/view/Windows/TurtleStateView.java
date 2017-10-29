@@ -1,9 +1,12 @@
 package view.Windows;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import model.ImmutableTurtle;
-import view.Animation.TurtleImageOptionListener;
 import view.Animation.TurtleListener;
 import view.Animation.TurtleView;
+import view.Toolbar.TurtleImageOptionListener;
 
 /**
  * Class allowing users to see attributes of current turtle.
@@ -12,27 +15,31 @@ import view.Animation.TurtleView;
  *
  */
 public class TurtleStateView extends Window implements TurtleListener, TurtleImageOptionListener {
-	private ImmutableTurtle turtle;
-	
+	private List<ImmutableTurtle> turtles = new ArrayList<>();;
+
 	public TurtleStateView(double height) {
 		super(height);
 		ta.appendText(myResources.getString("TurtleStateView"));
 	}
 
-	// add to interface	
+	// add to interface
 	private void update() {
 		ta.clear();
-
 		ta.appendText(myResources.getString("TurtleStateView") + "\n\n");
-		ta.appendText("ID: " + Integer.toString(turtle.getID()) + "\n");
-		ta.appendText("Active: " + Boolean.toString(turtle.isActive()) + "\n");
-		ta.appendText("X: " + Double.toString(turtle.getX()) + "\n");
-		ta.appendText("Y: " + Double.toString(turtle.getY()) + "\n");
-		ta.appendText("Heading: " + Double.toString(turtle.getHeading()) + "\n");
-		ta.appendText("Pen Down: " + Boolean.toString(turtle.getPenDown()) + "\n");
-		ta.appendText("Pen Color: " + TurtleView.colorList.get(turtle.getPenColorIndex()) + "\n");
-		ta.appendText("Visibility: " + Boolean.toString(turtle.isVisible()) + "\n");
-
+		
+		for (ImmutableTurtle turtle : turtles) {
+			
+			if (turtle.isActive()) {
+				ta.appendText("ID: " + Integer.toString(turtle.getID()) + "\n");
+				ta.appendText("Active: " + Boolean.toString(turtle.isActive()) + "\n");
+				ta.appendText("X: " + Double.toString(turtle.getX()) + "\n");
+				ta.appendText("Y: " + Double.toString(turtle.getY()) + "\n");
+				ta.appendText("Heading: " + Double.toString(turtle.getHeading()) + "\n");
+				ta.appendText("Pen Down: " + Boolean.toString(turtle.getPenDown()) + "\n");
+				ta.appendText("Pen Color: " + TurtleView.colorList.get(turtle.getPenColorIndex()) + "\n");
+				ta.appendText("Visibility: " + Boolean.toString(turtle.isVisible()) + "\n\n");
+			}
+		}
 	}
 
 	@Override
@@ -42,7 +49,8 @@ public class TurtleStateView extends Window implements TurtleListener, TurtleIma
 
 	@Override
 	public void setTurtle(ImmutableTurtle turtle) {
-		this.turtle = turtle;
+		turtles.add(turtle);
+		System.out.println("added turtle");
 		update();
 	}
 

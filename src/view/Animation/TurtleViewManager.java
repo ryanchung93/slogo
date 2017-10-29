@@ -5,8 +5,7 @@ import java.util.List;
 
 import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
-import model.ImmutableTurtle;
-import view.Windows.TurtleStateView;
+import view.Toolbar.TurtleImageOptionListener;
 
 /**
  * Class that manages the viewing of turtles.
@@ -19,7 +18,6 @@ public class TurtleViewManager implements TurtleImageOptionListener {
 	private List<TurtleView> turtleList;
 	private final Pane myParent;
 	private Image myImage;
-	private TurtleStateView stateView;
 
 	public TurtleViewManager(Pane parent, Image image) {
 		turtleList = new ArrayList<TurtleView>();
@@ -28,9 +26,11 @@ public class TurtleViewManager implements TurtleImageOptionListener {
 	}
 
 	public void addTurtle() {
-		TurtleView turtleView = new TurtleView(myParent, myImage, turtleList.size());		
+		TurtleView turtleView = new TurtleView(myParent, myImage);		
 		turtleList.add(turtleView);
 		myParent.getChildren().add(turtleView.getImageView());
+//		tsv.addTurtleList(this.getImmutableTurtleList());
+		
 	}
 
 	public TurtleListener getListener(int id) {

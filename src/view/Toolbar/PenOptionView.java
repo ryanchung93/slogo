@@ -6,7 +6,6 @@ import java.util.List;
 
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
-import view.Animation.TextPromptInserter;
 import view.Animation.TextPromptView;
 
 /**
@@ -15,7 +14,7 @@ import view.Animation.TextPromptView;
  * @author taekwhunchung
  *
  */
-public class PenOptionView extends OptionView implements TextPromptInserter {
+public class PenOptionView extends OptionView {
 
 	private static final String PROMPT = "PenPrompt";
 	private List<String> colorList;
@@ -41,7 +40,6 @@ public class PenOptionView extends OptionView implements TextPromptInserter {
 
 	}
 
-	@Override
 	public void addTextPrompt(TextPromptView tp) {
 		this.tp = tp;
 	}

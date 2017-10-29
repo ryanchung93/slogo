@@ -1,7 +1,6 @@
 package view.Animation;
 
 import model.ImmutableTurtle;
-import view.Windows.TurtleStateView;
 
 /**
  * Listens for modifications to a turtle's state -- its methods must be called
@@ -54,7 +53,5 @@ public interface TurtleListener {
 	 * Called when a Turtle's active state is changed
 	 */
 	public void activeToggle(boolean active);
-
-
 }
 

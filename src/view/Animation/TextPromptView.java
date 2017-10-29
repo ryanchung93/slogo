@@ -7,6 +7,7 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextArea;
+import javafx.scene.input.KeyCode;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import view.Toolbar.LanguageListener;
@@ -42,8 +43,6 @@ public class TextPromptView extends HBox implements TextPromptAPI, LanguageListe
 		this.commandConsumer = commandConsumer;
 		this.historyConsumer = historyConsumer;
 		acceptedCommands = ResourceBundle.getBundle("resources.languages." + DEFAULT_LANGUAGE);
-
-
 
 		addButtons(width - tp.getPrefWidth(), height / 2);
 
@@ -91,6 +90,35 @@ public class TextPromptView extends HBox implements TextPromptAPI, LanguageListe
 	@Override
 	public void languageChange(String language) {
 		acceptedCommands = ResourceBundle.getBundle("resources.languages." + language);
+	}
+
+	public void handleInput(KeyCode code) {
+		switch (code) {
+		case W:
+			this.runCommand("Forward", 1);
+			break;
+		case S:
+			this.runCommand("Backward", 1);
+			break;
+		case A:
+			this.runCommand("Left", 90);
+			this.runCommand("Forward", 1);
+			this.runCommand("Right", 90);
+			break;
+		case D:
+			this.runCommand("Right", 90);
+			this.runCommand("Forward", 1);
+			this.runCommand("Left", 90);
+			break;
+		case R:
+			this.runCommand("Left", 1);
+			break;
+		case T:
+			this.runCommand("Right", 1);
+			break;
+		default:
+			break;
+		}
 	}
 
 }
