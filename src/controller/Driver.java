@@ -43,6 +43,7 @@ public class Driver implements DriverAPI {
 	@Override
 	public void run() {
 		myModel.addTurtle();
+		
 		myModel.addCommandListener(myView.getCommandListener());
 		myModel.addCommandListener(myView.getUserDefinedCommandListener());
 		myModel.addVariableListener(myView.getVariableListener());
