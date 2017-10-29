@@ -153,6 +153,7 @@ public class SingularTurtle implements ImmutableTurtle, Turtle {
 	@Override
 	public void setShapeIndex(int index) {
 		shapeIndex = index;
+		for(TurtleListener tL : listeners) tL.shapeChange(index);
 	}
 
 	/**
