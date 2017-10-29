@@ -34,7 +34,7 @@ public class PenOptionView extends OptionView {
 
 			@Override
 			public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
-				tp.runCommand("SETPENCOLOR", Integer.toString(newValue.intValue()));
+				tp.runCommand("SetPenColor", Integer.toString(newValue.intValue()));
 			}
 		});
 

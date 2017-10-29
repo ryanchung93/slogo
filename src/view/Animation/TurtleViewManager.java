@@ -11,6 +11,7 @@ import javafx.scene.layout.Pane;
  * 
  * @author DavidTran
  */
+
 public class TurtleViewManager {
 
 	private List<TurtleView> turtleList;

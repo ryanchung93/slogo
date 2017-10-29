@@ -6,7 +6,6 @@ import java.util.List;
 import model.ImmutableTurtle;
 import view.Animation.TurtleListener;
 import view.Animation.TurtleView;
-import view.Toolbar.TurtleImageOptionListener;
 
 /**
  * Class allowing users to see attributes of current turtle.
@@ -14,7 +13,7 @@ import view.Toolbar.TurtleImageOptionListener;
  * @author DavidTran
  *
  */
-public class TurtleStateView extends Window implements TurtleListener, TurtleImageOptionListener {
+public class TurtleStateView extends Window implements TurtleListener {
 	private List<ImmutableTurtle> turtles = new ArrayList<>();;
 
 	public TurtleStateView(double height) {
@@ -41,11 +40,6 @@ public class TurtleStateView extends Window implements TurtleListener, TurtleIma
 				ta.appendText("Visibility: " + Boolean.toString(turtle.isVisible()) + "\n\n");
 			}
 		}
-	}
-
-	@Override
-	public void imageChange(int imageIndex) {
-		update();
 	}
 
 	@Override
@@ -98,6 +92,11 @@ public class TurtleStateView extends Window implements TurtleListener, TurtleIma
 	@Override
 	public void shapeChange(int index) {
 		update();
+	}
+
+	@Override
+	public void backgroundColorChange(int index) {
+		//do nothing
 	}
 
 }
