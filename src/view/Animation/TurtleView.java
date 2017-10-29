@@ -13,7 +13,6 @@ import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 import model.ImmutableTurtle;
-import view.Toolbar.TurtleImageOptionListener;
 
 /**
  * Class to make the turtle viewable.
