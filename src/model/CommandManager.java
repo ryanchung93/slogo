@@ -61,11 +61,15 @@ public class CommandManager {
 			if (s.matches(regex))
 				return builtInCommands.get(regex);
 		}
+		return getUserDefinedCommand(s);
+	}
+
+	public CommandDef getUserDefinedCommand(String s) throws SLogoException{
 		if (userCommands.containsKey(s))
 			return userCommands.get(s);
 		throw new SLogoException("UnexpectedCommand", s);
 	}
-
+	
 	public void addListener(StringListener commandListener) {
 		listeners.add(commandListener);
 		updateListeners();
