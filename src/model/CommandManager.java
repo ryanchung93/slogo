@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
 
+import model.commandBuilder.CommandDef;
 import view.Windows.StringListener;
 
 public class CommandManager {
@@ -17,7 +18,7 @@ public class CommandManager {
 	private String builderPropertiesPath;
 
 	private Map<String, CommandBuilder> builtInCommands = new HashMap<>();
-	private Map<String, CommandBuilder> userCommands = new HashMap<>();
+	private Map<String, CommandDef> userCommands = new HashMap<>();
 	private List<StringListener> listeners = new ArrayList<>();
 
 	public CommandManager(String builderPropertiesPath) {
@@ -70,7 +71,7 @@ public class CommandManager {
 		updateListeners();
 	}
 
-	public void put(String name, CommandBuilder definition) {
+	public void put(String name, CommandDef definition) {
 		builtInCommands.put(name, definition);
 		userCommands.put(name, definition);
 		updateListeners();

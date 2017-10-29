@@ -20,9 +20,7 @@ public class Driver implements DriverAPI {
 	 * Constructor
 	 */
 	public Driver(Stage stage) {
-		myView = new View(stage, s -> languageChange(s), s -> execute(s));
-		CommandManager commandManager = new CommandManager("resources.builders.completeCommands");
-		myModel = new Model(commandManager, this::getListeners);
+		myView = new View(stage, s -> languageChange(s), s -> execute(s), ()->run());
 	}
 
 	private List<TurtleListener> getListeners() {
@@ -43,8 +41,9 @@ public class Driver implements DriverAPI {
 
 	@Override
 	public void run() {
+		CommandManager commandManager = new CommandManager("resources.builders.completeCommands");
+		myModel = new Model(commandManager, this::getListeners);
 		myModel.addTurtle();
-		
 		myModel.addCommandListener(myView.getCommandListener());
 		myModel.addCommandListener(myView.getUserDefinedCommandListener());
 		myModel.addVariableListener(myView.getVariableListener());
