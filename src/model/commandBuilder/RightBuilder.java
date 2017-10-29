@@ -12,7 +12,7 @@ public class RightBuilder implements CommandBuilder {
 
 	@Override
 	public Command build(TokenDispenser dispenser) throws SLogoException {
-		return new Left(new Product(new NumberCommand(-1), dispenser.getNextCommand()));
+		return new Product(new NumberCommand(-1), new Left(new Product(new NumberCommand(-1), dispenser.getNextCommand())));
 	}
 
 }

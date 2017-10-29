@@ -77,7 +77,7 @@ public class View implements ViewAPI {
 	 * 
 	 * @param stage
 	 */
-	public View(Stage stage, LanguageListener langListener, Consumer<String> commandConsumer) {
+	public View(Stage stage, LanguageListener langListener, Consumer<String> commandConsumer, Runnable reset) {
 		myStage = stage;
 		myLanguageListener = langListener;
 		myStage.setTitle("SLogo Interpreter");

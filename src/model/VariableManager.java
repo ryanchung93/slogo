@@ -37,6 +37,7 @@ public class VariableManager {
 		if(!s.matches(Parser.SYNTAX.getString("Variable")))
 			throw new SLogoException("InvalidVar", s);
 		getScope().put(s, val);
+		updated = true;
 	}
 	
 	public void setGlobalValue(String s, double val) throws SLogoException{
@@ -44,6 +45,7 @@ public class VariableManager {
 			throw new SLogoException("InvalidVar", s);
 		updated = true;
 		globals.put(s, val);
+		updated = true;
 	}
 	
 	public void enterLocalScope() {
@@ -62,7 +64,7 @@ public class VariableManager {
 		if(updated) {
 			updated = false;
 			for(VariableListener listener : listeners) {
-				listener.changedMap(Collections.unmodifiableMap(globals));
+				listener.changedMap(globals);
 			}
 		}
 	}

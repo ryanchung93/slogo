@@ -12,7 +12,7 @@ public class BackBuilder implements CommandBuilder {
 
 	@Override
 	public Command build(TokenDispenser dispenser) throws SLogoException {
-		return new Forward(new Product(new NumberCommand(-1), dispenser.getNextCommand()));
+		return new Product(new NumberCommand(-1), new Forward(new Product(new NumberCommand(-1), dispenser.getNextCommand())));
 	}
 
 }
