@@ -1,5 +1,6 @@
 package view.Animation;
 
+import javafx.scene.input.KeyCode;
 import view.SubcomponentViewAPI;
 
 /**
@@ -13,9 +14,17 @@ public interface TextPromptAPI extends SubcomponentViewAPI {
 	 * Called when a command needs to be added to prompt and run.
 	 * 
 	 * @param s
-	 *            string to be add to text prompt 
+	 *            string to be add to text prompt
 	 * @param parameter
 	 */
 	public void runCommand(String s, String params);
+
+	/**
+	 * Called when user enters key command.
+	 * 
+	 * @param code
+	 *            KeyCode that is processed
+	 */
+	public void handleInput(KeyCode code);
 
 }

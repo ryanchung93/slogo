@@ -13,7 +13,6 @@ import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 import model.ImmutableTurtle;
-import view.ErrorWindow;
 import view.Toolbar.TurtleImageOptionListener;
 
 /**
@@ -21,12 +20,12 @@ import view.Toolbar.TurtleImageOptionListener;
  *
  * @author DavidTran
  */
-public class TurtleView implements TurtleListener, TurtleImageOptionListener {
+public class TurtleView implements TurtleListener {
 
 	private static final double WIDTH = 35;
 	private static final double HEIGHT = 35;
 	private static final ResourceBundle myResources = ResourceBundle.getBundle("resources.view/choicebox");
-	private static final ArrayList<String> imageNameList = new ArrayList<String>(new ArrayList<String>(
+	public static final ArrayList<String> imageNameList = new ArrayList<String>(new ArrayList<String>(
 			Arrays.asList(myResources.getString("TurtleImages").replaceAll("\\s+", "").split(","))));
 	public static final List<String> colorList = new ArrayList<String>(
 			Arrays.asList(myResources.getString("PenColors").replaceAll("\\s+", "").split(",")));
@@ -39,6 +38,7 @@ public class TurtleView implements TurtleListener, TurtleImageOptionListener {
 	private Pane myParent;
 	private double myHeading;
 	private int myID;
+	private int myShapeIndex;
 	private List<Image> imageList = new ArrayList<Image>();
 
 	private double myOffsetX;
@@ -66,7 +66,7 @@ public class TurtleView implements TurtleListener, TurtleImageOptionListener {
 		System.out.println("ID: " + myID);
 		myHeading = turtle.getHeading();
 		myPenColorIndex = turtle.getPenColorIndex();
-		myPenThickness = turtle.getPenThickness();
+		myPenThickness = turtle.getPenSize();
 		myPenIsDown = turtle.getPenDown();
 		myView.setVisible(turtle.isVisible());
 
@@ -212,7 +212,7 @@ public class TurtleView implements TurtleListener, TurtleImageOptionListener {
 	}
 
 	@Override
-	public void penThicknessChange(double thickness) {
+	public void penSizeChange(double thickness) {
 		myPenThickness = thickness;
 	}
 
@@ -240,8 +240,9 @@ public class TurtleView implements TurtleListener, TurtleImageOptionListener {
 	}
 
 	@Override
-	public void imageChange(int imageIndex) {
-		myView.setImage(imageList.get(imageIndex));
+	public void shapeChange(int index) {
+		myShapeIndex = index;
+		myView.setImage(imageList.get(myShapeIndex));
 	}
 
 	/**
@@ -287,4 +288,5 @@ public class TurtleView implements TurtleListener, TurtleImageOptionListener {
 		if (!turtle.isActive())
 			myView.setStyle("-fx-background-color:transparent;");
 	}
+
 }

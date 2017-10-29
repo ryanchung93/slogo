@@ -240,7 +240,8 @@ public class View implements ViewAPI {
 		myToolbarView.getBackgroundOptionView().addTextPrompt(myTextPrompt);
 		myToolbarView.getPenOptionView().addTextPrompt(myTextPrompt);
 		myToolbarView.getPenSlider().addTextPrompt(myTextPrompt);
-		myToolbarView.getImageOptionView().addTurtleImageListener(myTurtleViewManager);
+//		myToolbarView.getImageOptionView().addTurtleImageListener(myTurtleViewManager);
+		myToolbarView.getImageOptionView().addTextPrompt(myTextPrompt);
 		myToolbarView.getLanguageOptionView().addLanguageOptionListener(myLanguageListener);
 		myToolbarView.getLanguageOptionView().addLanguageOptionListener(myTextPrompt);
 		myGrid.add(myToolbarView.getParent(), 0, 0);

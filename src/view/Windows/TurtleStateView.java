@@ -36,7 +36,7 @@ public class TurtleStateView extends Window implements TurtleListener, TurtleIma
 				ta.appendText(String.format("Heading: %5.1f\n", turtle.getHeading()));
 				ta.appendText("Pen Down: " + Boolean.toString(turtle.getPenDown()) + "\n");
 				ta.appendText("Pen Color: " + TurtleView.colorList.get(turtle.getPenColorIndex()) + "\n");
-				ta.appendText("Pen Thickness: " + turtle.getPenThickness() + "\n");
+				ta.appendText("Pen Thickness: " + turtle.getPenSize() + "\n");
 				ta.appendText("Visibility: " + Boolean.toString(turtle.isVisible()) + "\n\n");
 			}
 		}
@@ -90,8 +90,14 @@ public class TurtleStateView extends Window implements TurtleListener, TurtleIma
 	}
 
 	@Override
-	public void penThicknessChange(double thickness) {
+	public void penSizeChange(double thickness) {
 		update();
+		
+	}
+
+	@Override
+	public void shapeChange(int index) {
+		update();asdfa
 		
 	}
 

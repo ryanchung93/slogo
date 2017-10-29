@@ -57,6 +57,12 @@ public interface TurtleListener {
 	/**
 	 * Called when a turtle's thickness is changed
 	 */
-	public void penThicknessChange(double thickness);
+	public void penSizeChange(double thickness);
+	
+	/**
+	 * Called when a turtle's shape is changed
+	 * @param index
+	 */
+	public void shapeChange(int index);
 }
 

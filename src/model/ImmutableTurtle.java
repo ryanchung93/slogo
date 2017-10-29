@@ -23,5 +23,5 @@ public interface ImmutableTurtle {
 
 	public boolean isActive();
 	
-	public double getPenThickness();
+	public double getPenSize();
 }

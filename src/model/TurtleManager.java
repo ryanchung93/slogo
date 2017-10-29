@@ -14,20 +14,20 @@ public class TurtleManager implements Iterable<SingularTurtle>, Turtle {
 
 	private List<SingularTurtle> turtles;
 	private Supplier<List<TurtleListener>> listenersProducer;
-	
+
 	public TurtleManager(Supplier<List<TurtleListener>> listenersProducer) {
 		turtles = new ArrayList<>();
 		this.listenersProducer = listenersProducer;
 	}
-	
+
 	public void addTurtle() {
-		SingularTurtle turtle = new SingularTurtle(0,0,0, turtles.size()+1);
-		for(TurtleListener tL : listenersProducer.get())
+		SingularTurtle turtle = new SingularTurtle(0, 0, 0, turtles.size() + 1);
+		for (TurtleListener tL : listenersProducer.get())
 			turtle.addTurtleListener(tL);
-		turtle.setNumTurtles(()->getNumTurtles());
+		turtle.setNumTurtles(() -> getNumTurtles());
 		turtles.add(turtle);
 	}
-	
+
 	public int getNumTurtles() {
 		return turtles.size();
 	}
@@ -38,10 +38,11 @@ public class TurtleManager implements Iterable<SingularTurtle>, Turtle {
 
 			private List<SingularTurtle> activeTurtles = getActiveTurtles();
 			private int nextIndex = 0;
-			
+
 			@Override
 			public boolean hasNext() {
-				if(nextIndex < activeTurtles.size()) return true;
+				if (nextIndex < activeTurtles.size())
+					return true;
 				return false;
 			}
 
@@ -51,59 +52,60 @@ public class TurtleManager implements Iterable<SingularTurtle>, Turtle {
 				nextIndex++;
 				return ret;
 			}
-			
+
 		};
 	}
-	
+
 	private List<SingularTurtle> getActiveTurtles() {
 		List<SingularTurtle> activeTurtles = new ArrayList<>();
-		for(SingularTurtle t : turtles) {
-			if(t.isActive()) activeTurtles.add(t);
+		for (SingularTurtle t : turtles) {
+			if (t.isActive())
+				activeTurtles.add(t);
 		}
 		return activeTurtles;
 	}
-	
+
 	private SingularTurtle getLastActiveTurtle() {
 		return getActiveTurtles().get(getActiveTurtles().size() - 1);
 	}
- 	
+
 	public double forward(Command command, CommandManager commands, VariableManager variables) {
-		return doToEach(t->t.forward(command, commands, variables));
+		return doToEach(t -> t.forward(command, commands, variables));
 	}
-	
+
 	public double left(Command command, CommandManager commands, VariableManager variables) {
-		return doToEach(t->t.left(command, commands, variables));
+		return doToEach(t -> t.left(command, commands, variables));
 	}
-	
+
 	public double setXY(Command command1, Command command2, CommandManager commands, VariableManager variables) {
-		return doToEach(t->t.setXY(command1, command2, commands, variables));
+		return doToEach(t -> t.setXY(command1, command2, commands, variables));
 	}
-	
+
 	public double setHeading(Command command, CommandManager commands, VariableManager variables) {
-		return doToEach(t->t.setHeading(command, commands, variables));
+		return doToEach(t -> t.setHeading(command, commands, variables));
 	}
-	
+
 	public double setTowards(Command command1, Command command2, CommandManager commands, VariableManager variables) {
-		return doToEach(t->t.setTowards(command1, command2, commands, variables));
+		return doToEach(t -> t.setTowards(command1, command2, commands, variables));
 	}
-	
+
 	public double clearScreen() {
-		return doToEach(t->t.clearScreen());
+		return doToEach(t -> t.clearScreen());
 	}
-	
+
 	public void setPenDown(boolean b) {
-		for(SingularTurtle t : this)
+		for (SingularTurtle t : this)
 			t.setPenDown(b);
 	}
 
 	public void setVisible(boolean b) {
-		for(SingularTurtle t : this)
+		for (SingularTurtle t : this)
 			t.setVisible(b);
 	}
 
 	private double doToEach(Function<SingularTurtle, Double> command) {
 		double result = 0;
-		for(SingularTurtle t : this) {
+		for (SingularTurtle t : this) {
 			result = command.apply(t);
 		}
 		return result;
@@ -144,29 +146,40 @@ public class TurtleManager implements Iterable<SingularTurtle>, Turtle {
 		return getLastActiveTurtle().getPenColorIndex();
 	}
 
+	@Override
+	public double getPenSize() {
+		return getLastActiveTurtle().getPenSize();
+	}
+
+	@Override
+	public void setPenSize(double pixels) {
+		for (SingularTurtle t : this)
+			t.setPenSize(pixels);
+	}
+
 	public void ask(List<Integer> ids, Consumer<SingularTurtle> consumer) {
-		for(Integer i : ids) {
+		for (Integer i : ids) {
 			makeTurtlesTo(i);
-			consumer.accept(turtles.get(i-1));
+			consumer.accept(turtles.get(i - 1));
 		}
 	}
-	
+
 	public void askAll(Consumer<SingularTurtle> consumer) {
-		for(SingularTurtle t : turtles)
+		for (SingularTurtle t : turtles)
 			consumer.accept(t);
 	}
 
 	public void setActiveTurtles(List<Integer> ids) {
-		if(!ids.isEmpty())
+		if (!ids.isEmpty())
 			makeTurtlesTo(Collections.max(ids));
-		for(SingularTurtle t : turtles) {
+		for (SingularTurtle t : turtles) {
 			t.setActive(ids.contains(t.getID()));
 		}
 	}
-	
+
 	private void makeTurtlesTo(int lastID) {
-		while(turtles.size()<lastID)
+		while (turtles.size() < lastID)
 			addTurtle();
 	}
-	
+
 }

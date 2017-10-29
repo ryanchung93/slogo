@@ -6,6 +6,7 @@ import java.util.List;
 
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import view.Animation.TextPromptView;
 
 /**
  * Class that allows users to select a canvas color from a choice box.
@@ -13,13 +14,14 @@ import javafx.beans.value.ObservableValue;
  * @author DavidTran
  *
  */
-public class TurtleImageOptionView extends OptionView implements TurtleImageOptionAPI {
+public class TurtleImageOptionView extends OptionView {
 
-	private List<TurtleImageOptionListener> listeners = new ArrayList<>();
 	private List<String> imageNameList;
 	private static final String PROMPT = "TurtleImagePrompt";
+	private TextPromptView tp;
 
 	public TurtleImageOptionView() {
+		
 		super(PROMPT);
 
 		imageNameList = new ArrayList<String>(new ArrayList<String>(
@@ -33,15 +35,13 @@ public class TurtleImageOptionView extends OptionView implements TurtleImageOpti
 
 			@Override
 			public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
-				for (TurtleImageOptionListener listener : listeners)
-					listener.imageChange(newValue.intValue());
+				tp.runCommand("SetShape", Integer.toString(newValue.intValue()));
 			}
 		});
 	}
 
-	@Override
-	public void addTurtleImageListener(TurtleImageOptionListener l) {
-		listeners.add(l);
+	public void addTextPrompt(TextPromptView tp) {
+		this.tp = tp;
 	}
 
 }

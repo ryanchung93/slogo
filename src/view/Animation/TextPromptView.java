@@ -48,6 +48,51 @@ public class TextPromptView extends HBox implements TextPromptAPI, LanguageListe
 
 	}
 
+	/*************************** PUBLIC METHODS ********************************/
+
+	@Override
+	public void runCommand(String s, String params) {
+		String command = acceptedCommands.getString(s).split("\\|")[0] + " " + params;
+		commandConsumer.accept(command);
+	}
+
+	@Override
+	public void languageChange(String language) {
+		acceptedCommands = ResourceBundle.getBundle("resources.languages." + language);
+	}
+
+	@Override
+	public void handleInput(KeyCode code) {
+		switch (code) {
+		case W:
+			this.runCommand("Forward", "1");
+			break;
+		case S:
+			this.runCommand("Backward", "1");
+			break;
+		case A:
+			this.runCommand("Left", "90");
+			this.runCommand("Forward", "1");
+			this.runCommand("Right", "90");
+			break;
+		case D:
+			this.runCommand("Right", "90");
+			this.runCommand("Forward", "1");
+			this.runCommand("Left", "90");
+			break;
+		case R:
+			this.runCommand("Left", "1");
+			break;
+		case T:
+			this.runCommand("Right", "1");
+			break;
+		default:
+			break;
+		}
+	}
+
+	/*************************** PRIVATE METHODS ********************************/
+
 	private void addButtons(double width, double height) {
 		buttonPanel = new VBox();
 
@@ -77,48 +122,6 @@ public class TextPromptView extends HBox implements TextPromptAPI, LanguageListe
 
 	private void clear() {
 		tp.clear();
-	}
-
-	/*************************** PUBLIC METHODS ********************************/
-
-	@Override
-	public void runCommand(String s, String params) {
-		String command = acceptedCommands.getString(s).split("\\|")[0] + " " + params;
-		commandConsumer.accept(command);
-	}
-
-	@Override
-	public void languageChange(String language) {
-		acceptedCommands = ResourceBundle.getBundle("resources.languages." + language);
-	}
-
-	public void handleInput(KeyCode code) {
-		switch (code) {
-		case W:
-			this.runCommand("Forward", "1");
-			break;
-		case S:
-			this.runCommand("Backward", "1");
-			break;
-		case A:
-			this.runCommand("Left", "90");
-			this.runCommand("Forward", "1");
-			this.runCommand("Right", "90");
-			break;
-		case D:
-			this.runCommand("Right", "90");
-			this.runCommand("Forward", "1");
-			this.runCommand("Left", "90");
-			break;
-		case R:
-			this.runCommand("Left", "1");
-			break;
-		case T:
-			this.runCommand("Right", "1");
-			break;
-		default:
-			break;
-		}
 	}
 
 }
