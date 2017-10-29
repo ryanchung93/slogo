@@ -20,7 +20,7 @@ public class Driver implements DriverAPI {
 	 * Constructor
 	 */
 	public Driver(Stage stage) {
-		myView = new View(stage, s -> languageChange(s), s -> execute(s));
+		myView = new View(stage, s -> languageChange(s), s -> myModel.execute(s));
 		CommandManager commandManager = new CommandManager("resources.builders.completeCommands");
 		myModel = new Model(commandManager, this::getListeners);
 	}
@@ -29,17 +29,16 @@ public class Driver implements DriverAPI {
 		List<TurtleListener> list = new ArrayList<>();
 		list.add(myView.getNewTurtleListener());
 		list.add(myView.getStateViewListener());
-//		list.add(myView.getCanvasListener());
 		return list;
 	}
 	
-	private void execute(String s) {
-		try {
-			myModel.execute(s);
-		} catch (SLogoException e) {
-			myView.display(e);
-		}
-	}
+//	private void execute(String s) {
+////		try {
+//			myModel.execute(s);
+////		} catch (SLogoException e) {
+////			myView.display(e);
+////		}
+//	}
 
 	@Override
 	public void run() {

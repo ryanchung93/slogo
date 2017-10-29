@@ -104,11 +104,6 @@ public class View implements ViewAPI {
 	public TurtleListener getStateViewListener() {
 		return myTurtleStateView;
 	}
-	
-//	@Override
-//	public TurtleListener getCanvasListener() {
-//		return myCanvas;
-//	}
 
 	@Override
 	public VariableListener getVariableListener() {
@@ -123,11 +118,6 @@ public class View implements ViewAPI {
 	@Override
 	public StringListener getUserDefinedCommandListener() {
 		return myUDCView;
-	}
-
-	@Override
-	public void display(SLogoException e) {
-		new ErrorWindow(e.getMessage());
 	}
 
 	/*************** PRIVATE METHODS *******************/
@@ -146,10 +136,7 @@ public class View implements ViewAPI {
 	/**
 	 * Steps to update interface.
 	 */
-	private void step(double elaspedTime) {
-		// Read command
-		// Pass into execute
-	}
+	private void step(double elaspedTime) {}
 
 	/**
 	 * Sets up the general layout of the scene.
@@ -205,9 +192,7 @@ public class View implements ViewAPI {
 	 */
 	private void addTextPrompt(Consumer<String> commandConsumer, Consumer<String> historyConsumer) {
 		double[][] dims = getGridDimensions();
-		myTextPrompt = new TextPromptView(dims[0][1], dims[1][2], s -> {
-			commandConsumer.accept(s);
-		}, historyConsumer);
+		myTextPrompt = new TextPromptView(dims[0][1], dims[1][2], commandConsumer, historyConsumer);
 		myGrid.add(myTextPrompt, 1, 2, 2, 1);
 	}
 
