@@ -11,8 +11,6 @@ import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
-import model.ImmutableTurtle;
-import view.Toolbar.BackgroundColorListener;
 
 /**
  * Class for setting up the canvas where turtles are placed.
@@ -20,7 +18,7 @@ import view.Toolbar.BackgroundColorListener;
  * @author DavidTran
  *
  */
-public class CanvasView extends Pane implements TurtleListener {
+public class CanvasView extends Pane {
 
 	private Color DEFAULT_COLOR = Color.WHITE;
 	private ResourceBundle myResources = ResourceBundle.getBundle("resources.view/choicebox");
@@ -31,7 +29,7 @@ public class CanvasView extends Pane implements TurtleListener {
 	 * Constructor
 	 */
 	public CanvasView(double width, double height) {
-		this.setBackgroundColor(DEFAULT_COLOR);
+		this.setBackground(new Background(new BackgroundFill(DEFAULT_COLOR, CornerRadii.EMPTY, Insets.EMPTY)));
 		this.setScaleY(-1);
 		this.setMaxWidth(width);
 		this.setMaxHeight(height);
@@ -39,73 +37,7 @@ public class CanvasView extends Pane implements TurtleListener {
 		this.setLayoutY(this.getMaxHeight() / 2);
 	}
 
-	private void setBackgroundColor(Color c) {
-		this.setBackground(new Background(new BackgroundFill(c, CornerRadii.EMPTY, Insets.EMPTY)));
-	}
-
-	@Override
 	public void backgroundColorChange(int colorIndex) {
-		this.setBackgroundColor(Color.valueOf(colorList.get(colorIndex)));
+		this.setBackground(new Background(new BackgroundFill(Color.valueOf(colorList.get(colorIndex)), CornerRadii.EMPTY, Insets.EMPTY)));
 	}
-
-	@Override
-	public void setTurtle(ImmutableTurtle turtle) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void locationChange(double newX, double newY) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void headingChange(double newAngle) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void penChange(boolean down) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void visibilityChange(boolean isVisible) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void penColorChange(int colorIndex) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void clearScreen() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void activeToggle(boolean active) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void penSizeChange(double thickness) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void shapeChange(int index) {
-		// TODO Auto-generated method stub
-		
-	}
-
 }

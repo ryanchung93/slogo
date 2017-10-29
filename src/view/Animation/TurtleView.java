@@ -245,7 +245,7 @@ public class TurtleView implements TurtleListener {
 	
 	@Override
 	public void backgroundColorChange(int index) {
-		//do nothing
+		myParent.backgroundColorChange(index);
 	}
 
 	/**

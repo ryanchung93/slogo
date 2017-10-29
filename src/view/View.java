@@ -105,10 +105,10 @@ public class View implements ViewAPI {
 		return myTurtleStateView;
 	}
 	
-	@Override
-	public TurtleListener getCanvasListener() {
-		return myCanvas;
-	}
+//	@Override
+//	public TurtleListener getCanvasListener() {
+//		return myCanvas;
+//	}
 
 	@Override
 	public VariableListener getVariableListener() {
