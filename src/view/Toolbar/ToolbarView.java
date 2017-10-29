@@ -8,10 +8,9 @@ import java.util.ResourceBundle;
 
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Hyperlink;
 import javafx.scene.layout.HBox;
+import view.ErrorWindow;
 import view.SubcomponentViewAPI;
 
 /**
@@ -83,6 +82,7 @@ public class ToolbarView implements SubcomponentViewAPI {
 
 		myHelpLink = new Hyperlink();
 		myHelpLink.setText("Help");
+		myHelpLink.setId("help-hyperlink");
 
 		myHelpLink.setOnAction(e -> {
 			if (Desktop.isDesktopSupported()) {
@@ -90,9 +90,9 @@ public class ToolbarView implements SubcomponentViewAPI {
 					Desktop.getDesktop().browse(new URI(myResources.getString("HelpURL")));
 				} catch (IOException e1) {
 					e1.printStackTrace();
-					showError(e1.getMessage());
+					new ErrorWindow(e1.getMessage());
 				} catch (URISyntaxException e1) {
-					e1.printStackTrace();
+					new ErrorWindow(e1.getMessage());
 				}
 			}
 		});
@@ -129,12 +129,6 @@ public class ToolbarView implements SubcomponentViewAPI {
 	private void addLanguageOption() {
 		myLanguageOptionView = new LanguageOptionView();
 		myToolbar.getChildren().add(myLanguageOptionView.getParent());
-	}
-
-	private void showError(String message) {
-		Alert alert = new Alert(AlertType.ERROR);
-		alert.setContentText(message);
-		alert.showAndWait();
 	}
 
 }
