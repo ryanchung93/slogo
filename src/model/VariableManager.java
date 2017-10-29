@@ -64,7 +64,7 @@ public class VariableManager {
 		if(updated) {
 			updated = false;
 			for(VariableListener listener : listeners) {
-				listener.changedMap(Collections.unmodifiableMap(globals));
+				listener.changedMap(globals);
 			}
 		}
 	}
