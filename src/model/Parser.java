@@ -54,12 +54,8 @@ public class Parser implements TokenDispenser{
 	public Command getNextCommand() throws SLogoException {
 		String token = getNextToken();
 		
-		if(token.matches(SYNTAX.getString("GroupStart"))) {
-			token = getNextToken();
-			Command toReturn = availableCommands.get(token).buildGroup(this);
-			getNextToken();
-			return toReturn;
-		}
+		if(token.matches(SYNTAX.getString("GroupStart")))
+			return generateGroup();
 		if(token.matches(SYNTAX.getString("Constant")))
 			return new NumberCommand(Double.parseDouble(token));
 		if(token.matches(SYNTAX.getString("Variable")))
@@ -67,6 +63,13 @@ public class Parser implements TokenDispenser{
 		if(token.matches(SYNTAX.getString("Command")))
 			return availableCommands.get(token).build(this);
 		throw new SLogoException("UnexpectedToken", token);
+	}
+
+	private Command generateGroup() {
+		String token = getNextToken();
+		Command toReturn = availableCommands.get(token).buildGroup(this);
+		getNextToken();
+		return toReturn;
 	}
 
 	@Override

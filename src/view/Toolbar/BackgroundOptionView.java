@@ -36,7 +36,7 @@ public class BackgroundOptionView extends OptionView {
 
 			@Override
 			public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
-				tp.runCommand("SETBACKGROUND", newValue.intValue());
+				tp.runCommand("SETBACKGROUND", Integer.toString(newValue.intValue()));
 
 			}
 		});

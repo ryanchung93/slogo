@@ -1,5 +1,8 @@
 package model;
 
+import java.util.List;
+import java.util.function.Supplier;
+
 import view.Animation.TurtleListener;
 import view.Windows.StringListener;
 import view.Windows.VariableListener;
@@ -10,18 +13,14 @@ public class Model {
 	private VariableManager variables;
 	private TurtleManager turtles;
 	
-	public Model(CommandManager commands) {
+	public Model(CommandManager commands, Supplier<List<TurtleListener>> listenersSupplier) {
 		this.commands = commands;
 		variables = new VariableManager();
-		turtles = new TurtleManager();
+		turtles = new TurtleManager(listenersSupplier);
 	}
 	
 	public void setLanguage(String language) {
 		commands.setLanguage(language);
-	}
-	
-	public void addTurtleListener(TurtleListener tL) {
-		turtles.addTurtleViewManager(tL);
 	}
 	
 	public void addVariableListener(VariableListener vL) {
@@ -32,23 +31,9 @@ public class Model {
 		commands.addListener(sL);
 	}
 	
-	public void addTurtle(SingularTurtle t, TurtleListener... tL) {
-		turtles.addTurtle(t);
-		for(TurtleListener listener : tL) {
-			t.addTurtleListener(listener);
-		}
+	public void addTurtle() {
+		turtles.addTurtle();
 	}
-	
-//	public void execute(String code) throws SLogoException {
-//		for (Turtle turtle : turtles.getTurtles()) {
-//			turtle.setParser(new Parser(code, commands));
-//			while(turtle.getParser().hasNextCommand()) {
-//			    // must implement if turtle is toggled - discuss
-//				turtle.getParser().getNextCommand().execute(turtle, commands, variables);
-//				variables.notifyListeners();
-//			}
-//		}
-//	}
 	
 	public void execute(String code) throws SLogoException {
 		Parser parser = new Parser(code, commands);

@@ -5,7 +5,6 @@ import java.util.function.Consumer;
 import model.SLogoException;
 import view.Animation.TurtleListener;
 import view.Windows.StringListener;
-import view.Windows.TurtleStateView;
 import view.Windows.VariableListener;
 
 public interface ViewAPI {
@@ -41,11 +40,9 @@ public interface ViewAPI {
 	/**
 	 * Called when model needs the turtlelistener when a turtle is created.
 	 * 
-	 * @param id
-	 *            - unique for each turtle
 	 * @return TurtleListener
 	 */
-	public TurtleListener getTurtleListener(int id);
+	public TurtleListener getNewTurtleListener();
 
 	/**
 	 * Called when turtle is created in model to display turtle stats

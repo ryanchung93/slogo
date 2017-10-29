@@ -17,5 +17,5 @@ public interface Turtle {
 	public void setPenDown(boolean b);
 	public void setVisible(boolean b);
 	public double clearScreen();
-	
+	public int getNumTurtles();
 }

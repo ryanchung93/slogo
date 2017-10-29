@@ -82,8 +82,8 @@ public class TextPromptView extends HBox implements TextPromptAPI, LanguageListe
 	/*************************** PUBLIC METHODS ********************************/
 
 	@Override
-	public void runCommand(String s, int index) {
-		String command = acceptedCommands.getString(s).split("\\|")[0] + " " + index;
+	public void runCommand(String s, String params) {
+		String command = acceptedCommands.getString(s).split("\\|")[0] + " " + params;
 		commandConsumer.accept(command);
 	}
 
@@ -95,26 +95,26 @@ public class TextPromptView extends HBox implements TextPromptAPI, LanguageListe
 	public void handleInput(KeyCode code) {
 		switch (code) {
 		case W:
-			this.runCommand("Forward", 1);
+			this.runCommand("Forward", "1");
 			break;
 		case S:
-			this.runCommand("Backward", 1);
+			this.runCommand("Backward", "1");
 			break;
 		case A:
-			this.runCommand("Left", 90);
-			this.runCommand("Forward", 1);
-			this.runCommand("Right", 90);
+			this.runCommand("Left", "90");
+			this.runCommand("Forward", "1");
+			this.runCommand("Right", "90");
 			break;
 		case D:
-			this.runCommand("Right", 90);
-			this.runCommand("Forward", 1);
-			this.runCommand("Left", 90);
+			this.runCommand("Right", "90");
+			this.runCommand("Forward", "1");
+			this.runCommand("Left", "90");
 			break;
 		case R:
-			this.runCommand("Left", 1);
+			this.runCommand("Left", "1");
 			break;
 		case T:
-			this.runCommand("Right", 1);
+			this.runCommand("Right", "1");
 			break;
 		default:
 			break;

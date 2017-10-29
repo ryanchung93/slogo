@@ -2,6 +2,7 @@ package model;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Supplier;
 
 import view.Animation.TurtleListener;
 
@@ -24,6 +25,7 @@ public class SingularTurtle implements ImmutableTurtle, Turtle {
 	private boolean isVisible;
 	private boolean isActive;
 	private int penColorIndex;
+	private Supplier<Integer> numTurtles;
 	
 	public static final int DEFAULT_PEN_COLOR_INDEX = 0;
 	
@@ -43,6 +45,14 @@ public class SingularTurtle implements ImmutableTurtle, Turtle {
 	public void addTurtleListener(TurtleListener tL) {
 		listeners.add(tL);
 		tL.setTurtle(this);
+	}
+	
+	public void setNumTurtles(Supplier<Integer> numTurtles) {
+		this.numTurtles = numTurtles;
+	}
+	
+	public int getNumTurtles() {
+		return numTurtles.get();
 	}
 	
 	public int getID() {
