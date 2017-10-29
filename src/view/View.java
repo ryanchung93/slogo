@@ -96,8 +96,8 @@ public class View implements ViewAPI {
 	}
 
 	@Override
-	public TurtleListener getTurtleListener(int id) {
-		return myTurtleViewManager.getListener(id);
+	public TurtleListener getNewTurtleListener() {
+		return myTurtleViewManager.getNewListener();
 	}
 
 	public TurtleListener getStateViewListener() {

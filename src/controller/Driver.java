@@ -1,12 +1,15 @@
 package controller;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import controller.API.DriverAPI;
 import javafx.stage.Stage;
 import model.CommandManager;
 import model.Model;
 import model.SLogoException;
-import model.SingularTurtle;
 import view.View;
+import view.Animation.TurtleListener;
 
 public class Driver implements DriverAPI {
 
@@ -18,10 +21,17 @@ public class Driver implements DriverAPI {
 	 */
 	public Driver(Stage stage) {
 		myView = new View(stage, s -> languageChange(s), s -> execute(s));
-		CommandManager commandManager = new CommandManager("resources.builders.basicCommands");
-		myModel = new Model(commandManager);
+		CommandManager commandManager = new CommandManager("resources.builders.completeCommands");
+		myModel = new Model(commandManager, this::getListeners);
 	}
 
+	private List<TurtleListener> getListeners() {
+		List<TurtleListener> list = new ArrayList<>();
+		list.add(myView.getNewTurtleListener());
+		list.add(myView.getStateViewListener());
+		return list;
+	}
+	
 	private void execute(String s) {
 		try {
 			myModel.execute(s);
@@ -32,10 +42,7 @@ public class Driver implements DriverAPI {
 
 	@Override
 	public void run() {
-		SingularTurtle t = new SingularTurtle(0, 0, 0, 0);
-		myModel.addTurtle(t, myView.getTurtleListener(0), myView.getStateViewListener());
-		SingularTurtle t2 = new SingularTurtle(50, 50, 0, 1);
-		myModel.addTurtle(t2, myView.getTurtleListener(1), myView.getStateViewListener());
+		myModel.addTurtle();
 		myModel.addCommandListener(myView.getCommandListener());
 		myModel.addCommandListener(myView.getUserDefinedCommandListener());
 		myModel.addVariableListener(myView.getVariableListener());
@@ -43,6 +50,5 @@ public class Driver implements DriverAPI {
 
 	private void languageChange(String language) {
 		myModel.setLanguage(language);
-
 	}
 }

@@ -1,39 +1,35 @@
 package model;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
+import java.util.function.Consumer;
 import java.util.function.Function;
+import java.util.function.Supplier;
 
 import view.Animation.TurtleListener;
 
 public class TurtleManager implements Iterable<SingularTurtle>, Turtle {
 
-	private List<TurtleListener> turtleViewManagers;
 	private List<SingularTurtle> turtles;
+	private Supplier<List<TurtleListener>> listenersProducer;
 	
-	public TurtleManager() {
-		turtleViewManagers = new ArrayList<>();
+	public TurtleManager(Supplier<List<TurtleListener>> listenersProducer) {
 		turtles = new ArrayList<>();
+		this.listenersProducer = listenersProducer;
 	}
 	
-	public List<SingularTurtle> getTurtles() {
-		return turtles;
+	public void addTurtle() {
+		SingularTurtle turtle = new SingularTurtle(0,0,0, turtles.size()+1);
+		for(TurtleListener tL : listenersProducer.get())
+			turtle.addTurtleListener(tL);
+		turtle.setNumTurtles(()->getNumTurtles());
+		turtles.add(turtle);
 	}
 	
-	public void addTurtle(SingularTurtle t) {
-		boolean match = false;
-		for(SingularTurtle e : turtles) {
-			if(e.getID() == t.getID()) match = true;
-		}
-		if(!match) {
-			turtles.add(t);
-		}
-		//Throw Turtle already exists exception
-	}
-	
-	public void addTurtleViewManager(TurtleListener tL) {
-		turtleViewManagers.add(tL);
+	public int getNumTurtles() {
+		return turtles.size();
 	}
 
 	@Override
@@ -148,4 +144,29 @@ public class TurtleManager implements Iterable<SingularTurtle>, Turtle {
 		return getLastActiveTurtle().getPenColorIndex();
 	}
 
+	public void ask(List<Integer> ids, Consumer<SingularTurtle> consumer) {
+		for(Integer i : ids) {
+			makeTurtlesTo(i);
+			consumer.accept(turtles.get(i-1));
+		}
+	}
+	
+	public void askAll(Consumer<SingularTurtle> consumer) {
+		for(SingularTurtle t : turtles)
+			consumer.accept(t);
+	}
+
+	public void setActiveTurtles(List<Integer> ids) {
+		if(!ids.isEmpty())
+			makeTurtlesTo(Collections.max(ids));
+		for(SingularTurtle t : turtles) {
+			t.setActive(ids.contains(t.getID()));
+		}
+	}
+	
+	private void makeTurtlesTo(int lastID) {
+		while(turtles.size()<lastID)
+			addTurtle();
+	}
+	
 }

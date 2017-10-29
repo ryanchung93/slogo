@@ -2,9 +2,11 @@ package view.Animation;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Iterator;
 import java.util.List;
 import java.util.ResourceBundle;
 
+import javafx.scene.Node;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
@@ -35,7 +37,6 @@ public class TurtleView implements TurtleListener, TurtleImageOptionListener {
 	private boolean myPenIsDown;
 	private Pane myParent;
 	private double myHeading;
-	private boolean myIsActive;
 	private int myID;
 	private List<Image> imageList = new ArrayList<Image>();
 
@@ -47,7 +48,6 @@ public class TurtleView implements TurtleListener, TurtleImageOptionListener {
 	public TurtleView(Pane parent, Image image) {
 
 		myView = setupImageView(image);
-		myIsActive = true;
 		myParent = parent;
 
 		for (String s : imageNameList) {
@@ -81,7 +81,6 @@ public class TurtleView implements TurtleListener, TurtleImageOptionListener {
 
 	@Override
 	public void locationChange(double newX, double newY) {
-		if (myIsActive) {
 			// compensate for center offset since center if not (0,0), returns value
 			// referenced from center.
 			double offsetNewX = newX + myOffsetX;
@@ -190,59 +189,50 @@ public class TurtleView implements TurtleListener, TurtleImageOptionListener {
 			// System.out.println("offsetNewX: " + offsetNewX + " | offsetNewY: " +
 			// offsetNewY);
 
-		}
 	}
 
 	@Override
 	public void headingChange(double newHeading) {
-		if (myIsActive) {
 			myHeading = -newHeading;
 			myView.setRotate(180 - myHeading);
-		}
 	}
 
 	@Override
 	public void penChange(boolean newState) {
-		if (myIsActive) {
 			myPenIsDown = newState;
-		}
 	}
 
 	@Override
 	public void penColorChange(int index) {
-		try {
-			if (myIsActive) {
-				myPenColorIndex = index;
-			}
-		} catch (Exception e) {
-			new ErrorWindow(e.getMessage());
-		}
+		myPenColorIndex = index;
 	}
 
 	@Override
 	public void visibilityChange(boolean visibility) {
-		if (myIsActive) {
-			myView.setVisible(visibility);
-		}
+		myView.setVisible(visibility);
 	}
 
 	@Override
 	public void activeToggle(boolean active) {
-		myIsActive = active;
+		if (!active)
+			myView.setStyle("-fx-background-color:transparent");
+		else
+			myView.setStyle("-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 15, 0, 0, 0)");
 	}
 
 	@Override
 	public void clearScreen() {
-		if (myIsActive) {
-			myParent.getChildren().remove(myView);
-			myIsActive = false;
+		Iterator<Node> it = myParent.getChildren().iterator();
+		while(it.hasNext()) {
+			Node n = it.next();
+			if(n instanceof Line)
+				it.remove();
 		}
 	}
 
 	@Override
 	public void imageChange(int imageIndex) {
-		if (myIsActive)
-			myView.setImage(imageList.get(imageIndex));
+		myView.setImage(imageList.get(imageIndex));
 	}
 
 	/**
@@ -273,26 +263,19 @@ public class TurtleView implements TurtleListener, TurtleImageOptionListener {
 	 */
 	private void clicked() {
 		System.out.println("Clicked turtle");
-		if (myIsActive)
-			myView.setStyle("-fx-background-color:transparent");
-		else {
-			myView.setStyle("-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 15, 0, 0, 0)");
-		}
-		activeToggle(!myIsActive);
-		turtle.setActive(myIsActive);
-		System.out.println(myIsActive);
+		turtle.setActive(!turtle.isActive());
 	}
 
 	/**
 	 * Make mouse hovering noticeable.
 	 */
 	private void entered() {
-		if (!myIsActive)
+		if (!turtle.isActive())
 			myView.setStyle("-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0, 0, 0)");
 	}
 
 	private void exited() {
-		if (!myIsActive)
+		if (!turtle.isActive())
 			myView.setStyle("-fx-background-color:transparent;");
 	}
 }

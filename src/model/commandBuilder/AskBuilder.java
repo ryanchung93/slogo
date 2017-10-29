@@ -4,13 +4,13 @@ import model.Command;
 import model.CommandBuilder;
 import model.SLogoException;
 import model.TokenDispenser;
-import model.commands.Equal;
-import model.commands.Not;
+import model.commands.Ask;
 
-public class NotEqualBuilder implements CommandBuilder {
+public class AskBuilder implements CommandBuilder {
 
 	@Override
 	public Command build(TokenDispenser dispenser) throws SLogoException {
-		return new Not(new Equal(dispenser.getNextCommand(), dispenser.getNextCommand()));
+		return new Ask(dispenser.getNextCommandList(), dispenser.getNextCommandList());
 	}
+
 }
