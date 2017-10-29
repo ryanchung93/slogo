@@ -16,5 +16,6 @@ public interface TextPromptAPI extends SubcomponentViewAPI {
 	 *            string to be add to text prompt 
 	 * @param parameter
 	 */
-	public void runCommand(String s, int param);
+	public void runCommand(String s, String params);
+
 }
