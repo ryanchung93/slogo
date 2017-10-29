@@ -17,6 +17,7 @@ public class Window implements SubcomponentViewAPI {
 		view = new VBox();
 		view.setMinHeight(height);
 		ta = createTA(height);
+//		ta = createTA(1);
 		view.getChildren().addAll(ta);
 	}
 

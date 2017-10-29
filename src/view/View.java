@@ -69,6 +69,8 @@ public class View implements ViewAPI {
 	private ToolbarView myToolbarView;
 	private TurtleStateView myTurtleStateView;
 	private LanguageListener myLanguageListener;
+	
+	private Consumer<String> myCommandConsumer;
 
 	/**
 	 * Constructor for setting up animation.
@@ -87,6 +89,7 @@ public class View implements ViewAPI {
 	@Override
 	public void start(Consumer<String> commandConsumer) {
 		myTimeline = setupTimeline();
+		myCommandConsumer = commandConsumer;
 		setupLayout();
 		addScrollPaneComponents();
 		addAnimationComponents();
@@ -216,7 +219,7 @@ public class View implements ViewAPI {
 		myVarView = new VariableView((dims[1][1] + dims[1][2]) / 2);
 		myTurtleStateView = new TurtleStateView((dims[1][1] + dims[1][2]) / 2);
 		myRefView = new ReferenceView((dims[1][1] + dims[1][2]) / 2);
-		myHistoryView = new HistoryView((dims[1][1] + dims[1][2]) / 2);
+		myHistoryView = new HistoryView((dims[1][1] + dims[1][2]) / 2, myCommandConsumer);
 		
 		myLeftVBox.getChildren().addAll(myTurtleStateView.getParent(), myUDCView.getParent(), myVarView.getParent());
 		myRightVBox.getChildren().addAll(myRefView.getParent(), myHistoryView.getParent());
