@@ -53,5 +53,10 @@ public interface TurtleListener {
 	 * Called when a Turtle's active state is changed
 	 */
 	public void activeToggle(boolean active);
+	
+	/**
+	 * Called when a turtle's thickness is changed
+	 */
+	public void penThicknessChange(double thickness);
 }
 
