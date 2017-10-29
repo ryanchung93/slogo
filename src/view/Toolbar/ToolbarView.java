@@ -22,13 +22,15 @@ import view.SubcomponentViewAPI;
  */
 public class ToolbarView implements SubcomponentViewAPI {
 
-    private ResourceBundle myResources = ResourceBundle.getBundle("resources.view/view");
+	private ResourceBundle myResources = ResourceBundle.getBundle("resources.view/view");
 	private static final double NODE_SPACING = 50;
 	private HBox myToolbar;
 	private Hyperlink myHelpLink;
 	private BackgroundOptionView myBackgroundOptionView;
-	private TurtleImageOptionView myImageOptionView;
 	private PenOptionView myPenOptionView;
+	private PenSlider myPenSlider;
+	private PenButtons myPenButtons;
+	private TurtleImageOptionView myImageOptionView;
 	private LanguageOptionView myLanguageOptionView;
 
 	public ToolbarView(double width) {
@@ -38,6 +40,8 @@ public class ToolbarView implements SubcomponentViewAPI {
 		myToolbar.setMinWidth(width);
 		addBackgroundColorOption();
 		addPenColorOption();
+		addPenSlider();
+		addPenButtons();
 		addTurtleImageOption();
 		addLanguageOption();
 		addHelpLink();
@@ -53,11 +57,19 @@ public class ToolbarView implements SubcomponentViewAPI {
 	public BackgroundOptionView getBackgroundOptionView() {
 		return myBackgroundOptionView;
 	}
-	
+
 	public PenOptionView getPenOptionView() {
 		return myPenOptionView;
 	}
+
+	public PenSlider getPenSlider() {
+		return myPenSlider;
+	}
 	
+	public PenButtons getPenButtons() {
+		return myPenButtons;
+	}
+
 	public LanguageOptionView getLanguageOptionView() {
 		return myLanguageOptionView;
 	}
@@ -75,8 +87,7 @@ public class ToolbarView implements SubcomponentViewAPI {
 		myHelpLink.setOnAction(e -> {
 			if (Desktop.isDesktopSupported()) {
 				try {
-					Desktop.getDesktop().browse(
-							new URI(myResources.getString("HelpURL")));
+					Desktop.getDesktop().browse(new URI(myResources.getString("HelpURL")));
 				} catch (IOException e1) {
 					e1.printStackTrace();
 					showError(e1.getMessage());
@@ -93,20 +104,28 @@ public class ToolbarView implements SubcomponentViewAPI {
 	private void addBackgroundColorOption() {
 		myBackgroundOptionView = new BackgroundOptionView();
 		myToolbar.getChildren().add(myBackgroundOptionView.getParent());
-
-	}
-	
-	private void addTurtleImageOption() {
-		myImageOptionView = new TurtleImageOptionView();
-		myToolbar.getChildren().add(myImageOptionView.getParent());
-
 	}
 
 	private void addPenColorOption() {
 		myPenOptionView = new PenOptionView();
 		myToolbar.getChildren().add(myPenOptionView.getParent());
 	}
+
+	private void addPenSlider() {
+		myPenSlider = new PenSlider();
+		myToolbar.getChildren().add(myPenSlider.getParent());
+	}
 	
+	private void addPenButtons() {
+		myPenButtons = new PenButtons();
+		myToolbar.getChildren().add(myPenButtons.getParent());
+	}
+
+	private void addTurtleImageOption() {
+		myImageOptionView = new TurtleImageOptionView();
+		myToolbar.getChildren().add(myImageOptionView.getParent());
+	}
+
 	private void addLanguageOption() {
 		myLanguageOptionView = new LanguageOptionView();
 		myToolbar.getChildren().add(myLanguageOptionView.getParent());

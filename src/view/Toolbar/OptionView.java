@@ -22,7 +22,7 @@ public class OptionView implements SubcomponentViewAPI {
 		prompt = new Label(myResources.getString(label));
 		cb = new ChoiceBox<String>();
 		optionView.getChildren().addAll(prompt, cb);
-		optionView.setAlignment(Pos.CENTER);
+		optionView.setAlignment(Pos.BASELINE_CENTER);
 		
 	}
 

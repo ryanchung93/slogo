@@ -5,7 +5,6 @@ import java.util.function.Consumer;
 import model.SLogoException;
 import view.Animation.TurtleListener;
 import view.Windows.StringListener;
-import view.Windows.TurtleStateView;
 import view.Windows.VariableListener;
 
 public interface ViewAPI {
@@ -48,8 +47,8 @@ public interface ViewAPI {
 	/**
 	 * Called when turtle is created in model to display turtle stats
 	 * 
-	 * @return
+	 * @return TurtleListener
 	 */
 	public TurtleListener getStateViewListener();
-
+	
 }

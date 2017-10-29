@@ -100,9 +100,15 @@ public class View implements ViewAPI {
 		return myTurtleViewManager.getNewListener();
 	}
 
+	@Override
 	public TurtleListener getStateViewListener() {
 		return myTurtleStateView;
 	}
+	
+//	@Override
+//	public TurtleListener getCanvasListener() {
+//		return myCanvas;
+//	}
 
 	@Override
 	public VariableListener getVariableListener() {
@@ -239,7 +245,9 @@ public class View implements ViewAPI {
 		// set a listener for background, pen, image, language changes.
 		myToolbarView.getBackgroundOptionView().addTextPrompt(myTextPrompt);
 		myToolbarView.getPenOptionView().addTextPrompt(myTextPrompt);
-		myToolbarView.getImageOptionView().addTurtleImageListener(myTurtleViewManager);
+		myToolbarView.getPenSlider().addTextPrompt(myTextPrompt);
+		myToolbarView.getPenButtons().addTextPrompt(myTextPrompt);
+		myToolbarView.getImageOptionView().addTextPrompt(myTextPrompt);
 		myToolbarView.getLanguageOptionView().addLanguageOptionListener(myLanguageListener);
 		myToolbarView.getLanguageOptionView().addLanguageOptionListener(myTextPrompt);
 		myGrid.add(myToolbarView.getParent(), 0, 0);

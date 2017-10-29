@@ -2,17 +2,14 @@ package view;
 
 import java.io.File;
 import java.io.FileOutputStream;
-import java.io.IOException;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
 
-import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 
-import com.fasterxml.jackson.core.JsonGenerationException;
-import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.DeserializationFeature;
-import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class JacksonResource implements java.io.Serializable {
@@ -24,34 +21,29 @@ public class JacksonResource implements java.io.Serializable {
 	public JacksonResource() {
 
 		final ObjectMapper mapper = new ObjectMapper();
-
+		Map<Integer,String> colorPallete = new HashMap<Integer, String>();
+		colorPallete.put(1, "RED");
+		colorPallete.put(2, "WHITE");
+		
 		// Object to JSON in file
 		try {
 			WorkSpace ws = new WorkSpace();
 			ws.setBackgroundIndex(0);
-			ws.setPenColorPalette(new HashMap<Double, String>());
+			
+			ws.setPenColorPalette(colorPallete);
 
 			mapper.writeValue(new FileOutputStream("data/output.json"), ws);
 			String jsonInString = mapper.writeValueAsString(ws);
 			JSONObject obj = new JSONObject(jsonInString); // Convert text to object
 			System.out.println(obj.toString(4));
-		} catch (JsonGenerationException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		} catch (JsonMappingException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		} catch (IOException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		} catch (JSONException e) {
-			// TODO Auto-generated catch block
+			
+			
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 
 		ObjectMapper objectMapper = new ObjectMapper();
 		objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-
 		File file = new File("data/output.json");
 
 		try {
@@ -60,29 +52,29 @@ public class JacksonResource implements java.io.Serializable {
 			JSONObject obj = new JSONObject(json); // Convert text to object
 			System.out.println(obj.toString(4));
 
-			JSONObject turtles = obj.getJSONObject("turtles"); // Get the element object
-			JSONObject userMethods = obj.getJSONObject("userMethods"); // Get duration sub object
-			JSONObject variables = obj.getJSONObject("variables"); // Get distance sub object
-
-			System.out.println("turtles: " + turtles); // Print int value
-			System.out.println("userMethods: " + userMethods.toString()); // Print int value
-			System.out.println("variables: " + variables.toString()); // Print int value
-
-			// WorkSpace parsed = objectMapper.parse(json);
-		} catch (JsonParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (JsonMappingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (JSONException e) {
-			// TODO Auto-generated catch block
+			JSONObject colorPal = obj.getJSONObject("penColorPalette"); // Get the element object
+			Iterator<String> nameItr = colorPal.keys();
+			Map<String, String> outMap = new HashMap<String, String>();
+			while(nameItr.hasNext()) {
+			    String name = nameItr.next();
+			    outMap.put(name, colorPal.getString(name));
+			}
+			for (String key : outMap.keySet()) {
+				System.out.println(key + " " + outMap.get(key));
+			}
+			
+//			JSONObject userMethods = obj.getJSONObject("userMethods"); // Get duration sub object
+//			JSONObject variables = obj.getJSONObject("variables"); // Get distance sub object
+//
+//			System.out.println("turtles: " + turtles); // Print int value
+//			System.out.println("userMethods: " + userMethods.toString()); // Print int value
+//			System.out.println("variables: " + variables.toString()); // Print int value
+//
+//			// WorkSpace parsed = objectMapper.parse(json);
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
-
+//
 	}
 
 	public static void main(String[] args) {

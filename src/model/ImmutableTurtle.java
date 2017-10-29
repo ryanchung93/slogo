@@ -22,4 +22,8 @@ public interface ImmutableTurtle {
 	public void setActive(boolean active);
 
 	public boolean isActive();
+	
+	public double getPenSize();
+	
+	public int getShapeIndex();
 }

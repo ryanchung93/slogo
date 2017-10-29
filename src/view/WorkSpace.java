@@ -13,9 +13,9 @@ public class WorkSpace implements java.io.Serializable {
 	private List<String> views;
 	private List<ImmutableTurtle> turtles;
 
-	private Map<Double, String> penColorPalette;
-	private Map<Double, String> imagePalette;
-	private Map<Double, String> backgroundColorPalette;
+	private Map<Integer, String> penColorPalette;
+	private Map<Integer, String> imagePalette;
+	private Map<Integer, String> backgroundColorPalette;
 
 	private String languageIndex;
 	private double backgroundIndex;
@@ -47,27 +47,27 @@ public class WorkSpace implements java.io.Serializable {
 		this.views = views;
 	}
 
-	public Map<Double, String> getPenColorPalette() {
+	public Map<Integer, String> getPenColorPalette() {
 		return penColorPalette;
 	}
 
-	public void setPenColorPalette(Map<Double, String> colorPalette) {
+	public void setPenColorPalette(Map<Integer, String> colorPalette) {
 		this.penColorPalette = colorPalette;
 	}
 
-	public Map<Double, String> getBackgroundColorPalette() {
+	public Map<Integer, String> getBackgroundColorPalette() {
 		return backgroundColorPalette;
 	}
 
-	public void setBackgroundColorPalette(Map<Double, String> colorPalette) {
+	public void setBackgroundColorPalette(Map<Integer, String> colorPalette) {
 		this.backgroundColorPalette = colorPalette;
 	}
 
-	public Map<Double, String> getImagePalette() {
+	public Map<Integer, String> getImagePalette() {
 		return imagePalette;
 	}
 
-	public void setImagePalette(Map<Double, String> imagePalette) {
+	public void setImagePalette(Map<Integer, String> imagePalette) {
 		this.imagePalette = imagePalette;
 	}
 
