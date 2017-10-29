@@ -68,7 +68,7 @@ public class TextPromptView extends HBox implements TextPromptAPI, LanguageListe
 		return ret;
 	}
 
-	public void enter() {
+	private void enter() {
 		String code = tp.getText();
 		commandConsumer.accept(code);
 		historyConsumer.accept(code);

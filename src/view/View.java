@@ -239,6 +239,7 @@ public class View implements ViewAPI {
 		// set a listener for background, pen, image, language changes.
 		myToolbarView.getBackgroundOptionView().addTextPrompt(myTextPrompt);
 		myToolbarView.getPenOptionView().addTextPrompt(myTextPrompt);
+		myToolbarView.getPenSlider().addTextPrompt(myTextPrompt);
 		myToolbarView.getImageOptionView().addTurtleImageListener(myTurtleViewManager);
 		myToolbarView.getLanguageOptionView().addLanguageOptionListener(myLanguageListener);
 		myToolbarView.getLanguageOptionView().addLanguageOptionListener(myTextPrompt);
