@@ -31,7 +31,7 @@ public class PenButtons implements SubcomponentViewAPI {
 		downButton = makeButton(myResources.getString("DownButtonCommand"), e -> tp.runCommand("PenDown", ""));
 		buttonPanel.getChildren().addAll(upButton, downButton);
 		view.getChildren().addAll(prompt, buttonPanel);
-		view.setAlignment(Pos.CENTER);
+		view.setAlignment(Pos.BASELINE_CENTER);
 	}
 
 	private Button makeButton(String label, EventHandler<ActionEvent> e) {
