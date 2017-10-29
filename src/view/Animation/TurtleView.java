@@ -34,6 +34,7 @@ public class TurtleView implements TurtleListener, TurtleImageOptionListener {
 	private ImmutableTurtle turtle;
 	private ImageView myView;
 	private int myPenColorIndex;
+	private double myPenThickness;
 	private boolean myPenIsDown;
 	private Pane myParent;
 	private double myHeading;
@@ -65,6 +66,7 @@ public class TurtleView implements TurtleListener, TurtleImageOptionListener {
 		System.out.println("ID: " + myID);
 		myHeading = turtle.getHeading();
 		myPenColorIndex = turtle.getPenColorIndex();
+		myPenThickness = turtle.getPenThickness();
 		myPenIsDown = turtle.getPenDown();
 		myView.setVisible(turtle.isVisible());
 
@@ -81,130 +83,137 @@ public class TurtleView implements TurtleListener, TurtleImageOptionListener {
 
 	@Override
 	public void locationChange(double newX, double newY) {
-			// compensate for center offset since center if not (0,0), returns value
-			// referenced from center.
-			double offsetNewX = newX + myOffsetX;
-			double offsetNewY = newY + myOffsetY;
-			System.out.println("Turtle ID: " + myID);
-			System.out.println("prevX: " + myPrevNewX + " | prevY: " + myPrevNewY);
-			System.out.println("offsetNewX: " + offsetNewX + " | offsetNewY: " + offsetNewY);
+		// compensate for center offset since center if not (0,0), returns value
+		// referenced from center.
+		double offsetNewX = newX + myOffsetX;
+		double offsetNewY = newY + myOffsetY;
+		System.out.println("Turtle ID: " + myID);
+		System.out.println("prevX: " + myPrevNewX + " | prevY: " + myPrevNewY);
+		System.out.println("offsetNewX: " + offsetNewX + " | offsetNewY: " + offsetNewY);
 
-			double coordInsideX = offsetNewX % (myOffsetX * 2);
-			double coordInsideY = offsetNewY % (myOffsetY * 2);
+		double coordInsideX = offsetNewX % (myOffsetX * 2);
+		double coordInsideY = offsetNewY % (myOffsetY * 2);
 
-			boolean rightBound = offsetNewX - myPrevNewX + myView.getX() >= myOffsetX * 2;
-			boolean upperBound = offsetNewY - myPrevNewY + myView.getY() >= myOffsetY * 2;
-			boolean leftBound = offsetNewX - myPrevNewX + myView.getX() <= 0;
-			boolean lowerBound = offsetNewY - myPrevNewY + myView.getY() <= 0;
+		boolean rightBound = offsetNewX - myPrevNewX + myView.getX() >= myOffsetX * 2;
+		boolean upperBound = offsetNewY - myPrevNewY + myView.getY() >= myOffsetY * 2;
+		boolean leftBound = offsetNewX - myPrevNewX + myView.getX() <= 0;
+		boolean lowerBound = offsetNewY - myPrevNewY + myView.getY() <= 0;
 
-			double prevX = myPrevNewX;
-			double prevY = myPrevNewY;
-			myPrevNewX = offsetNewX;
-			myPrevNewY = offsetNewY;
-			double distX = offsetNewX - prevX + myView.getX();
-			double distY = offsetNewY - prevY + myView.getY();
+		double prevX = myPrevNewX;
+		double prevY = myPrevNewY;
+		myPrevNewX = offsetNewX;
+		myPrevNewY = offsetNewY;
+		double distX = offsetNewX - prevX + myView.getX();
+		double distY = offsetNewY - prevY + myView.getY();
 
-			Line line;
+		Line line;
 
-			if (rightBound) {
-				while (distX >= (myOffsetX * 2)) {
+		if (rightBound) {
+			while (distX >= (myOffsetX * 2)) {
 
-					if (distY > prevY + 0.05 || distY < prevY - 0.05)
-						distY = myView.getY()
-								+ (offsetNewY - prevY) * ((myOffsetX * 2 - myView.getX()) / (offsetNewX - prevX));
-					if (myPenIsDown) {
-						line = new Line(myView.getX(), myView.getY(), myOffsetX * 2, distY);
-						line.setStroke(Color.valueOf(colorList.get(myPenColorIndex)));
-						myParent.getChildren().add(line);
-					}
-					myView.setX(0);
-					myView.setY(distY);
-
-					offsetNewX = offsetNewX - myOffsetX * 2;
-					distX = offsetNewX - prevX + myView.getX();
-					System.out.println("OOB");
-					System.out.println("Now x= " + myView.getX() + " | y=" + myView.getY());
-					System.out.println("Now offsetnewx= " + offsetNewX + " | offsetnewy=" + offsetNewY);
+				if (distY > prevY + 0.05 || distY < prevY - 0.05)
+					distY = myView.getY()
+							+ (offsetNewY - prevY) * ((myOffsetX * 2 - myView.getX()) / (offsetNewX - prevX));
+				if (myPenIsDown) {
+					line = new Line(myView.getX(), myView.getY(), myOffsetX * 2, distY);
+					line.setStroke(Color.valueOf(colorList.get(myPenColorIndex)));
+					line.setStrokeWidth(myPenThickness);
+					myParent.getChildren().add(line);
 				}
+				myView.setX(0);
+				myView.setY(distY);
+
+				offsetNewX = offsetNewX - myOffsetX * 2;
+				distX = offsetNewX - prevX + myView.getX();
+				System.out.println("OOB");
+				System.out.println("Now x= " + myView.getX() + " | y=" + myView.getY());
+				System.out.println("Now offsetnewx= " + offsetNewX + " | offsetnewy=" + offsetNewY);
 			}
-			// else if (leftBound) {
-			// while (distX <= 0) {
-			//
-			// if (distY > prevY+0.05 || distY < prevY - 0.05)
-			// distY = myView.getY() + (offsetNewY - prevY)*((0 + myView.getX()) /
-			// (offsetNewX - prevX));
-			// if (myPenIsDown) {
-			// line = new Line(myView.getX(), myView.getY(), 0, distY);
-			// line.setStroke(Color.valueOf(colorList.get(myPenColorIndex)));
-			// myParent.getChildren().add(line);
-			// }
-			// myView.setX(myOffsetX * 2);
-			// myView.setY(distY);
-			//
-			// offsetNewX = offsetNewX + myOffsetX * 2;
-			// distX = offsetNewX - prevX + myView.getX();
-			// System.out.println("OOB");
-			// System.out.println("Now x= " + myView.getX() + " | y=" + myView.getY());
-			// System.out.println("Now offsetnewx= " + offsetNewX + " | offsetnewy=" +
-			// offsetNewY);
-			// }
-			// }
-			// else if (rightBound) {
-			// line = new Line(myView.getX(), myView.getY(), myOffsetX * 2 - myPrevNewX,
-			// coordInsideY);
-			// line.setStroke(myPenColor);
-			// myParent.getChildren().add(line);
-			// myView.setX(0);
-			// System.out.println("OOB");
-			// }
-			// else if (upperBound) {
-			// line = new Line(myView.getX(), myView.getY(), coordInsideX, myOffsetY * 2);
-			// line.setStroke(myPenColor);
-			// myParent.getChildren().add(line);
-			// myView.setY(0);
-			// System.out.println("OOB");
-			// }
+		}
+		// else if (leftBound) {
+		// while (distX <= 0) {
+		//
+		// if (distY > prevY+0.05 || distY < prevY - 0.05)
+		// distY = myView.getY() + (offsetNewY - prevY)*((0 + myView.getX()) /
+		// (offsetNewX - prevX));
+		// if (myPenIsDown) {
+		// line = new Line(myView.getX(), myView.getY(), 0, distY);
+		// line.setStroke(Color.valueOf(colorList.get(myPenColorIndex)));
+		// myParent.getChildren().add(line);
+		// }
+		// myView.setX(myOffsetX * 2);
+		// myView.setY(distY);
+		//
+		// offsetNewX = offsetNewX + myOffsetX * 2;
+		// distX = offsetNewX - prevX + myView.getX();
+		// System.out.println("OOB");
+		// System.out.println("Now x= " + myView.getX() + " | y=" + myView.getY());
+		// System.out.println("Now offsetnewx= " + offsetNewX + " | offsetnewy=" +
+		// offsetNewY);
+		// }
+		// }
+		// else if (rightBound) {
+		// line = new Line(myView.getX(), myView.getY(), myOffsetX * 2 - myPrevNewX,
+		// coordInsideY);
+		// line.setStroke(myPenColor);
+		// myParent.getChildren().add(line);
+		// myView.setX(0);
+		// System.out.println("OOB");
+		// }
+		// else if (upperBound) {
+		// line = new Line(myView.getX(), myView.getY(), coordInsideX, myOffsetY * 2);
+		// line.setStroke(myPenColor);
+		// myParent.getChildren().add(line);
+		// myView.setY(0);
+		// System.out.println("OOB");
+		// }
 
-			// line = new Line(myView.getX(), myView.getY(), coordInsideX, coordInsideY);
-			// line.setStroke(myPenColor);
-			// myParent.getChildren().add(line);
-			// myView.setX(coordInsideX);
-			// myView.setY(coordInsideY);
+		// line = new Line(myView.getX(), myView.getY(), coordInsideX, coordInsideY);
+		// line.setStroke(myPenColor);
+		// myParent.getChildren().add(line);
+		// myView.setX(coordInsideX);
+		// myView.setY(coordInsideY);
 
-			if (myPenIsDown) {
-				line = new Line(myView.getX(), myView.getY(), coordInsideX, coordInsideY);
-				line.setStroke(Color.valueOf(colorList.get(myPenColorIndex)));
-				myParent.getChildren().add(line);
-			}
+		if (myPenIsDown) {
+			line = new Line(myView.getX(), myView.getY(), coordInsideX, coordInsideY);
+			line.setStroke(Color.valueOf(colorList.get(myPenColorIndex)));
+			line.setStrokeWidth(myPenThickness);
+			myParent.getChildren().add(line);
+		}
 
-			myView.setX(coordInsideX);
-			myView.setY(coordInsideY);
+		myView.setX(coordInsideX);
+		myView.setY(coordInsideY);
 
-			System.out.println("OOB");
-			System.out.println("Final x= " + myView.getX() + " | y=" + myView.getY());
+		System.out.println("OOB");
+		System.out.println("Final x= " + myView.getX() + " | y=" + myView.getY());
 
-			// System.out.println("LayoutX: " + myOffsetX + " LayoutY: " + myOffsetY);
-			// System.out.println("myX: " + myView.getX() + " | myY: " + myView.getY());
-			// System.out.println("newX: " + newX + " | newY: " + newY);
-			// System.out.println("offsetNewX: " + offsetNewX + " | offsetNewY: " +
-			// offsetNewY);
+		// System.out.println("LayoutX: " + myOffsetX + " LayoutY: " + myOffsetY);
+		// System.out.println("myX: " + myView.getX() + " | myY: " + myView.getY());
+		// System.out.println("newX: " + newX + " | newY: " + newY);
+		// System.out.println("offsetNewX: " + offsetNewX + " | offsetNewY: " +
+		// offsetNewY);
 
 	}
 
 	@Override
 	public void headingChange(double newHeading) {
-			myHeading = -newHeading;
-			myView.setRotate(180 - myHeading);
+		myHeading = -newHeading;
+		myView.setRotate(180 - myHeading);
 	}
 
 	@Override
 	public void penChange(boolean newState) {
-			myPenIsDown = newState;
+		myPenIsDown = newState;
 	}
 
 	@Override
 	public void penColorChange(int index) {
 		myPenColorIndex = index;
+	}
+
+	@Override
+	public void penThicknessChange(double thickness) {
+		myPenThickness = thickness;
 	}
 
 	@Override
@@ -223,9 +232,9 @@ public class TurtleView implements TurtleListener, TurtleImageOptionListener {
 	@Override
 	public void clearScreen() {
 		Iterator<Node> it = myParent.getChildren().iterator();
-		while(it.hasNext()) {
+		while (it.hasNext()) {
 			Node n = it.next();
-			if(n instanceof Line)
+			if (n instanceof Line)
 				it.remove();
 		}
 	}

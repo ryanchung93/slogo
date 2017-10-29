@@ -1,7 +1,6 @@
 package view.Toolbar;
 
 import java.util.ResourceBundle;
-import java.util.function.Consumer;
 
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
