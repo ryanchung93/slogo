@@ -10,6 +10,7 @@ import javafx.scene.image.Image;
  * 
  * @author DavidTran
  */
+
 public class TurtleViewManager {
 
 	private List<TurtleView> turtleList;

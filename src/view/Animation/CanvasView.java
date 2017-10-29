@@ -11,6 +11,7 @@ import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
+import model.ImmutableTurtle;
 import view.Toolbar.BackgroundColorListener;
 
 /**
@@ -19,7 +20,7 @@ import view.Toolbar.BackgroundColorListener;
  * @author DavidTran
  *
  */
-public class CanvasView extends Pane implements BackgroundColorListener {
+public class CanvasView extends Pane implements TurtleListener {
 
 	private Color DEFAULT_COLOR = Color.WHITE;
 	private ResourceBundle myResources = ResourceBundle.getBundle("resources.view/choicebox");
@@ -45,6 +46,66 @@ public class CanvasView extends Pane implements BackgroundColorListener {
 	@Override
 	public void backgroundColorChange(int colorIndex) {
 		this.setBackgroundColor(Color.valueOf(colorList.get(colorIndex)));
+	}
+
+	@Override
+	public void setTurtle(ImmutableTurtle turtle) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void locationChange(double newX, double newY) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void headingChange(double newAngle) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void penChange(boolean down) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void visibilityChange(boolean isVisible) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void penColorChange(int colorIndex) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void clearScreen() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void activeToggle(boolean active) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void penSizeChange(double thickness) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void shapeChange(int index) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

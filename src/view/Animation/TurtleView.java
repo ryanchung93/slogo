@@ -242,6 +242,11 @@ public class TurtleView implements TurtleListener {
 		myShapeIndex = index;
 		myView.setImage(imageList.get(myShapeIndex));
 	}
+	
+	@Override
+	public void backgroundColorChange(int index) {
+		//do nothing
+	}
 
 	/**
 	 * Returns image associated with turtle.

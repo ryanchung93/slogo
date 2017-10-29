@@ -1,5 +1,7 @@
 package model;
 
+import view.View;
+
 /**
  * Represents a single line of SLogo code that can be executed. 
  *

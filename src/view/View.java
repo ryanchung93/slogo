@@ -100,8 +100,14 @@ public class View implements ViewAPI {
 		return myTurtleViewManager.getNewListener();
 	}
 
+	@Override
 	public TurtleListener getStateViewListener() {
 		return myTurtleStateView;
+	}
+	
+	@Override
+	public TurtleListener getCanvasListener() {
+		return myCanvas;
 	}
 
 	@Override
