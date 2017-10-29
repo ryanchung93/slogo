@@ -9,7 +9,6 @@ import javafx.geometry.HPos;
 import javafx.geometry.VPos;
 import javafx.scene.Scene;
 import javafx.scene.control.ScrollPane;
-import javafx.scene.control.ScrollPane.ScrollBarPolicy;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.ColumnConstraints;
@@ -97,8 +96,8 @@ public class View implements ViewAPI {
 	}
 
 	@Override
-	public TurtleListener getTurtleListener(int id) {
-		return myTurtleViewManager.getListener(id);
+	public TurtleListener getNewTurtleListener() {
+		return myTurtleViewManager.getNewListener();
 	}
 
 	public TurtleListener getStateViewListener() {

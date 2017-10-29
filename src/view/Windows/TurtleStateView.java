@@ -31,10 +31,9 @@ public class TurtleStateView extends Window implements TurtleListener, TurtleIma
 			
 			if (turtle.isActive()) {
 				ta.appendText("ID: " + Integer.toString(turtle.getID()) + "\n");
-				ta.appendText("Active: " + Boolean.toString(turtle.isActive()) + "\n");
-				ta.appendText("X: " + Double.toString(turtle.getX()) + "\n");
-				ta.appendText("Y: " + Double.toString(turtle.getY()) + "\n");
-				ta.appendText("Heading: " + Double.toString(turtle.getHeading()) + "\n");
+				ta.appendText(String.format("X: %5.3f\n", turtle.getX()));
+				ta.appendText(String.format("Y: %5.3f\n", turtle.getY()));
+				ta.appendText(String.format("Heading: %5.1f\n", turtle.getHeading()));
 				ta.appendText("Pen Down: " + Boolean.toString(turtle.getPenDown()) + "\n");
 				ta.appendText("Pen Color: " + TurtleView.colorList.get(turtle.getPenColorIndex()) + "\n");
 				ta.appendText("Visibility: " + Boolean.toString(turtle.isVisible()) + "\n\n");

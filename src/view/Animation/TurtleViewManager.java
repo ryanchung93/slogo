@@ -32,10 +32,9 @@ public class TurtleViewManager implements TurtleImageOptionListener {
 		
 	}
 
-	public TurtleListener getListener(int id) {
-		if(id >= turtleList.size())
-			addTurtle();
-		return turtleList.get(id);
+	public TurtleListener getNewListener() {
+		addTurtle();
+		return turtleList.get(turtleList.size()-1);
 	}
 
 	@Override
