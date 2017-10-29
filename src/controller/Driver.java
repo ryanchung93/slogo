@@ -31,14 +31,6 @@ public class Driver implements DriverAPI {
 		list.add(myView.getStateViewListener());
 		return list;
 	}
-	
-//	private void execute(String s) {
-////		try {
-//			myModel.execute(s);
-////		} catch (SLogoException e) {
-////			myView.display(e);
-////		}
-//	}
 
 	@Override
 	public void run() {
