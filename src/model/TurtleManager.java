@@ -67,35 +67,64 @@ public class TurtleManager implements Iterable<SingularTurtle>, Turtle {
 		return getActiveTurtles().get(getActiveTurtles().size() - 1);
 	}
  	
+	@Override
 	public double forward(Command command, CommandManager commands, VariableManager variables) {
 		return doToEach(t->t.forward(command, commands, variables));
 	}
 	
+	@Override
 	public double left(Command command, CommandManager commands, VariableManager variables) {
 		return doToEach(t->t.left(command, commands, variables));
 	}
 	
+	@Override
 	public double setXY(Command command1, Command command2, CommandManager commands, VariableManager variables) {
 		return doToEach(t->t.setXY(command1, command2, commands, variables));
 	}
 	
+	@Override
 	public double setHeading(Command command, CommandManager commands, VariableManager variables) {
 		return doToEach(t->t.setHeading(command, commands, variables));
 	}
 	
+	@Override
 	public double setTowards(Command command1, Command command2, CommandManager commands, VariableManager variables) {
 		return doToEach(t->t.setTowards(command1, command2, commands, variables));
 	}
 	
+	@Override
 	public double clearScreen() {
 		return doToEach(t->t.clearScreen());
 	}
 	
+	@Override
 	public void setPenDown(boolean b) {
 		for(SingularTurtle t : this)
 			t.setPenDown(b);
 	}
+	
+	@Override
+	public void setPenColor(int index) {
+		for(SingularTurtle t : this) {
+			t.setPenColor(index);
+		}
+	}
+	
+	@Override
+	public void setPenSize(double size) {
+		for(SingularTurtle t : this) {
+			t.setPenSize(size);
+		}
+	}
+	
+	@Override
+	public void setBackgroundColor(int index) {
+		for(SingularTurtle t : turtles) {
+			t.setBackgroundColor(index);
+		}
+	}
 
+	@Override
 	public void setVisible(boolean b) {
 		for(SingularTurtle t : this)
 			t.setVisible(b);

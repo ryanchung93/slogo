@@ -15,6 +15,9 @@ public interface Turtle {
 	public double setXY(Command xCor, Command yCor, CommandManager commands, VariableManager variables);
 	public double setTowards(Command xCor, Command yCor, CommandManager commands, VariableManager variables);
 	public void setPenDown(boolean b);
+	public void setPenColor(int index);
+	public void setPenSize(double size);
+	public void setBackgroundColor(int index);
 	public void setVisible(boolean b);
 	public double clearScreen();
 	public int getNumTurtles();

@@ -6,7 +6,7 @@ package view.Toolbar;
  * @author DavidTran
  *
  */
-public interface BackgroundColorListener {
+public interface BackgroundColorListener extends ViewListener {
 
 	/**
 	 * Changes the background color.

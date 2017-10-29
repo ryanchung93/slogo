@@ -25,11 +25,13 @@ public class SingularTurtle implements ImmutableTurtle, Turtle {
 	private boolean isVisible;
 	private boolean isActive;
 	private int penColorIndex;
+	private int backgroundColorIndex;
 	private double penThickness;
 	private Supplier<Integer> numTurtles;
 	
 	public static final int DEFAULT_PEN_COLOR_INDEX = 0;
 	public static final int DEFAULT_PEN_THICKNESS = 1;
+	public static final int DEFAULT_BACKGROUND_COLOR_INDEX = 0;
 	
 	
 	public SingularTurtle(double x0, double y0, double heading0, int id) {
@@ -42,6 +44,7 @@ public class SingularTurtle implements ImmutableTurtle, Turtle {
 		isActive = true;
 		penColorIndex = DEFAULT_PEN_COLOR_INDEX;
 		penThickness = DEFAULT_PEN_THICKNESS;
+		backgroundColorIndex = DEFAULT_BACKGROUND_COLOR_INDEX;
 		listeners = new ArrayList<>();
 	}
 	
@@ -123,7 +126,12 @@ public class SingularTurtle implements ImmutableTurtle, Turtle {
 		for(TurtleListener tL : listeners) tL.penColorChange(index);
 	}
 	
-	public void setPenThickness(double pixels) {
+	public void setBackgroundColor(int index) {
+		backgroundColorIndex = index;
+		for(TurtleListener tL : listeners) tL.backgroundColorChange(backgroundColorIndex);
+	}
+	
+	public void setPenSize(double pixels) {
 		penThickness = pixels;
 		for(TurtleListener tL : listeners) tL.penThicknessChange(pixels);
 	}

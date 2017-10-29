@@ -58,5 +58,10 @@ public interface TurtleListener {
 	 * Called when a turtle's thickness is changed
 	 */
 	public void penThicknessChange(double thickness);
+
+	/**
+	 * Called when the background color is changed
+	 */
+	public void backgroundColorChange(int index);
 }
 

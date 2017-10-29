@@ -47,8 +47,15 @@ public interface ViewAPI {
 	/**
 	 * Called when turtle is created in model to display turtle stats
 	 * 
-	 * @return
+	 * @return TurtleListener
 	 */
 	public TurtleListener getStateViewListener();
-
+	
+	/**
+	 * Called when model needs the canvas when a turtle is created.
+	 * 
+	 * @return TurtleListener
+	 */
+	public TurtleListener getCanvasListener();
+	
 }

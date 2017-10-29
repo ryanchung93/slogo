@@ -95,4 +95,9 @@ public class TurtleStateView extends Window implements TurtleListener, TurtleIma
 		
 	}
 
+	@Override
+	public void backgroundColorChange(int index) {
+		//do nothing
+	}
+
 }
