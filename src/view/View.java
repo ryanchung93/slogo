@@ -247,7 +247,6 @@ public class View implements ViewAPI {
 		myToolbarView.getPenOptionView().addTextPrompt(myTextPrompt);
 		myToolbarView.getPenSlider().addTextPrompt(myTextPrompt);
 		myToolbarView.getPenButtons().addTextPrompt(myTextPrompt);
-//		myToolbarView.getImageOptionView().addTurtleImageListener(myTurtleViewManager);
 		myToolbarView.getImageOptionView().addTextPrompt(myTextPrompt);
 		myToolbarView.getLanguageOptionView().addLanguageOptionListener(myLanguageListener);
 		myToolbarView.getLanguageOptionView().addLanguageOptionListener(myTextPrompt);
