@@ -16,6 +16,8 @@ public class PenSlider implements SubcomponentViewAPI {
 
 	private static ResourceBundle myResources = ResourceBundle.getBundle("resources.view/view");
 	private static final String PROMPT = "PenThicknessPrompt";
+	private static final double SLIDER_MAX = 10;
+	private static final double SLIDER_MIN = 0;
 	private Label prompt;
 	private Slider sl;
 	private VBox view;
@@ -31,7 +33,8 @@ public class PenSlider implements SubcomponentViewAPI {
 		sl.valueProperty().addListener(new ChangeListener<Number>() {
             public void changed(ObservableValue<? extends Number> ov,
                 Number old_val, Number new_val) {
-                    tp.runCommand("SetPenSize", Integer.toString(new_val.intValue()));
+                    tp.runCommand("SetPenSize", Double.toString(new_val.doubleValue()));
+                    System.out.println(new_val.doubleValue());
             }
         });
 	}
@@ -42,11 +45,12 @@ public class PenSlider implements SubcomponentViewAPI {
 	}
 
 	private Slider makeSlider() {
-		Slider ret = new Slider(0, Integer.parseInt(myResources.getString("MaxThickness")), 1);
+		Slider ret = new Slider(SLIDER_MIN, SLIDER_MAX, 1);
 		ret.setShowTickLabels(true);
 		ret.setShowTickMarks(true);
-		ret.setMajorTickUnit(1);
+		ret.setMajorTickUnit(2);
 		ret.setMinorTickCount(1);
+		ret.setSnapToTicks(true);
 		return ret;
 	}
 

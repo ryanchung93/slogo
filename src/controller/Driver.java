@@ -29,7 +29,7 @@ public class Driver implements DriverAPI {
 		List<TurtleListener> list = new ArrayList<>();
 		list.add(myView.getNewTurtleListener());
 		list.add(myView.getStateViewListener());
-		list.add(myView.getCanvasListener());
+//		list.add(myView.getCanvasListener());
 		return list;
 	}
 	

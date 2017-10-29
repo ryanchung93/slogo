@@ -9,7 +9,6 @@ import java.util.ResourceBundle;
 import javafx.scene.Node;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 import model.ImmutableTurtle;
@@ -34,7 +33,7 @@ public class TurtleView implements TurtleListener {
 	private int myPenColorIndex;
 	private double myPenThickness;
 	private boolean myPenIsDown;
-	private Pane myParent;
+	private CanvasView myParent;
 	private double myHeading;
 	private int myID;
 	private int myShapeIndex;
@@ -45,7 +44,7 @@ public class TurtleView implements TurtleListener {
 	private double myPrevNewX;
 	private double myPrevNewY;
 
-	public TurtleView(Pane parent, Image image) {
+	public TurtleView(CanvasView parent, Image image) {
 
 		myView = setupImageView(image);
 		myParent = parent;
@@ -71,8 +70,9 @@ public class TurtleView implements TurtleListener {
 
 		this.turtle = turtle;
 
-		myOffsetX = myParent.getLayoutX();
-		myOffsetY = myParent.getLayoutY();
+		myOffsetX = myParent.getMaxWidth()/2;
+		myOffsetY = myParent.getMaxHeight()/2;
+		
 		myView.setX(turtle.getX() + myOffsetX);
 		myView.setY(turtle.getY() + myOffsetY);
 		myPrevNewX = turtle.getX() + myOffsetX;
@@ -246,7 +246,7 @@ public class TurtleView implements TurtleListener {
 	
 	@Override
 	public void backgroundColorChange(int index) {
-		//do nothing
+		myParent.backgroundColorChange(index);
 	}
 
 	/**

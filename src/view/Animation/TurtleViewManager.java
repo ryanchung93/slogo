@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javafx.scene.image.Image;
-import javafx.scene.layout.Pane;
 
 /**
  * Class that manages the viewing of turtles.
@@ -15,10 +14,10 @@ import javafx.scene.layout.Pane;
 public class TurtleViewManager {
 
 	private List<TurtleView> turtleList;
-	private final Pane myParent;
+	private final CanvasView myParent;
 	private Image myImage;
 
-	public TurtleViewManager(Pane parent, Image image) {
+	public TurtleViewManager(CanvasView parent, Image image) {
 		turtleList = new ArrayList<TurtleView>();
 		myParent = parent;
 		myImage = image;
