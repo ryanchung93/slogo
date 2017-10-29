@@ -55,13 +55,19 @@ public interface TurtleListener {
 	public void activeToggle(boolean active);
 	
 	/**
-	 * Called when a turtle's thickness is changed
+	 * Called when a turtle's pen size is changed
 	 */
-	public void penThicknessChange(double thickness);
+	public void penSizeChange(double thickness);
 
 	/**
 	 * Called when the background color is changed
 	 */
 	public void backgroundColorChange(int index);
+	
+	/**
+	 * Called when a turtle's shape is changed
+	 * @param index
+	 */
+	public void shapeChange(int index);
 }
 

@@ -5,7 +5,6 @@ import java.util.List;
 
 import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
-import view.Toolbar.TurtleImageOptionListener;
 
 /**
  * Class that manages the viewing of turtles.
@@ -13,7 +12,7 @@ import view.Toolbar.TurtleImageOptionListener;
  * @author DavidTran
  */
 
-public class TurtleViewManager implements TurtleImageOptionListener {
+public class TurtleViewManager {
 
 	private List<TurtleView> turtleList;
 	private final Pane myParent;
@@ -38,10 +37,10 @@ public class TurtleViewManager implements TurtleImageOptionListener {
 		return turtleList.get(turtleList.size()-1);
 	}
 
-	@Override
-	public void imageChange(int imageIndex) {
-		for(TurtleView turtle : turtleList) {
-			turtle.imageChange(imageIndex);//TODO
-		}
-	}
+//	@Override
+//	public void imageChange(int imageIndex) {
+//		for(TurtleView turtle : turtleList) {
+//			turtle.imageChange(imageIndex);//TODO
+//		}
+//	}
 }

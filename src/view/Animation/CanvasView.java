@@ -97,7 +97,13 @@ public class CanvasView extends Pane implements TurtleListener {
 	}
 
 	@Override
-	public void penThicknessChange(double thickness) {
+	public void penSizeChange(double thickness) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void shapeChange(int index) {
 		// TODO Auto-generated method stub
 		
 	}
