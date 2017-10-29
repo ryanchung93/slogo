@@ -70,8 +70,9 @@ public class TurtleView implements TurtleListener {
 
 		this.turtle = turtle;
 
-		myOffsetX = myParent.getLayoutX();
-		myOffsetY = myParent.getLayoutY();
+		myOffsetX = myParent.getMaxWidth()/2;
+		myOffsetY = myParent.getMaxHeight()/2;
+		
 		myView.setX(turtle.getX() + myOffsetX);
 		myView.setY(turtle.getY() + myOffsetY);
 		myPrevNewX = turtle.getX() + myOffsetX;
