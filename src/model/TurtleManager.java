@@ -103,6 +103,18 @@ public class TurtleManager implements Iterable<SingularTurtle>, Turtle {
 			t.setVisible(b);
 	}
 
+	@Override
+	public void setPenSize(double pixels) {
+		for (SingularTurtle t : this)
+			t.setPenSize(pixels);
+	}
+
+	@Override
+	public void setShapeIndex(int index) {
+		for (SingularTurtle t : this)
+			t.setShapeIndex(index);
+	}
+
 	private double doToEach(Function<SingularTurtle, Double> command) {
 		double result = 0;
 		for (SingularTurtle t : this) {
@@ -152,9 +164,8 @@ public class TurtleManager implements Iterable<SingularTurtle>, Turtle {
 	}
 
 	@Override
-	public void setPenSize(double pixels) {
-		for (SingularTurtle t : this)
-			t.setPenSize(pixels);
+	public int getShapeIndex() {
+		return getLastActiveTurtle().getShapeIndex();
 	}
 
 	public void ask(List<Integer> ids, Consumer<SingularTurtle> consumer) {
