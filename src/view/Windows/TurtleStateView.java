@@ -38,7 +38,7 @@ public class TurtleStateView extends Window implements TurtleListener {
 				ta.appendText("ID: " + Integer.toString(turtle.getID()) + "\n");
 				ta.appendText(String.format("X: %5.3f\n", turtle.getX()));
 				ta.appendText(String.format("Y: %5.3f\n", turtle.getY()));
-				ta.appendText(String.format("Heading: %5.1f\n", turtle.getHeading() % 360));
+				ta.appendText(String.format("Heading: %5.1f\n", (turtle.getHeading() % 360) + 90));
 				ta.appendText("Pen Down: " + Boolean.toString(turtle.getPenDown()) + "\n");
 				ta.appendText("Pen Color: " + myColorList.get(turtle.getPenColorIndex()) + "\n");
 				ta.appendText("Pen Thickness: " + turtle.getPenSize() + "\n");
