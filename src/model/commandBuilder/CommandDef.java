@@ -23,7 +23,8 @@ public class CommandDef implements CommandBuilder{
 
 	public Command build(TokenDispenser dispenser) throws SLogoException {
 		List<Command> localVars = new ArrayList<>();
-		localVars.add(dispenser.getNextCommand());
+		for(int i = 0; i < variables.size(); i++)
+			localVars.add(dispenser.getNextCommand());
 		return new UserDefinedCommand(name, localVars);
 	}
 

@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.ResourceBundle;
 import java.util.function.Supplier;
 
+import model.commandBuilder.CommandDef;
 import model.commands.NumberCommand;
 import model.commands.VariableCommand;
 
@@ -99,5 +100,10 @@ public class Parser implements TokenDispenser{
 		}
 		getNextToken();
 		return result;
+	}
+
+	@Override
+	public void defineCommand(String name, List<String> vars) {
+		availableCommands.put(name, new CommandDef(name, vars, new ArrayList<Command>()));
 	}
 }

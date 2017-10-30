@@ -10,4 +10,5 @@ public interface TokenDispenser {
 	public List<Command> getNextCommandList() throws SLogoException;
 	public List<String> getNextTokenList() throws SLogoException;
 	public List<String> getNextVariableList() throws SLogoException;
+	public void defineCommand(String name, List<String> vars);
 }

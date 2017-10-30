@@ -39,7 +39,11 @@ public class Model {
 		Parser parser = new Parser(code, commands);
 		while(parser.hasNextCommand()) {
 			Command command = parser.getNextCommand();
+			try {
 			command.execute(turtles, commands, variables);
+			} catch (StackOverflowError e) {
+				throw new SLogoException("StackOverflow");
+			}
 			variables.notifyListeners();
 		}
 	}
