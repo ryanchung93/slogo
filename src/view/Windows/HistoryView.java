@@ -1,19 +1,14 @@
 package view.Windows;
 
-import java.util.ResourceBundle;
 import java.util.function.Consumer;
 
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.geometry.HPos;
-import javafx.geometry.Orientation;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.Hyperlink;
 import javafx.scene.control.ScrollPane;
-import javafx.scene.control.TextArea;
 import javafx.scene.layout.ColumnConstraints;
-import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.RowConstraints;
 import javafx.scene.layout.VBox;
@@ -24,11 +19,9 @@ public class HistoryView {
 
 	private Button clearButton;
 	private Text text;
-	private TextArea ta;
 	private VBox myHistory;
 	private ScrollPane scrollPane;
 	private GridPane view;
-	private ResourceBundle myResources = ResourceBundle.getBundle("resources.view/view");
 
 	private Consumer<String> myCommandConsumer;
 
@@ -58,7 +51,7 @@ public class HistoryView {
 		myHistory = new VBox();
 		scrollPane = new ScrollPane();
 		scrollPane.setContent(myHistory);
-		
+
 		clearButton = makeButton("Clear History", e -> clear());
 
 		view.add(text, 0, 0);
