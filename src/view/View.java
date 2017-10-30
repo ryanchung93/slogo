@@ -150,7 +150,8 @@ public class View implements ViewAPI {
 	/**
 	 * Steps to update interface.
 	 */
-	private void step(double elaspedTime) {}
+	private void step(double elaspedTime) {
+	}
 
 	/**
 	 * Sets up the general layout of the scene.
@@ -199,7 +200,11 @@ public class View implements ViewAPI {
 
 		Image image = new Image(
 				getClass().getClassLoader().getResourceAsStream("resources/images/" + DEFAULT_TURTLE_IMAGE));
-		myTurtleViewManager = new TurtleViewManager(myCanvas, image, myImageNameList, myColorList);
+
+		myTurtleViewManager = new TurtleViewManager(myCanvas, image, myImageNameList, myColorList, () -> {
+			myToolbarView.getBackgroundOptionView().makeChoiceBox();
+			myToolbarView.getPenOptionView().makeChoiceBox();
+		});
 	}
 
 	/**
@@ -231,7 +236,7 @@ public class View implements ViewAPI {
 		myVarView = new VariableView((dims[1][1] + dims[1][2]) / 2);
 		myTurtleStateView = new TurtleStateView((dims[1][1] + dims[1][2]) / 2, myImageNameList, myColorList);
 		myRefView = new ReferenceView((dims[1][1] + dims[1][2]) / 2);
-		myHistoryView = new HistoryView((dims[1][1] + dims[1][2]) / 2, myCommandConsumer, () -> { 
+		myHistoryView = new HistoryView((dims[1][1] + dims[1][2]) / 2, myCommandConsumer, () -> {
 			myTurtleViewManager.clear();
 			reset.run();
 		});

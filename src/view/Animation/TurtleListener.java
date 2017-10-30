@@ -69,5 +69,10 @@ public interface TurtleListener {
 	 * @param index
 	 */
 	public void shapeChange(int index);
+	
+	/**
+	 * Called when a new color option index is added
+	 */
+	public void addToPalette(int index, int rVal, int gVal, int bVal);
 }
 

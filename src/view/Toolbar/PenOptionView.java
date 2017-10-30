@@ -26,16 +26,15 @@ public class PenOptionView extends OptionView {
 		this.colorList = colorList;
 
 		makeChoiceBox();
-
-		addItem(7, "255", "254", "253");
-
 	}
 
 	public void addTextPrompt(TextPromptView tp) {
 		this.tp = tp;
 	}
 
-	private void makeChoiceBox() {
+	public void makeChoiceBox() {
+
+		cb.getItems().removeAll(cb.getItems());
 
 		for (String color : colorList)
 			cb.getItems().add(colorList.indexOf(color) + ". " + color);
@@ -47,15 +46,8 @@ public class PenOptionView extends OptionView {
 				tp.runCommand("SetPenColor", Integer.toString(newValue.intValue()));
 			}
 		});
-	}
 
-	private void addItem(int index, String r, String g, String b) {
-		if (index < cb.getItems().size()) {
-			cb.getItems().remove(index);
-			cb.getItems().add(index, "rgb(" + r + "," + g + "," + b + ")");
-			Color c = Color.valueOf(cb.getItems().get(7));
-			System.out.println(c);
-		}
+		cb.setMinWidth(cb.getWidth());
 	}
 
 }

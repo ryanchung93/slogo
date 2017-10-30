@@ -1,14 +1,11 @@
 package view.Windows;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.ResourceBundle;
 
-import javafx.scene.image.Image;
 import model.ImmutableTurtle;
 import view.Animation.TurtleListener;
-import view.Animation.TurtleView;
 
 /**
  * Class allowing users to see attributes of current turtle.
@@ -106,6 +103,12 @@ public class TurtleStateView extends Window implements TurtleListener {
 	@Override
 	public void backgroundColorChange(int index) {
 		//do nothing
+	}
+
+	@Override
+	public void addToPalette(int index, int rVal, int gVal, int bVal) {
+		//do nothing
+		
 	}
 
 }
