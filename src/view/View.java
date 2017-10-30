@@ -24,6 +24,7 @@ import javafx.scene.layout.RowConstraints;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import model.SaverLoader;
 import view.Animation.CanvasView;
 import view.Animation.TextPromptView;
 import view.Animation.TurtleListener;
@@ -55,6 +56,9 @@ public class View implements ViewAPI {
 	private static final String STYLESHEET = "/resources/view/view.css";
 	private static final String DEFAULT_TURTLE_IMAGE = "turtle0.png";
 	private static final ResourceBundle myResources = ResourceBundle.getBundle("resources.view/view");
+	private static final String HIST_EXT = "_hist";
+	private static final String BKGD_EXT = "_bkgd";
+	private static final String COLOR_EXT = "_color";
 
 	private Stage myStage;
 	private Scene myScene;
@@ -80,17 +84,22 @@ public class View implements ViewAPI {
 	private List<String> myImageNameList;
 	private List<String> myColorList;
 	private Runnable reset;
+	private Consumer<String> load;
+	private Consumer<String> save;
 
 	/**
 	 * Constructor for setting up animation.
 	 * 
 	 * @param stage
 	 */
-	public View(Stage stage, LanguageListener langListener, Consumer<String> commandConsumer, Runnable reset) {
+	public View(Stage stage, LanguageListener langListener, Consumer<String> commandConsumer, Runnable reset,
+			Consumer<String> save, Consumer<String> load) {
 		myStage = stage;
 		myLanguageListener = langListener;
 		myStage.setTitle("SLogo Interpreter");
 		this.reset = reset;
+		this.save = save;
+		this.load = load;
 		start(commandConsumer);
 	}
 
@@ -100,7 +109,7 @@ public class View implements ViewAPI {
 	public void start(Consumer<String> commandConsumer) {
 		myTimeline = setupTimeline();
 		myCommandConsumer = commandConsumer;
-		myImageNameList = createImageList("src/resources/images", ".png");
+		myImageNameList = createFileList("src/resources/images", ".png");
 		createColorList();
 		setupLayout();
 		addScrollPaneComponents();
@@ -203,8 +212,8 @@ public class View implements ViewAPI {
 				getClass().getClassLoader().getResourceAsStream("resources/images/" + DEFAULT_TURTLE_IMAGE));
 
 		myTurtleViewManager = new TurtleViewManager(myCanvas, image, myImageNameList, myColorList, () -> {
-			myToolbarView.getBackgroundOptionView().makeChoiceBox();
-			myToolbarView.getPenOptionView().makeChoiceBox();
+			myToolbarView.getBackgroundOptionView().makeChoiceBox(myColorList);
+			myToolbarView.getPenOptionView().makeChoiceBox(myColorList);
 		});
 	}
 
@@ -249,24 +258,8 @@ public class View implements ViewAPI {
 	 * Add toolbar and its subcomponents.
 	 */
 	private void addToolbar() {
-		myToolbarView = new ToolbarView(SCREEN_WIDTH, myImageNameList, myColorList, ( ) -> {
-			try {
-				newWorkSpace();
-			} catch (Exception e) {
-				new ErrorWindow(e.getMessage());
-			}
-		}, filePath -> {
-			try {
-				newWorkSpace();
-			} catch (Exception e) {
-				new ErrorWindow(e.getMessage());
-			};
-		}, filePath -> {
-			try {
-				newWorkSpace();
-			} catch (Exception e) {
-				new ErrorWindow(e.getMessage());
-			};});
+		myToolbarView = new ToolbarView(SCREEN_WIDTH, myImageNameList, myColorList, () -> newWorkSpace(), s -> save(s),
+				s -> load(s));
 
 		// set a listener for background, pen, image, language changes.
 		myToolbarView.getBackgroundOptionView().addTextPrompt(myTextPrompt);
@@ -279,9 +272,12 @@ public class View implements ViewAPI {
 		myGrid.add(myToolbarView.getParent(), 0, 0);
 	}
 
-	private void newWorkSpace() throws Exception {
-		new Driver(new Stage()).run();
-		
+	private void newWorkSpace() {
+		try {
+			new Driver(new Stage()).run();
+		} catch (Exception e) {
+			new ErrorWindow(e.getMessage());
+		}
 	}
 
 	/**
@@ -300,7 +296,7 @@ public class View implements ViewAPI {
 		return ret;
 	}
 
-	private List<String> createImageList(String path, String ext) {
+	private List<String> createFileList(String path, String ext) {
 
 		List<String> ret = new ArrayList<String>();
 
@@ -324,6 +320,29 @@ public class View implements ViewAPI {
 
 	private void createColorList() {
 		myColorList = Arrays.asList(myResources.getString("Colors").replaceAll("\\s+", "").split("\\|"));
+	}
+
+	private void save(String filePath) {
+		save.accept(filePath);
+
+		myHistoryView.save(filePath + HIST_EXT);
+		myCanvas.save(filePath + BKGD_EXT);
+		StringBuilder sb = new StringBuilder();
+		for (String color : myColorList)
+			sb.append(color + " ");
+		SaverLoader.save(sb.toString(), filePath + COLOR_EXT);
+	}
+
+	private void load(String filePath) {
+		load.accept(filePath);
+
+		myHistoryView.load(filePath + HIST_EXT);
+		myCanvas.load(filePath + BKGD_EXT);
+		myTextPrompt.runCommand("ClearScreen", "");
+		myColorList = Arrays.asList(((String) SaverLoader.load(filePath + COLOR_EXT)).split(" "));
+		myToolbarView.getBackgroundOptionView().makeChoiceBox(myColorList);
+		myToolbarView.getPenOptionView().makeChoiceBox(myColorList);
+		myCanvas.update(myColorList);
 	}
 
 }

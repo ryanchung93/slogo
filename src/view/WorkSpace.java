@@ -11,31 +11,30 @@ public class WorkSpace implements java.io.Serializable {
 	private static final long serialVersionUID = 1L;
 
 	private List<String> views;
-	private List<ImmutableTurtle> turtles;
+	private List<String> turtles;
 
-	private Map<Integer, String> penColorPalette;
 	private Map<Integer, String> imagePalette;
-	private Map<Integer, String> backgroundColorPalette;
+	private Map<Integer, String> colorPalette;
 
-	private String languageIndex;
-	private double backgroundIndex;
+	private String language;
+	private int backgroundIndex;
 
 	private Map<String, CommandBuilder> userCommands;
 	private Map<String, Double> globalVariables;
 
 	public String getLanguage() {
-		return languageIndex;
+		return language;
 	}
 
-	public void setLanguageIndex(String index) {
-		this.languageIndex = index;
+	public void setLanguage(String lang) {
+		this.language = lang;
 	}
 
-	public double getBackgroundIndex() {
+	public int getBackgroundIndex() {
 		return backgroundIndex;
 	}
 
-	public void setBackgroundIndex(double index) {
+	public void setBackgroundIndex(int index) {
 		this.backgroundIndex = index;
 	}
 
@@ -47,20 +46,12 @@ public class WorkSpace implements java.io.Serializable {
 		this.views = views;
 	}
 
-	public Map<Integer, String> getPenColorPalette() {
-		return penColorPalette;
+	public Map<Integer, String> getColorPalette() {
+		return colorPalette;
 	}
 
-	public void setPenColorPalette(Map<Integer, String> colorPalette) {
-		this.penColorPalette = colorPalette;
-	}
-
-	public Map<Integer, String> getBackgroundColorPalette() {
-		return backgroundColorPalette;
-	}
-
-	public void setBackgroundColorPalette(Map<Integer, String> colorPalette) {
-		this.backgroundColorPalette = colorPalette;
+	public void setColorPalette(Map<Integer, String> colorPalette) {
+		this.colorPalette = colorPalette;
 	}
 
 	public Map<Integer, String> getImagePalette() {
@@ -71,11 +62,11 @@ public class WorkSpace implements java.io.Serializable {
 		this.imagePalette = imagePalette;
 	}
 
-	public List<ImmutableTurtle> getTurtles() {
+	public List<String> getTurtles() {
 		return turtles;
 	}
 
-	public void setTurtles(List<ImmutableTurtle> turtles) {
+	public void setTurtles(List<String> turtles) {
 		this.turtles = turtles;
 	}
 
