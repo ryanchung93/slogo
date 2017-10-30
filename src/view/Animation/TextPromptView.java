@@ -10,6 +10,8 @@ import javafx.scene.control.TextArea;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import model.SLogoException;
+import view.ErrorWindow;
 import view.Toolbar.LanguageListener;
 
 /**
@@ -115,8 +117,13 @@ public class TextPromptView extends HBox implements TextPromptAPI, LanguageListe
 
 	private void enter() {
 		String code = tp.getText();
-		commandConsumer.accept(code);
-		historyConsumer.accept(code);
+		try {
+			commandConsumer.accept(code);
+			historyConsumer.accept(code);
+		}
+		catch(SLogoException e) {
+			new ErrorWindow(e.getMessage());
+		}
 		clear();
 	}
 

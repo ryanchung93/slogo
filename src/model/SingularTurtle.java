@@ -213,4 +213,9 @@ public class SingularTurtle implements ImmutableTurtle, Turtle {
 		return dtheta;
 	}
 
+	@Override
+	public void setPalette(int indexVal, int rVal, int gVal, int bVal) {
+		for(TurtleListener tL : listeners)
+			tL.addToPalette(indexVal, rVal, gVal, bVal);
+	}
 }

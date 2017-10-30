@@ -23,7 +23,6 @@ import javafx.scene.layout.RowConstraints;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-import model.SLogoException;
 import view.Animation.CanvasView;
 import view.Animation.TextPromptView;
 import view.Animation.TurtleListener;
@@ -79,6 +78,7 @@ public class View implements ViewAPI {
 	private Consumer<String> myCommandConsumer;
 	private List<String> myImageNameList;
 	private List<String> myColorList;
+	private Runnable reset;
 
 	/**
 	 * Constructor for setting up animation.
@@ -89,6 +89,7 @@ public class View implements ViewAPI {
 		myStage = stage;
 		myLanguageListener = langListener;
 		myStage.setTitle("SLogo Interpreter");
+		this.reset = reset;
 		start(commandConsumer);
 	}
 
@@ -133,11 +134,6 @@ public class View implements ViewAPI {
 		return myUDCView;
 	}
 
-	@Override
-	public void display(SLogoException e) {
-		new ErrorWindow(e.getMessage());
-	}
-
 	/*************** PRIVATE METHODS *******************/
 
 	/**
@@ -154,10 +150,7 @@ public class View implements ViewAPI {
 	/**
 	 * Steps to update interface.
 	 */
-	private void step(double elaspedTime) {
-		// Read command
-		// Pass into execute
-	}
+	private void step(double elaspedTime) {}
 
 	/**
 	 * Sets up the general layout of the scene.
@@ -214,9 +207,7 @@ public class View implements ViewAPI {
 	 */
 	private void addTextPrompt(Consumer<String> commandConsumer, Consumer<String> historyConsumer) {
 		double[][] dims = getGridDimensions();
-		myTextPrompt = new TextPromptView(dims[0][1], dims[1][2], s -> {
-			commandConsumer.accept(s);
-		}, historyConsumer);
+		myTextPrompt = new TextPromptView(dims[0][1], dims[1][2], commandConsumer, historyConsumer);
 		myGrid.add(myTextPrompt, 1, 2, 2, 1);
 	}
 
@@ -240,8 +231,10 @@ public class View implements ViewAPI {
 		myVarView = new VariableView((dims[1][1] + dims[1][2]) / 2);
 		myTurtleStateView = new TurtleStateView((dims[1][1] + dims[1][2]) / 2, myImageNameList, myColorList);
 		myRefView = new ReferenceView((dims[1][1] + dims[1][2]) / 2);
-		myHistoryView = new HistoryView((dims[1][1] + dims[1][2]) / 2, myCommandConsumer);
-
+		myHistoryView = new HistoryView((dims[1][1] + dims[1][2]) / 2, myCommandConsumer, () -> { 
+			myTurtleViewManager.clear();
+			reset.run();
+		});
 		myLeftVBox.getChildren().addAll(myTurtleStateView.getParent(), myUDCView.getParent(), myVarView.getParent());
 		myRightVBox.getChildren().addAll(myRefView.getParent(), myHistoryView.getParent());
 	}

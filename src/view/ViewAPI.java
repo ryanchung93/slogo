@@ -32,12 +32,6 @@ public interface ViewAPI {
 	public StringListener getUserDefinedCommandListener();
 
 	/**
-	 * @param e
-	 *            A SLogoException produced when the code is executed
-	 */
-	public void display(SLogoException e);
-
-	/**
 	 * Called when model needs the turtlelistener when a turtle is created.
 	 * 
 	 * @return TurtleListener

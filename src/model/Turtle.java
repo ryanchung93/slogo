@@ -24,4 +24,5 @@ public interface Turtle {
 	public void setShapeIndex(int index);
 	public double clearScreen();
 	public int getNumTurtles();
+	public void setPalette(int indexVal, int rVal, int gVal, int bVal);
 }
