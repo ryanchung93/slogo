@@ -1,7 +1,6 @@
 package model;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -9,7 +8,7 @@ import java.util.Map;
 import view.Windows.VariableListener;
 
 public class VariableManager {
-	private Map<String, Double> globals = new HashMap<>();
+	private HashMap<String, Double> globals = new HashMap<>();
 	private List<Map<String, Double>> localScopes = new ArrayList<>();
 	private List<VariableListener> listeners = new ArrayList<>();
 	private boolean updated;
@@ -73,5 +72,19 @@ public class VariableManager {
 		if(localScopes.isEmpty())
 			return globals;
 		return localScopes.get(localScopes.size()-1);
+	}
+	
+	public void save(String fileName) {
+		SaverLoader.save(globals, fileName);
+	}
+	
+	@SuppressWarnings("unchecked")
+	public void load(String fileName) {
+		HashMap<String, Double> data = (HashMap<String, Double>) SaverLoader.load(fileName);
+		for(String s: data.keySet()) {
+			globals.put(s, data.get(s));
+		}
+		updated = true;
+		notifyListeners();
 	}
 }

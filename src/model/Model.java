@@ -9,6 +9,8 @@ import view.Windows.VariableListener;
 
 public class Model {
 
+	private static final String VAR_EXT = "_var";
+	private static final String COM_EXT = "_com";
 	private CommandManager commands;
 	private VariableManager variables;
 	private TurtleManager turtles;
@@ -46,5 +48,16 @@ public class Model {
 			}
 			variables.notifyListeners();
 		}
+	}
+	
+	public void save(String file) {
+		variables.save(file+VAR_EXT);
+		commands.save(file+COM_EXT);
+		SaverLoader.addToKnown(file);
+	}
+	
+	public void load(String file) {
+		variables.load(file+VAR_EXT);
+		commands.load(file+COM_EXT);
 	}
 }

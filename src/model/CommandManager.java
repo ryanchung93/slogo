@@ -18,7 +18,7 @@ public class CommandManager {
 	private String builderPropertiesPath;
 
 	private Map<String, CommandBuilder> builtInCommands = new HashMap<>();
-	private Map<String, CommandDef> userCommands = new HashMap<>();
+	private HashMap<String, CommandDef> userCommands = new HashMap<>();
 	private List<StringListener> listeners = new ArrayList<>();
 
 	public CommandManager(String builderPropertiesPath) {
@@ -92,5 +92,18 @@ public class CommandManager {
 		for (StringListener listener : listeners)
 			listener.changedMap(Collections.unmodifiableSet(builtInCommands.keySet()),
 					Collections.unmodifiableSet(userCommands.keySet()));
+	}
+	
+	public void save(String fileName) {
+		SaverLoader.save(userCommands, fileName);
+	}
+	
+	@SuppressWarnings("unchecked")
+	public void load(String fileName) {
+		HashMap<String, CommandDef> data = (HashMap<String, CommandDef>) SaverLoader.load(fileName);
+		for(String s: data.keySet()) {
+			userCommands.put(s, data.get(s));
+		}
+		updateListeners();
 	}
 }

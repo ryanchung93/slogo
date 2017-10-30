@@ -7,7 +7,6 @@ import controller.API.DriverAPI;
 import javafx.stage.Stage;
 import model.CommandManager;
 import model.Model;
-import model.SLogoException;
 import view.View;
 import view.Animation.TurtleListener;
 

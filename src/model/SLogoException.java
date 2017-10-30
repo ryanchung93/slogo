@@ -15,7 +15,7 @@ public class SLogoException extends RuntimeException {
 	}
 
 	public SLogoException() {
-		this("This is the default SLogoException message -- use constructor "
+		super("This is the default SLogoException message -- use constructor "
 				+ "SLogoException(s, objects) unless planning to change the message elsewhere");
 	}
 }
