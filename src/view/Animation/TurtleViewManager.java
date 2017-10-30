@@ -36,10 +36,9 @@ public class TurtleViewManager {
 		return turtleList.get(turtleList.size()-1);
 	}
 
-//	@Override
-//	public void imageChange(int imageIndex) {
-//		for(TurtleView turtle : turtleList) {
-//			turtle.imageChange(imageIndex);//TODO
-//		}
-//	}
+	public void clear() {
+		turtleList.clear();
+		myParent.getChildren().clear();
+	}
+	
 }
