@@ -76,7 +76,6 @@ public class CommandManager {
 	}
 
 	public void put(String name, CommandDef definition) {
-		builtInCommands.put(name, definition);
 		userCommands.put(name, definition);
 		updateListeners();
 	}
