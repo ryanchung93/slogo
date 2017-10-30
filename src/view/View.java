@@ -2,9 +2,12 @@ package view;
 
 import java.io.File;
 import java.io.FilenameFilter;
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Observable;
+import java.util.Observer;
 import java.util.ResourceBundle;
 import java.util.function.Consumer;
 
@@ -13,7 +16,10 @@ import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.geometry.HPos;
 import javafx.geometry.VPos;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
@@ -21,6 +27,7 @@ import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.RowConstraints;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import view.Animation.CanvasView;
@@ -29,6 +36,7 @@ import view.Animation.TurtleListener;
 import view.Animation.TurtleViewManager;
 import view.Toolbar.LanguageListener;
 import view.Toolbar.ToolbarView;
+import view.Toolbar.WindowObservable;
 import view.Windows.HistoryView;
 import view.Windows.ReferenceView;
 import view.Windows.ScrollPaneView;
@@ -44,7 +52,7 @@ import view.Windows.VariableView;
  * @author DavidTran
  *
  */
-public class View implements ViewAPI {
+public class View implements ViewAPI, Observer {
 
 	private static final int FRAMES_PER_SECOND = 60;
 	private static final int MILLISECOND_DELAY = 1000 / FRAMES_PER_SECOND;
@@ -74,10 +82,14 @@ public class View implements ViewAPI {
 	private HistoryView myHistoryView;
 	private ToolbarView myToolbarView;
 	private TurtleStateView myTurtleStateView;
+	private WindowObservable<String> myActiveView;
 	private LanguageListener myLanguageListener;
 	private Consumer<String> myCommandConsumer;
 	private List<String> myImageNameList;
 	private List<String> myColorList;
+	private ArrayList<String> myWindowList;
+	private ArrayList<String> myLeftSPList;
+	private ArrayList<String> myRightSPList;
 	private Runnable reset;
 
 	/**
@@ -101,6 +113,7 @@ public class View implements ViewAPI {
 		myCommandConsumer = commandConsumer;
 		createImageList();
 		createColorList();
+		createWindowList();
 		setupLayout();
 		addScrollPaneComponents();
 		addAnimationComponents();
@@ -150,7 +163,8 @@ public class View implements ViewAPI {
 	/**
 	 * Steps to update interface.
 	 */
-	private void step(double elaspedTime) {}
+	private void step(double elaspedTime) {
+	}
 
 	/**
 	 * Sets up the general layout of the scene.
@@ -231,7 +245,7 @@ public class View implements ViewAPI {
 		myVarView = new VariableView((dims[1][1] + dims[1][2]) / 2);
 		myTurtleStateView = new TurtleStateView((dims[1][1] + dims[1][2]) / 2, myImageNameList, myColorList);
 		myRefView = new ReferenceView((dims[1][1] + dims[1][2]) / 2);
-		myHistoryView = new HistoryView((dims[1][1] + dims[1][2]) / 2, myCommandConsumer, () -> { 
+		myHistoryView = new HistoryView((dims[1][1] + dims[1][2]) / 2, myCommandConsumer, () -> {
 			myTurtleViewManager.clear();
 			reset.run();
 		});
@@ -243,7 +257,7 @@ public class View implements ViewAPI {
 	 * Add toolbar and its subcomponents.
 	 */
 	private void addToolbar() {
-		myToolbarView = new ToolbarView(SCREEN_WIDTH, myImageNameList, myColorList);
+		myToolbarView = new ToolbarView(SCREEN_WIDTH, myImageNameList, myColorList, myActiveView);
 		// set a listener for background, pen, image, language changes.
 		myToolbarView.getBackgroundOptionView().addTextPrompt(myTextPrompt);
 		myToolbarView.getPenOptionView().addTextPrompt(myTextPrompt);
@@ -293,6 +307,58 @@ public class View implements ViewAPI {
 
 	private void createColorList() {
 		myColorList = Arrays.asList(myResources.getString("Colors").replaceAll("\\s+", "").split("\\|"));
+	}
+
+	private void createWindowList() {
+		myWindowList = new ArrayList<String>();
+		myWindowList.addAll(Arrays.asList(myResources.getString("DefaultWindows").split(",")));
+		myActiveView = new WindowObservable<String>(myWindowList);
+		// add observers
+		myActiveView.addObserver(this);
+	}
+
+	@Override
+	public void update(Observable o, Object arg) {
+		try {
+			updateView((String) arg);
+		} catch (NoSuchFieldException | SecurityException | IllegalArgumentException | IllegalAccessException e) {
+			e.printStackTrace();
+		}
+	}
+
+	private void updateView(String window)
+			throws NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException {
+
+		Field f = this.getClass().getDeclaredField(window);
+		SubcomponentViewAPI temp = (SubcomponentViewAPI) f.get(this);
+		Parent newWindow = temp.getParent();
+
+		makeScrollPaneLists();
+		
+		changeView(window, newWindow);
+
+	}
+
+	private void changeView(String window, Parent newWindow) {
+		if (myLeftSPList.contains(window)) {
+			if (myLeftVBox.getChildren().contains(newWindow)) {
+				myLeftVBox.getChildren().remove(newWindow);
+			} else {
+				myLeftVBox.getChildren().add(newWindow);
+			}
+		} else {
+			if (myRightVBox.getChildren().contains(newWindow)) {
+				myRightVBox.getChildren().remove(newWindow);
+			} else {
+				myRightVBox.getChildren().add(newWindow);
+			}
+		}
+	}
+
+	private void makeScrollPaneLists() {
+		myLeftSPList = new ArrayList<String>();
+		myLeftSPList.addAll(Arrays.asList(myResources.getString("LeftSPViews").split(",")));
+		// myRightSPList.addAll(Arrays.asList(myResources.getString("RightSPViews").split(",")));
 	}
 
 }

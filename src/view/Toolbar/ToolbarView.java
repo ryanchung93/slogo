@@ -9,6 +9,7 @@ import java.util.ResourceBundle;
 
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
+import javafx.scene.control.Button;
 import javafx.scene.control.Hyperlink;
 import javafx.scene.layout.HBox;
 import view.ErrorWindow;
@@ -34,8 +35,10 @@ public class ToolbarView implements SubcomponentViewAPI {
 	private LanguageOptionView myLanguageOptionView;
 	private List<String> myImageNameList;
 	private List<String> myColorList;
-
-	public ToolbarView(double width, List<String> imgList, List<String> colorList) {
+	private ViewSelector myViewSelector;
+	private WindowObservable<String> myActiveView;
+	
+	public ToolbarView(double width, List<String> imgList, List<String> colorList, WindowObservable<String> activeView) {
 
 		myToolbar = new HBox(NODE_SPACING);
 		myToolbar.setAlignment(Pos.CENTER);
@@ -43,6 +46,7 @@ public class ToolbarView implements SubcomponentViewAPI {
 		
 		myImageNameList = imgList;
 		myColorList = colorList;
+		myActiveView = activeView;
 		
 		addBackgroundColorOption();
 		addPenColorOption();
@@ -51,6 +55,7 @@ public class ToolbarView implements SubcomponentViewAPI {
 		addTurtleImageOption();
 		addLanguageOption();
 		addHelpLink();
+		addViewSelector(myActiveView);
 
 	}
 
@@ -137,5 +142,20 @@ public class ToolbarView implements SubcomponentViewAPI {
 		myLanguageOptionView = new LanguageOptionView();
 		myToolbar.getChildren().add(myLanguageOptionView.getParent());
 	}
+	
+	private void addViewSelector(WindowObservable<String> activeView) {
+		myViewSelector = new ViewSelector(activeView);
+		Button openViewSelector = createButton(myResources.getString("ToolbarViewSelectorPrompt"));
+		openViewSelector.setOnAction(e -> myViewSelector.run());
+//		myToolbar.getChildren().add(myViewSelector.getParent());
+	}
+
+	private Button createButton(String string) {
+		Button button = new Button(string);
+		myToolbar.getChildren().add(button);
+		return button;
+		
+	}
+		
 
 }
