@@ -6,7 +6,7 @@ import model.Turtle;
 import model.VariableManager;
 
 public class And implements Command {
-
+	private static final long serialVersionUID = -9050221653639491294L;
 	private Command x1;
 	private Command x2;
 	

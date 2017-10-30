@@ -7,6 +7,7 @@ import model.VariableManager;
 
 public class SetPenSize implements Command {
 
+	private static final long serialVersionUID = -2641483880650176017L;
 	private Command size;
 	
 	public SetPenSize(Command size) {

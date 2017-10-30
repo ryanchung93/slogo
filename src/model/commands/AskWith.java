@@ -10,7 +10,7 @@ import model.TurtleManagerSpecificCommand;
 import model.VariableManager;
 
 public class AskWith extends TurtleManagerSpecificCommand {
-
+	private static final long serialVersionUID = 7931047379222341527L;
 	private Command condition;
 	private Command commandList;
 	private double toReturn = 0;

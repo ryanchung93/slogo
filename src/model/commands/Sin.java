@@ -6,7 +6,7 @@ import model.Turtle;
 import model.VariableManager;
 
 public class Sin implements Command {
-
+	private static final long serialVersionUID = 1L;
 	private Command x;
 	
 	public Sin(Command x) {

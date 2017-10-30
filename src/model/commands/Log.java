@@ -7,6 +7,7 @@ import model.VariableManager;
 
 public class Log implements Command {
 
+	private static final long serialVersionUID = -6564968783754638512L;
 	private Command a;
 	
 	public Log(Command a) {

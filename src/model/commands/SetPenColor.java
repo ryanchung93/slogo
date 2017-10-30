@@ -7,6 +7,7 @@ import model.VariableManager;
 
 public class SetPenColor implements Command {
 
+	private static final long serialVersionUID = 3774158069090673735L;
 	private Command index;
 	
 	public SetPenColor(Command index) {

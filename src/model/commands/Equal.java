@@ -6,7 +6,7 @@ import model.Turtle;
 import model.VariableManager;
 
 public class Equal implements Command {
-
+	private static final long serialVersionUID = 6961853062872571506L;
 	private Command x1;
 	private Command x2;
 	

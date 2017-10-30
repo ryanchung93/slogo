@@ -7,6 +7,8 @@ import model.VariableManager;
 
 public class XCor implements Command {
 
+	private static final long serialVersionUID = -3053705734473356831L;
+
 	public XCor() {}
 	
 	@Override

@@ -7,6 +7,7 @@ import model.VariableManager;
 
 public class Left implements Command {
 
+	private static final long serialVersionUID = -6316260648514400919L;
 	private Command input;
 
 	public Left(Command par1) {

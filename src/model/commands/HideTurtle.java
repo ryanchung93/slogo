@@ -6,6 +6,7 @@ import model.Turtle;
 import model.VariableManager;
 
 public class HideTurtle implements Command {
+	private static final long serialVersionUID = -4655985376422334442L;
 
 	@Override
 	public double execute(Turtle t, CommandManager commands, VariableManager variables) {

@@ -9,6 +9,7 @@ import model.VariableManager;
 
 public class IfElse implements Command {
 
+	private static final long serialVersionUID = 4182334857279998120L;
 	private Command expr;
 	private List<Command> trueCommands;
 	private List<Command> falseCommands;

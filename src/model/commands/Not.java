@@ -7,6 +7,7 @@ import model.VariableManager;
 
 public class Not implements Command {
 
+	private static final long serialVersionUID = 1977742165928483890L;
 	private Command x1;
 	
 	public Not(Command x1) {

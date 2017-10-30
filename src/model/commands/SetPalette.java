@@ -7,6 +7,7 @@ import model.VariableManager;
 
 public class SetPalette implements Command{
 
+	private static final long serialVersionUID = 1144339788966397020L;
 	private Command index;
 	private Command r;
 	private Command g;

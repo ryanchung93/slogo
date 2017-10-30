@@ -7,6 +7,7 @@ import model.VariableManager;
 
 public class SetTowards implements Command {
 
+	private static final long serialVersionUID = -6328856068244155700L;
 	private Command x;
 	private Command y;
 

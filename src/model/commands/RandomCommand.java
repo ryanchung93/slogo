@@ -7,6 +7,7 @@ import model.VariableManager;
 
 public class RandomCommand implements Command {
 
+	private static final long serialVersionUID = 1L;
 	private Command max;
 	
 	public RandomCommand(Command max) {

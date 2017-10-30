@@ -6,7 +6,7 @@ import model.Turtle;
 import model.VariableManager;
 
 public class ATan implements Command {
-
+	private static final long serialVersionUID = -7821142903737347711L;
 	private Command a;
 	
 	public ATan(Command a) {
