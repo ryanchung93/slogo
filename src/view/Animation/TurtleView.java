@@ -12,6 +12,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 import model.ImmutableTurtle;
+import view.ErrorWindow;
 
 /**
  * Class to make the turtle viewable.
@@ -23,10 +24,9 @@ public class TurtleView implements TurtleListener {
 	private static final double WIDTH = 35;
 	private static final double HEIGHT = 35;
 	private static final ResourceBundle myResources = ResourceBundle.getBundle("resources.view/choicebox");
-	public static final ArrayList<String> imageNameList = new ArrayList<String>(new ArrayList<String>(
-			Arrays.asList(myResources.getString("TurtleImages").replaceAll("\\s+", "").split(","))));
-	public static final List<String> colorList = new ArrayList<String>(
-			Arrays.asList(myResources.getString("PenColors").replaceAll("\\s+", "").split(",")));
+	private List<Image> myImageList;
+	private List<String> myImageNameList;
+	private List<String> myColorList;
 
 	private ImmutableTurtle turtle;
 	private ImageView myView;
@@ -37,21 +37,24 @@ public class TurtleView implements TurtleListener {
 	private double myHeading;
 	private int myID;
 	private int myShapeIndex;
-	private List<Image> imageList = new ArrayList<Image>();
 
 	private double myOffsetX;
 	private double myOffsetY;
 	private double myPrevNewX;
 	private double myPrevNewY;
 
-	public TurtleView(CanvasView parent, Image image) {
+	public TurtleView(CanvasView parent, Image image, List<String> imgNameList, List<String> colorList) {
 
 		myView = setupImageView(image);
 		myParent = parent;
 
-		for (String s : imageNameList) {
+		myImageNameList = imgNameList;
+		myColorList = colorList;
+		
+		myImageList = new ArrayList<>();
+		for (String s : myImageNameList) {
 			Image fileImage = new Image(getClass().getClassLoader().getResourceAsStream("resources/images/" + s));
-			imageList.add(fileImage);
+			myImageList.add(fileImage);
 		}
 	}
 
@@ -70,9 +73,9 @@ public class TurtleView implements TurtleListener {
 
 		this.turtle = turtle;
 
-		myOffsetX = myParent.getMaxWidth()/2;
-		myOffsetY = myParent.getMaxHeight()/2;
-		
+		myOffsetX = myParent.getMaxWidth() / 2;
+		myOffsetY = myParent.getMaxHeight() / 2;
+
 		myView.setX(turtle.getX() + myOffsetX);
 		myView.setY(turtle.getY() + myOffsetY);
 		myPrevNewX = turtle.getX() + myOffsetX;
@@ -115,7 +118,7 @@ public class TurtleView implements TurtleListener {
 							+ (offsetNewY - prevY) * ((myOffsetX * 2 - myView.getX()) / (offsetNewX - prevX));
 				if (myPenIsDown) {
 					line = new Line(myView.getX(), myView.getY(), myOffsetX * 2, distY);
-					line.setStroke(Color.valueOf(colorList.get(myPenColorIndex)));
+					line.setStroke(Color.valueOf(myColorList.get(myPenColorIndex)));
 					line.setStrokeWidth(myPenThickness);
 					myParent.getChildren().add(line);
 				}
@@ -175,7 +178,7 @@ public class TurtleView implements TurtleListener {
 
 		if (myPenIsDown) {
 			line = new Line(myView.getX(), myView.getY(), coordInsideX, coordInsideY);
-			line.setStroke(Color.valueOf(colorList.get(myPenColorIndex)));
+			line.setStroke(Color.valueOf(myColorList.get(myPenColorIndex)));
 			line.setStrokeWidth(myPenThickness);
 			myParent.getChildren().add(line);
 		}
@@ -240,10 +243,14 @@ public class TurtleView implements TurtleListener {
 
 	@Override
 	public void shapeChange(int index) {
-		myShapeIndex = index;
-		myView.setImage(imageList.get(myShapeIndex));
+		try {
+			myShapeIndex = index;
+			myView.setImage(myImageList.get(myShapeIndex));
+		} catch (Exception e) {
+			new ErrorWindow(e.getMessage());
+		}
 	}
-	
+
 	@Override
 	public void backgroundColorChange(int index) {
 		myParent.backgroundColorChange(index);

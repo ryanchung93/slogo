@@ -18,7 +18,7 @@ public class ScrollPaneView implements SubcomponentViewAPI {
 		sp.setPannable(true);
 		sp.setVbarPolicy(ScrollBarPolicy.ALWAYS);
 		sp.setHbarPolicy(ScrollBarPolicy.NEVER);
-
+//		sp.setVvalue(1.0);
 		return sp;
 	}
 	

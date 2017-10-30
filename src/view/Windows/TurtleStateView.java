@@ -1,8 +1,11 @@
 package view.Windows;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.ResourceBundle;
 
+import javafx.scene.image.Image;
 import model.ImmutableTurtle;
 import view.Animation.TurtleListener;
 import view.Animation.TurtleView;
@@ -14,11 +17,17 @@ import view.Animation.TurtleView;
  *
  */
 public class TurtleStateView extends Window implements TurtleListener {
-	private List<ImmutableTurtle> turtles = new ArrayList<>();;
+	private List<ImmutableTurtle> myTurtles = new ArrayList<>();
+	private static final ResourceBundle myResources = ResourceBundle.getBundle("resources.view/view");
+	
+	private List<String> myImageNameList;
+	private List<String> myColorList;
 
-	public TurtleStateView(double height) {
+	public TurtleStateView(double height, List<String> imgList, List<String> colorList) {
 		super(height);
 		ta.appendText(myResources.getString("TurtleStateView"));
+		myImageNameList = imgList;
+		myColorList = colorList;
 	}
 
 	// add to interface
@@ -26,17 +35,17 @@ public class TurtleStateView extends Window implements TurtleListener {
 		ta.clear();
 		ta.appendText(myResources.getString("TurtleStateView") + "\n\n");
 		
-		for (ImmutableTurtle turtle : turtles) {
+		for (ImmutableTurtle turtle : myTurtles) {
 			
 			if (turtle.isActive()) {
 				ta.appendText("ID: " + Integer.toString(turtle.getID()) + "\n");
 				ta.appendText(String.format("X: %5.3f\n", turtle.getX()));
 				ta.appendText(String.format("Y: %5.3f\n", turtle.getY()));
-				ta.appendText(String.format("Heading: %5.1f\n", turtle.getHeading()));
+				ta.appendText(String.format("Heading: %5.1f\n", turtle.getHeading() % 360));
 				ta.appendText("Pen Down: " + Boolean.toString(turtle.getPenDown()) + "\n");
-				ta.appendText("Pen Color: " + TurtleView.colorList.get(turtle.getPenColorIndex()) + "\n");
+				ta.appendText("Pen Color: " + myColorList.get(turtle.getPenColorIndex()) + "\n");
 				ta.appendText("Pen Thickness: " + turtle.getPenSize() + "\n");
-				ta.appendText("Shape: " + TurtleView.imageNameList.get(turtle.getShapeIndex()) + "\n");
+				ta.appendText("Shape: " + myImageNameList.get(turtle.getShapeIndex()) + "\n");
 				ta.appendText("Visibility: " + Boolean.toString(turtle.isVisible()) + "\n\n");
 			}
 		}
@@ -44,7 +53,7 @@ public class TurtleStateView extends Window implements TurtleListener {
 
 	@Override
 	public void setTurtle(ImmutableTurtle turtle) {
-		turtles.add(turtle);
+		myTurtles.add(turtle);
 		System.out.println("added turtle");
 		update();
 	}

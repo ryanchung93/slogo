@@ -31,13 +31,17 @@ public class VariableView implements SubcomponentViewAPI, VariableListener {
 
 	public VariableView(double height) {
 		view = new VBox();
-		ScrollPane sp = (ScrollPane) new ScrollPaneView().getParent();
-		sp.setMinHeight(height);
 		header = new Label(HEADER);
+		
 		varsBox = new VBox();
 		varsBox.setMinHeight(height);
 		varsBox.getChildren().add(header);
+		varsBox.setId("var-VBox");
+		
+		ScrollPane sp = (ScrollPane) new ScrollPaneView().getParent();
+		sp.setMinHeight(height);
 		sp.setContent(varsBox);
+		
 		view.getChildren().addAll(sp);
 		view.setAlignment(Pos.CENTER);
 	}
@@ -64,7 +68,7 @@ public class VariableView implements SubcomponentViewAPI, VariableListener {
 		TextInputDialog dialog = new TextInputDialog();
 		dialog.setTitle("Update Variable Dialog");
 		dialog.setHeaderText("Update Variable");
-		dialog.setContentText("Please enter new variable value for " + key + ":");
+		dialog.setContentText("Please enter new variable value for \'" + key + "\':");
 
 		Optional<String> result = dialog.showAndWait();
 		try {

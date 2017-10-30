@@ -4,6 +4,7 @@ import java.awt.Desktop;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.List;
 import java.util.ResourceBundle;
 
 import javafx.geometry.Pos;
@@ -31,12 +32,18 @@ public class ToolbarView implements SubcomponentViewAPI {
 	private PenButtons myPenButtons;
 	private TurtleImageOptionView myImageOptionView;
 	private LanguageOptionView myLanguageOptionView;
+	private List<String> myImageNameList;
+	private List<String> myColorList;
 
-	public ToolbarView(double width) {
+	public ToolbarView(double width, List<String> imgList, List<String> colorList) {
 
 		myToolbar = new HBox(NODE_SPACING);
 		myToolbar.setAlignment(Pos.CENTER);
 		myToolbar.setMinWidth(width);
+		
+		myImageNameList = imgList;
+		myColorList = colorList;
+		
 		addBackgroundColorOption();
 		addPenColorOption();
 		addPenSlider();
@@ -102,12 +109,12 @@ public class ToolbarView implements SubcomponentViewAPI {
 	}
 
 	private void addBackgroundColorOption() {
-		myBackgroundOptionView = new BackgroundOptionView();
+		myBackgroundOptionView = new BackgroundOptionView(myColorList);
 		myToolbar.getChildren().add(myBackgroundOptionView.getParent());
 	}
 
 	private void addPenColorOption() {
-		myPenOptionView = new PenOptionView();
+		myPenOptionView = new PenOptionView(myColorList);
 		myToolbar.getChildren().add(myPenOptionView.getParent());
 	}
 
@@ -122,7 +129,7 @@ public class ToolbarView implements SubcomponentViewAPI {
 	}
 
 	private void addTurtleImageOption() {
-		myImageOptionView = new TurtleImageOptionView();
+		myImageOptionView = new TurtleImageOptionView(myImageNameList);
 		myToolbar.getChildren().add(myImageOptionView.getParent());
 	}
 

@@ -1,5 +1,9 @@
 VBox {
-	-fx-background-color: #435761;
+	-fx-background-color: #3a4b53;
+}
+
+#var-VBox {
+	-fx-background-color: #435761
 }
 
 HBox {
