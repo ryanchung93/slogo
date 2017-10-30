@@ -7,6 +7,7 @@ import model.VariableManager;
 
 public class Product implements Command {
 
+	private static final long serialVersionUID = -2577392820254437807L;
 	private Command first;
 	private Command second;
 	

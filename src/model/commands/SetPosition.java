@@ -7,6 +7,7 @@ import model.VariableManager;
 
 public class SetPosition implements Command {
 
+	private static final long serialVersionUID = 7061776636289024642L;
 	private Command xCor;
 	private Command yCor;
 

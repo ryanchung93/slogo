@@ -7,6 +7,7 @@ import model.VariableManager;
 
 public class Forward implements Command {
 
+	private static final long serialVersionUID = 3383171923769027257L;
 	private Command input;
 
 	public Forward(Command par1) {

@@ -7,6 +7,7 @@ import model.VariableManager;
 
 public class NumberCommand implements Command {
 
+	private static final long serialVersionUID = 8312725661651529289L;
 	private double input;
 	
 	public NumberCommand(double num) {

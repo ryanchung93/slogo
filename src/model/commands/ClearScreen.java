@@ -6,6 +6,7 @@ import model.Turtle;
 import model.VariableManager;
 
 public class ClearScreen implements Command {
+	private static final long serialVersionUID = 7518525842758579433L;
 
 	@Override
 	public double execute(Turtle t, CommandManager commands, VariableManager variables) {

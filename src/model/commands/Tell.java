@@ -11,6 +11,7 @@ import model.VariableManager;
 
 public class Tell extends TurtleManagerSpecificCommand {
 
+	private static final long serialVersionUID = -7345912902104085021L;
 	private List<Command> ids;
 
 	public Tell(List<Command> ids) {

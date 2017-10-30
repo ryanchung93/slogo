@@ -7,6 +7,7 @@ import model.VariableManager;
 
 public class SetBackground implements Command {
 
+	private static final long serialVersionUID = -5060712041243299791L;
 	private Command index;
 	
 	public SetBackground(Command index) {

@@ -7,6 +7,7 @@ import model.VariableManager;
 
 public class Make implements Command {
 
+	private static final long serialVersionUID = -8024247388009867582L;
 	private String variable;
 	private Command value;
 	

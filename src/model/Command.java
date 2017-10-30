@@ -1,12 +1,12 @@
 package model;
 
-import view.View;
+import java.io.Serializable;
 
 /**
  * Represents a single line of SLogo code that can be executed. 
  *
  */
-public interface Command {
+public interface Command extends Serializable {
 	/**
 	 * @param t
 	 *            The turtle that this command may modify or get data from

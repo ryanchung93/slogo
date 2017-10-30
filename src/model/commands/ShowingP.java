@@ -7,6 +7,8 @@ import model.VariableManager;
 
 public class ShowingP implements Command {
 
+	private static final long serialVersionUID = -5590913794825746037L;
+
 	@Override
 	public double execute(Turtle t, CommandManager commands, VariableManager variables) {
 		if(t.isVisible()) return 1;

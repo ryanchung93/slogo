@@ -8,7 +8,7 @@ import model.Turtle;
 import model.VariableManager;
 
 public class CommandList implements Command {
-
+	private static final long serialVersionUID = -7771505214481274902L;
 	private List<Command> commandList;
 
 	public CommandList(List<Command> commandList) {

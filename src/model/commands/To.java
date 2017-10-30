@@ -10,6 +10,7 @@ import model.commandBuilder.CommandDef;
 
 public class To implements Command {
 
+	private static final long serialVersionUID = 588849466683654678L;
 	private String name;
 	private List<String> localVariables;
 	private List<Command> inputCommands;

@@ -7,6 +7,7 @@ import model.VariableManager;
 
 public class SetShape implements Command {
 
+	private static final long serialVersionUID = 7935793616297223613L;
 	private Command index;
 	
 	public SetShape(Command index) {

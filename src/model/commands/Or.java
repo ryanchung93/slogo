@@ -7,6 +7,7 @@ import model.VariableManager;
 
 public class Or implements Command {
 
+	private static final long serialVersionUID = 2825735315668974704L;
 	private Command x1;
 	private Command x2;
 	

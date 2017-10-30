@@ -7,6 +7,7 @@ import model.VariableManager;
 
 public class Sum implements Command {
 
+	private static final long serialVersionUID = -8185145500913360646L;
 	private Command input1;
 	private Command input2;
 	
