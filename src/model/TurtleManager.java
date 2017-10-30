@@ -216,4 +216,9 @@ public class TurtleManager implements Iterable<SingularTurtle>, Turtle {
 			addTurtle();
 	}
 
+	@Override
+	public void setPalette(int indexVal, int rVal, int gVal, int bVal) {
+		turtles.get(0).setPalette(indexVal, rVal, gVal, bVal);
+	}
+
 }

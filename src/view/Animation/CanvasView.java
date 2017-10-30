@@ -21,20 +21,19 @@ import javafx.scene.paint.Color;
 public class CanvasView extends Pane {
 
 	private Color DEFAULT_COLOR = Color.WHITE;
-	private ResourceBundle myResources = ResourceBundle.getBundle("resources.view/choicebox");
-	private final List<String> colorList = new ArrayList<String>(
-			Arrays.asList(myResources.getString("BackgroundColors").replaceAll("\\s+", "").split(",")));
+	private List<String> colorList;
 
 	/**
 	 * Constructor
 	 */
-	public CanvasView(double width, double height) {
+	public CanvasView(double width, double height, List<String> list) {
 		this.setBackground(new Background(new BackgroundFill(DEFAULT_COLOR, CornerRadii.EMPTY, Insets.EMPTY)));
 		this.setScaleY(-1);
 		this.setMaxWidth(width);
 		this.setMaxHeight(height);
 		this.setLayoutX(this.getMaxWidth() / 2);
 		this.setLayoutY(this.getMaxHeight() / 2);
+		colorList = list;
 	}
 
 	public void backgroundColorChange(int colorIndex) {

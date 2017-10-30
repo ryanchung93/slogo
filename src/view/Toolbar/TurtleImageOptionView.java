@@ -20,12 +20,11 @@ public class TurtleImageOptionView extends OptionView {
 	private static final String PROMPT = "TurtleImagePrompt";
 	private TextPromptView tp;
 
-	public TurtleImageOptionView() {
+	public TurtleImageOptionView(List<String> imgList) {
 		
 		super(PROMPT);
 
-		imageNameList = new ArrayList<String>(new ArrayList<String>(
-				Arrays.asList(myResources.getString("TurtleImages").replaceAll("\\s+", "").split(","))));
+		imageNameList = imgList;
 
 		for (String imageName : imageNameList) {
 			cb.getItems().add(imageNameList.indexOf(imageName) + ". " + imageName);

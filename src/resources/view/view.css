@@ -2,6 +2,10 @@ VBox {
 	-fx-background-color: #3a4b53;
 }
 
+#var-VBox {
+	-fx-background-color: #435761
+}
+
 HBox {
 	-fx-background-color: #3a4b53;
 	-fx-spacing: 5.0;
@@ -86,9 +90,13 @@ HBox {
 	-fx-background-color: #f5f7f8;
 }
 
-.hyperlink {
+#help-hyperlink {
 	-fx-text-fill: #f5f7f8;
 	-fx-border-color: #f5f7f8;
+}
+
+.hyperlink {
+	-fx-text-fill: #f5f7f8;
 }
 
 .label {

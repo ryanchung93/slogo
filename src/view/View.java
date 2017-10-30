@@ -1,5 +1,11 @@
 package view;
 
+import java.io.File;
+import java.io.FilenameFilter;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.ResourceBundle;
 import java.util.function.Consumer;
 
 import javafx.animation.Animation;
@@ -17,7 +23,6 @@ import javafx.scene.layout.RowConstraints;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-import model.SLogoException;
 import view.Animation.CanvasView;
 import view.Animation.TextPromptView;
 import view.Animation.TurtleListener;
@@ -47,7 +52,8 @@ public class View implements ViewAPI {
 	private static final int SCREEN_WIDTH = 1000;
 	private static final int SCREEN_HEIGHT = 700;
 	private static final String STYLESHEET = "/resources/view/view.css";
-	private static final String DEFAULT_TURTLE_IMAGE = "Turtle_up.png";
+	private static final String DEFAULT_TURTLE_IMAGE = "turtle0.png";
+	private static final ResourceBundle myResources = ResourceBundle.getBundle("resources.view/view");
 
 	private Stage myStage;
 	private Scene myScene;
@@ -69,18 +75,21 @@ public class View implements ViewAPI {
 	private ToolbarView myToolbarView;
 	private TurtleStateView myTurtleStateView;
 	private LanguageListener myLanguageListener;
-	
 	private Consumer<String> myCommandConsumer;
+	private List<String> myImageNameList;
+	private List<String> myColorList;
+	private Runnable reset;
 
 	/**
 	 * Constructor for setting up animation.
 	 * 
 	 * @param stage
 	 */
-	public View(Stage stage, LanguageListener langListener, Consumer<String> commandConsumer) {
+	public View(Stage stage, LanguageListener langListener, Consumer<String> commandConsumer, Runnable reset) {
 		myStage = stage;
 		myLanguageListener = langListener;
 		myStage.setTitle("SLogo Interpreter");
+		this.reset = reset;
 		start(commandConsumer);
 	}
 
@@ -90,6 +99,8 @@ public class View implements ViewAPI {
 	public void start(Consumer<String> commandConsumer) {
 		myTimeline = setupTimeline();
 		myCommandConsumer = commandConsumer;
+		createImageList();
+		createColorList();
 		setupLayout();
 		addScrollPaneComponents();
 		addAnimationComponents();
@@ -107,11 +118,6 @@ public class View implements ViewAPI {
 	public TurtleListener getStateViewListener() {
 		return myTurtleStateView;
 	}
-	
-//	@Override
-//	public TurtleListener getCanvasListener() {
-//		return myCanvas;
-//	}
 
 	@Override
 	public VariableListener getVariableListener() {
@@ -126,11 +132,6 @@ public class View implements ViewAPI {
 	@Override
 	public StringListener getUserDefinedCommandListener() {
 		return myUDCView;
-	}
-
-	@Override
-	public void display(SLogoException e) {
-		new ErrorWindow(e.getMessage());
 	}
 
 	/*************** PRIVATE METHODS *******************/
@@ -149,10 +150,7 @@ public class View implements ViewAPI {
 	/**
 	 * Steps to update interface.
 	 */
-	private void step(double elaspedTime) {
-		// Read command
-		// Pass into execute
-	}
+	private void step(double elaspedTime) {}
 
 	/**
 	 * Sets up the general layout of the scene.
@@ -194,13 +192,14 @@ public class View implements ViewAPI {
 	 */
 	private void addAnimationComponents() {
 		double[][] dims = getGridDimensions();
-		myCanvas = new CanvasView(dims[0][1], dims[1][1]);
+		myCanvas = new CanvasView(dims[0][1], dims[1][1], myColorList);
 
 		myGrid.add(myCanvas, 1, 1);
 		GridPane.setConstraints(myCanvas, 1, 1, 1, 1, HPos.CENTER, VPos.CENTER);
 
-		Image image = new Image(getClass().getClassLoader().getResourceAsStream("resources/images/" + DEFAULT_TURTLE_IMAGE));
-		myTurtleViewManager = new TurtleViewManager(myCanvas, image);
+		Image image = new Image(
+				getClass().getClassLoader().getResourceAsStream("resources/images/" + DEFAULT_TURTLE_IMAGE));
+		myTurtleViewManager = new TurtleViewManager(myCanvas, image, myImageNameList, myColorList);
 	}
 
 	/**
@@ -208,9 +207,7 @@ public class View implements ViewAPI {
 	 */
 	private void addTextPrompt(Consumer<String> commandConsumer, Consumer<String> historyConsumer) {
 		double[][] dims = getGridDimensions();
-		myTextPrompt = new TextPromptView(dims[0][1], dims[1][2], s -> {
-			commandConsumer.accept(s);
-		}, historyConsumer);
+		myTextPrompt = new TextPromptView(dims[0][1], dims[1][2], commandConsumer, historyConsumer);
 		myGrid.add(myTextPrompt, 1, 2, 2, 1);
 	}
 
@@ -232,10 +229,12 @@ public class View implements ViewAPI {
 
 		myUDCView = new UserDefinedCommandView((dims[1][1] + dims[1][2]) / 2);
 		myVarView = new VariableView((dims[1][1] + dims[1][2]) / 2);
-		myTurtleStateView = new TurtleStateView((dims[1][1] + dims[1][2]) / 2);
+		myTurtleStateView = new TurtleStateView((dims[1][1] + dims[1][2]) / 2, myImageNameList, myColorList);
 		myRefView = new ReferenceView((dims[1][1] + dims[1][2]) / 2);
-		myHistoryView = new HistoryView((dims[1][1] + dims[1][2]) / 2, myCommandConsumer);
-		
+		myHistoryView = new HistoryView((dims[1][1] + dims[1][2]) / 2, myCommandConsumer, () -> { 
+			myTurtleViewManager.clear();
+			reset.run();
+		});
 		myLeftVBox.getChildren().addAll(myTurtleStateView.getParent(), myUDCView.getParent(), myVarView.getParent());
 		myRightVBox.getChildren().addAll(myRefView.getParent(), myHistoryView.getParent());
 	}
@@ -244,7 +243,7 @@ public class View implements ViewAPI {
 	 * Add toolbar and its subcomponents.
 	 */
 	private void addToolbar() {
-		myToolbarView = new ToolbarView(SCREEN_WIDTH);
+		myToolbarView = new ToolbarView(SCREEN_WIDTH, myImageNameList, myColorList);
 		// set a listener for background, pen, image, language changes.
 		myToolbarView.getBackgroundOptionView().addTextPrompt(myTextPrompt);
 		myToolbarView.getPenOptionView().addTextPrompt(myTextPrompt);
@@ -270,6 +269,30 @@ public class View implements ViewAPI {
 			new ErrorWindow(e.getMessage());
 		}
 		return ret;
+	}
+
+	private void createImageList() {
+		myImageNameList = new ArrayList<String>();
+
+		File file = new File("src/resources/images");
+		File[] files = file.listFiles(new FilenameFilter() {
+
+			@Override
+			public boolean accept(File dir, String name) {
+				if (name.toLowerCase().endsWith(".png")) {
+					return true;
+				} else {
+					return false;
+				}
+			}
+		});
+		for (File f : files) {
+			myImageNameList.add(f.getName());
+		}
+	}
+
+	private void createColorList() {
+		myColorList = Arrays.asList(myResources.getString("Colors").replaceAll("\\s+", "").split("\\|"));
 	}
 
 }

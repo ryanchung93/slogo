@@ -4,14 +4,14 @@ import java.awt.Desktop;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.List;
 import java.util.ResourceBundle;
 
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Hyperlink;
 import javafx.scene.layout.HBox;
+import view.ErrorWindow;
 import view.SubcomponentViewAPI;
 
 /**
@@ -32,12 +32,18 @@ public class ToolbarView implements SubcomponentViewAPI {
 	private PenButtons myPenButtons;
 	private TurtleImageOptionView myImageOptionView;
 	private LanguageOptionView myLanguageOptionView;
+	private List<String> myImageNameList;
+	private List<String> myColorList;
 
-	public ToolbarView(double width) {
+	public ToolbarView(double width, List<String> imgList, List<String> colorList) {
 
 		myToolbar = new HBox(NODE_SPACING);
 		myToolbar.setAlignment(Pos.CENTER);
 		myToolbar.setMinWidth(width);
+		
+		myImageNameList = imgList;
+		myColorList = colorList;
+		
 		addBackgroundColorOption();
 		addPenColorOption();
 		addPenSlider();
@@ -83,6 +89,7 @@ public class ToolbarView implements SubcomponentViewAPI {
 
 		myHelpLink = new Hyperlink();
 		myHelpLink.setText("Help");
+		myHelpLink.setId("help-hyperlink");
 
 		myHelpLink.setOnAction(e -> {
 			if (Desktop.isDesktopSupported()) {
@@ -90,9 +97,9 @@ public class ToolbarView implements SubcomponentViewAPI {
 					Desktop.getDesktop().browse(new URI(myResources.getString("HelpURL")));
 				} catch (IOException e1) {
 					e1.printStackTrace();
-					showError(e1.getMessage());
+					new ErrorWindow(e1.getMessage());
 				} catch (URISyntaxException e1) {
-					e1.printStackTrace();
+					new ErrorWindow(e1.getMessage());
 				}
 			}
 		});
@@ -102,12 +109,12 @@ public class ToolbarView implements SubcomponentViewAPI {
 	}
 
 	private void addBackgroundColorOption() {
-		myBackgroundOptionView = new BackgroundOptionView();
+		myBackgroundOptionView = new BackgroundOptionView(myColorList);
 		myToolbar.getChildren().add(myBackgroundOptionView.getParent());
 	}
 
 	private void addPenColorOption() {
-		myPenOptionView = new PenOptionView();
+		myPenOptionView = new PenOptionView(myColorList);
 		myToolbar.getChildren().add(myPenOptionView.getParent());
 	}
 
@@ -122,19 +129,13 @@ public class ToolbarView implements SubcomponentViewAPI {
 	}
 
 	private void addTurtleImageOption() {
-		myImageOptionView = new TurtleImageOptionView();
+		myImageOptionView = new TurtleImageOptionView(myImageNameList);
 		myToolbar.getChildren().add(myImageOptionView.getParent());
 	}
 
 	private void addLanguageOption() {
 		myLanguageOptionView = new LanguageOptionView();
 		myToolbar.getChildren().add(myLanguageOptionView.getParent());
-	}
-
-	private void showError(String message) {
-		Alert alert = new Alert(AlertType.ERROR);
-		alert.setContentText(message);
-		alert.showAndWait();
 	}
 
 }

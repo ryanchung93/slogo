@@ -30,7 +30,7 @@ public class SingularTurtle implements ImmutableTurtle, Turtle {
 	private int shapeIndex;
 	private Supplier<Integer> numTurtles;
 
-	public static final int DEFAULT_PEN_COLOR_INDEX = 0;
+	public static final int DEFAULT_PEN_COLOR_INDEX = 1;
 	public static final int DEFAULT_PEN_SIZE = 1;
 	public static final int DEFAULT_BACKGROUND_COLOR_INDEX = 0;
 	public static final int DEFAULT_SHAPE_INDEX = 0;
@@ -213,4 +213,9 @@ public class SingularTurtle implements ImmutableTurtle, Turtle {
 		return dtheta;
 	}
 
+	@Override
+	public void setPalette(int indexVal, int rVal, int gVal, int bVal) {
+		for(TurtleListener tL : listeners)
+			tL.addToPalette(indexVal, rVal, gVal, bVal);
+	}
 }

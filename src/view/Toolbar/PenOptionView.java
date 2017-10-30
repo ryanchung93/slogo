@@ -1,11 +1,10 @@
 package view.Toolbar;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.scene.paint.Color;
 import view.Animation.TextPromptView;
 
 /**
@@ -20,12 +19,23 @@ public class PenOptionView extends OptionView {
 	private List<String> colorList;
 	private TextPromptView tp;
 
-	public PenOptionView() {
-		
+	public PenOptionView(List<String> colorList) {
+
 		super(PROMPT);
-		
-		colorList = new ArrayList<String>(
-				Arrays.asList(myResources.getString("PenColors").replaceAll("\\s+", "").split(",")));
+
+		this.colorList = colorList;
+
+		makeChoiceBox();
+
+		addItem(7, "255", "254", "253");
+
+	}
+
+	public void addTextPrompt(TextPromptView tp) {
+		this.tp = tp;
+	}
+
+	private void makeChoiceBox() {
 
 		for (String color : colorList)
 			cb.getItems().add(colorList.indexOf(color) + ". " + color);
@@ -37,11 +47,15 @@ public class PenOptionView extends OptionView {
 				tp.runCommand("SetPenColor", Integer.toString(newValue.intValue()));
 			}
 		});
-
 	}
 
-	public void addTextPrompt(TextPromptView tp) {
-		this.tp = tp;
+	private void addItem(int index, String r, String g, String b) {
+		if (index < cb.getItems().size()) {
+			cb.getItems().remove(index);
+			cb.getItems().add(index, "rgb(" + r + "," + g + "," + b + ")");
+			Color c = Color.valueOf(cb.getItems().get(7));
+			System.out.println(c);
+		}
 	}
 
 }

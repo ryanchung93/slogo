@@ -25,7 +25,7 @@ public class Tell extends TurtleManagerSpecificCommand {
 			toReturn = (int)Math.round(c.execute(t, commands, variables));
 			list.add(toReturn);
 		}
-		t.setActiveTurtles(list); //TODO another issue to address -- what if "fd tell [ 1 ]"?
+		t.setActiveTurtles(list); 
 		return toReturn;
 	}
 
