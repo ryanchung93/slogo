@@ -25,6 +25,7 @@ import view.ErrorWindow;
 
 public class HistoryView {
 
+	private static final String DELIMITER = "&&&";
 	private Button clearButton;
 	private Button undoButton;
 	private String lastCommand;
@@ -109,12 +110,13 @@ public class HistoryView {
 	public void save(String filePath) {
 		StringBuilder sb = new StringBuilder();
 		for (String s : historyList)
-			sb.append(s);
+			sb.append(s + " " + DELIMITER + " ");
 		SaverLoader.save(sb.toString(), filePath);
 	}
 
 	public void load(String filePath) {
-		historyList = new ArrayList<String>(Arrays.asList(((String) SaverLoader.load(filePath)).split("\n")));
+		historyList = new ArrayList<String>(Arrays.asList(((String) SaverLoader.load(filePath)).split("\\s" + DELIMITER + "\\s")         ));
+		myHistory.getChildren().removeAll(myHistory.getChildren());
 		for (String s : historyList) {
 			Hyperlink t = new Hyperlink(s);
 			t.setOnAction(event -> {
