@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.ResourceBundle;
 import java.util.function.Consumer;
 
+import controller.Driver;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -49,7 +50,7 @@ public class View implements ViewAPI {
 	private static final int FRAMES_PER_SECOND = 60;
 	private static final int MILLISECOND_DELAY = 1000 / FRAMES_PER_SECOND;
 	private static final double SECOND_DELAY = 1.0 / FRAMES_PER_SECOND;
-	private static final int SCREEN_WIDTH = 1000;
+	private static final int SCREEN_WIDTH = 1200;
 	private static final int SCREEN_HEIGHT = 700;
 	private static final String STYLESHEET = "/resources/view/view.css";
 	private static final String DEFAULT_TURTLE_IMAGE = "turtle0.png";
@@ -99,7 +100,7 @@ public class View implements ViewAPI {
 	public void start(Consumer<String> commandConsumer) {
 		myTimeline = setupTimeline();
 		myCommandConsumer = commandConsumer;
-		createImageList();
+		myImageNameList = createImageList("src/resources/images", ".png");
 		createColorList();
 		setupLayout();
 		addScrollPaneComponents();
@@ -164,11 +165,11 @@ public class View implements ViewAPI {
 		myScene.setOnKeyPressed(e -> handleKeyInput(e.getCode()));
 
 		ColumnConstraints col1 = new ColumnConstraints();
-		col1.setPercentWidth(25);
+		col1.setPercentWidth(22.5);
 		ColumnConstraints col2 = new ColumnConstraints();
-		col2.setPercentWidth(50);
+		col2.setPercentWidth(55);
 		ColumnConstraints col3 = new ColumnConstraints();
-		col3.setPercentWidth(25);
+		col3.setPercentWidth(22.5);
 		RowConstraints row1 = new RowConstraints();
 		row1.setPercentHeight(10);
 		RowConstraints row2 = new RowConstraints();
@@ -248,7 +249,25 @@ public class View implements ViewAPI {
 	 * Add toolbar and its subcomponents.
 	 */
 	private void addToolbar() {
-		myToolbarView = new ToolbarView(SCREEN_WIDTH, myImageNameList, myColorList);
+		myToolbarView = new ToolbarView(SCREEN_WIDTH, myImageNameList, myColorList, ( ) -> {
+			try {
+				newWorkSpace();
+			} catch (Exception e) {
+				new ErrorWindow(e.getMessage());
+			}
+		}, filePath -> {
+			try {
+				newWorkSpace();
+			} catch (Exception e) {
+				new ErrorWindow(e.getMessage());
+			};
+		}, filePath -> {
+			try {
+				newWorkSpace();
+			} catch (Exception e) {
+				new ErrorWindow(e.getMessage());
+			};});
+
 		// set a listener for background, pen, image, language changes.
 		myToolbarView.getBackgroundOptionView().addTextPrompt(myTextPrompt);
 		myToolbarView.getPenOptionView().addTextPrompt(myTextPrompt);
@@ -258,6 +277,11 @@ public class View implements ViewAPI {
 		myToolbarView.getLanguageOptionView().addLanguageOptionListener(myLanguageListener);
 		myToolbarView.getLanguageOptionView().addLanguageOptionListener(myTextPrompt);
 		myGrid.add(myToolbarView.getParent(), 0, 0);
+	}
+
+	private void newWorkSpace() throws Exception {
+		new Driver(new Stage()).run();
+		
 	}
 
 	/**
@@ -276,15 +300,16 @@ public class View implements ViewAPI {
 		return ret;
 	}
 
-	private void createImageList() {
-		myImageNameList = new ArrayList<String>();
+	private List<String> createImageList(String path, String ext) {
 
-		File file = new File("src/resources/images");
+		List<String> ret = new ArrayList<String>();
+
+		File file = new File(path);
 		File[] files = file.listFiles(new FilenameFilter() {
 
 			@Override
 			public boolean accept(File dir, String name) {
-				if (name.toLowerCase().endsWith(".png")) {
+				if (name.toLowerCase().endsWith(ext)) {
 					return true;
 				} else {
 					return false;
@@ -292,8 +317,9 @@ public class View implements ViewAPI {
 			}
 		});
 		for (File f : files) {
-			myImageNameList.add(f.getName());
+			ret.add(f.getName());
 		}
+		return ret;
 	}
 
 	private void createColorList() {
