@@ -17,7 +17,6 @@ import javafx.scene.layout.RowConstraints;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-import model.SLogoException;
 import view.Animation.CanvasView;
 import view.Animation.TextPromptView;
 import view.Animation.TurtleListener;
@@ -71,6 +70,7 @@ public class View implements ViewAPI {
 	private LanguageListener myLanguageListener;
 	
 	private Consumer<String> myCommandConsumer;
+	private Runnable reset;
 
 	/**
 	 * Constructor for setting up animation.
@@ -81,6 +81,7 @@ public class View implements ViewAPI {
 		myStage = stage;
 		myLanguageListener = langListener;
 		myStage.setTitle("SLogo Interpreter");
+		this.reset = reset;
 		start(commandConsumer);
 	}
 
@@ -219,7 +220,10 @@ public class View implements ViewAPI {
 		myVarView = new VariableView((dims[1][1] + dims[1][2]) / 2);
 		myTurtleStateView = new TurtleStateView((dims[1][1] + dims[1][2]) / 2);
 		myRefView = new ReferenceView((dims[1][1] + dims[1][2]) / 2);
-		myHistoryView = new HistoryView((dims[1][1] + dims[1][2]) / 2, myCommandConsumer);
+		myHistoryView = new HistoryView((dims[1][1] + dims[1][2]) / 2, myCommandConsumer, () -> { 
+			myTurtleViewManager.clear();
+			reset.run();
+		});
 		
 		myLeftVBox.getChildren().addAll(myTurtleStateView.getParent(), myUDCView.getParent(), myVarView.getParent());
 		myRightVBox.getChildren().addAll(myRefView.getParent(), myHistoryView.getParent());
