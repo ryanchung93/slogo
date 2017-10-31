@@ -29,10 +29,12 @@ public class TextPromptView extends HBox implements TextPromptAPI, LanguageListe
 
 	private Consumer<String> commandConsumer;
 	private Consumer<String> historyConsumer;
+	private Runnable undoneClearer;
 	private ResourceBundle acceptedCommands;
 
 	public TextPromptView(double width, double height, Consumer<String> commandConsumer,
-			Consumer<String> historyConsumer) {
+			Consumer<String> historyConsumer, Runnable undoneClearer) {
+		
 		this.setMaxWidth(width);
 		this.setMaxHeight(height);
 
@@ -44,6 +46,7 @@ public class TextPromptView extends HBox implements TextPromptAPI, LanguageListe
 
 		this.commandConsumer = commandConsumer;
 		this.historyConsumer = historyConsumer;
+		this.undoneClearer = undoneClearer;
 		acceptedCommands = ResourceBundle.getBundle("resources.languages." + DEFAULT_LANGUAGE);
 
 		addButtons(width - tp.getPrefWidth(), height / 2);
@@ -98,7 +101,10 @@ public class TextPromptView extends HBox implements TextPromptAPI, LanguageListe
 	private void addButtons(double width, double height) {
 		buttonPanel = new VBox();
 
-		runButton = makeButton("Run", e -> enter());
+		runButton = makeButton("Run", e -> {
+			enter();
+			undoneClearer.run();
+		});
 		runButton.setPrefWidth(width);
 		runButton.setPrefHeight(height);
 		clearButton = makeButton("Clear", e -> clear());
@@ -114,7 +120,7 @@ public class TextPromptView extends HBox implements TextPromptAPI, LanguageListe
 		ret.setOnAction(handler);
 		return ret;
 	}
-
+	
 	private void enter() {
 		String code = tp.getText();
 		try {

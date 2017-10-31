@@ -47,6 +47,11 @@ public class TurtleStateView extends Window implements TurtleListener {
 			}
 		}
 	}
+	
+	public void clear() {
+		ta.clear();
+		myTurtles.clear();
+	}
 
 	@Override
 	public void setTurtle(ImmutableTurtle turtle) {
