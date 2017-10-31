@@ -11,6 +11,10 @@ import model.TokenDispenser;
 import model.commands.CommandList;
 import model.commands.UserDefinedCommand;
 
+/**
+ * @author Aaron Paskin
+ * @author Ian Eldridge-Allegra
+ */
 public class CommandDef implements CommandBuilder, Serializable {
 	private static final long serialVersionUID = -2704047808972245064L;
 	private List<String> variables;

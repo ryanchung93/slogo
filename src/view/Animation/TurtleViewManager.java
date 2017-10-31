@@ -2,7 +2,6 @@ package view.Animation;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.function.Consumer;
 
 import javafx.scene.image.Image;
 
@@ -21,6 +20,9 @@ public class TurtleViewManager {
 	private Image myImage;
 	private Runnable myUpdateColorList;
 
+	/*
+	 * Constructor
+	 */
 	public TurtleViewManager(CanvasView parent, Image image, List<String> imgList, List<String> colorList, Runnable updateColorList) {
 		myTurtleList = new ArrayList<TurtleView>();
 		myParent = parent;
@@ -30,17 +32,28 @@ public class TurtleViewManager {
 		myUpdateColorList = updateColorList;
 	}
 
+	/**
+	 * Called when a turtle is added.
+	 */
 	public void addTurtle() {
 		TurtleView turtleView = new TurtleView(myParent, myImage, myImageNameList, myColorList, myUpdateColorList);		
 		myTurtleList.add(turtleView);
 		myParent.getChildren().add(turtleView.getImageView());
 	}
 
+	/**
+	 * Called when a TurtleListener is needed for the backend.
+	 * 
+	 * @return a new TurtleListener
+	 */
 	public TurtleListener getNewListener() {
 		addTurtle();
 		return myTurtleList.get(myTurtleList.size()-1);
 	}
 	
+	/**
+	 * Removes TurtleListeners from the program.
+	 */
 	public void clear() {
 		myTurtleList.clear();
 		myParent.getChildren().clear();

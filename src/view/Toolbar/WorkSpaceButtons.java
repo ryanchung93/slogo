@@ -3,13 +3,10 @@ package view.Toolbar;
 import java.io.File;
 import java.io.FilenameFilter;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 import java.util.function.Consumer;
 
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
@@ -33,8 +30,6 @@ public class WorkSpaceButtons implements SubcomponentViewAPI {
 	private Runnable newWorkspace;
 	private Consumer<String> saveConsumer;
 	private Consumer<String> loadConsumer;
-	private ChoiceBox<String> cb;
-	private List<String> fileList;
 
 	public WorkSpaceButtons(Runnable newWorkspace, Consumer<String> saveConsumer, Consumer<String> loadConsumer) {
 
@@ -99,6 +94,7 @@ public class WorkSpaceButtons implements SubcomponentViewAPI {
 		return view;
 	}
 	
+	// used if we want a drop-down
 	private List<String> createFileList(String path, String ext) {
 
 		List<String> ret = new ArrayList<String>();

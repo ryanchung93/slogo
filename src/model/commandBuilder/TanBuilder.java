@@ -10,6 +10,10 @@ import model.commands.Product;
 import model.commands.Sin;
 import model.commands.Sum;
 
+/**
+ * @author Aaron Paskin
+ * @author Ian Eldridge-Allegra
+ */
 public class TanBuilder implements CommandBuilder {
 
 	@Override

@@ -20,11 +20,11 @@ import model.commands.CommandList;
  */
 public interface CommandBuilder {
 	/**
-	 * Constructs a single command. Assumes that the command name has just been
-	 * passed by the Parser, so that the tokens following are the parameters.
+	 * Constructs a single command. Assumes that the command name was the last
+	 * token, so that the tokens following are the parameters.
 	 * 
 	 * @param dispenser
-	 *            A @TokenDispenser to get parameters from
+	 *            A TokenDispenser to get parameters from
 	 * @return A Command that can be executed, containing any needed parameters.
 	 * @throws SLogoException
 	 *             When encountering inappropriate command parameters.

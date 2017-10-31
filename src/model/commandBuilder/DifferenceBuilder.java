@@ -8,6 +8,10 @@ import model.commands.NumberCommand;
 import model.commands.Product;
 import model.commands.Sum;
 
+/**
+ * @author Aaron Paskin
+ * @author Ian Eldridge-Allegra
+ */
 public class DifferenceBuilder extends StackGroupCommandBuilder {
 
 	@Override

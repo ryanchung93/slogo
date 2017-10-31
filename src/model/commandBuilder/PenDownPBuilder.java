@@ -6,6 +6,10 @@ import model.SLogoException;
 import model.TokenDispenser;
 import model.commands.PenDownP;
 
+/**
+ * @author Aaron Paskin
+ * @author Ian Eldridge-Allegra
+ */
 public class PenDownPBuilder implements CommandBuilder {
 
 	@Override

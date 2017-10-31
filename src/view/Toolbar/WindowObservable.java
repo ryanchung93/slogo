@@ -27,9 +27,9 @@ public class WindowObservable<T> extends Observable {
 	
 	public WindowObservable(ArrayList<String> activeWindows) {
 		windows = activeWindows;
-		for (String window : windows) {
+		/*for (String window : windows) {
 			System.out.println("Y" + window);
-		}
+		}*/
 	}
 
 	/**

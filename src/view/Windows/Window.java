@@ -36,10 +36,5 @@ public class Window implements SubcomponentViewAPI {
 	public Parent getParent() {
 		return view;
 	}
-	
-	@Override
-	public TextArea getTextArea() {
-		return ta;
-	}
 }
 

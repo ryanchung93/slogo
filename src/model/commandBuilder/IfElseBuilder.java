@@ -10,6 +10,10 @@ import model.commands.IfElse;
  * Builds the IfElse Command with three arguments: The command representing the
  * condition, a list of commands for true values, and a list of commands for
  * false values.
+ * 
+ * @author Aaron Paskin
+ * @author Ian Eldridge-Allegra
+ *
  */
 public class IfElseBuilder implements CommandBuilder {
 

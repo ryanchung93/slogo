@@ -6,6 +6,10 @@ import model.SLogoException;
 import model.TokenDispenser;
 import model.commands.Not;
 
+/**
+ * @author Aaron Paskin
+ * @author Ian Eldridge-Allegra
+ */
 public class NotBuilder implements CommandBuilder {
 
 	@Override

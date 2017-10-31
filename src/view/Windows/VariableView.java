@@ -51,7 +51,7 @@ public class VariableView implements SubcomponentViewAPI, VariableListener {
 	@Override
 	public void changedMap(Map<String, Double> vars) {
 		variableMap = vars;
-		System.out.println("changed");
+		//System.out.println("changed");
 		varsBox.getChildren().removeAll(varsBox.getChildren());
 		varsBox.getChildren().add(header);
 

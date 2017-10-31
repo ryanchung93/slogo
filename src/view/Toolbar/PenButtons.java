@@ -1,6 +1,7 @@
 package view.Toolbar;
 
 import java.util.ResourceBundle;
+import java.util.function.BiConsumer;
 
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -11,24 +12,23 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import view.SubcomponentViewAPI;
-import view.Animation.TextPromptView;
 
 public class PenButtons implements SubcomponentViewAPI {
 
 	private VBox view;
 	private Button upButton;
 	private Button downButton;
-	private TextPromptView tp;
 	private static final ResourceBundle myResources = ResourceBundle.getBundle("resources.view/view");
 	private static final String PROMPT = myResources.getString("PenButtonsPrompt");
+	private BiConsumer<String, String> myCommandConsumer;
 
-	public PenButtons() {
+	public PenButtons(BiConsumer<String, String> commandConsumer) {
 		view = new VBox();
-
+		myCommandConsumer = commandConsumer;
 		Label prompt = new Label(PROMPT);
 		HBox buttonPanel = new HBox();
-		upButton = makeButton(myResources.getString("UpButtonCommand"), e -> tp.runCommand("PenUp", ""));
-		downButton = makeButton(myResources.getString("DownButtonCommand"), e -> tp.runCommand("PenDown", ""));
+		upButton = makeButton(myResources.getString("UpButtonCommand"), e -> myCommandConsumer.accept("PenUp", ""));
+		downButton = makeButton(myResources.getString("DownButtonCommand"), e -> myCommandConsumer.accept("PenDown", ""));
 		buttonPanel.getChildren().addAll(upButton, downButton);
 		view.getChildren().addAll(prompt, buttonPanel);
 		view.setAlignment(Pos.BASELINE_CENTER);
@@ -37,16 +37,12 @@ public class PenButtons implements SubcomponentViewAPI {
 	private Button makeButton(String label, EventHandler<ActionEvent> e) {
 		Button ret = new Button(label);
 		ret.setOnAction(e);
-		ret.setId("pen-button");
+		ret.setId("toolbar-button");
 		return ret;
 	}
 
 	@Override
 	public Parent getParent() {
 		return view;
-	}
-
-	public void addTextPrompt(TextPromptView tp) {
-		this.tp = tp;
 	}
 }

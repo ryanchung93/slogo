@@ -6,6 +6,7 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 
 import javafx.geometry.Pos;
@@ -41,9 +42,11 @@ public class ToolbarView implements SubcomponentViewAPI {
 	private ViewSelector myViewSelector;
 	private WindowObservable<String> myActiveView;
 	private Hyperlink myHelpLink;
+	private BiConsumer<String, String> myCommandConsumer;
 
 	public ToolbarView(double width, List<String> imgList, List<String> colorList, Runnable newWorkspace,
-			Consumer<String> saveConsumer, Consumer<String> loadConsumer, WindowObservable<String> activeView) {
+			Consumer<String> saveConsumer, Consumer<String> loadConsumer, BiConsumer<String, String> commandConsumer,
+			WindowObservable<String> activeView) {
 
 		myToolbar = new HBox(NODE_SPACING);
 		myToolbar.setAlignment(Pos.CENTER);
@@ -51,6 +54,7 @@ public class ToolbarView implements SubcomponentViewAPI {
 
 		myImageNameList = imgList;
 		myColorList = colorList;
+		myCommandConsumer = commandConsumer;
 		myActiveView = activeView;
 
 		myWorkSpaceButtons = new WorkSpaceButtons(newWorkspace, saveConsumer, loadConsumer);
@@ -116,11 +120,11 @@ public class ToolbarView implements SubcomponentViewAPI {
 	}
 
 	private void makeSubcomponents() {
-		myBackgroundOptionView = new BackgroundOptionView(myColorList);
-		myPenOptionView = new PenOptionView(myColorList);
-		myPenSlider = new PenSlider();
-		myPenButtons = new PenButtons();
-		myImageOptionView = new TurtleImageOptionView(myImageNameList);
+		myBackgroundOptionView = new BackgroundOptionView(myColorList, myCommandConsumer);
+		myPenOptionView = new PenOptionView(myColorList, myCommandConsumer);
+		myPenSlider = new PenSlider(myCommandConsumer);
+		myPenButtons = new PenButtons(myCommandConsumer);
+		myImageOptionView = new TurtleImageOptionView(myImageNameList, myCommandConsumer);
 		myLanguageOptionView = new LanguageOptionView();
 		addViewSelector(myActiveView);
 	}
@@ -133,6 +137,7 @@ public class ToolbarView implements SubcomponentViewAPI {
 
 	private Button createButton(String string) {
 		Button button = new Button(string);
+		button.setId("toolbar-button");
 		myToolbar.getChildren().add(button);
 		return button;
 

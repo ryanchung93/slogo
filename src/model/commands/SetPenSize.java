@@ -5,6 +5,10 @@ import model.CommandManager;
 import model.Turtle;
 import model.VariableManager;
 
+/**
+ * @author Aaron Paskin
+ * @author Ian Eldridge-Allegra
+ */
 public class SetPenSize implements Command {
 
 	private static final long serialVersionUID = -2641483880650176017L;

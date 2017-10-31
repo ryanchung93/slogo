@@ -6,6 +6,10 @@ import model.StackGroupCommandBuilder;
 import model.TokenDispenser;
 import model.commands.Sum;
 
+/**
+ * @author Aaron Paskin
+ * @author Ian Eldridge-Allegra
+ */
 public class SumBuilder extends StackGroupCommandBuilder {
 
 	@Override

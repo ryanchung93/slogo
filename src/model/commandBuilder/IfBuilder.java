@@ -8,6 +8,10 @@ import model.SLogoException;
 import model.TokenDispenser;
 import model.commands.IfElse;
 
+/**
+ * @author Aaron Paskin
+ * @author Ian Eldridge-Allegra
+ */
 public class IfBuilder implements CommandBuilder {
 	@Override
 	public Command build(TokenDispenser dispenser) throws SLogoException {

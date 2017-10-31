@@ -7,6 +7,10 @@ import model.TokenDispenser;
 import model.commands.AskWith;
 import model.commands.CommandList;
 
+/**
+ * @author Aaron Paskin
+ * @author Ian Eldridge-Allegra
+ */
 public class AskWithBuilder implements CommandBuilder {
 
 	@Override

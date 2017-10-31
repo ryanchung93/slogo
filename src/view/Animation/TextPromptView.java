@@ -15,7 +15,7 @@ import view.ErrorWindow;
 import view.Toolbar.LanguageListener;
 
 /**
- * Class allowing users to enter and clear commands.
+ * Class allowing users to enter and clear text/key commands.
  * 
  * @author DavidTran
  *
@@ -120,11 +120,11 @@ public class TextPromptView extends HBox implements TextPromptAPI, LanguageListe
 		try {
 			commandConsumer.accept(code);
 			historyConsumer.accept(code);
+			clear();
 		}
 		catch(SLogoException e) {
 			new ErrorWindow(e.getMessage());
 		}
-		clear();
 	}
 
 	private void clear() {

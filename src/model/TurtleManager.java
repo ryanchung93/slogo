@@ -10,28 +10,53 @@ import java.util.function.Supplier;
 
 import view.Animation.TurtleListener;
 
+/**
+ * Represents and holds all the turtles. Commands can be executed on the
+ * TurtleManager, and will simply be excecuted on each active turtle. Iterating
+ * over an instance of this class iterates only over the active turtles.
+ * 
+ * @author Pair programmed by:
+ * @author Aaron Paskin
+ * @author Ian Eldridge-Allegra
+ *
+ */
 public class TurtleManager implements Iterable<SingularTurtle>, Turtle {
 
 	private List<SingularTurtle> turtles;
-	private Supplier<List<TurtleListener>> listenersProducer;
+	private Supplier<List<TurtleListener>> listenersSupplier;
 
-	public TurtleManager(Supplier<List<TurtleListener>> listenersProducer) {
+	/**
+	 * @param listenersProducer
+	 *            A supplier of lists of listeners, where each list should be given
+	 *            to a particular turtle.
+	 */
+	public TurtleManager(Supplier<List<TurtleListener>> listenersSupplier) {
 		turtles = new ArrayList<>();
-		this.listenersProducer = listenersProducer;
+		this.listenersSupplier = listenersSupplier;
 	}
 
+	/**
+	 * Adds a turtle to the program and gives it listeners from the Supplier. 
+	 */
 	public void addTurtle() {
 		SingularTurtle turtle = new SingularTurtle(0, 0, 0, turtles.size() + 1);
-		for (TurtleListener tL : listenersProducer.get())
+		for (TurtleListener tL : listenersSupplier.get())
 			turtle.addTurtleListener(tL);
 		turtle.setNumTurtles(() -> getNumTurtles());
 		turtles.add(turtle);
 	}
 
+	/* (non-Javadoc)
+	 * @see model.Turtle#getNumTurtles()
+	 */
 	public int getNumTurtles() {
 		return turtles.size();
 	}
 
+	/* (non-Javadoc)
+	 *  Iterates only over the active turtles. 
+	 * @see java.lang.Iterable#iterator()
+	 */
 	@Override
 	public Iterator<SingularTurtle> iterator() {
 		return new Iterator<SingularTurtle>() {
@@ -68,27 +93,27 @@ public class TurtleManager implements Iterable<SingularTurtle>, Turtle {
 	private SingularTurtle getLastActiveTurtle() {
 		return getActiveTurtles().get(getActiveTurtles().size() - 1);
 	}
- 	
+
 	@Override
 	public double forward(Command command, CommandManager commands, VariableManager variables) {
 		return doToEach(t -> t.forward(command, commands, variables));
 	}
-	
+
 	@Override
 	public double left(Command command, CommandManager commands, VariableManager variables) {
 		return doToEach(t -> t.left(command, commands, variables));
 	}
-	
+
 	@Override
 	public double setXY(Command command1, Command command2, CommandManager commands, VariableManager variables) {
 		return doToEach(t -> t.setXY(command1, command2, commands, variables));
 	}
-	
+
 	@Override
 	public double setHeading(Command command, CommandManager commands, VariableManager variables) {
 		return doToEach(t -> t.setHeading(command, commands, variables));
 	}
-	
+
 	@Override
 	public double setTowards(Command command1, Command command2, CommandManager commands, VariableManager variables) {
 		return doToEach(t -> t.setTowards(command1, command2, commands, variables));
@@ -104,24 +129,24 @@ public class TurtleManager implements Iterable<SingularTurtle>, Turtle {
 		for (SingularTurtle t : this)
 			t.setPenDown(b);
 	}
-	
+
 	@Override
 	public void setPenColor(int index) {
-		for(SingularTurtle t : this) {
+		for (SingularTurtle t : this) {
 			t.setPenColor(index);
 		}
 	}
-	
+
 	@Override
 	public void setPenSize(double size) {
-		for(SingularTurtle t : this) {
+		for (SingularTurtle t : this) {
 			t.setPenSize(size);
 		}
 	}
-	
+
 	@Override
 	public void setBackgroundColor(int index) {
-		for(SingularTurtle t : turtles) {
+		for (SingularTurtle t : turtles) {
 			t.setBackgroundColor(index);
 		}
 	}
@@ -193,6 +218,8 @@ public class TurtleManager implements Iterable<SingularTurtle>, Turtle {
 
 	public void ask(List<Integer> ids, Consumer<SingularTurtle> consumer) {
 		for (Integer i : ids) {
+			if(i < 0)
+				continue;
 			makeTurtlesTo(i);
 			consumer.accept(turtles.get(i - 1));
 		}
