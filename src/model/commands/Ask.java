@@ -10,6 +10,10 @@ import model.TurtleManager;
 import model.TurtleManagerSpecificCommand;
 import model.VariableManager;
 
+/**
+ * @author Aaron Paskin
+ * @author Ian Eldridge-Allegra
+ */
 public class Ask extends TurtleManagerSpecificCommand {
 	private static final long serialVersionUID = 4697243747785822209L;
 	private Command commandList;

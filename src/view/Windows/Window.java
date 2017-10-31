@@ -37,7 +37,6 @@ public class Window implements SubcomponentViewAPI {
 		return view;
 	}
 	
-	@Override
 	public TextArea getTextArea() {
 		return ta;
 	}

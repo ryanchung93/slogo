@@ -11,6 +11,10 @@ import model.Turtle;
 import model.VariableManager;
 import model.commandBuilder.CommandDef;
 
+/**
+ * @author Aaron Paskin
+ * @author Ian Eldridge-Allegra
+ */
 public class UserDefinedCommand implements Command {
 	private static final long serialVersionUID = -4720749543660734895L;
 	private String name;

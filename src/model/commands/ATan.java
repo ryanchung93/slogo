@@ -5,6 +5,10 @@ import model.CommandManager;
 import model.Turtle;
 import model.VariableManager;
 
+/**
+ * @author Aaron Paskin
+ * @author Ian Eldridge-Allegra
+ */
 public class ATan implements Command {
 	private static final long serialVersionUID = -7821142903737347711L;
 	private Command a;

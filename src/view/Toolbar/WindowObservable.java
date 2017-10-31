@@ -9,20 +9,20 @@ public class WindowObservable<T> extends Observable {
 	
 	public WindowObservable(ArrayList<String> activeWindows) {
 		windows = activeWindows;
-		for (String window : windows) {
+		/*for (String window : windows) {
 			System.out.println("Y" + window);
-		}
+		}*/
 	}
 	
 	public void add(T t) {
 		String str = (String) t;
 		windows.add(str);
 		
-		System.out.println("ACTIVEVIEWS: ");
-		for (String s : windows) {
+		//System.out.println("ACTIVEVIEWS: ");
+		/*for (String s : windows) {
 			System.out.println(s);
 		}
-		System.out.println("============");
+		System.out.println("============");*/
 		this.setChanged();
 		notifyObservers(t);
 	}
@@ -31,9 +31,9 @@ public class WindowObservable<T> extends Observable {
 		String str = (String) t;
 		windows.remove(str);
 		
-		System.out.println("ACTIVEVIEWS: ");
+		//System.out.println("ACTIVEVIEWS: ");
 		for (String s : windows) {
-			System.out.println(s);
+			//System.out.println(s);
 		}
 		
 		this.setChanged();
