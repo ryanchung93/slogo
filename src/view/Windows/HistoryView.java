@@ -19,11 +19,20 @@ import javafx.scene.layout.RowConstraints;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
+import view.SubcomponentViewAPI;
+import view.ErrorWindow;
 import model.SLogoException;
 import model.SaverLoader;
-import view.ErrorWindow;
 
-public class HistoryView {
+
+/**
+ * Class that allows users to see command history.
+ * 
+ * @author taekwhunchung
+ *
+ */
+
+public class HistoryView implements SubcomponentViewAPI{
 
 	private static final String DELIMITER = "&&&";
 	private Button clearButton;
@@ -31,11 +40,9 @@ public class HistoryView {
 	private String lastCommand;
 	private List<String> historyList;
 	private Text text;
-	private TextArea ta;
 	private VBox myHistory;
 	private ScrollPane scrollPane;
 	private GridPane view;
-	private ResourceBundle myResources = ResourceBundle.getBundle("resources.view/view");
 
 	private Consumer<String> myCommandConsumer;
 	private Runnable myReset;
@@ -151,4 +158,5 @@ public class HistoryView {
 			myCommandConsumer.accept(command);
 		}
 	}
+
 }

@@ -10,6 +10,7 @@ import java.util.function.Consumer;
 
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
+import javafx.scene.control.Button;
 import javafx.scene.control.Hyperlink;
 import javafx.scene.layout.HBox;
 import view.ErrorWindow;
@@ -36,10 +37,14 @@ public class ToolbarView implements SubcomponentViewAPI {
 	private PenButtons myPenButtons;
 	private TurtleImageOptionView myImageOptionView;
 	private LanguageOptionView myLanguageOptionView;
+	private List<String> myImageNameList;
+	private List<String> myColorList;
+	private ViewSelector myViewSelector;
+	private WindowObservable<String> myActiveView;
 	private Hyperlink myHelpLink;
 
 	public ToolbarView(double width, List<String> imgList, List<String> colorList, Runnable newWorkspace,
-			Consumer<String> saveConsumer, Consumer<String> loadConsumer) {
+			Consumer<String> saveConsumer, Consumer<String> loadConsumer, WindowObservable<String> activeView) {
 
 		myToolbar = new HBox(NODE_SPACING);
 		myToolbar.setAlignment(Pos.CENTER);
@@ -47,6 +52,7 @@ public class ToolbarView implements SubcomponentViewAPI {
 
 		myImageNameList = imgList;
 		myColorList = colorList;
+		myActiveView = activeView;
 
 		myWorkSpaceButtons = new WorkSpaceButtons(newWorkspace, saveConsumer, loadConsumer);
 		makeSubcomponents();
@@ -54,7 +60,7 @@ public class ToolbarView implements SubcomponentViewAPI {
 
 		myToolbar.getChildren().addAll(myWorkSpaceButtons.getParent(), myBackgroundOptionView.getParent(),
 				myPenOptionView.getParent(), myPenSlider.getParent(), myPenButtons.getParent(),
-				myImageOptionView.getParent(), myLanguageOptionView.getParent(), myHelpLink);
+				myImageOptionView.getParent(), myLanguageOptionView.getParent(), myHelpLink, myViewSelector.getParent());
 
 	}
 
@@ -117,6 +123,21 @@ public class ToolbarView implements SubcomponentViewAPI {
 		myPenButtons = new PenButtons();
 		myImageOptionView = new TurtleImageOptionView(myImageNameList);
 		myLanguageOptionView = new LanguageOptionView();
+		addViewSelector(myActionView);
 	}
+	
+	private void addViewSelector(WindowObservable<String> activeView) {
+		myViewSelector = new ViewSelector(activeView);
+		Button openViewSelector = createButton(myResources.getString("ToolbarViewSelectorPrompt"));
+		openViewSelector.setOnAction(e -> myViewSelector.run());
+	}
+
+	private Button createButton(String string) {
+		Button button = new Button(string);
+		myToolbar.getChildren().add(button);
+		return button;
+		
+	}
+		
 
 }
