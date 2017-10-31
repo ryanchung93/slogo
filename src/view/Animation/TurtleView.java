@@ -231,6 +231,14 @@ public class TurtleView implements TurtleListener {
 		System.out.println("Changed palette: " + myColorList);
 		myUpdateColorList.run();
 	}
+	
+	/**
+	 * Called when color list is updated
+	 * @param colorList
+	 */
+	public void updateColorList(List<String> colorList) {
+		myColorList = colorList;
+	}
 
 	/*************************** PRIVATE METHODS ********************************/
 

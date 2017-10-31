@@ -179,6 +179,8 @@ public class View implements ViewAPI, Observer, SaveLoadAPI {
 		myToolbarView.getBackgroundOptionView().makeChoiceBox(myColorList);
 		myToolbarView.getPenOptionView().makeChoiceBox(myColorList);
 		myCanvas.update(myColorList);
+		myTurtleViewManager.updateColorList(myColorList);
+		myTurtleStateView.updateColorList(myColorList);
 	}
 
 	/*************** PRIVATE METHODS *******************/

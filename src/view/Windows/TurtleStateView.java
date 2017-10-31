@@ -16,7 +16,7 @@ import view.Animation.TurtleListener;
 public class TurtleStateView extends Window implements TurtleListener {
 	private List<ImmutableTurtle> myTurtles = new ArrayList<>();
 	private static final ResourceBundle myResources = ResourceBundle.getBundle("resources.view/view");
-	
+
 	private List<String> myImageNameList;
 	private List<String> myColorList;
 
@@ -31,9 +31,9 @@ public class TurtleStateView extends Window implements TurtleListener {
 	private void update() {
 		ta.clear();
 		ta.appendText(myResources.getString("TurtleStateView") + "\n\n");
-		
+
 		for (ImmutableTurtle turtle : myTurtles) {
-			
+
 			if (turtle.isActive()) {
 				ta.appendText("ID: " + Integer.toString(turtle.getID()) + "\n");
 				ta.appendText(String.format("X: %5.3f\n", turtle.getX()));
@@ -47,7 +47,7 @@ public class TurtleStateView extends Window implements TurtleListener {
 			}
 		}
 	}
-	
+
 	public void clear() {
 		ta.clear();
 		myTurtles.clear();
@@ -56,7 +56,7 @@ public class TurtleStateView extends Window implements TurtleListener {
 	@Override
 	public void setTurtle(ImmutableTurtle turtle) {
 		myTurtles.add(turtle);
-		//System.out.println("added turtle");
+		// System.out.println("added turtle");
 		update();
 	}
 
@@ -107,13 +107,20 @@ public class TurtleStateView extends Window implements TurtleListener {
 
 	@Override
 	public void backgroundColorChange(int index) {
-		//do nothing
+		// do nothing
 	}
 
 	@Override
 	public void addToPalette(int index, int rVal, int gVal, int bVal) {
-		//do nothing
-		
+		if (index < myColorList.size()) {
+			myColorList.set(index, "rgb(" + Integer.toString(rVal) + "," + Integer.toString(gVal) + ","
+					+ Integer.toString(bVal) + ")");
+		}
+	}
+
+	public void updateColorList(List<String> colorList) {
+		myColorList = colorList;
+		update();
 	}
 
 }

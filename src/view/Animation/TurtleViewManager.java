@@ -58,4 +58,12 @@ public class TurtleViewManager {
 		myTurtleList.clear();
 		myParent.getChildren().clear();
 	}
+
+	/**
+	 * Updates color list for each turtle
+	 */
+	public void updateColorList(List<String> colorList) {
+		for (TurtleView tv : myTurtleList)
+			tv.updateColorList(colorList);	
+	}
 }
