@@ -8,6 +8,10 @@ import model.Turtle;
 import model.VariableManager;
 import model.commandBuilder.CommandDef;
 
+/**
+ * @author Aaron Paskin
+ * @author Ian Eldridge-Allegra
+ */
 public class To implements Command {
 
 	private static final long serialVersionUID = 588849466683654678L;

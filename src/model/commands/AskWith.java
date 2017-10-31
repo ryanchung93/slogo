@@ -9,6 +9,10 @@ import model.TurtleManager;
 import model.TurtleManagerSpecificCommand;
 import model.VariableManager;
 
+/**
+ * @author Aaron Paskin
+ * @author Ian Eldridge-Allegra
+ */
 public class AskWith extends TurtleManagerSpecificCommand {
 	private static final long serialVersionUID = 7931047379222341527L;
 	private Command condition;

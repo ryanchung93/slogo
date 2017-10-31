@@ -7,6 +7,10 @@ import model.TokenDispenser;
 import model.commands.Equal;
 import model.commands.Not;
 
+/**
+ * @author Aaron Paskin
+ * @author Ian Eldridge-Allegra
+ */
 public class NotEqualBuilder implements CommandBuilder {
 
 	@Override

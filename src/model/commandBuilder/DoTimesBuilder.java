@@ -7,6 +7,10 @@ import model.TokenDispenser;
 import model.commands.For;
 import model.commands.NumberCommand;
 
+/**
+ * @author Aaron Paskin
+ * @author Ian Eldridge-Allegra
+ */
 public class DoTimesBuilder implements CommandBuilder {
 
 	@Override

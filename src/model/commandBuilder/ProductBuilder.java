@@ -6,6 +6,10 @@ import model.StackGroupCommandBuilder;
 import model.TokenDispenser;
 import model.commands.Product;
 
+/**
+ * @author Aaron Paskin
+ * @author Ian Eldridge-Allegra
+ */
 public class ProductBuilder extends StackGroupCommandBuilder{
 
 	@Override

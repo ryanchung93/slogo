@@ -25,7 +25,7 @@ public class PenSlider implements SubcomponentViewAPI {
 
 	public PenSlider(BiConsumer<String, String> commandConsumer) {
 		myCommandConsumer = commandConsumer;
-		
+
 		view = new VBox();
 		sl = makeSlider();
 		prompt = new Label(myResources.getString(PROMPT));
@@ -35,9 +35,9 @@ public class PenSlider implements SubcomponentViewAPI {
 		sl.valueProperty().addListener(new ChangeListener<Number>() {
 			public void changed(ObservableValue<? extends Number> ov, Number old_val, Number new_val) {
 				myCommandConsumer.accept("SetPenSize", Double.toString(new_val.doubleValue()));
-				System.out.println(new_val.doubleValue());
 			}
 		});
+
 	}
 
 	@Override

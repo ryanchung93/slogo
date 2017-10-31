@@ -8,6 +8,10 @@ import model.commands.NumberCommand;
 import model.commands.Sin;
 import model.commands.Sum;
 
+/**
+ * @author Aaron Paskin
+ * @author Ian Eldridge-Allegra
+ */
 public class CosBuilder implements CommandBuilder {
 
 	@Override

@@ -5,6 +5,10 @@ import model.CommandManager;
 import model.Turtle;
 import model.VariableManager;
 
+/**
+ * @author Aaron Paskin
+ * @author Ian Eldridge-Allegra
+ */
 public class ShowTurtle implements Command {
 
 	private static final long serialVersionUID = 307984746123238206L;

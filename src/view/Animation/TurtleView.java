@@ -43,7 +43,8 @@ public class TurtleView implements TurtleListener {
 	private double myPrevNewX;
 	private double myPrevNewY;
 
-	public TurtleView(CanvasView parent, Image image, List<String> imgNameList, List<String> colorList, Runnable updateColorList) {
+	public TurtleView(CanvasView parent, Image image, List<String> imgNameList, List<String> colorList,
+			Runnable updateColorList) {
 
 		myView = setupImageView(image);
 		myParent = parent;
@@ -51,7 +52,7 @@ public class TurtleView implements TurtleListener {
 		myImageNameList = imgNameList;
 		myColorList = colorList;
 		myUpdateColorList = updateColorList;
-		
+
 		myImageList = new ArrayList<>();
 		for (String s : myImageNameList) {
 			Image fileImage = new Image(getClass().getClassLoader().getResourceAsStream("resources/images/" + s));
@@ -65,7 +66,7 @@ public class TurtleView implements TurtleListener {
 	public void setTurtle(ImmutableTurtle turtle) {
 
 		myID = turtle.getID();
-		System.out.println("ID: " + myID);
+		// System.out.println("ID: " + myID);
 		myHeading = turtle.getHeading();
 		myPenColorIndex = turtle.getPenColorIndex();
 		myPenThickness = turtle.getPenSize();
@@ -90,9 +91,10 @@ public class TurtleView implements TurtleListener {
 		// referenced from center.
 		double offsetNewX = newX + myOffsetX;
 		double offsetNewY = newY + myOffsetY;
-		System.out.println("Turtle ID: " + myID);
-		System.out.println("prevX: " + myPrevNewX + " | prevY: " + myPrevNewY);
-		System.out.println("offsetNewX: " + offsetNewX + " | offsetNewY: " + offsetNewY);
+		// System.out.println("Turtle ID: " + myID);
+		// System.out.println("prevX: " + myPrevNewX + " | prevY: " + myPrevNewY);
+		// System.out.println("offsetNewX: " + offsetNewX + " | offsetNewY: " +
+		// offsetNewY);
 
 		double coordInsideX = offsetNewX % (myOffsetX * 2);
 		double coordInsideY = offsetNewY % (myOffsetY * 2);
@@ -128,9 +130,10 @@ public class TurtleView implements TurtleListener {
 
 				offsetNewX = offsetNewX - myOffsetX * 2;
 				distX = offsetNewX - prevX + myView.getX();
-				System.out.println("OOB");
-				System.out.println("Now x= " + myView.getX() + " | y=" + myView.getY());
-				System.out.println("Now offsetnewx= " + offsetNewX + " | offsetnewy=" + offsetNewY);
+				// System.out.println("OOB");
+				// System.out.println("Now x= " + myView.getX() + " | y=" + myView.getY());
+				// System.out.println("Now offsetnewx= " + offsetNewX + " | offsetnewy=" +
+				// offsetNewY);
 			}
 		}
 
@@ -144,8 +147,8 @@ public class TurtleView implements TurtleListener {
 		myView.setX(coordInsideX);
 		myView.setY(coordInsideY);
 
-		System.out.println("OOB");
-		System.out.println("Final x= " + myView.getX() + " | y=" + myView.getY());
+		// System.out.println("OOB");
+		// System.out.println("Final x= " + myView.getX() + " | y=" + myView.getY());
 
 		// System.out.println("LayoutX: " + myOffsetX + " LayoutY: " + myOffsetY);
 		// System.out.println("myX: " + myView.getX() + " | myY: " + myView.getY());
@@ -220,11 +223,12 @@ public class TurtleView implements TurtleListener {
 	public ImageView getImageView() {
 		return myView;
 	}
-	
+
 	@Override
 	public void addToPalette(int index, int rVal, int gVal, int bVal) {
 		if (index < myColorList.size()) {
-			myColorList.set(index,"rgb(" + Integer.toString(rVal) + "," + Integer.toString(gVal) + "," + Integer.toString(bVal) + ")");
+			myColorList.set(index, "rgb(" + Integer.toString(rVal) + "," + Integer.toString(gVal) + ","
+					+ Integer.toString(bVal) + ")");
 		}
 		System.out.println("Changed palette: " + myColorList);
 		myUpdateColorList.run();
@@ -250,7 +254,7 @@ public class TurtleView implements TurtleListener {
 	 * Make toggling viewable.
 	 */
 	private void clicked() {
-		System.out.println("Clicked turtle");
+		// System.out.println("Clicked turtle");
 		turtle.setActive(!turtle.isActive());
 	}
 
