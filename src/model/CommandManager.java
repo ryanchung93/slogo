@@ -150,9 +150,13 @@ public class CommandManager {
 	 * Updates listeners to a change in the commands
 	 */
 	private void updateListeners() {
+		Map<String, List<String>> userCs = new HashMap<String, List<String>>();
+		for(String name : userCommands.keySet()) {
+			userCs.put(name, Collections.unmodifiableList(userCommands.get(name).getParameterNames()));
+		}
 		for (StringListener listener : listeners)
 			listener.changedMap(Collections.unmodifiableSet(builtInCommands.keySet()),
-					Collections.unmodifiableSet(userCommands.keySet()));
+					userCs);
 	}
 
 	/**

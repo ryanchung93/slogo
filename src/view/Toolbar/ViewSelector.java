@@ -4,7 +4,6 @@ import java.util.HashMap;
 import java.util.ResourceBundle;
 
 import javafx.geometry.Insets;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -23,9 +22,12 @@ import view.SubcomponentViewAPI;
 
 public class ViewSelector implements SubcomponentViewAPI{
 
+	private static final int MIN_WIDTH = 240;
+	
 	private ResourceBundle myResources = ResourceBundle.getBundle("resources.view/view");
 	private HashMap<String, String> newViews;
 	private WindowObservable<String> activeViews;
+	private static final String STYLESHEET = "/resources/view/view.css";
 	
 	private Stage myStage;
 	private Scene myScene;
@@ -46,6 +48,7 @@ public class ViewSelector implements SubcomponentViewAPI{
 
 	private void createButton() {
 		Button confirmButton = new Button(myResources.getString("ViewButton"));
+		confirmButton.setId("toolbar-button");
 		confirmButton.setOnAction(e -> closeWindow());
 		myWindows.getChildren().add(confirmButton);
 	}
@@ -85,13 +88,17 @@ public class ViewSelector implements SubcomponentViewAPI{
 	private void createWindow() {
 		myStage = new Stage();
 		myWindows = new VBox();
+		
+		
 		myScene = new Scene(myWindows);
+		myScene.getStylesheets().add(STYLESHEET);
 		
 		myStage.setTitle(myResources.getString("ViewSelectorTitle"));
 		Label instruction = new Label(myResources.getString("ViewSelectorMessage"));
 		myWindows.getChildren().add(instruction);
 		myWindows.setPadding(new Insets(10,10,10,10));
 		myWindows.setSpacing(10);
+		myWindows.setMinWidth(MIN_WIDTH);
 		
 		myStage.setScene(myScene);
 		

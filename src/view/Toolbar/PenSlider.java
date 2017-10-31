@@ -1,6 +1,7 @@
 package view.Toolbar;
 
 import java.util.ResourceBundle;
+import java.util.function.BiConsumer;
 
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -10,7 +11,6 @@ import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
 import javafx.scene.layout.VBox;
 import view.SubcomponentViewAPI;
-import view.Animation.TextPromptView;
 
 public class PenSlider implements SubcomponentViewAPI {
 
@@ -21,22 +21,23 @@ public class PenSlider implements SubcomponentViewAPI {
 	private Label prompt;
 	private Slider sl;
 	private VBox view;
-	private TextPromptView tp;
+	private BiConsumer<String, String> myCommandConsumer;
 
-	public PenSlider() {
+	public PenSlider(BiConsumer<String, String> commandConsumer) {
+		myCommandConsumer = commandConsumer;
+
 		view = new VBox();
 		sl = makeSlider();
 		prompt = new Label(myResources.getString(PROMPT));
 		view.getChildren().addAll(prompt, sl);
 		view.setAlignment(Pos.CENTER);
-		
+
 		sl.valueProperty().addListener(new ChangeListener<Number>() {
-            public void changed(ObservableValue<? extends Number> ov,
-                Number old_val, Number new_val) {
-                    tp.runCommand("SetPenSize", Double.toString(new_val.doubleValue()));
-                    //System.out.println(new_val.doubleValue());
-            }
-        });
+			public void changed(ObservableValue<? extends Number> ov, Number old_val, Number new_val) {
+				myCommandConsumer.accept("SetPenSize", Double.toString(new_val.doubleValue()));
+			}
+		});
+
 	}
 
 	@Override
@@ -53,9 +54,4 @@ public class PenSlider implements SubcomponentViewAPI {
 		ret.setSnapToTicks(true);
 		return ret;
 	}
-
-	public void addTextPrompt(TextPromptView myTextPrompt) {
-		tp = myTextPrompt;
-	}
-
 }

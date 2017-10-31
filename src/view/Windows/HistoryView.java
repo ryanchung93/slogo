@@ -36,6 +36,7 @@ import model.SaverLoader;
 public class HistoryView implements SubcomponentViewAPI{
 
 	private static final String DELIMITER = "&&&";
+	private static final ResourceBundle myResources = ResourceBundle.getBundle("resources.view/view");
 	private Button clearButton;
 	private Button undoButton;
 	private Button redoButton;
@@ -78,10 +79,12 @@ public class HistoryView implements SubcomponentViewAPI{
 		// ta = createTA(height);
 		// ta = createTA(1);
 
-		text = new Text("HistoryView");
+		text = new Text(myResources.getString(("HistoryView")));
 		text.setFill(Color.WHITE);
 
 		myHistory = new VBox();
+		myHistory.setMinHeight(height);
+		myHistory.setId("var-VBox");
 		scrollPane = new ScrollPane();
 		scrollPane.setContent(myHistory);
 
@@ -112,7 +115,6 @@ public class HistoryView implements SubcomponentViewAPI{
 			}
 		});
 		myHistory.getChildren().addAll(t);
-		// ta.appendText("\n" + newCode);
 	}
 
 	public Parent getParent() {

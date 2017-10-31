@@ -274,14 +274,9 @@ public class View implements ViewAPI, Observer {
 	 */
 	private void addToolbar() {
 		myToolbarView = new ToolbarView(SCREEN_WIDTH, myImageNameList, myColorList, () -> newWorkSpace(), s -> save(s),
-				s -> load(s), myActiveView);
+				s -> load(s), (s, p) -> myTextPrompt.runCommand(s, p), myActiveView);
 
 		// set a listener for background, pen, image, language changes.
-		myToolbarView.getBackgroundOptionView().addTextPrompt(myTextPrompt);
-		myToolbarView.getPenOptionView().addTextPrompt(myTextPrompt);
-		myToolbarView.getPenSlider().addTextPrompt(myTextPrompt);
-		myToolbarView.getPenButtons().addTextPrompt(myTextPrompt);
-		myToolbarView.getImageOptionView().addTextPrompt(myTextPrompt);
 		myToolbarView.getLanguageOptionView().addLanguageOptionListener(myLanguageListener);
 		myToolbarView.getLanguageOptionView().addLanguageOptionListener(myTextPrompt);
 		myGrid.add(myToolbarView.getParent(), 0, 0);
@@ -362,7 +357,7 @@ public class View implements ViewAPI, Observer {
 		Parent newWindow = temp.getParent();
 
 		makeScrollPaneLists();
-		
+
 		changeView(window, newWindow);
 
 	}
@@ -387,7 +382,7 @@ public class View implements ViewAPI, Observer {
 		myLeftSPList = new ArrayList<String>();
 		myLeftSPList.addAll(Arrays.asList(myResources.getString("LeftSPViews").split(",")));
 	}
-	
+
 	private void save(String filePath) {
 		save.accept(filePath);
 
@@ -397,7 +392,7 @@ public class View implements ViewAPI, Observer {
 		for (String color : myColorList)
 			sb.append(color + " ");
 		SaverLoader.save(sb.toString(), filePath + COLOR_EXT);
-	}
+	}	
 
 	private void load(String filePath) {
 		load.accept(filePath);
