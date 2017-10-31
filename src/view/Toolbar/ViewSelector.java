@@ -22,6 +22,8 @@ import view.SubcomponentViewAPI;
 
 public class ViewSelector implements SubcomponentViewAPI {
 
+	private static final int MIN_WIDTH = 240;
+	
 	private ResourceBundle myResources = ResourceBundle.getBundle("resources.view/view");
 	private HashMap<String, String> newViews;
 	private WindowObservable<String> activeViews;
@@ -84,6 +86,8 @@ public class ViewSelector implements SubcomponentViewAPI {
 	private void createWindow() {
 		myStage = new Stage();
 		myWindows = new VBox();
+		
+		
 		myScene = new Scene(myWindows);
 		myScene.getStylesheets().add(STYLESHEET);
 
@@ -92,7 +96,7 @@ public class ViewSelector implements SubcomponentViewAPI {
 		myWindows.getChildren().add(instruction);
 		myWindows.setPadding(new Insets(10, 10, 10, 10));
 		myWindows.setSpacing(10);
-
+		myWindows.setMinWidth(MIN_WIDTH);
 		myStage.setScene(myScene);
 
 	}

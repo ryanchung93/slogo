@@ -118,7 +118,6 @@ public class HistoryView implements SubcomponentViewAPI{
 			}
 		});
 		myHistory.getChildren().addAll(t);
-		// ta.appendText("\n" + newCode);
 	}
 
 	public Parent getParent() {

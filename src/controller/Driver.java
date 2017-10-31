@@ -10,6 +10,10 @@ import model.Model;
 import view.View;
 import view.Animation.TurtleListener;
 
+/**
+ * @author Aaron Paskin
+ *
+ */
 public class Driver implements DriverAPI {
 
 	private View myView;
