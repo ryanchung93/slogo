@@ -4,7 +4,6 @@ import java.util.HashMap;
 import java.util.ResourceBundle;
 
 import javafx.geometry.Insets;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -21,26 +20,26 @@ import view.SubcomponentViewAPI;
  *
  */
 
-public class ViewSelector implements SubcomponentViewAPI{
+public class ViewSelector implements SubcomponentViewAPI {
 
 	private ResourceBundle myResources = ResourceBundle.getBundle("resources.view/view");
 	private HashMap<String, String> newViews;
 	private WindowObservable<String> activeViews;
 	private static final String STYLESHEET = "/resources/view/view.css";
-	
+
 	private Stage myStage;
 	private Scene myScene;
 	private VBox myWindows;
-	
+
 	public ViewSelector(WindowObservable<String> initViews) {
 		activeViews = initViews;
-		newViews = new HashMap<String,String>();
-		
+		newViews = new HashMap<String, String>();
+
 		createWindow();
 		createCheckBoxes();
 		createButton();
 	}
-	
+
 	public void run() {
 		myStage.show();
 	}
@@ -59,7 +58,7 @@ public class ViewSelector implements SubcomponentViewAPI{
 	private void createCheckBoxes() {
 		String[] windows = myResources.getString("Windows").split(",");
 		for (int i = 0; i < windows.length; i = i + 2) {
-			newViews.put(windows[i], windows[i+1]);
+			newViews.put(windows[i], windows[i + 1]);
 			myWindows.getChildren().addAll(newCheckBox(windows[i]));
 
 		}
@@ -67,19 +66,17 @@ public class ViewSelector implements SubcomponentViewAPI{
 
 	private CheckBox newCheckBox(String windowName) {
 		CheckBox cb = new CheckBox(windowName);
-		if(activeViews.contains(newViews.get(windowName))) {
+		if (activeViews.contains(newViews.get(windowName))) {
 			cb.setSelected(true);
 		}
 		cb.setOnAction(e -> viewChanged(cb));
 		return cb;
 	}
 
-
 	private void viewChanged(CheckBox checkbox) {
-		if(checkbox.isSelected()) {
+		if (checkbox.isSelected()) {
 			activeViews.add(newViews.get(checkbox.getText()));
-		}
-		else {
+		} else {
 			activeViews.remove(newViews.get(checkbox.getText()));
 		}
 	}
@@ -89,16 +86,15 @@ public class ViewSelector implements SubcomponentViewAPI{
 		myWindows = new VBox();
 		myScene = new Scene(myWindows);
 		myScene.getStylesheets().add(STYLESHEET);
-		
+
 		myStage.setTitle(myResources.getString("ViewSelectorTitle"));
 		Label instruction = new Label(myResources.getString("ViewSelectorMessage"));
 		myWindows.getChildren().add(instruction);
-		myWindows.setPadding(new Insets(10,10,10,10));
+		myWindows.setPadding(new Insets(10, 10, 10, 10));
 		myWindows.setSpacing(10);
-		
+
 		myStage.setScene(myScene);
-		
-		
+
 	}
 
 	@Override
