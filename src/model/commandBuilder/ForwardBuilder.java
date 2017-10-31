@@ -6,6 +6,10 @@ import model.SLogoException;
 import model.TokenDispenser;
 import model.commands.Forward;
 
+/**
+ * @author Aaron Paskin
+ * @author Ian Eldridge-Allegra
+ */
 public class ForwardBuilder implements CommandBuilder {
 	@Override
 	public Command build(TokenDispenser dispenser) throws SLogoException {

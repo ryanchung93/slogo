@@ -8,6 +8,10 @@ import model.commands.Left;
 import model.commands.NumberCommand;
 import model.commands.Product;
 
+/**
+ * @author Aaron Paskin
+ * @author Ian Eldridge-Allegra
+ */
 public class RightBuilder implements CommandBuilder {
 
 	@Override

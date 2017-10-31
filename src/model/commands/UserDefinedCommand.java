@@ -35,7 +35,6 @@ public class UserDefinedCommand implements Command {
 					parameters.get(i).execute(t, commands, variables));
 		}
 		variables.enterLocalScope();
-		System.out.println(vals);
 		for(String var : vals.keySet())
 			variables.setLocalValue(var, vals.get(var));
 		double answer = command.getCommandList().execute(t, commands, variables);

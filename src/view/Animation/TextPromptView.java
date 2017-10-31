@@ -120,11 +120,11 @@ public class TextPromptView extends HBox implements TextPromptAPI, LanguageListe
 		try {
 			commandConsumer.accept(code);
 			historyConsumer.accept(code);
+			clear();
 		}
 		catch(SLogoException e) {
 			new ErrorWindow(e.getMessage());
 		}
-		clear();
 	}
 
 	private void clear() {
