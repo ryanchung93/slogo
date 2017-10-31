@@ -24,7 +24,7 @@ import view.SubcomponentViewAPI;
  *
  */
 
-public class ToolbarView implements SubcomponentViewAPI {
+public class ToolbarView implements ToolbarAPI, SubcomponentViewAPI {
 
 	private ResourceBundle myResources = ResourceBundle.getBundle("resources.view/view");
 	private static final double NODE_SPACING = 50;
@@ -72,28 +72,32 @@ public class ToolbarView implements SubcomponentViewAPI {
 		return myToolbar;
 	}
 
-	// Must add to API
+	@Override
 	public BackgroundOptionView getBackgroundOptionView() {
 		return myBackgroundOptionView;
 	}
 
+	@Override
 	public PenOptionView getPenOptionView() {
 		return myPenOptionView;
 	}
 
+	@Override
 	public PenSlider getPenSlider() {
 		return myPenSlider;
 	}
 
+	@Override
 	public PenButtons getPenButtons() {
 		return myPenButtons;
 	}
 
+	@Override
 	public LanguageOptionView getLanguageOptionView() {
 		return myLanguageOptionView;
 	}
 
-	// Must add to API
+	@Override
 	public TurtleImageOptionView getImageOptionView() {
 		return myImageOptionView;
 	}
