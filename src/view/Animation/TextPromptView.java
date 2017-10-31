@@ -15,7 +15,7 @@ import view.ErrorWindow;
 import view.Toolbar.LanguageListener;
 
 /**
- * Class allowing users to enter and clear commands.
+ * Class allowing users to enter and clear text/key commands.
  * 
  * @author DavidTran
  *

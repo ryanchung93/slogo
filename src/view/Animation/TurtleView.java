@@ -23,7 +23,6 @@ public class TurtleView implements TurtleListener {
 
 	private static final double WIDTH = 35;
 	private static final double HEIGHT = 35;
-	private static final ResourceBundle myResources = ResourceBundle.getBundle("resources.view/choicebox");
 	private List<Image> myImageList;
 	private List<String> myImageNameList;
 	private List<String> myColorList;
@@ -134,49 +133,6 @@ public class TurtleView implements TurtleListener {
 				System.out.println("Now offsetnewx= " + offsetNewX + " | offsetnewy=" + offsetNewY);
 			}
 		}
-		// else if (leftBound) {
-		// while (distX <= 0) {
-		//
-		// if (distY > prevY+0.05 || distY < prevY - 0.05)
-		// distY = myView.getY() + (offsetNewY - prevY)*((0 + myView.getX()) /
-		// (offsetNewX - prevX));
-		// if (myPenIsDown) {
-		// line = new Line(myView.getX(), myView.getY(), 0, distY);
-		// line.setStroke(Color.valueOf(colorList.get(myPenColorIndex)));
-		// myParent.getChildren().add(line);
-		// }
-		// myView.setX(myOffsetX * 2);
-		// myView.setY(distY);
-		//
-		// offsetNewX = offsetNewX + myOffsetX * 2;
-		// distX = offsetNewX - prevX + myView.getX();
-		// System.out.println("OOB");
-		// System.out.println("Now x= " + myView.getX() + " | y=" + myView.getY());
-		// System.out.println("Now offsetnewx= " + offsetNewX + " | offsetnewy=" +
-		// offsetNewY);
-		// }
-		// }
-		// else if (rightBound) {
-		// line = new Line(myView.getX(), myView.getY(), myOffsetX * 2 - myPrevNewX,
-		// coordInsideY);
-		// line.setStroke(myPenColor);
-		// myParent.getChildren().add(line);
-		// myView.setX(0);
-		// System.out.println("OOB");
-		// }
-		// else if (upperBound) {
-		// line = new Line(myView.getX(), myView.getY(), coordInsideX, myOffsetY * 2);
-		// line.setStroke(myPenColor);
-		// myParent.getChildren().add(line);
-		// myView.setY(0);
-		// System.out.println("OOB");
-		// }
-
-		// line = new Line(myView.getX(), myView.getY(), coordInsideX, coordInsideY);
-		// line.setStroke(myPenColor);
-		// myParent.getChildren().add(line);
-		// myView.setX(coordInsideX);
-		// myView.setY(coordInsideY);
 
 		if (myPenIsDown) {
 			line = new Line(myView.getX(), myView.getY(), coordInsideX, coordInsideY);
@@ -264,6 +220,15 @@ public class TurtleView implements TurtleListener {
 	public ImageView getImageView() {
 		return myView;
 	}
+	
+	@Override
+	public void addToPalette(int index, int rVal, int gVal, int bVal) {
+		if (index < myColorList.size()) {
+			myColorList.set(index,"rgb(" + Integer.toString(rVal) + "," + Integer.toString(gVal) + "," + Integer.toString(bVal) + ")");
+		}
+		System.out.println("Changed palette: " + myColorList);
+		myUpdateColorList.run();
+	}
 
 	/*************************** PRIVATE METHODS ********************************/
 
@@ -301,14 +266,4 @@ public class TurtleView implements TurtleListener {
 		if (!turtle.isActive())
 			myView.setStyle("-fx-background-color:transparent;");
 	}
-
-	@Override
-	public void addToPalette(int index, int rVal, int gVal, int bVal) {
-		if (index < myColorList.size()) {
-			myColorList.set(index,"rgb(" + Integer.toString(rVal) + "," + Integer.toString(gVal) + "," + Integer.toString(bVal) + ")");
-		}
-		System.out.println("Changed palette: " + myColorList);
-		myUpdateColorList.run();
-	}
-
 }

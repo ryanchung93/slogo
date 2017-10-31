@@ -259,14 +259,9 @@ public class View implements ViewAPI {
 	 */
 	private void addToolbar() {
 		myToolbarView = new ToolbarView(SCREEN_WIDTH, myImageNameList, myColorList, () -> newWorkSpace(), s -> save(s),
-				s -> load(s));
+				s -> load(s), (s,p) -> myTextPrompt.runCommand(s, p));
 
 		// set a listener for background, pen, image, language changes.
-		myToolbarView.getBackgroundOptionView().addTextPrompt(myTextPrompt);
-		myToolbarView.getPenOptionView().addTextPrompt(myTextPrompt);
-		myToolbarView.getPenSlider().addTextPrompt(myTextPrompt);
-		myToolbarView.getPenButtons().addTextPrompt(myTextPrompt);
-		myToolbarView.getImageOptionView().addTextPrompt(myTextPrompt);
 		myToolbarView.getLanguageOptionView().addLanguageOptionListener(myLanguageListener);
 		myToolbarView.getLanguageOptionView().addLanguageOptionListener(myTextPrompt);
 		myGrid.add(myToolbarView.getParent(), 0, 0);

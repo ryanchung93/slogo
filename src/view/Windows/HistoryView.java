@@ -31,7 +31,6 @@ public class HistoryView {
 	private String lastCommand;
 	private List<String> historyList;
 	private Text text;
-	private TextArea ta;
 	private VBox myHistory;
 	private ScrollPane scrollPane;
 	private GridPane view;
@@ -65,10 +64,12 @@ public class HistoryView {
 		// ta = createTA(height);
 		// ta = createTA(1);
 
-		text = new Text("HistoryView");
+		text = new Text(myResources.getString(("HistoryView")));
 		text.setFill(Color.WHITE);
 
 		myHistory = new VBox();
+		myHistory.setMinHeight(height);
+		myHistory.setId("var-VBox");
 		scrollPane = new ScrollPane();
 		scrollPane.setContent(myHistory);
 
