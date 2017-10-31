@@ -1,15 +1,18 @@
 package view.Windows;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.Set;
+import java.util.function.BiConsumer;
 
 import javafx.scene.Parent;
 import javafx.scene.control.Hyperlink;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.control.ScrollPane.ScrollBarPolicy;
 import javafx.scene.control.TextInputDialog;
 import javafx.scene.layout.VBox;
 import view.ErrorWindow;
@@ -25,12 +28,22 @@ public class UserDefinedCommandView implements StringListener {
 	private Map<String, List<String>> userCommands;
 	private ScrollPane sp;
 	private VBox vb;
-	protected ResourceBundle myResources = ResourceBundle.getBundle("resources.view/view");
+	private ResourceBundle myResources = ResourceBundle.getBundle("resources.view/view");
+	private BiConsumer<String, String> myConsumer;
 
-	public UserDefinedCommandView(double height) {
+	public UserDefinedCommandView(double width, double height, BiConsumer<String, String> consumer) {
+		myConsumer = consumer;
+
 		sp = new ScrollPane();
 		vb = new VBox(new Label(myResources.getString("UserDefinedCommandView") + "\n\n"));
+
+		vb.setMinWidth(width);
+		vb.setMinHeight(height);
+		vb.setId("var-VBox");
+		sp.setMinHeight(height);
 		sp.setContent(vb);
+		sp.setHbarPolicy(ScrollBarPolicy.NEVER);
+		sp.setVbarPolicy(ScrollBarPolicy.ALWAYS);
 	}
 
 	@Override
@@ -48,20 +61,33 @@ public class UserDefinedCommandView implements StringListener {
 	}
 
 	private void prompt(String key) {
-		if (!userCommands.get(key).isEmpty()) {
+		int i = 0;
+		List<String> params = userCommands.get(key);
+		List<String> inputs = new ArrayList<>();
+		if (!params.isEmpty()) {
+			try {
+				while (i < params.size()) {
 
-//			TextInputDialog dialog = new TextInputDialog();
-//			dialog.setTitle("Update Variable Dialog");
-//			dialog.setHeaderText("Update Variable");
-//			dialog.setContentText("Please enter new variable value for \'" + key + "\':");
-//
-//			Optional<String> result = dialog.showAndWait();
-//			try {
-//				result.ifPresent(value -> variableMap.put(key, Double.parseDouble(value)));
-//			} catch (NumberFormatException e) {
-//				new ErrorWindow(e.getMessage());
-//			}
+					TextInputDialog dialog = new TextInputDialog();
+					dialog.setTitle("Enter Parameter Dialog");
+					dialog.setHeaderText("Enter Parameter");
+					dialog.setContentText("Please enter a value for \'" + params.get(i) + "\':");
+
+					Optional<String> result = dialog.showAndWait();
+
+					result.ifPresent(value -> inputs.add(value));
+					i++;
+				}
+				StringBuilder sb = new StringBuilder();
+				for (String s : inputs)
+					sb.append(s + " ");
+				myConsumer.accept(key, sb.toString());
+				
+			} catch (Exception e) {
+				new ErrorWindow(e.getMessage());
+			}
 		}
+
 	}
 
 	@Override
