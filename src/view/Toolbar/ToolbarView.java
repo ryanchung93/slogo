@@ -20,9 +20,10 @@ import view.SubcomponentViewAPI;
 /**
  * Class allowing users to view and use toolbar functions.
  * 
- * @author DavidTran
+ * @author DavidTran, taekwhunchung
  *
  */
+
 public class ToolbarView implements SubcomponentViewAPI {
 
 	private ResourceBundle myResources = ResourceBundle.getBundle("resources.view/view");

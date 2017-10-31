@@ -1,11 +1,29 @@
 package view.Toolbar;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Observable;
 
+/**
+ * Class that stores active windows (windows that users can view) in ArrayList
+ * as string.
+ * 
+ * Extends Observable, so any class that implements Observer can
+ * detect change in this class.
+ * 
+ * @author taekwhunchung
+ *
+ */
+
 public class WindowObservable<T> extends Observable {
+	
 	private ArrayList<String> windows;
+
+	/**
+	 * 
+	 * Constructor for Observable ArrayList of active windows as Strings
+	 * 
+	 * @param activeWindows
+	 */
 	
 	public WindowObservable(ArrayList<String> activeWindows) {
 		windows = activeWindows;
@@ -13,33 +31,26 @@ public class WindowObservable<T> extends Observable {
 			System.out.println("Y" + window);
 		}*/
 	}
-	
+
+	/**
+	 * 
+	 * method to 
+	 * @param t
+	 */
 	public void add(T t) {
 		String str = (String) t;
 		windows.add(str);
-		
-		//System.out.println("ACTIVEVIEWS: ");
-		/*for (String s : windows) {
-			System.out.println(s);
-		}
-		System.out.println("============");*/
 		this.setChanged();
 		notifyObservers(t);
 	}
-	
+
 	public void remove(T t) {
 		String str = (String) t;
 		windows.remove(str);
-		
-		//System.out.println("ACTIVEVIEWS: ");
-		for (String s : windows) {
-			//System.out.println(s);
-		}
-		
 		this.setChanged();
 		notifyObservers(t);
 	}
-	
+
 	public boolean contains(T t) {
 		return windows.contains(t);
 	}
