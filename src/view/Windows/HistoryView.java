@@ -1,15 +1,13 @@
 package view.Windows;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.function.Consumer;
 
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.geometry.HPos;
-import javafx.geometry.Orientation;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.Hyperlink;
@@ -22,6 +20,10 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import view.SubcomponentViewAPI;
+import view.ErrorWindow;
+import model.SLogoException;
+import model.SaverLoader;
+
 
 /**
  * Class that allows users to see command history.
@@ -32,6 +34,7 @@ import view.SubcomponentViewAPI;
 
 public class HistoryView implements SubcomponentViewAPI{
 
+	private static final String DELIMITER = "&&&";
 	private Button clearButton;
 	private Button undoButton;
 	private String lastCommand;
@@ -46,7 +49,7 @@ public class HistoryView implements SubcomponentViewAPI{
 
 	public HistoryView(double height, Consumer<String> commandConsumer, Runnable reset) {
 		historyList = new ArrayList<>();
-		
+
 		myCommandConsumer = commandConsumer;
 		myReset = reset;
 
@@ -78,7 +81,7 @@ public class HistoryView implements SubcomponentViewAPI{
 
 		clearButton = makeButton("Clear History", e -> clear());
 		undoButton = makeButton("Undo", e -> undo());
-		
+
 		view.add(text, 0, 0);
 		view.add(scrollPane, 0, 1);
 		view.add(clearButton, 0, 2);
@@ -92,7 +95,13 @@ public class HistoryView implements SubcomponentViewAPI{
 		lastCommand = newCode;
 		historyList.add(lastCommand);
 		Hyperlink t = new Hyperlink(newCode);
-		t.setOnAction(e -> myCommandConsumer.accept(newCode));
+		t.setOnAction(event -> {
+			try {
+				myCommandConsumer.accept(newCode);
+			} catch (SLogoException e) {
+				new ErrorWindow(e.getMessage());
+			}
+		});
 		myHistory.getChildren().addAll(t);
 		// ta.appendText("\n" + newCode);
 	}
@@ -100,9 +109,32 @@ public class HistoryView implements SubcomponentViewAPI{
 	public Parent getParent() {
 		return view;
 	}
-	
+
 	public void clear() {
 		myHistory.getChildren().clear();
+	}
+
+	public void save(String filePath) {
+		StringBuilder sb = new StringBuilder();
+		for (String s : historyList)
+			sb.append(s + " " + DELIMITER + " ");
+		SaverLoader.save(sb.toString(), filePath);
+	}
+
+	public void load(String filePath) {
+		historyList = new ArrayList<String>(Arrays.asList(((String) SaverLoader.load(filePath)).split("\\s" + DELIMITER + "\\s")         ));
+		myHistory.getChildren().removeAll(myHistory.getChildren());
+		for (String s : historyList) {
+			Hyperlink t = new Hyperlink(s);
+			t.setOnAction(event -> {
+				try {
+					myCommandConsumer.accept(s);
+				} catch (SLogoException e) {
+					new ErrorWindow(e.getMessage());
+				}
+			});
+			myHistory.getChildren().add(t);
+		}
 	}
 
 	/*************************** PRIVATE METHODS ********************************/
@@ -112,16 +144,17 @@ public class HistoryView implements SubcomponentViewAPI{
 		ret.setOnAction(e);
 		return ret;
 	}
-	
+
 	private void undo() {
-		//TODO make redo, store undone commands in a separate Stack, throw error/do nothing when undoing too many times
+		// TODO make redo, store undone commands in a separate Stack, throw error/do
+		// nothing when undoing too many times
 		clear();
 		int size = historyList.size();
-		if (size != 0){
+		if (size != 0) {
 			historyList.remove(size - 1);
 		}
 		myReset.run();
-		for(String command : historyList) {
+		for (String command : historyList) {
 			myCommandConsumer.accept(command);
 		}
 	}

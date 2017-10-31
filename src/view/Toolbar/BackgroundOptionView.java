@@ -24,11 +24,15 @@ public class BackgroundOptionView extends OptionView {
 
 		this.colorList = colorList;
 
-		makeChoiceBox();
+		makeChoiceBox(colorList);
 	}
 	
-	private void makeChoiceBox() {
-
+	public void makeChoiceBox(List<String> list) {
+		this.colorList = list;
+		
+		cb.getItems().removeAll(cb.getItems());
+		
+		
 		for (String color : colorList)
 			cb.getItems().add(colorList.indexOf(color) + ". " + color);
 		
@@ -39,6 +43,8 @@ public class BackgroundOptionView extends OptionView {
 				tp.runCommand("SetBackground", Integer.toString(newValue.intValue()));
 			}
 		});
+		
+		cb.setMinWidth(cb.getWidth());
 	}
 	
 	public void addTextPrompt(TextPromptView tp) {

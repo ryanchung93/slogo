@@ -7,6 +7,8 @@ import model.VariableManager;
 
 public class YCor implements Command {
 
+	private static final long serialVersionUID = -8805640596637749805L;
+
 	@Override
 	public double execute(Turtle t, CommandManager commands, VariableManager variables) {
 		return t.getY();

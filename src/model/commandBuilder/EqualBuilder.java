@@ -12,4 +12,5 @@ public class EqualBuilder implements CommandBuilder {
 	public Command build(TokenDispenser dispenser) throws SLogoException {
 		return new Equal(dispenser.getNextCommand(), dispenser.getNextCommand());
 	}
+	
 }

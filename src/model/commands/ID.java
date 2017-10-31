@@ -7,6 +7,8 @@ import model.VariableManager;
 
 public class ID implements Command {
 
+	private static final long serialVersionUID = 272185873730515699L;
+
 	@Override
 	public double execute(Turtle t, CommandManager commands, VariableManager variables) {
 		return t.getID();

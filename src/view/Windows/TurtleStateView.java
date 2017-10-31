@@ -1,14 +1,11 @@
 package view.Windows;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.ResourceBundle;
 
-import javafx.scene.image.Image;
 import model.ImmutableTurtle;
 import view.Animation.TurtleListener;
-import view.Animation.TurtleView;
 
 /**
  * Class allowing users to see attributes of current turtle.
@@ -41,7 +38,7 @@ public class TurtleStateView extends Window implements TurtleListener {
 				ta.appendText("ID: " + Integer.toString(turtle.getID()) + "\n");
 				ta.appendText(String.format("X: %5.3f\n", turtle.getX()));
 				ta.appendText(String.format("Y: %5.3f\n", turtle.getY()));
-				ta.appendText(String.format("Heading: %5.1f\n", turtle.getHeading() % 360));
+				ta.appendText(String.format("Heading: %5.1f\n", (turtle.getHeading() % 360) + 90));
 				ta.appendText("Pen Down: " + Boolean.toString(turtle.getPenDown()) + "\n");
 				ta.appendText("Pen Color: " + myColorList.get(turtle.getPenColorIndex()) + "\n");
 				ta.appendText("Pen Thickness: " + turtle.getPenSize() + "\n");
@@ -106,6 +103,12 @@ public class TurtleStateView extends Window implements TurtleListener {
 	@Override
 	public void backgroundColorChange(int index) {
 		//do nothing
+	}
+
+	@Override
+	public void addToPalette(int index, int rVal, int gVal, int bVal) {
+		//do nothing
+		
 	}
 
 }

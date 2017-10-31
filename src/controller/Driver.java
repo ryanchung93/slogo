@@ -7,7 +7,6 @@ import controller.API.DriverAPI;
 import javafx.stage.Stage;
 import model.CommandManager;
 import model.Model;
-import model.SLogoException;
 import view.View;
 import view.Animation.TurtleListener;
 
@@ -22,7 +21,7 @@ public class Driver implements DriverAPI {
 	public Driver(Stage stage) {
 		CommandManager commandManager = new CommandManager("resources.builders.completeCommands");
 		myModel = new Model(commandManager, this::getListeners);
-		myView = new View(stage, s -> languageChange(s), s -> myModel.execute(s), ()->run());
+		myView = new View(stage, s -> languageChange(s), s -> myModel.execute(s), ()->run(), s -> save(s), s ->load(s));
 	}
 
 	private List<TurtleListener> getListeners() {
@@ -41,6 +40,15 @@ public class Driver implements DriverAPI {
 		myModel.addCommandListener(myView.getUserDefinedCommandListener());
 		myModel.addVariableListener(myView.getVariableListener());
 	}
+	
+	private void save(String filePath) {
+		myModel.save(filePath);
+	}
+	
+	private void load(String filePath) {
+		myModel.load(filePath);
+	}
+
 
 	private void languageChange(String language) {
 		myModel.setLanguage(language);

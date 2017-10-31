@@ -7,6 +7,7 @@ import model.VariableManager;
 
 public class SetHeading implements Command {
 
+	private static final long serialVersionUID = 7489917969522945122L;
 	private Command input;
 	
 	public SetHeading(Command par1) {

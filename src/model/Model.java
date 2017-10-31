@@ -9,6 +9,8 @@ import view.Windows.VariableListener;
 
 public class Model {
 
+	private static final String VAR_EXT = "_var";
+	private static final String COM_EXT = "_com";
 	private CommandManager commands;
 	private VariableManager variables;
 	private TurtleManager turtles;
@@ -39,8 +41,23 @@ public class Model {
 		Parser parser = new Parser(code, commands);
 		while(parser.hasNextCommand()) {
 			Command command = parser.getNextCommand();
+			try {
 			command.execute(turtles, commands, variables);
+			} catch (StackOverflowError e) {
+				throw new SLogoException("StackOverflow");
+			}
 			variables.notifyListeners();
 		}
+	}
+	
+	public void save(String file) {
+		variables.save(file+VAR_EXT);
+		commands.save(file+COM_EXT);
+		SaverLoader.addToKnown(file);
+	}
+	
+	public void load(String file) {
+		variables.load(file+VAR_EXT);
+		commands.load(file+COM_EXT);
 	}
 }

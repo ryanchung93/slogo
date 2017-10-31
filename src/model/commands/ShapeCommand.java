@@ -7,6 +7,8 @@ import model.VariableManager;
 
 public class ShapeCommand implements Command {
 
+	private static final long serialVersionUID = 6831035105706814644L;
+
 	@Override
 	public double execute(Turtle t, CommandManager commands, VariableManager variables) {
 		return t.getShapeIndex();

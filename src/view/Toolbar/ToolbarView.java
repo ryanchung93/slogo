@@ -6,6 +6,7 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.function.Consumer;
 
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
@@ -25,8 +26,11 @@ public class ToolbarView implements SubcomponentViewAPI {
 
 	private ResourceBundle myResources = ResourceBundle.getBundle("resources.view/view");
 	private static final double NODE_SPACING = 50;
+	private List<String> myImageNameList;
+	private List<String> myColorList;
+
 	private HBox myToolbar;
-	private Hyperlink myHelpLink;
+	private WorkSpaceButtons myWorkSpaceButtons;
 	private BackgroundOptionView myBackgroundOptionView;
 	private PenOptionView myPenOptionView;
 	private PenSlider myPenSlider;
@@ -37,25 +41,26 @@ public class ToolbarView implements SubcomponentViewAPI {
 	private List<String> myColorList;
 	private ViewSelector myViewSelector;
 	private WindowObservable<String> myActiveView;
-	
-	public ToolbarView(double width, List<String> imgList, List<String> colorList, WindowObservable<String> activeView) {
+	private Hyperlink myHelpLink;
+
+	public ToolbarView(double width, List<String> imgList, List<String> colorList, Runnable newWorkspace,
+			Consumer<String> saveConsumer, Consumer<String> loadConsumer, WindowObservable<String> activeView) {
 
 		myToolbar = new HBox(NODE_SPACING);
 		myToolbar.setAlignment(Pos.CENTER);
 		myToolbar.setMinWidth(width);
-		
+
 		myImageNameList = imgList;
 		myColorList = colorList;
 		myActiveView = activeView;
-		
-		addBackgroundColorOption();
-		addPenColorOption();
-		addPenSlider();
-		addPenButtons();
-		addTurtleImageOption();
-		addLanguageOption();
-		addHelpLink();
-		addViewSelector(myActiveView);
+
+		myWorkSpaceButtons = new WorkSpaceButtons(newWorkspace, saveConsumer, loadConsumer);
+		makeSubcomponents();
+		makeHelpLink();
+
+		myToolbar.getChildren().addAll(myWorkSpaceButtons.getParent(), myBackgroundOptionView.getParent(),
+				myPenOptionView.getParent(), myPenSlider.getParent(), myPenButtons.getParent(),
+				myImageOptionView.getParent(), myLanguageOptionView.getParent(), myHelpLink, myViewSelector.getParent());
 
 	}
 
@@ -76,7 +81,7 @@ public class ToolbarView implements SubcomponentViewAPI {
 	public PenSlider getPenSlider() {
 		return myPenSlider;
 	}
-	
+
 	public PenButtons getPenButtons() {
 		return myPenButtons;
 	}
@@ -90,7 +95,7 @@ public class ToolbarView implements SubcomponentViewAPI {
 		return myImageOptionView;
 	}
 
-	private void addHelpLink() {
+	private void makeHelpLink() {
 
 		myHelpLink = new Hyperlink();
 		myHelpLink.setText("Help");
@@ -109,45 +114,22 @@ public class ToolbarView implements SubcomponentViewAPI {
 			}
 		});
 
-		myToolbar.getChildren().add(myHelpLink);
-
 	}
 
-	private void addBackgroundColorOption() {
+	private void makeSubcomponents() {
 		myBackgroundOptionView = new BackgroundOptionView(myColorList);
-		myToolbar.getChildren().add(myBackgroundOptionView.getParent());
-	}
-
-	private void addPenColorOption() {
 		myPenOptionView = new PenOptionView(myColorList);
-		myToolbar.getChildren().add(myPenOptionView.getParent());
-	}
-
-	private void addPenSlider() {
 		myPenSlider = new PenSlider();
-		myToolbar.getChildren().add(myPenSlider.getParent());
-	}
-	
-	private void addPenButtons() {
 		myPenButtons = new PenButtons();
-		myToolbar.getChildren().add(myPenButtons.getParent());
-	}
-
-	private void addTurtleImageOption() {
 		myImageOptionView = new TurtleImageOptionView(myImageNameList);
-		myToolbar.getChildren().add(myImageOptionView.getParent());
-	}
-
-	private void addLanguageOption() {
 		myLanguageOptionView = new LanguageOptionView();
-		myToolbar.getChildren().add(myLanguageOptionView.getParent());
+		addViewSelector(myActionView);
 	}
 	
 	private void addViewSelector(WindowObservable<String> activeView) {
 		myViewSelector = new ViewSelector(activeView);
 		Button openViewSelector = createButton(myResources.getString("ToolbarViewSelectorPrompt"));
 		openViewSelector.setOnAction(e -> myViewSelector.run());
-//		myToolbar.getChildren().add(myViewSelector.getParent());
 	}
 
 	private Button createButton(String string) {

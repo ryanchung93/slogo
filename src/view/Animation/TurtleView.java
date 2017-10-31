@@ -37,19 +37,21 @@ public class TurtleView implements TurtleListener {
 	private double myHeading;
 	private int myID;
 	private int myShapeIndex;
+	private Runnable myUpdateColorList;
 
 	private double myOffsetX;
 	private double myOffsetY;
 	private double myPrevNewX;
 	private double myPrevNewY;
 
-	public TurtleView(CanvasView parent, Image image, List<String> imgNameList, List<String> colorList) {
+	public TurtleView(CanvasView parent, Image image, List<String> imgNameList, List<String> colorList, Runnable updateColorList) {
 
 		myView = setupImageView(image);
 		myParent = parent;
 
 		myImageNameList = imgNameList;
 		myColorList = colorList;
+		myUpdateColorList = updateColorList;
 		
 		myImageList = new ArrayList<>();
 		for (String s : myImageNameList) {
@@ -298,6 +300,15 @@ public class TurtleView implements TurtleListener {
 	private void exited() {
 		if (!turtle.isActive())
 			myView.setStyle("-fx-background-color:transparent;");
+	}
+
+	@Override
+	public void addToPalette(int index, int rVal, int gVal, int bVal) {
+		if (index < myColorList.size()) {
+			myColorList.set(index,"rgb(" + Integer.toString(rVal) + "," + Integer.toString(gVal) + "," + Integer.toString(bVal) + ")");
+		}
+		System.out.println("Changed palette: " + myColorList);
+		myUpdateColorList.run();
 	}
 
 }

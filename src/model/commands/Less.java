@@ -7,6 +7,7 @@ import model.VariableManager;
 
 public class Less implements Command {
 
+	private static final long serialVersionUID = 1L;
 	private Command input1;
 	private Command input2;
 

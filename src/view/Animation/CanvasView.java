@@ -11,6 +11,7 @@ import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
+import model.SaverLoader;
 
 /**
  * Class for setting up the canvas where turtles are placed.
@@ -22,6 +23,7 @@ public class CanvasView extends Pane {
 
 	private Color DEFAULT_COLOR = Color.WHITE;
 	private List<String> colorList;
+	private int myColorIndex;
 
 	/**
 	 * Constructor
@@ -38,5 +40,18 @@ public class CanvasView extends Pane {
 
 	public void backgroundColorChange(int colorIndex) {
 		this.setBackground(new Background(new BackgroundFill(Color.valueOf(colorList.get(colorIndex)), CornerRadii.EMPTY, Insets.EMPTY)));
+		myColorIndex = colorIndex;
+	}
+	
+	public void save(String filePath) {
+		SaverLoader.save(myColorIndex, filePath);
+	}
+	
+	public void load(String filePath) {
+		backgroundColorChange((int) SaverLoader.load(filePath));
+	}
+	
+	public void update(List<String> list) {
+		colorList = list;
 	}
 }
