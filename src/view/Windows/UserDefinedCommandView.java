@@ -15,6 +15,7 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.control.ScrollPane.ScrollBarPolicy;
 import javafx.scene.control.TextInputDialog;
 import javafx.scene.layout.VBox;
+import model.SLogoException;
 import view.ErrorWindow;
 
 /**
@@ -64,28 +65,25 @@ public class UserDefinedCommandView implements StringListener {
 		int i = 0;
 		List<String> params = userCommands.get(key);
 		List<String> inputs = new ArrayList<>();
-		if (!params.isEmpty()) {
-			try {
-				while (i < params.size()) {
 
-					TextInputDialog dialog = new TextInputDialog();
-					dialog.setTitle("Enter Parameter Dialog");
-					dialog.setHeaderText("Enter Parameter");
-					dialog.setContentText("Please enter a value for \'" + params.get(i) + "\':");
+		try {while (i < params.size()) {
 
-					Optional<String> result = dialog.showAndWait();
+			TextInputDialog dialog = new TextInputDialog();
+			dialog.setTitle("Enter Parameter Dialog");
+			dialog.setHeaderText("Enter Parameter");
+			dialog.setContentText("Please enter a value for \'" + params.get(i) + "\':");
 
-					result.ifPresent(value -> inputs.add(value));
-					i++;
-				}
-				StringBuilder sb = new StringBuilder();
-				for (String s : inputs)
-					sb.append(s + " ");
-				myConsumer.accept(key, sb.toString());
-				
-			} catch (Exception e) {
-				new ErrorWindow(e.getMessage());
-			}
+			Optional<String> result = dialog.showAndWait();
+
+			result.ifPresent(value -> inputs.add(value));
+			i++;
+		}
+		StringBuilder sb = new StringBuilder();
+		for (String s : inputs)
+			sb.append(s + " ");
+		myConsumer.accept(key, sb.toString());
+		} catch (SLogoException e) {
+			new ErrorWindow(e.getMessage());
 		}
 
 	}

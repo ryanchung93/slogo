@@ -34,7 +34,7 @@ public class TextPromptView extends HBox implements TextPromptAPI, LanguageListe
 
 	public TextPromptView(double width, double height, Consumer<String> commandConsumer,
 			Consumer<String> historyConsumer, Runnable undoneClearer) {
-		
+
 		this.setMaxWidth(width);
 		this.setMaxHeight(height);
 
@@ -57,11 +57,11 @@ public class TextPromptView extends HBox implements TextPromptAPI, LanguageListe
 
 	@Override
 	public void runCommand(String s, String params) {
+
 		if (acceptedCommands.containsKey(s)) {
 			String command = acceptedCommands.getString(s).split("\\|")[0] + " " + params;
 			commandConsumer.accept(command);
-		}
-		else {
+		} else {
 			String command = s + " " + params;
 			commandConsumer.accept(command);
 		}
@@ -127,7 +127,7 @@ public class TextPromptView extends HBox implements TextPromptAPI, LanguageListe
 		ret.setOnAction(handler);
 		return ret;
 	}
-	
+
 	private void enter() {
 		String code = tp.getText();
 		try {

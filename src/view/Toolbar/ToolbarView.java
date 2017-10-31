@@ -97,6 +97,10 @@ public class ToolbarView implements SubcomponentViewAPI {
 	public TurtleImageOptionView getImageOptionView() {
 		return myImageOptionView;
 	}
+	
+	public WorkSpaceButtons getWorkSpaceButtons() {
+		return myWorkSpaceButtons;
+	}
 
 	private void makeHelpLink() {
 

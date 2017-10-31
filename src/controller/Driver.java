@@ -23,7 +23,8 @@ public class Driver implements DriverAPI {
 	 * Construct a driver, loads a model and view
 	 */
 	public Driver(Stage stage) {
-		myView = new View(stage, s -> languageChange(s), s -> myModel.execute(s), ()->run(), s -> save(s), s ->load(s));
+		myView = new View(stage, s -> languageChange(s), s -> myModel.execute(s), () -> run(), s -> myModel.save(s),
+				s -> myModel.load(s));
 	}
 
 	private List<TurtleListener> getListeners() {
@@ -33,7 +34,9 @@ public class Driver implements DriverAPI {
 		return list;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see controller.API.DriverAPI#run()
 	 */
 	@Override
@@ -45,15 +48,6 @@ public class Driver implements DriverAPI {
 		myModel.addCommandListener(myView.getUserDefinedCommandListener());
 		myModel.addVariableListener(myView.getVariableListener());
 	}
-	
-	private void save(String filePath) {
-		myModel.save(filePath);
-	}
-	
-	private void load(String filePath) {
-		myModel.load(filePath);
-	}
-
 
 	private void languageChange(String language) {
 		myModel.setLanguage(language);

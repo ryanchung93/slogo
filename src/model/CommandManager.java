@@ -177,6 +177,7 @@ public class CommandManager {
 		for (String s : data.keySet()) {
 			userCommands.put(s, data.get(s));
 		}
+		System.out.println(userCommands);
 		updateListeners();
 	}
 }
