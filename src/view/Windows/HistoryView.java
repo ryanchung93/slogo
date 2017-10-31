@@ -114,6 +114,7 @@ public class HistoryView implements SubcomponentViewAPI{
 			try {
 				clearUndone();
 				myCommandConsumer.accept(newCode);
+				updateHistory(newCode);
 			} catch (SLogoException e) {
 				new ErrorWindow(e.getMessage());
 			}
