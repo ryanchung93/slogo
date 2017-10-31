@@ -1,5 +1,7 @@
 package view.Windows;
 
+import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -16,14 +18,14 @@ public class ReferenceView extends Window implements StringListener {
 	}
 
 	@Override
-	public void changedMap(Set<String> refMap, Set<String> commandSet) {
+	public void changedMap(Set<String> set, Map<String, List<String>> userCs) {
 		ta.clear();
 		ta.appendText(myResources.getString("ReferenceView") + "\n\n");
-		for (String key : refMap) {
+		for (String key : set) {
 			ta.appendText(key + "\n");
 		}
 		ta.setScrollTop(0);
-
+		
 	}
 
 }
