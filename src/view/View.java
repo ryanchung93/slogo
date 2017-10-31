@@ -384,7 +384,8 @@ public class View implements ViewAPI, Observer {
 	private void makeScrollPaneLists() {
 		myLeftSPList = new ArrayList<String>();
 		myLeftSPList.addAll(Arrays.asList(myResources.getString("LeftSPViews").split(",")));
-
+	}
+	
 	private void save(String filePath) {
 		save.accept(filePath);
 

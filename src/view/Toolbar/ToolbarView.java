@@ -26,8 +26,6 @@ public class ToolbarView implements SubcomponentViewAPI {
 
 	private ResourceBundle myResources = ResourceBundle.getBundle("resources.view/view");
 	private static final double NODE_SPACING = 50;
-	private List<String> myImageNameList;
-	private List<String> myColorList;
 
 	private HBox myToolbar;
 	private WorkSpaceButtons myWorkSpaceButtons;
@@ -60,7 +58,7 @@ public class ToolbarView implements SubcomponentViewAPI {
 
 		myToolbar.getChildren().addAll(myWorkSpaceButtons.getParent(), myBackgroundOptionView.getParent(),
 				myPenOptionView.getParent(), myPenSlider.getParent(), myPenButtons.getParent(),
-				myImageOptionView.getParent(), myLanguageOptionView.getParent(), myHelpLink, myViewSelector.getParent());
+				myImageOptionView.getParent(), myLanguageOptionView.getParent(), myHelpLink);
 
 	}
 
@@ -123,7 +121,7 @@ public class ToolbarView implements SubcomponentViewAPI {
 		myPenButtons = new PenButtons();
 		myImageOptionView = new TurtleImageOptionView(myImageNameList);
 		myLanguageOptionView = new LanguageOptionView();
-		addViewSelector(myActionView);
+		addViewSelector(myActiveView);
 	}
 	
 	private void addViewSelector(WindowObservable<String> activeView) {
