@@ -84,7 +84,7 @@ public class HistoryView implements SubcomponentViewAPI{
 		text.setFill(Color.WHITE);
 
 		myHistory = new VBox();
-		myHistory.setMinWidth(width);
+		myHistory.setPrefWidth(width);
 		myHistory.setMinHeight(height);
 		myHistory.setId("var-VBox");
 		scrollPane = new ScrollPane();
