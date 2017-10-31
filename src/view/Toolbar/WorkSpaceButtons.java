@@ -32,7 +32,7 @@ public class WorkSpaceButtons implements SubcomponentViewAPI {
 
 	public WorkSpaceButtons(Runnable newWorkspace, Consumer<String> saveConsumer, Consumer<String> loadConsumer) {
 
-		view = new VBox(new Label("WorkSpace Manager"));
+		view = new VBox(new Label("Workspace Manager"));
 		HBox panel = new HBox();
 		newButton = makeButton("New", e -> newFile());
 		saveButton = makeButton("Save", e -> saveFile());

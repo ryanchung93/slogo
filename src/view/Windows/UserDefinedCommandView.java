@@ -25,4 +25,6 @@ public class UserDefinedCommandView extends Window implements StringListener {
 			ta.appendText(key + "\n");
 		}
 	}
+	
+	
 }

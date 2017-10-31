@@ -256,7 +256,7 @@ public class View implements ViewAPI, Observer {
 		myVarView = new VariableView((dims[1][1] + dims[1][2]) / 2);
 		myTurtleStateView = new TurtleStateView((dims[1][1] + dims[1][2]) / 2, myImageNameList, myColorList);
 		myRefView = new ReferenceView((dims[1][1] + dims[1][2]) / 2);
-		myHistoryView = new HistoryView((dims[1][1] + dims[1][2]) / 2, myCommandConsumer, () -> {
+		myHistoryView = new HistoryView(dims[0][0], (dims[1][1] + dims[1][2]) / 2, myCommandConsumer, () -> {
 			myTurtleViewManager.clear();
 			reset.run();
 		});
