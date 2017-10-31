@@ -395,7 +395,7 @@ public class View implements ViewAPI, Observer {
 		for (String color : myColorList)
 			sb.append(color + " ");
 		SaverLoader.save(sb.toString(), filePath + COLOR_EXT);
-	}
+	}	
 
 	private void load(String filePath) {
 		load.accept(filePath);
