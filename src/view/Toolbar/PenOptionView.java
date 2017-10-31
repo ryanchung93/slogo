@@ -23,6 +23,13 @@ public class PenOptionView extends OptionView {
 		makeChoiceBox(colorList);
 	}
 
+	/**
+	 * method that creates default ChoiceBoxes. Also changes ChoiceBox when user
+	 * defines new Color.
+	 * 
+	 * @param colorList
+	 */
+
 	public void makeChoiceBox(List<String> colorList) {
 		cb.getItems().removeAll(cb.getItems());
 
