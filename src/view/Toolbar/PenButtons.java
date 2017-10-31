@@ -13,6 +13,12 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import view.SubcomponentViewAPI;
 
+/**
+ * Class for pen up/down buttons.
+ * 
+ * @author DavidTran
+ *
+ */
 public class PenButtons implements SubcomponentViewAPI {
 
 	private VBox view;
@@ -28,10 +34,16 @@ public class PenButtons implements SubcomponentViewAPI {
 		Label prompt = new Label(PROMPT);
 		HBox buttonPanel = new HBox();
 		upButton = makeButton(myResources.getString("UpButtonCommand"), e -> myCommandConsumer.accept("PenUp", ""));
-		downButton = makeButton(myResources.getString("DownButtonCommand"), e -> myCommandConsumer.accept("PenDown", ""));
+		downButton = makeButton(myResources.getString("DownButtonCommand"),
+				e -> myCommandConsumer.accept("PenDown", ""));
 		buttonPanel.getChildren().addAll(upButton, downButton);
 		view.getChildren().addAll(prompt, buttonPanel);
 		view.setAlignment(Pos.BASELINE_CENTER);
+	}
+
+	@Override
+	public Parent getParent() {
+		return view;
 	}
 
 	private Button makeButton(String label, EventHandler<ActionEvent> e) {
@@ -39,10 +51,5 @@ public class PenButtons implements SubcomponentViewAPI {
 		ret.setOnAction(e);
 		ret.setId("toolbar-button");
 		return ret;
-	}
-
-	@Override
-	public Parent getParent() {
-		return view;
 	}
 }

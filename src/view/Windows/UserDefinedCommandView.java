@@ -61,36 +61,37 @@ public class UserDefinedCommandView implements StringListener {
 		}
 	}
 
+	@Override
+	public Parent getParent() {
+		return sp;
+	}
+
 	private void prompt(String key) {
 		int i = 0;
 		List<String> params = userCommands.get(key);
 		List<String> inputs = new ArrayList<>();
 
-		try {while (i < params.size()) {
+		try {
+			while (i < params.size()) {
 
-			TextInputDialog dialog = new TextInputDialog();
-			dialog.setTitle("Enter Parameter Dialog");
-			dialog.setHeaderText("Enter Parameter");
-			dialog.setContentText("Please enter a value for \'" + params.get(i) + "\':");
+				TextInputDialog dialog = new TextInputDialog();
+				dialog.setTitle("Enter Parameter Dialog");
+				dialog.setHeaderText("Enter Parameter");
+				dialog.setContentText("Please enter a value for \'" + params.get(i) + "\':");
 
-			Optional<String> result = dialog.showAndWait();
+				Optional<String> result = dialog.showAndWait();
 
-			result.ifPresent(value -> inputs.add(value));
-			i++;
-		}
-		StringBuilder sb = new StringBuilder();
-		for (String s : inputs)
-			sb.append(s + " ");
-		myConsumer.accept(key, sb.toString());
+				result.ifPresent(value -> inputs.add(value));
+				i++;
+			}
+			StringBuilder sb = new StringBuilder();
+			for (String s : inputs)
+				sb.append(s + " ");
+			myConsumer.accept(key, sb.toString());
 		} catch (SLogoException e) {
 			new ErrorWindow(e.getMessage());
 		}
 
-	}
-
-	@Override
-	public Parent getParent() {
-		return sp;
 	}
 
 }

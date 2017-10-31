@@ -7,7 +7,7 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 
 /**
- * Class that allows users to select a canvas color from a choice box.
+ * Class that allows users to select a turtle image from a choice box.
  * 
  * @author DavidTran
  *

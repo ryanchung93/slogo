@@ -9,6 +9,12 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 import view.SubcomponentViewAPI;
 
+/**
+ * Super class for 
+ * 
+ * @author DavidTran
+ *
+ */
 public class OptionView implements SubcomponentViewAPI {
 
 	protected VBox optionView;

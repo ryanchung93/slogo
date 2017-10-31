@@ -7,6 +7,12 @@ import javafx.scene.control.TextArea;
 import javafx.scene.layout.VBox;
 import view.SubcomponentViewAPI;
 
+/**
+ * Super class for sub-windos displayed on side scroll panes.
+ * 
+ * @author DavidTran
+ *
+ */
 public class Window implements SubcomponentViewAPI {
 
 	protected TextArea ta;
@@ -29,7 +35,7 @@ public class Window implements SubcomponentViewAPI {
 		ret.setEditable(false);
 		return ret;
 	}
-	
+
 	/*************************** PUBLIC METHODS ********************************/
 
 	@Override
@@ -37,4 +43,3 @@ public class Window implements SubcomponentViewAPI {
 		return view;
 	}
 }
-

@@ -66,6 +66,8 @@ public class ToolbarView implements ToolbarAPI, SubcomponentViewAPI {
 				myImageOptionView.getParent(), myLanguageOptionView.getParent(), myHelpLink);
 
 	}
+	
+	/******************** PUBLIC METHODS ********************/
 
 	@Override
 	public Parent getParent() {
@@ -87,9 +89,12 @@ public class ToolbarView implements ToolbarAPI, SubcomponentViewAPI {
 		return myLanguageOptionView;
 	}
 
+	@Override
 	public WorkSpaceButtons getWorkSpaceButtons() {
 		return myWorkSpaceButtons;
 	}
+	
+	/******************** PRIVATE METHODS ********************/
 
 	private void makeHelpLink() {
 

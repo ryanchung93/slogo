@@ -25,7 +25,6 @@ import view.ErrorWindow;
 import model.SLogoException;
 import model.SaverLoader;
 
-
 /**
  * Class that allows users to see command history.
  * 
@@ -33,7 +32,7 @@ import model.SaverLoader;
  *
  */
 
-public class HistoryView implements SubcomponentViewAPI, SaveLoadAPI{
+public class HistoryView implements SubcomponentViewAPI, SaveLoadAPI {
 
 	private static final String DELIMITER = "&&&";
 	private static final ResourceBundle myResources = ResourceBundle.getBundle("resources.view/view");
@@ -54,7 +53,7 @@ public class HistoryView implements SubcomponentViewAPI, SaveLoadAPI{
 	public HistoryView(double width, double height, Consumer<String> commandConsumer, Runnable reset) {
 		historyList = new ArrayList<>();
 		undone = new Stack<>();
-		
+
 		myCommandConsumer = commandConsumer;
 		myReset = reset;
 
@@ -92,7 +91,7 @@ public class HistoryView implements SubcomponentViewAPI, SaveLoadAPI{
 		clearButton = makeButton("Clear History", e -> clear());
 		undoButton = makeButton("Undo", e -> undo());
 		redoButton = makeButton("Redo", e -> redo());
-		
+
 		view.add(text, 0, 0);
 		view.add(scrollPane, 0, 1);
 		view.add(clearButton, 0, 2);
@@ -102,7 +101,12 @@ public class HistoryView implements SubcomponentViewAPI, SaveLoadAPI{
 
 	/*************************** PUBLIC METHODS ********************************/
 
-	// add to interface
+	/**
+	 * Updates the history view.
+	 * 
+	 * @param newCode
+	 *            command to be added to the view.
+	 */
 	public void updateHistory(String newCode) {
 		lastCommand = newCode;
 		historyList.add(lastCommand);
@@ -118,7 +122,7 @@ public class HistoryView implements SubcomponentViewAPI, SaveLoadAPI{
 		});
 		myHistory.getChildren().addAll(t);
 	}
-	
+
 	@Override
 	public Parent getParent() {
 		return view;
@@ -134,7 +138,8 @@ public class HistoryView implements SubcomponentViewAPI, SaveLoadAPI{
 
 	@Override
 	public void load(String filePath) {
-		historyList = new ArrayList<String>(Arrays.asList(((String) SaverLoader.load(filePath)).split("\\s" + DELIMITER + "\\s")         ));
+		historyList = new ArrayList<String>(
+				Arrays.asList(((String) SaverLoader.load(filePath)).split("\\s" + DELIMITER + "\\s")));
 		myHistory.getChildren().removeAll(myHistory.getChildren());
 		for (String s : historyList) {
 			Hyperlink t = new Hyperlink(s);
@@ -148,7 +153,10 @@ public class HistoryView implements SubcomponentViewAPI, SaveLoadAPI{
 			myHistory.getChildren().add(t);
 		}
 	}
-	
+
+	/**
+	 * Clears the undo stack.
+	 */
 	public void clearUndone() {
 		undone.clear();
 	}
@@ -160,16 +168,15 @@ public class HistoryView implements SubcomponentViewAPI, SaveLoadAPI{
 		ret.setOnAction(e);
 		return ret;
 	}
-	
+
 	private void redo() {
 		clear();
 		int size = undone.size();
-		if(size != 0) {
+		if (size != 0) {
 			historyList.add(undone.pop());
 		}
 		resetAndRun();
 	}
-	
 
 	private void undo() {
 		// TODO make redo, store undone commands in a separate Stack, throw error/do
@@ -181,11 +188,11 @@ public class HistoryView implements SubcomponentViewAPI, SaveLoadAPI{
 		}
 		resetAndRun();
 	}
-	
+
 	private void clear() {
 		myHistory.getChildren().clear();
 	}
-	
+
 	private void resetAndRun() {
 		myReset.run();
 		List<String> newHistory = new ArrayList<>();

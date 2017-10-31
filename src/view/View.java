@@ -49,7 +49,7 @@ import view.Windows.VariableView;
 /**
  * Class that displays the GUI and SLogo animations.
  * 
- * @author DavidTran
+ * @author DavidTran, RyanChung
  *
  */
 public class View implements ViewAPI, Observer, SaveLoadAPI {
@@ -93,7 +93,6 @@ public class View implements ViewAPI, Observer, SaveLoadAPI {
 	private ArrayList<String> myWindowList;
 	private ArrayList<String> myLeftSPList;
 	private Runnable reset;
-	private Runnable stateClear;
 	private Consumer<String> load;
 	private Consumer<String> save;
 

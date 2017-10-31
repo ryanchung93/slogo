@@ -33,4 +33,10 @@ public interface ToolbarAPI {
 	 */
 	public LanguageOptionView getLanguageOptionView();
 
+	/**
+	 * method used to get WorkSpaceButtons to update file load list
+	 * 
+	 * @return PenButtons in ToolbarView
+	 */
+	public WorkSpaceButtons getWorkSpaceButtons();
 }

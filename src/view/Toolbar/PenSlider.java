@@ -12,6 +12,12 @@ import javafx.scene.control.Slider;
 import javafx.scene.layout.VBox;
 import view.SubcomponentViewAPI;
 
+/**
+ * Class for pen size slider.
+ * 
+ * @author DavidTran
+ *
+ */
 public class PenSlider implements SubcomponentViewAPI {
 
 	private static ResourceBundle myResources = ResourceBundle.getBundle("resources.view/view");

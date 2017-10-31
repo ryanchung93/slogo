@@ -5,6 +5,12 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.control.ScrollPane.ScrollBarPolicy;
 import view.SubcomponentViewAPI;
 
+/**
+ * Class for Scroll panes.
+ * 
+ * @author DavidTran
+ *
+ */
 public class ScrollPaneView implements SubcomponentViewAPI {
 
 	ScrollPane sp;

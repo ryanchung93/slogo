@@ -2,7 +2,6 @@ package view;
 
 import java.util.function.Consumer;
 
-import model.SLogoException;
 import view.Animation.TurtleListener;
 import view.Windows.StringListener;
 import view.Windows.VariableListener;

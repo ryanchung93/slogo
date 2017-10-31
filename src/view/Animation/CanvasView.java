@@ -17,7 +17,7 @@ import view.Windows.SaveLoadAPI;
  * @author DavidTran
  *
  */
-public class CanvasView extends Pane implements SaveLoadAPI{
+public class CanvasView extends Pane implements SaveLoadAPI {
 
 	private Color DEFAULT_COLOR = Color.WHITE;
 	private List<String> colorList;
@@ -36,21 +36,34 @@ public class CanvasView extends Pane implements SaveLoadAPI{
 		colorList = list;
 	}
 
+	/**
+	 * Called when background color is changed.
+	 * 
+	 * @param colorIndex
+	 *            index of the color to be set.
+	 */
 	public void backgroundColorChange(int colorIndex) {
-		this.setBackground(new Background(new BackgroundFill(Color.valueOf(colorList.get(colorIndex)), CornerRadii.EMPTY, Insets.EMPTY)));
+		this.setBackground(new Background(
+				new BackgroundFill(Color.valueOf(colorList.get(colorIndex)), CornerRadii.EMPTY, Insets.EMPTY)));
 		myColorIndex = colorIndex;
 	}
-	
+
 	@Override
 	public void save(String filePath) {
 		SaverLoader.save(myColorIndex, filePath);
 	}
-	
+
 	@Override
 	public void load(String filePath) {
 		backgroundColorChange((int) SaverLoader.load(filePath));
 	}
-	
+
+	/**
+	 * Called when color list if updated.
+	 * 
+	 * @param list
+	 *            updated colorlist
+	 */
 	public void update(List<String> list) {
 		colorList = list;
 	}

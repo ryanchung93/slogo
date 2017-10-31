@@ -118,6 +118,12 @@ public class TurtleStateView extends Window implements TurtleListener {
 		}
 	}
 
+	/**
+	 * Called when color list needs to be updated.
+	 * 
+	 * @param colorList
+	 *            updated color list
+	 */
 	public void updateColorList(List<String> colorList) {
 		myColorList = colorList;
 		update();

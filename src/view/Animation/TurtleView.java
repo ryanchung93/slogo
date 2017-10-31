@@ -32,7 +32,6 @@ public class TurtleView implements TurtleListener {
 	private boolean myPenIsDown;
 	private CanvasView myParent;
 	private double myHeading;
-	private int myID;
 	private int myShapeIndex;
 	private Runnable myUpdateColorList;
 
@@ -63,8 +62,6 @@ public class TurtleView implements TurtleListener {
 	@Override
 	public void setTurtle(ImmutableTurtle turtle) {
 
-		myID = turtle.getID();
-		// System.out.println("ID: " + myID);
 		myHeading = turtle.getHeading();
 		myPenColorIndex = turtle.getPenColorIndex();
 		myPenThickness = turtle.getPenSize();
