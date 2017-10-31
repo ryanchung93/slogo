@@ -6,6 +6,10 @@ import model.StackGroupCommandBuilder;
 import model.TokenDispenser;
 import model.commands.Or;
 
+/**
+ * @author Aaron Paskin
+ * @author Ian Eldridge-Allegra
+ */
 public class OrBuilder extends StackGroupCommandBuilder {
 
 	@Override

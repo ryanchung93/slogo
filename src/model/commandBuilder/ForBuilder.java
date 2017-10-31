@@ -9,6 +9,10 @@ import model.SLogoException;
 import model.TokenDispenser;
 import model.commands.For;
 
+/**
+ * @author Aaron Paskin
+ * @author Ian Eldridge-Allegra
+ */
 public class ForBuilder implements CommandBuilder {
 
 	@Override

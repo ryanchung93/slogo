@@ -1,7 +1,7 @@
 package model;
 
 /**
- * A view-only version of 
+ * A Turtle that is primarily view-only. 
  * @see Turtle
  */
 public interface ImmutableTurtle {

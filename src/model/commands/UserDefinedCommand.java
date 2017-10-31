@@ -11,6 +11,10 @@ import model.Turtle;
 import model.VariableManager;
 import model.commandBuilder.CommandDef;
 
+/**
+ * @author Aaron Paskin
+ * @author Ian Eldridge-Allegra
+ */
 public class UserDefinedCommand implements Command {
 	private static final long serialVersionUID = -4720749543660734895L;
 	private String name;
@@ -35,7 +39,6 @@ public class UserDefinedCommand implements Command {
 					parameters.get(i).execute(t, commands, variables));
 		}
 		variables.enterLocalScope();
-		System.out.println(vals);
 		for(String var : vals.keySet())
 			variables.setLocalValue(var, vals.get(var));
 		double answer = command.getCommandList().execute(t, commands, variables);

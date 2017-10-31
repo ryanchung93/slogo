@@ -6,6 +6,10 @@ import model.SLogoException;
 import model.TokenDispenser;
 import model.commands.Less;
 
+/**
+ * @author Aaron Paskin
+ * @author Ian Eldridge-Allegra
+ */
 public class LessBuilder implements CommandBuilder {
 
 	@Override

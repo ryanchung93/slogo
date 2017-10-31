@@ -6,6 +6,10 @@ import model.SLogoException;
 import model.TokenDispenser;
 import model.commands.ClearScreen;
 
+/**
+ * @author Aaron Paskin
+ * @author Ian Eldridge-Allegra
+ */
 public class ClearScreenBuilder implements CommandBuilder {
 
 	@Override

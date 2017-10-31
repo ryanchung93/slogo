@@ -8,6 +8,10 @@ import model.commands.NumberCommand;
 import model.commands.Pow;
 import model.commands.Product;
 
+/**
+ * @author Aaron Paskin
+ * @author Ian Eldridge-Allegra
+ */
 public class QuotientBuilder extends StackGroupCommandBuilder {
 
 	@Override

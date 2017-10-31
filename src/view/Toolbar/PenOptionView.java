@@ -25,15 +25,15 @@ public class PenOptionView extends OptionView {
 
 		this.colorList = colorList;
 
-		makeChoiceBox();
+		makeChoiceBox(colorList);
 	}
 
 	public void addTextPrompt(TextPromptView tp) {
 		this.tp = tp;
 	}
 
-	public void makeChoiceBox() {
-
+	public void makeChoiceBox(List<String> colorList) {
+		this.colorList = colorList;
 		cb.getItems().removeAll(cb.getItems());
 
 		for (String color : colorList)

@@ -24,11 +24,12 @@ public class BackgroundOptionView extends OptionView {
 
 		this.colorList = colorList;
 
-		makeChoiceBox();
+		makeChoiceBox(colorList);
 	}
 	
-	public void makeChoiceBox() {
-
+	public void makeChoiceBox(List<String> list) {
+		this.colorList = list;
+		
 		cb.getItems().removeAll(cb.getItems());
 		
 		

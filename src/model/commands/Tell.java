@@ -9,6 +9,10 @@ import model.TurtleManager;
 import model.TurtleManagerSpecificCommand;
 import model.VariableManager;
 
+/**
+ * @author Aaron Paskin
+ * @author Ian Eldridge-Allegra
+ */
 public class Tell extends TurtleManagerSpecificCommand {
 
 	private static final long serialVersionUID = -7345912902104085021L;

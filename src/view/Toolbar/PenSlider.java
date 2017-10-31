@@ -34,7 +34,7 @@ public class PenSlider implements SubcomponentViewAPI {
             public void changed(ObservableValue<? extends Number> ov,
                 Number old_val, Number new_val) {
                     tp.runCommand("SetPenSize", Double.toString(new_val.doubleValue()));
-                    System.out.println(new_val.doubleValue());
+                    //System.out.println(new_val.doubleValue());
             }
         });
 	}

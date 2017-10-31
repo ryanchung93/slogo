@@ -2,18 +2,25 @@ package view;
 
 import java.io.File;
 import java.io.FilenameFilter;
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Observable;
+import java.util.Observer;
 import java.util.ResourceBundle;
 import java.util.function.Consumer;
 
+import controller.Driver;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.geometry.HPos;
 import javafx.geometry.VPos;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
@@ -21,14 +28,17 @@ import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.RowConstraints;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import model.SaverLoader;
 import view.Animation.CanvasView;
 import view.Animation.TextPromptView;
 import view.Animation.TurtleListener;
 import view.Animation.TurtleViewManager;
 import view.Toolbar.LanguageListener;
 import view.Toolbar.ToolbarView;
+import view.Toolbar.WindowObservable;
 import view.Windows.HistoryView;
 import view.Windows.ReferenceView;
 import view.Windows.ScrollPaneView;
@@ -44,16 +54,19 @@ import view.Windows.VariableView;
  * @author DavidTran
  *
  */
-public class View implements ViewAPI {
+public class View implements ViewAPI, Observer {
 
 	private static final int FRAMES_PER_SECOND = 60;
 	private static final int MILLISECOND_DELAY = 1000 / FRAMES_PER_SECOND;
 	private static final double SECOND_DELAY = 1.0 / FRAMES_PER_SECOND;
-	private static final int SCREEN_WIDTH = 1000;
+	private static final int SCREEN_WIDTH = 1200;
 	private static final int SCREEN_HEIGHT = 700;
 	private static final String STYLESHEET = "/resources/view/view.css";
 	private static final String DEFAULT_TURTLE_IMAGE = "turtle0.png";
 	private static final ResourceBundle myResources = ResourceBundle.getBundle("resources.view/view");
+	private static final String HIST_EXT = "_hist";
+	private static final String BKGD_EXT = "_bkgd";
+	private static final String COLOR_EXT = "_color";
 
 	private Stage myStage;
 	private Scene myScene;
@@ -74,22 +87,31 @@ public class View implements ViewAPI {
 	private HistoryView myHistoryView;
 	private ToolbarView myToolbarView;
 	private TurtleStateView myTurtleStateView;
+	private WindowObservable<String> myActiveView;
 	private LanguageListener myLanguageListener;
 	private Consumer<String> myCommandConsumer;
 	private List<String> myImageNameList;
 	private List<String> myColorList;
+	private ArrayList<String> myWindowList;
+	private ArrayList<String> myLeftSPList;
+	private ArrayList<String> myRightSPList;
 	private Runnable reset;
+	private Consumer<String> load;
+	private Consumer<String> save;
 
 	/**
 	 * Constructor for setting up animation.
 	 * 
 	 * @param stage
 	 */
-	public View(Stage stage, LanguageListener langListener, Consumer<String> commandConsumer, Runnable reset) {
+	public View(Stage stage, LanguageListener langListener, Consumer<String> commandConsumer, Runnable reset,
+			Consumer<String> save, Consumer<String> load) {
 		myStage = stage;
 		myLanguageListener = langListener;
 		myStage.setTitle("SLogo Interpreter");
 		this.reset = reset;
+		this.save = save;
+		this.load = load;
 		start(commandConsumer);
 	}
 
@@ -99,8 +121,9 @@ public class View implements ViewAPI {
 	public void start(Consumer<String> commandConsumer) {
 		myTimeline = setupTimeline();
 		myCommandConsumer = commandConsumer;
-		createImageList();
+		myImageNameList = createFileList("src/resources/images", ".png");
 		createColorList();
+		createWindowList();
 		setupLayout();
 		addScrollPaneComponents();
 		addAnimationComponents();
@@ -164,11 +187,11 @@ public class View implements ViewAPI {
 		myScene.setOnKeyPressed(e -> handleKeyInput(e.getCode()));
 
 		ColumnConstraints col1 = new ColumnConstraints();
-		col1.setPercentWidth(25);
+		col1.setPercentWidth(22.5);
 		ColumnConstraints col2 = new ColumnConstraints();
-		col2.setPercentWidth(50);
+		col2.setPercentWidth(55);
 		ColumnConstraints col3 = new ColumnConstraints();
-		col3.setPercentWidth(25);
+		col3.setPercentWidth(22.5);
 		RowConstraints row1 = new RowConstraints();
 		row1.setPercentHeight(10);
 		RowConstraints row2 = new RowConstraints();
@@ -202,8 +225,8 @@ public class View implements ViewAPI {
 				getClass().getClassLoader().getResourceAsStream("resources/images/" + DEFAULT_TURTLE_IMAGE));
 
 		myTurtleViewManager = new TurtleViewManager(myCanvas, image, myImageNameList, myColorList, () -> {
-			myToolbarView.getBackgroundOptionView().makeChoiceBox();
-			myToolbarView.getPenOptionView().makeChoiceBox();
+			myToolbarView.getBackgroundOptionView().makeChoiceBox(myColorList);
+			myToolbarView.getPenOptionView().makeChoiceBox(myColorList);
 		});
 	}
 
@@ -248,7 +271,9 @@ public class View implements ViewAPI {
 	 * Add toolbar and its subcomponents.
 	 */
 	private void addToolbar() {
-		myToolbarView = new ToolbarView(SCREEN_WIDTH, myImageNameList, myColorList);
+		myToolbarView = new ToolbarView(SCREEN_WIDTH, myImageNameList, myColorList, () -> newWorkSpace(), s -> save(s),
+				s -> load(s), myActiveView);
+
 		// set a listener for background, pen, image, language changes.
 		myToolbarView.getBackgroundOptionView().addTextPrompt(myTextPrompt);
 		myToolbarView.getPenOptionView().addTextPrompt(myTextPrompt);
@@ -258,6 +283,14 @@ public class View implements ViewAPI {
 		myToolbarView.getLanguageOptionView().addLanguageOptionListener(myLanguageListener);
 		myToolbarView.getLanguageOptionView().addLanguageOptionListener(myTextPrompt);
 		myGrid.add(myToolbarView.getParent(), 0, 0);
+	}
+
+	private void newWorkSpace() {
+		try {
+			new Driver(new Stage()).run();
+		} catch (Exception e) {
+			new ErrorWindow(e.getMessage());
+		}
 	}
 
 	/**
@@ -276,15 +309,16 @@ public class View implements ViewAPI {
 		return ret;
 	}
 
-	private void createImageList() {
-		myImageNameList = new ArrayList<String>();
+	private List<String> createFileList(String path, String ext) {
 
-		File file = new File("src/resources/images");
+		List<String> ret = new ArrayList<String>();
+
+		File file = new File(path);
 		File[] files = file.listFiles(new FilenameFilter() {
 
 			@Override
 			public boolean accept(File dir, String name) {
-				if (name.toLowerCase().endsWith(".png")) {
+				if (name.toLowerCase().endsWith(ext)) {
 					return true;
 				} else {
 					return false;
@@ -292,12 +326,87 @@ public class View implements ViewAPI {
 			}
 		});
 		for (File f : files) {
-			myImageNameList.add(f.getName());
+			ret.add(f.getName());
 		}
+		return ret;
 	}
 
 	private void createColorList() {
 		myColorList = Arrays.asList(myResources.getString("Colors").replaceAll("\\s+", "").split("\\|"));
+	}
+
+	private void createWindowList() {
+		myWindowList = new ArrayList<String>();
+		myWindowList.addAll(Arrays.asList(myResources.getString("DefaultWindows").split(",")));
+		myActiveView = new WindowObservable<String>(myWindowList);
+		// add observers
+		myActiveView.addObserver(this);
+	}
+
+	@Override
+	public void update(Observable o, Object arg) {
+		try {
+			updateView((String) arg);
+		} catch (NoSuchFieldException | SecurityException | IllegalArgumentException | IllegalAccessException e) {
+			e.printStackTrace();
+		}
+	}
+
+	private void updateView(String window)
+			throws NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException {
+
+		Field f = this.getClass().getDeclaredField(window);
+		SubcomponentViewAPI temp = (SubcomponentViewAPI) f.get(this);
+		Parent newWindow = temp.getParent();
+
+		makeScrollPaneLists();
+		
+		changeView(window, newWindow);
+
+	}
+
+	private void changeView(String window, Parent newWindow) {
+		if (myLeftSPList.contains(window)) {
+			if (myLeftVBox.getChildren().contains(newWindow)) {
+				myLeftVBox.getChildren().remove(newWindow);
+			} else {
+				myLeftVBox.getChildren().add(newWindow);
+			}
+		} else {
+			if (myRightVBox.getChildren().contains(newWindow)) {
+				myRightVBox.getChildren().remove(newWindow);
+			} else {
+				myRightVBox.getChildren().add(newWindow);
+			}
+		}
+	}
+
+	private void makeScrollPaneLists() {
+		myLeftSPList = new ArrayList<String>();
+		myLeftSPList.addAll(Arrays.asList(myResources.getString("LeftSPViews").split(",")));
+	}
+	
+	private void save(String filePath) {
+		save.accept(filePath);
+
+		myHistoryView.save(filePath + HIST_EXT);
+		myCanvas.save(filePath + BKGD_EXT);
+		StringBuilder sb = new StringBuilder();
+		for (String color : myColorList)
+			sb.append(color + " ");
+		SaverLoader.save(sb.toString(), filePath + COLOR_EXT);
+	}
+
+	private void load(String filePath) {
+		load.accept(filePath);
+
+		myHistoryView.load(filePath + HIST_EXT);
+		myCanvas.load(filePath + BKGD_EXT);
+		myTextPrompt.runCommand("ClearScreen", "");
+		myColorList = Arrays.asList(((String) SaverLoader.load(filePath + COLOR_EXT)).split(" "));
+		myToolbarView.getBackgroundOptionView().makeChoiceBox(myColorList);
+		myToolbarView.getPenOptionView().makeChoiceBox(myColorList);
+		myCanvas.update(myColorList);
 	}
 
 }
