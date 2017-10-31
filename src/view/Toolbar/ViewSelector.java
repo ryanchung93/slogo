@@ -26,6 +26,7 @@ public class ViewSelector implements SubcomponentViewAPI{
 	private ResourceBundle myResources = ResourceBundle.getBundle("resources.view/view");
 	private HashMap<String, String> newViews;
 	private WindowObservable<String> activeViews;
+	private static final String STYLESHEET = "/resources/view/view.css";
 	
 	private Stage myStage;
 	private Scene myScene;
@@ -46,6 +47,7 @@ public class ViewSelector implements SubcomponentViewAPI{
 
 	private void createButton() {
 		Button confirmButton = new Button(myResources.getString("ViewButton"));
+		confirmButton.setId("toolbar-button");
 		confirmButton.setOnAction(e -> closeWindow());
 		myWindows.getChildren().add(confirmButton);
 	}
@@ -86,6 +88,7 @@ public class ViewSelector implements SubcomponentViewAPI{
 		myStage = new Stage();
 		myWindows = new VBox();
 		myScene = new Scene(myWindows);
+		myScene.getStylesheets().add(STYLESHEET);
 		
 		myStage.setTitle(myResources.getString("ViewSelectorTitle"));
 		Label instruction = new Label(myResources.getString("ViewSelectorMessage"));

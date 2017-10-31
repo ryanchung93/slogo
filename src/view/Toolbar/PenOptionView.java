@@ -1,11 +1,10 @@
 package view.Toolbar;
 
 import java.util.List;
+import java.util.function.BiConsumer;
 
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
-import javafx.scene.paint.Color;
-import view.Animation.TextPromptView;
 
 /**
  * Class that allows users to select a pen color from a choice box.
@@ -16,24 +15,15 @@ import view.Animation.TextPromptView;
 public class PenOptionView extends OptionView {
 
 	private static final String PROMPT = "PenPrompt";
-	private List<String> colorList;
-	private TextPromptView tp;
+	private BiConsumer<String, String> myCommandConsumer;
 
-	public PenOptionView(List<String> colorList) {
-
+	public PenOptionView(List<String> colorList, BiConsumer<String, String> commandConsumer) {
 		super(PROMPT);
-
-		this.colorList = colorList;
-
+		myCommandConsumer = commandConsumer;
 		makeChoiceBox(colorList);
 	}
 
-	public void addTextPrompt(TextPromptView tp) {
-		this.tp = tp;
-	}
-
 	public void makeChoiceBox(List<String> colorList) {
-		this.colorList = colorList;
 		cb.getItems().removeAll(cb.getItems());
 
 		for (String color : colorList)
@@ -43,7 +33,7 @@ public class PenOptionView extends OptionView {
 
 			@Override
 			public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
-				tp.runCommand("SetPenColor", Integer.toString(newValue.intValue()));
+				myCommandConsumer.accept("SetPenColor", Integer.toString(newValue.intValue()));
 			}
 		});
 

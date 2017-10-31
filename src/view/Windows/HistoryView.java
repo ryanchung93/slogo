@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.Stack;
 import java.util.function.Consumer;
 
 import javafx.event.ActionEvent;
@@ -35,10 +36,13 @@ import model.SaverLoader;
 public class HistoryView implements SubcomponentViewAPI{
 
 	private static final String DELIMITER = "&&&";
+	private static final ResourceBundle myResources = ResourceBundle.getBundle("resources.view/view");
 	private Button clearButton;
 	private Button undoButton;
+	private Button redoButton;
 	private String lastCommand;
 	private List<String> historyList;
+	private Stack<String> undone;
 	private Text text;
 	private VBox myHistory;
 	private ScrollPane scrollPane;
@@ -49,7 +53,8 @@ public class HistoryView implements SubcomponentViewAPI{
 
 	public HistoryView(double height, Consumer<String> commandConsumer, Runnable reset) {
 		historyList = new ArrayList<>();
-
+		undone = new Stack<>();
+		
 		myCommandConsumer = commandConsumer;
 		myReset = reset;
 
@@ -59,33 +64,39 @@ public class HistoryView implements SubcomponentViewAPI{
 		RowConstraints row1 = new RowConstraints();
 		row1.setPercentHeight(10);
 		RowConstraints row2 = new RowConstraints();
-		row2.setPercentHeight(70);
+		row2.setPercentHeight(60);
 		RowConstraints row3 = new RowConstraints();
 		row3.setPercentHeight(10);
 		RowConstraints row4 = new RowConstraints();
 		row4.setPercentHeight(10);
+		RowConstraints row5 = new RowConstraints();
+		row5.setPercentHeight(10);
 		ColumnConstraints col1 = new ColumnConstraints();
 		col1.setPercentWidth(100);
 
-		view.getRowConstraints().addAll(row1, row2, row3);
+		view.getRowConstraints().addAll(row1, row2, row3, row4, row5);
 		view.getColumnConstraints().addAll(col1);
 		// ta = createTA(height);
 		// ta = createTA(1);
 
-		text = new Text("HistoryView");
+		text = new Text(myResources.getString(("HistoryView")));
 		text.setFill(Color.WHITE);
 
 		myHistory = new VBox();
+		myHistory.setMinHeight(height);
+		myHistory.setId("var-VBox");
 		scrollPane = new ScrollPane();
 		scrollPane.setContent(myHistory);
 
 		clearButton = makeButton("Clear History", e -> clear());
 		undoButton = makeButton("Undo", e -> undo());
-
+		redoButton = makeButton("Redo", e -> redo());
+		
 		view.add(text, 0, 0);
 		view.add(scrollPane, 0, 1);
 		view.add(clearButton, 0, 2);
 		view.add(undoButton, 0, 3);
+		view.add(redoButton, 0, 4);
 	}
 
 	/*************************** PUBLIC METHODS ********************************/
@@ -108,10 +119,6 @@ public class HistoryView implements SubcomponentViewAPI{
 
 	public Parent getParent() {
 		return view;
-	}
-
-	public void clear() {
-		myHistory.getChildren().clear();
 	}
 
 	public void save(String filePath) {
@@ -144,6 +151,16 @@ public class HistoryView implements SubcomponentViewAPI{
 		ret.setOnAction(e);
 		return ret;
 	}
+	
+	private void redo() {
+		clear();
+		int size = undone.size();
+		if(size != 0) {
+			historyList.add(undone.pop());
+		}
+		resetAndRun();
+	}
+	
 
 	private void undo() {
 		// TODO make redo, store undone commands in a separate Stack, throw error/do
@@ -153,9 +170,18 @@ public class HistoryView implements SubcomponentViewAPI{
 		if (size != 0) {
 			historyList.remove(size - 1);
 		}
+		resetAndRun();
+	}
+	
+	private void clear() {
+		myHistory.getChildren().clear();
+	}
+	
+	private void resetAndRun() {
 		myReset.run();
 		for (String command : historyList) {
 			myCommandConsumer.accept(command);
+			myHistory.getChildren().add(new Hyperlink(command));
 		}
 	}
 

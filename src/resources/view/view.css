@@ -143,8 +143,6 @@ HBox {
 	-fx-background-color: #7d97a5;
 }
 
-
-
-/*.check-box {
-	-fx-text-fill: #ff3d3d;
-}*/
+.check-box {
+	-fx-text-fill: #f5f7f8;
+}
