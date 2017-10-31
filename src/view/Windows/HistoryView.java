@@ -33,7 +33,7 @@ import model.SaverLoader;
  *
  */
 
-public class HistoryView implements SubcomponentViewAPI{
+public class HistoryView implements SubcomponentViewAPI, SaveLoadAPI{
 
 	private static final String DELIMITER = "&&&";
 	private static final ResourceBundle myResources = ResourceBundle.getBundle("resources.view/view");
@@ -118,11 +118,13 @@ public class HistoryView implements SubcomponentViewAPI{
 		});
 		myHistory.getChildren().addAll(t);
 	}
-
+	
+	@Override
 	public Parent getParent() {
 		return view;
 	}
 
+	@Override
 	public void save(String filePath) {
 		StringBuilder sb = new StringBuilder();
 		for (String s : historyList)
@@ -130,6 +132,7 @@ public class HistoryView implements SubcomponentViewAPI{
 		SaverLoader.save(sb.toString(), filePath);
 	}
 
+	@Override
 	public void load(String filePath) {
 		historyList = new ArrayList<String>(Arrays.asList(((String) SaverLoader.load(filePath)).split("\\s" + DELIMITER + "\\s")         ));
 		myHistory.getChildren().removeAll(myHistory.getChildren());

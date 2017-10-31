@@ -1,9 +1,6 @@
 package view.Animation;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import java.util.ResourceBundle;
 
 import javafx.geometry.Insets;
 import javafx.scene.layout.Background;
@@ -12,6 +9,7 @@ import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import model.SaverLoader;
+import view.Windows.SaveLoadAPI;
 
 /**
  * Class for setting up the canvas where turtles are placed.
@@ -19,7 +17,7 @@ import model.SaverLoader;
  * @author DavidTran
  *
  */
-public class CanvasView extends Pane {
+public class CanvasView extends Pane implements SaveLoadAPI{
 
 	private Color DEFAULT_COLOR = Color.WHITE;
 	private List<String> colorList;
@@ -43,10 +41,12 @@ public class CanvasView extends Pane {
 		myColorIndex = colorIndex;
 	}
 	
+	@Override
 	public void save(String filePath) {
 		SaverLoader.save(myColorIndex, filePath);
 	}
 	
+	@Override
 	public void load(String filePath) {
 		backgroundColorChange((int) SaverLoader.load(filePath));
 	}

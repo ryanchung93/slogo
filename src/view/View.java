@@ -38,6 +38,7 @@ import view.Toolbar.ToolbarView;
 import view.Toolbar.WindowObservable;
 import view.Windows.HistoryView;
 import view.Windows.ReferenceView;
+import view.Windows.SaveLoadAPI;
 import view.Windows.ScrollPaneView;
 import view.Windows.StringListener;
 import view.Windows.TurtleStateView;
@@ -51,7 +52,7 @@ import view.Windows.VariableView;
  * @author DavidTran
  *
  */
-public class View implements ViewAPI, Observer {
+public class View implements ViewAPI, Observer, SaveLoadAPI {
 
 	private static final int FRAMES_PER_SECOND = 60;
 	private static final int MILLISECOND_DELAY = 1000 / FRAMES_PER_SECOND;
@@ -128,6 +129,32 @@ public class View implements ViewAPI, Observer {
 		addToolbar();
 		myTimeline.play();
 	}
+	
+	@Override
+	public void save(String filePath) {
+		save.accept(filePath);
+
+		myHistoryView.save(filePath + HIST_EXT);
+		myCanvas.save(filePath + BKGD_EXT);
+		StringBuilder sb = new StringBuilder();
+		for (String color : myColorList)
+			sb.append(color + " ");
+		SaverLoader.save(sb.toString(), filePath + COLOR_EXT);
+	}	
+
+	@Override
+	public void load(String filePath) {
+		load.accept(filePath);
+
+		myHistoryView.load(filePath + HIST_EXT);
+		myCanvas.load(filePath + BKGD_EXT);
+		myTextPrompt.runCommand("ClearScreen", "");
+		myColorList = Arrays.asList(((String) SaverLoader.load(filePath + COLOR_EXT)).split(" "));
+		myToolbarView.getBackgroundOptionView().makeChoiceBox(myColorList);
+		myToolbarView.getPenOptionView().makeChoiceBox(myColorList);
+		myCanvas.update(myColorList);
+	}
+
 
 	@Override
 	public TurtleListener getNewTurtleListener() {
@@ -379,27 +406,5 @@ public class View implements ViewAPI, Observer {
 		myLeftSPList.addAll(Arrays.asList(myResources.getString("LeftSPViews").split(",")));
 	}
 
-	private void save(String filePath) {
-		save.accept(filePath);
-
-		myHistoryView.save(filePath + HIST_EXT);
-		myCanvas.save(filePath + BKGD_EXT);
-		StringBuilder sb = new StringBuilder();
-		for (String color : myColorList)
-			sb.append(color + " ");
-		SaverLoader.save(sb.toString(), filePath + COLOR_EXT);
-	}	
-
-	private void load(String filePath) {
-		load.accept(filePath);
-
-		myHistoryView.load(filePath + HIST_EXT);
-		myCanvas.load(filePath + BKGD_EXT);
-		myTextPrompt.runCommand("ClearScreen", "");
-		myColorList = Arrays.asList(((String) SaverLoader.load(filePath + COLOR_EXT)).split(" "));
-		myToolbarView.getBackgroundOptionView().makeChoiceBox(myColorList);
-		myToolbarView.getPenOptionView().makeChoiceBox(myColorList);
-		myCanvas.update(myColorList);
-	}
 
 }
