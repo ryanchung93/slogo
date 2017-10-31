@@ -174,9 +174,11 @@ public class CommandManager {
 	@SuppressWarnings("unchecked")
 	public void load(String fileName) {
 		HashMap<String, CommandDef> data = (HashMap<String, CommandDef>) SaverLoader.load(fileName);
+		userCommands = new HashMap<>();
 		for (String s : data.keySet()) {
 			userCommands.put(s, data.get(s));
 		}
+		
 		System.out.println(userCommands);
 		updateListeners();
 	}
