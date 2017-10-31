@@ -54,8 +54,15 @@ public class TextPromptView extends HBox implements TextPromptAPI, LanguageListe
 
 	@Override
 	public void runCommand(String s, String params) {
-		String command = acceptedCommands.getString(s).split("\\|")[0] + " " + params;
-		commandConsumer.accept(command);
+		if (acceptedCommands.containsKey(s)) {
+			String command = acceptedCommands.getString(s).split("\\|")[0] + " " + params;
+			commandConsumer.accept(command);
+		}
+		else {
+			String command = s + " " + params;
+			commandConsumer.accept(command);
+		}
+
 	}
 
 	@Override
@@ -121,8 +128,7 @@ public class TextPromptView extends HBox implements TextPromptAPI, LanguageListe
 			commandConsumer.accept(code);
 			historyConsumer.accept(code);
 			clear();
-		}
-		catch(SLogoException e) {
+		} catch (SLogoException e) {
 			new ErrorWindow(e.getMessage());
 		}
 	}
