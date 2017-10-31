@@ -112,7 +112,9 @@ public class HistoryView implements SubcomponentViewAPI{
 		Hyperlink t = new Hyperlink(newCode);
 		t.setOnAction(event -> {
 			try {
+				clearUndone();
 				myCommandConsumer.accept(newCode);
+				updateHistory(newCode);
 			} catch (SLogoException e) {
 				new ErrorWindow(e.getMessage());
 			}
@@ -146,6 +148,10 @@ public class HistoryView implements SubcomponentViewAPI{
 			myHistory.getChildren().add(t);
 		}
 	}
+	
+	public void clearUndone() {
+		undone.clear();
+	}
 
 	/*************************** PRIVATE METHODS ********************************/
 
@@ -171,7 +177,7 @@ public class HistoryView implements SubcomponentViewAPI{
 		clear();
 		int size = historyList.size();
 		if (size != 0) {
-			historyList.remove(size - 1);
+			undone.add(historyList.remove(size - 1));
 		}
 		resetAndRun();
 	}
@@ -182,9 +188,12 @@ public class HistoryView implements SubcomponentViewAPI{
 	
 	private void resetAndRun() {
 		myReset.run();
-		for (String command : historyList) {
+		List<String> newHistory = new ArrayList<>();
+		newHistory.addAll(historyList);
+		historyList.clear();
+		for (String command : newHistory) {
 			myCommandConsumer.accept(command);
-			myHistory.getChildren().add(new Hyperlink(command));
+			updateHistory(command);
 		}
 	}
 

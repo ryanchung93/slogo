@@ -93,6 +93,7 @@ public class View implements ViewAPI, Observer {
 	private ArrayList<String> myLeftSPList;
 	private ArrayList<String> myRightSPList;
 	private Runnable reset;
+	private Runnable stateClear;
 	private Consumer<String> load;
 	private Consumer<String> save;
 
@@ -232,7 +233,7 @@ public class View implements ViewAPI, Observer {
 	 */
 	private void addTextPrompt(Consumer<String> commandConsumer, Consumer<String> historyConsumer) {
 		double[][] dims = getGridDimensions();
-		myTextPrompt = new TextPromptView(dims[0][1], dims[1][2], commandConsumer, historyConsumer);
+		myTextPrompt = new TextPromptView(dims[0][1], dims[1][2], commandConsumer, historyConsumer, () -> myHistoryView.clearUndone());
 		myGrid.add(myTextPrompt, 1, 2, 2, 1);
 	}
 
@@ -258,6 +259,7 @@ public class View implements ViewAPI, Observer {
 		myRefView = new ReferenceView((dims[1][1] + dims[1][2]) / 2);
 		myHistoryView = new HistoryView(dims[0][0], (dims[1][1] + dims[1][2]) / 2, myCommandConsumer, () -> {
 			myTurtleViewManager.clear();
+			myTurtleStateView.clear();
 			reset.run();
 		});
 		myLeftVBox.getChildren().addAll(myTurtleStateView.getParent(), myUDCView.getParent(), myVarView.getParent());

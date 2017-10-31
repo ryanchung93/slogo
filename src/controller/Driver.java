@@ -20,11 +20,9 @@ public class Driver implements DriverAPI {
 	private Model myModel;
 
 	/**
-	 * Constructor
+	 * Construct a driver, loads a model and view
 	 */
 	public Driver(Stage stage) {
-		CommandManager commandManager = new CommandManager("resources.builders.completeCommands");
-		myModel = new Model(commandManager, this::getListeners);
 		myView = new View(stage, s -> languageChange(s), s -> myModel.execute(s), ()->run(), s -> save(s), s ->load(s));
 	}
 
@@ -35,6 +33,9 @@ public class Driver implements DriverAPI {
 		return list;
 	}
 
+	/* (non-Javadoc)
+	 * @see controller.API.DriverAPI#run()
+	 */
 	@Override
 	public void run() {
 		CommandManager commandManager = new CommandManager("resources.builders.completeCommands");
