@@ -143,6 +143,7 @@ public class ToolbarView implements ToolbarAPI, SubcomponentViewAPI {
 		Button button = new Button(string);
 		button.setId("toolbar-button");
 		myToolbar.getChildren().add(button);
+		myToolbar.setAlignment(Pos.BASELINE_CENTER);
 		return button;
 
 	}

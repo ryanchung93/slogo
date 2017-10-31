@@ -8,6 +8,9 @@ import java.io.Serializable;
  * 
  * See @IfElse for an example.
  *
+ * @author Aaron Paskin
+ * @author Ian Eldridge-Allegra
+ *
  */
 public interface Command extends Serializable {
 	/**

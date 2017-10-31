@@ -12,7 +12,6 @@ import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
-import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextInputDialog;
 import javafx.scene.layout.HBox;
@@ -33,7 +32,7 @@ public class WorkSpaceButtons implements SubcomponentViewAPI {
 
 	public WorkSpaceButtons(Runnable newWorkspace, Consumer<String> saveConsumer, Consumer<String> loadConsumer) {
 
-		view = new VBox(new Label("WorkSpace Manager"));
+		view = new VBox(new Label("Workspace Manager"));
 		HBox panel = new HBox();
 		newButton = makeButton("New", e -> newFile());
 		saveButton = makeButton("Save", e -> saveFile());

@@ -38,18 +38,33 @@ public class Model {
 		commands.setLanguage(language);
 	}
 	
+	/**
+	 * @param vL The VariableListener to be added
+	 */
 	public void addVariableListener(VariableListener vL) {
 		variables.addListener(vL);
 	}
 
+	/**
+	 * @param sL The CommandListener to be added
+	 */
 	public void addCommandListener(StringListener sL) {
 		commands.addListener(sL);
 	}
 
+	/**
+	 * Adds a turtle at the origin
+	 */
 	public void addTurtle() {
 		turtles.addTurtle();
 	}
 
+	/**
+	 * Executes each command in the code block.
+	 * 
+	 * @param code The code block to execute
+	 * @throws SLogoException If the code is not valid
+	 */
 	public void execute(String code) throws SLogoException {
 		Parser parser = new Parser(code, commands);
 		while (parser.hasNextCommand()) {
@@ -63,12 +78,18 @@ public class Model {
 		}
 	}
 
+	/**
+	 * @param file The file path to save to -- assumed valid.
+	 */
 	public void save(String file) {
 		variables.save(file + VAR_EXT);
 		commands.save(file + COM_EXT);
 		SaverLoader.addToKnown(file);
 	}
 
+	/**
+	 * @param file The file path to load from -- assumed valid.
+	 */
 	public void load(String file) {
 		variables.load(file + VAR_EXT);
 		commands.load(file + COM_EXT);

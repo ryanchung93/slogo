@@ -13,6 +13,7 @@ import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.Hyperlink;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.control.ScrollPane.ScrollBarPolicy;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
@@ -51,7 +52,7 @@ public class HistoryView implements SubcomponentViewAPI{
 	private Consumer<String> myCommandConsumer;
 	private Runnable myReset;
 
-	public HistoryView(double height, Consumer<String> commandConsumer, Runnable reset) {
+	public HistoryView(double width, double height, Consumer<String> commandConsumer, Runnable reset) {
 		historyList = new ArrayList<>();
 		undone = new Stack<>();
 		
@@ -83,9 +84,12 @@ public class HistoryView implements SubcomponentViewAPI{
 		text.setFill(Color.WHITE);
 
 		myHistory = new VBox();
+		myHistory.setMinWidth(width);
 		myHistory.setMinHeight(height);
 		myHistory.setId("var-VBox");
 		scrollPane = new ScrollPane();
+		scrollPane.setHbarPolicy(ScrollBarPolicy.NEVER);
+		scrollPane.setVbarPolicy(ScrollBarPolicy.ALWAYS);
 		scrollPane.setContent(myHistory);
 
 		clearButton = makeButton("Clear History", e -> clear());
@@ -108,6 +112,7 @@ public class HistoryView implements SubcomponentViewAPI{
 		Hyperlink t = new Hyperlink(newCode);
 		t.setOnAction(event -> {
 			try {
+				clearUndone();
 				myCommandConsumer.accept(newCode);
 			} catch (SLogoException e) {
 				new ErrorWindow(e.getMessage());
@@ -142,6 +147,10 @@ public class HistoryView implements SubcomponentViewAPI{
 			myHistory.getChildren().add(t);
 		}
 	}
+	
+	public void clearUndone() {
+		undone.clear();
+	}
 
 	/*************************** PRIVATE METHODS ********************************/
 
@@ -167,7 +176,7 @@ public class HistoryView implements SubcomponentViewAPI{
 		clear();
 		int size = historyList.size();
 		if (size != 0) {
-			historyList.remove(size - 1);
+			undone.add(historyList.remove(size - 1));
 		}
 		resetAndRun();
 	}
@@ -178,9 +187,12 @@ public class HistoryView implements SubcomponentViewAPI{
 	
 	private void resetAndRun() {
 		myReset.run();
-		for (String command : historyList) {
+		List<String> newHistory = new ArrayList<>();
+		newHistory.addAll(historyList);
+		historyList.clear();
+		for (String command : newHistory) {
 			myCommandConsumer.accept(command);
-			myHistory.getChildren().add(new Hyperlink(command));
+			updateHistory(command);
 		}
 	}
 
