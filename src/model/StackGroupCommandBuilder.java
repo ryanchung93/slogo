@@ -5,6 +5,9 @@ package model;
  * differently. Specifically, buildGroup creates nested instances of the
  * command. This only makes sense for certain operations. As an example: ( sum
  * 10 20 30 40 ) yields a sum of all four.
+ * 
+ * @author Ian Eldridge-Allegra
+ *
  */
 public abstract class StackGroupCommandBuilder implements CommandBuilder {
 

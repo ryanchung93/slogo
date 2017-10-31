@@ -14,10 +14,6 @@ import view.Windows.VariableListener;
  * @author Ian Eldridge-Allegra
  *
  */
-/**
- * @author Ian Eldridge-Allegra
- *
- */
 public class VariableManager {
 	private HashMap<String, Double> globals = new HashMap<>();
 	private List<Map<String, Double>> localScopes = new ArrayList<>();
