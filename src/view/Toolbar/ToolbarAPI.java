@@ -26,29 +26,11 @@ public interface ToolbarAPI {
 	public PenOptionView getPenOptionView();
 
 	/**
-	 * 
-	 * @return
-	 */
-	public PenSlider getPenSlider();
-
-	/**
-	 * 
-	 * @return
-	 */
-	public PenButtons getPenButtons();
-
-	/**
 	 * method used to get LanguageOptionView to then call
 	 * .addLanguageOptionListener.
 	 * 
 	 * @return PenButtons in ToolbarView
 	 */
 	public LanguageOptionView getLanguageOptionView();
-
-	/**
-	 * 
-	 * @return
-	 */
-	public TurtleImageOptionView getImageOptionView();
 
 }

@@ -83,23 +83,8 @@ public class ToolbarView implements ToolbarAPI, SubcomponentViewAPI {
 	}
 
 	@Override
-	public PenSlider getPenSlider() {
-		return myPenSlider;
-	}
-
-	@Override
-	public PenButtons getPenButtons() {
-		return myPenButtons;
-	}
-
-	@Override
 	public LanguageOptionView getLanguageOptionView() {
 		return myLanguageOptionView;
-	}
-
-	@Override
-	public TurtleImageOptionView getImageOptionView() {
-		return myImageOptionView;
 	}
 
 	private void makeHelpLink() {
