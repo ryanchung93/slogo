@@ -2,6 +2,8 @@ package view.Windows;
 
 import java.util.Set;
 
+import javafx.scene.control.TextArea;
+
 /**
  * Class allowing users to see defined functions.
  * 
@@ -23,5 +25,4 @@ public class UserDefinedCommandView extends Window implements StringListener {
 			ta.appendText(key + "\n");
 		}
 	}
-
 }

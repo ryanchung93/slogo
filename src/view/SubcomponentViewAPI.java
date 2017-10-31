@@ -1,6 +1,7 @@
 package view;
 
 import javafx.scene.Parent;
+import javafx.scene.control.TextArea;
 
 /**
  * Methods for view subcomponents in the user interface
@@ -17,5 +18,4 @@ public interface SubcomponentViewAPI {
 	 * Parent node containing the subcomponent.
 	 */
 	public Parent getParent();
-	
 }

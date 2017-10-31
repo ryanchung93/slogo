@@ -37,7 +37,7 @@ public class PenButtons implements SubcomponentViewAPI {
 	private Button makeButton(String label, EventHandler<ActionEvent> e) {
 		Button ret = new Button(label);
 		ret.setOnAction(e);
-		ret.setId("pen-button");
+		ret.setId("toolbar-button");
 		return ret;
 	}
 
