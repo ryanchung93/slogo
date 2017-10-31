@@ -1,5 +1,7 @@
 package view.Windows;
 
+import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import view.SubcomponentViewAPI;
@@ -15,6 +17,6 @@ public interface StringListener extends SubcomponentViewAPI {
 	 * @param s
 	 *            The new String
 	 */
-	public void changedMap(Set<String> set, Set<String> commandSet);
+	public void changedMap(Set<String> set, Map<String, List<String>> userCs);
 	
 }

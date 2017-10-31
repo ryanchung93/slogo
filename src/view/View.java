@@ -19,8 +19,6 @@ import javafx.geometry.HPos;
 import javafx.geometry.VPos;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
@@ -28,7 +26,6 @@ import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.RowConstraints;
 import javafx.scene.layout.VBox;
-import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import model.SaverLoader;
@@ -260,7 +257,7 @@ public class View implements ViewAPI, Observer {
 		myVarView = new VariableView((dims[1][1] + dims[1][2]) / 2);
 		myTurtleStateView = new TurtleStateView((dims[1][1] + dims[1][2]) / 2, myImageNameList, myColorList);
 		myRefView = new ReferenceView((dims[1][1] + dims[1][2]) / 2);
-		myHistoryView = new HistoryView((dims[1][1] + dims[1][2]) / 2, myCommandConsumer, () -> {
+		myHistoryView = new HistoryView(dims[0][0], (dims[1][1] + dims[1][2]) / 2, myCommandConsumer, () -> {
 			myTurtleViewManager.clear();
 			myTurtleStateView.clear();
 			reset.run();

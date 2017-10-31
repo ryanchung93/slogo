@@ -15,9 +15,7 @@ import view.Animation.TurtleListener;
  * TurtleManager, and will simply be excecuted on each active turtle. Iterating
  * over an instance of this class iterates only over the active turtles.
  * 
- * @author Pair programmed by:
  * @author Aaron Paskin
- * @author Ian Eldridge-Allegra
  *
  */
 public class TurtleManager implements Iterable<SingularTurtle>, Turtle {
