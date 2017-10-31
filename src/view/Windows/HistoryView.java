@@ -14,7 +14,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Hyperlink;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.ScrollPane.ScrollBarPolicy;
-import javafx.scene.control.TextArea;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.RowConstraints;
@@ -34,7 +33,7 @@ import model.SaverLoader;
  *
  */
 
-public class HistoryView implements SubcomponentViewAPI{
+public class HistoryView implements SubcomponentViewAPI, SaveLoadAPI{
 
 	private static final String DELIMITER = "&&&";
 	private static final ResourceBundle myResources = ResourceBundle.getBundle("resources.view/view");
@@ -77,8 +76,6 @@ public class HistoryView implements SubcomponentViewAPI{
 
 		view.getRowConstraints().addAll(row1, row2, row3, row4, row5);
 		view.getColumnConstraints().addAll(col1);
-		// ta = createTA(height);
-		// ta = createTA(1);
 
 		text = new Text(myResources.getString(("HistoryView")));
 		text.setFill(Color.WHITE);
@@ -121,11 +118,13 @@ public class HistoryView implements SubcomponentViewAPI{
 		});
 		myHistory.getChildren().addAll(t);
 	}
-
+	
+	@Override
 	public Parent getParent() {
 		return view;
 	}
 
+	@Override
 	public void save(String filePath) {
 		StringBuilder sb = new StringBuilder();
 		for (String s : historyList)
@@ -133,6 +132,7 @@ public class HistoryView implements SubcomponentViewAPI{
 		SaverLoader.save(sb.toString(), filePath);
 	}
 
+	@Override
 	public void load(String filePath) {
 		historyList = new ArrayList<String>(Arrays.asList(((String) SaverLoader.load(filePath)).split("\\s" + DELIMITER + "\\s")         ));
 		myHistory.getChildren().removeAll(myHistory.getChildren());

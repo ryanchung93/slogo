@@ -38,6 +38,7 @@ import view.Toolbar.ToolbarView;
 import view.Toolbar.WindowObservable;
 import view.Windows.HistoryView;
 import view.Windows.ReferenceView;
+import view.Windows.SaveLoadAPI;
 import view.Windows.ScrollPaneView;
 import view.Windows.StringListener;
 import view.Windows.TurtleStateView;
@@ -51,7 +52,7 @@ import view.Windows.VariableView;
  * @author DavidTran
  *
  */
-public class View implements ViewAPI, Observer {
+public class View implements ViewAPI, Observer, SaveLoadAPI {
 
 	private static final int FRAMES_PER_SECOND = 60;
 	private static final int MILLISECOND_DELAY = 1000 / FRAMES_PER_SECOND;
@@ -91,7 +92,6 @@ public class View implements ViewAPI, Observer {
 	private List<String> myColorList;
 	private ArrayList<String> myWindowList;
 	private ArrayList<String> myLeftSPList;
-	private ArrayList<String> myRightSPList;
 	private Runnable reset;
 	private Runnable stateClear;
 	private Consumer<String> load;
@@ -153,6 +153,32 @@ public class View implements ViewAPI, Observer {
 	@Override
 	public StringListener getUserDefinedCommandListener() {
 		return myUDCView;
+	}
+
+	@Override
+	public void save(String filePath) {
+		save.accept(filePath);
+
+		myHistoryView.save(filePath + HIST_EXT);
+		myCanvas.save(filePath + BKGD_EXT);
+		StringBuilder sb = new StringBuilder();
+		for (String color : myColorList)
+			sb.append(color + " ");
+		SaverLoader.save(sb.toString(), filePath + COLOR_EXT);
+		myToolbarView.getWorkSpaceButtons().updateFileList();
+	}
+
+	@Override
+	public void load(String filePath) {
+		load.accept(filePath);
+
+		myHistoryView.load(filePath + HIST_EXT);
+		myCanvas.load(filePath + BKGD_EXT);
+		myTextPrompt.runCommand("ClearScreen", "");
+		myColorList = Arrays.asList(((String) SaverLoader.load(filePath + COLOR_EXT)).split(" "));
+		myToolbarView.getBackgroundOptionView().makeChoiceBox(myColorList);
+		myToolbarView.getPenOptionView().makeChoiceBox(myColorList);
+		myCanvas.update(myColorList);
 	}
 
 	/*************** PRIVATE METHODS *******************/
@@ -233,7 +259,8 @@ public class View implements ViewAPI, Observer {
 	 */
 	private void addTextPrompt(Consumer<String> commandConsumer, Consumer<String> historyConsumer) {
 		double[][] dims = getGridDimensions();
-		myTextPrompt = new TextPromptView(dims[0][1], dims[1][2], commandConsumer, historyConsumer, () -> myHistoryView.clearUndone());
+		myTextPrompt = new TextPromptView(dims[0][1], dims[1][2], commandConsumer, historyConsumer,
+				() -> myHistoryView.clearUndone());
 		myGrid.add(myTextPrompt, 1, 2, 2, 1);
 	}
 
@@ -253,7 +280,8 @@ public class View implements ViewAPI, Observer {
 		myRightSP.setContent(myRightVBox);
 		myGrid.add(myRightSP, 2, 1, 1, 2);
 
-		myUDCView = new UserDefinedCommandView(dims[0][0], (dims[1][1] + dims[1][2]) / 2, (s,p) -> myTextPrompt.runCommand(s, p));
+		myUDCView = new UserDefinedCommandView(dims[0][0], (dims[1][1] + dims[1][2]) / 2,
+				(s, p) -> myTextPrompt.runCommand(s, p));
 		myVarView = new VariableView((dims[1][1] + dims[1][2]) / 2);
 		myTurtleStateView = new TurtleStateView((dims[1][1] + dims[1][2]) / 2, myImageNameList, myColorList);
 		myRefView = new ReferenceView((dims[1][1] + dims[1][2]) / 2);
@@ -378,30 +406,6 @@ public class View implements ViewAPI, Observer {
 	private void makeScrollPaneLists() {
 		myLeftSPList = new ArrayList<String>();
 		myLeftSPList.addAll(Arrays.asList(myResources.getString("LeftSPViews").split(",")));
-	}
-
-	private void save(String filePath) {
-		save.accept(filePath);
-
-		myHistoryView.save(filePath + HIST_EXT);
-		myCanvas.save(filePath + BKGD_EXT);
-		StringBuilder sb = new StringBuilder();
-		for (String color : myColorList)
-			sb.append(color + " ");
-		SaverLoader.save(sb.toString(), filePath + COLOR_EXT);
-		myToolbarView.getWorkSpaceButtons().updateFileList();
-	}	
-
-	private void load(String filePath) {
-		load.accept(filePath);
-
-		myHistoryView.load(filePath + HIST_EXT);
-		myCanvas.load(filePath + BKGD_EXT);
-		myTextPrompt.runCommand("ClearScreen", "");
-		myColorList = Arrays.asList(((String) SaverLoader.load(filePath + COLOR_EXT)).split(" "));
-		myToolbarView.getBackgroundOptionView().makeChoiceBox(myColorList);
-		myToolbarView.getPenOptionView().makeChoiceBox(myColorList);
-		myCanvas.update(myColorList);
 	}
 
 }

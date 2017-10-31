@@ -7,15 +7,15 @@ import java.util.Observable;
  * Class that stores active windows (windows that users can view) in ArrayList
  * as string.
  * 
- * Extends Observable, so any class that implements Observer can
- * detect change in this class.
+ * Extends Observable, so any class that implements Observer can detect change
+ * in this class.
  * 
  * @author taekwhunchung
  *
  */
 
 public class WindowObservable<T> extends Observable {
-	
+
 	private ArrayList<String> windows;
 
 	/**
@@ -24,17 +24,15 @@ public class WindowObservable<T> extends Observable {
 	 * 
 	 * @param activeWindows
 	 */
-	
+
 	public WindowObservable(ArrayList<String> activeWindows) {
 		windows = activeWindows;
-		/*for (String window : windows) {
-			System.out.println("Y" + window);
-		}*/
 	}
 
 	/**
 	 * 
-	 * method to 
+	 * method to add selected window to active windows and notify observers.
+	 * 
 	 * @param t
 	 */
 	public void add(T t) {
@@ -44,6 +42,13 @@ public class WindowObservable<T> extends Observable {
 		notifyObservers(t);
 	}
 
+	/**
+	 * 
+	 * method to remove selected window from active windows and notify observers.
+	 * 
+	 * @param t
+	 */
+
 	public void remove(T t) {
 		String str = (String) t;
 		windows.remove(str);
@@ -51,9 +56,24 @@ public class WindowObservable<T> extends Observable {
 		notifyObservers(t);
 	}
 
+	/**
+	 * 
+	 * method that returns true if active windows contains window (param)
+	 * 
+	 * @param String
+	 *            name of window
+	 * @return boolean
+	 */
+
 	public boolean contains(T t) {
 		return windows.contains(t);
 	}
+	
+	/**
+	 * method that returns windows
+	 * 
+	 * @return ArrayList<String> windows
+	 */
 
 	public ArrayList<String> getList() {
 		return windows;

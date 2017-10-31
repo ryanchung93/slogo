@@ -67,69 +67,55 @@ SubcomponentViewAPI
 
 * Allows View.java to obtain the node represented by each view component class.
 
-BackgroundOptionListener
+LanguageOptionAPI
+
+	public void addLanguageOptionListener(LanguageListener l)
 	
-	public void backgroundColorChange(int index)
+ToolbarAPI
 
-* Enables communication between background color choice box and canvas class.
+	public BackgroundOptionView getBackgroundOptionView()
+	public PenOptionView getPenOptionView()
+	public LanguageOptionView getLanguageOptionView()
 
-TurtleImageOptionListener
-	
-	public void imageChange(int index)
+SaveLoadAPI
 
-* Enables communication between turtle image choice box and TurtleImageListener class.
-
-PenOptionListener
-	
-	public void penColorChange(int index)
-
-* Enables communication between turtle image choice box and TurtleListener.
-
-BackgroundColorDisplay
-	
-	public void addBackgroundOptionListener(BackgroundOptionListener listener)
-
-* Passes the instance of BackgroundOptionListener in order to call public methods on it.
-
-TurtleImageOptionDisplay
-	
-	public void addTurtleImageListener(TurtleImageListener listener)
-
-* Passes the instance of TurtleImageListener in order to call public methods on it.
-
-PenOptionDisplay
-	
-	public void addPenOptionListener(TurtleListener listener)
-
-* Passes the instance of TurtleListener in order to call public methods on it.
-
-LanguageOptionDisplay
-	
-	public void addLanguageOptionListener(LanguageListener listener)
-
-* Passes the LanguageListener in order to call public methods on it.
-
-TextPromptDisplay
-	
-	public void runCommand(String s)
-
-* Allows View.java to send a command to TextPrompt when user inputs key commands.
+	public void save(String filePath)
+	public void load(String filePath)
 
 
 **External View:**
 
-View
+ViewAPI
 	
 	public void start(Consumer<String> commandConsumer)
-	public void display(SlogoException e)
+	public VariableListener getVariableListener()
+	public StringListener getCommandListener();
 	public void getUserdefinedCommandListener()
+	public TurtleListener getNewTurtleListener();
+	public TurtleListener getStateViewListener();
+
 
 * Allows errors messages to be send from model to View, Controller to start stage setup in View, and to pass a listener from View to Model to update user defined commands displayed.
 
+TextPromptAPI
+
+	public void runCommand(String s, String params)
+	public void handleInput(KeyCode code)
+
 TurtleListener
 	
-	public void addTurtleStateListener(TurtleStateListener listener)
-	public void penColorChange(int index)
+	public void setTurtle(ImmutableTurtle turtle)
+	public void locationChange(double newX, double newY)
+	public void headingChange(double newAngle)
+	public void penChange(boolean down)
+	public void visibilityChange(boolean isVisible)
+	public void penColorChange(int colorIndex)
+	public void clearScreen()
+	public void activeToggle(boolean active)
+	public void penSizeChange(double thickness)
+	public void backgroundColorChange(int index)
+	public void shapeChange(int index)
+	public void addToPalette(int index, int rVal, int gVal, int bVal)
 
 * Allows hanged parameter from color to index.
 
@@ -138,3 +124,11 @@ LanguageListener
 	public void languageChange(String s)
 
 * Allows communication to change language between language option choice-box (in View) and model.
+
+VariableListener
+
+	public void changedMap(Map<String, Double> vars)
+	
+StringListener
+
+	public void changedMap(Set<String> set, Map<String, List<String>> userCs)
