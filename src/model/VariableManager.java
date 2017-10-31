@@ -142,6 +142,7 @@ public class VariableManager {
 	@SuppressWarnings("unchecked")
 	public void load(String fileName) {
 		HashMap<String, Double> data = (HashMap<String, Double>) SaverLoader.load(fileName);
+		globals = new HashMap<>();
 		for (String s : data.keySet()) {
 			globals.put(s, data.get(s));
 		}
